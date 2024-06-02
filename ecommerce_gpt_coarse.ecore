@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ecommerce" nsURI="http://yamtl.github.io/ecommerce" nsPrefix="ecommerce">
+  <eClassifiers xsi:type="ecore:EClass" name="EcommerceApplication">
+    <eOperations name="main">
+      <eParameters name="args" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Order">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="creationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="products" upperBound="-1"
+        eType="#//Product"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Product">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="productName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="price" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="createDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="#//Category"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orderItems" upperBound="-1"
+        eType="#//Order"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Element">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="categoryName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="products" upperBound="-1"
+        eType="#//Product"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderRepository" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CategoryRepository" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ProductRepository" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OrdersController">
+    <eOperations name="getAll" upperBound="-1" eType="#//Order"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orderRepository" eType="#//OrderRepository"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orderList" upperBound="-1"
+        eType="#//Order"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CategoriesController">
+    <eOperations name="getCategories" upperBound="-1" eType="#//Category"/>
+    <eOperations name="getCategoryById" eType="#//ResponseEntity">
+      <eParameters name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="saveCategory" eType="#//ResponseEntity">
+      <eParameters name="category" eType="#//Category"/>
+    </eOperations>
+    <eOperations name="updateCategory" eType="#//ResponseEntity">
+      <eParameters name="category" eType="#//Category"/>
+    </eOperations>
+    <eOperations name="deleteCategory" eType="#//ResponseEntity">
+      <eParameters name="category" eType="#//Category"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categoryRepository" eType="#//CategoryRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProductMutationResolver">
+    <eOperations name="saveProduct" eType="#//Product">
+      <eParameters name="product" eType="#//Product"/>
+    </eOperations>
+    <eOperations name="updateProduct" eType="#//Product">
+      <eParameters name="product" eType="#//Product"/>
+    </eOperations>
+    <eOperations name="deleteProduct" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eParameters name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="productRepository" eType="#//ProductRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProductQueryResolver">
+    <eOperations name="getProducts" upperBound="-1" eType="#//Product"/>
+    <eOperations name="getProductById" eType="#//Product">
+      <eParameters name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="productRepository" eType="#//ProductRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResponseEntity" interface="true">
+    <eAnnotations source="dependency"/>
+  </eClassifiers>
+</ecore:EPackage>

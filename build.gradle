@@ -1,0 +1,52 @@
+plugins {
+	// id 'java'
+    id 'application'
+	id 'eclipse'
+	id 'org.springframework.boot' version '3.0.0'
+	id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'com.mdre.evaluation'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'com.github.javaparser:javaparser-core:3.25.8'
+    implementation 'org.eclipse.emfatic:org.eclipse.emfatic.core:1.0.0'    
+    implementation 'com.google.guava:guava:30.1.1-jre'
+    implementation 'org.eclipse.emf:org.eclipse.emf.ecore:2.33.0'
+    implementation 'org.eclipse.emf:org.eclipse.emf.codegen.ecore:2.33.0'
+    implementation 'org.eclipse.emf:org.eclipse.emf.common:2.26.0'
+    implementation 'org.xerial:sqlite-jdbc:3.34.0'
+    implementation 'yamtl:emf-syncer.subtyping:1.1.1' 
+	implementation 'yamtl:yamtl:0.4.32'
+	implementation "org.eclipse.xtend:org.eclipse.xtend.core:2.31.0"
+	implementation 'org.eclipse.emf:org.eclipse.emf.common:2.28.0'
+	implementation "org.eclipse.emf:org.eclipse.emf.ecore.xmi:2.17.0"
+	implementation "org.eclipse.emf:org.eclipse.emf.ecore.change:2.14.0"
+	implementation "log4j:log4j:1.2.17" 
+	implementation 'org.aspectj:aspectjweaver:1.9.19'
+	implementation 'org.springframework:spring-aop:6.0.9'
+	implementation 'org.springframework:spring-context:6.0.9'
+	implementation 'net.openhft:zero-allocation-hashing:0.16'
+	implementation 'org.json:json:20171018'
+    implementation 'org.apache.opennlp:opennlp-tools:2.0.0'
+}
+application {
+    mainClass = 'com.mdre.evaluation.App'
+}
+tasks.named('test') {
+	useJUnitPlatform()
+}
