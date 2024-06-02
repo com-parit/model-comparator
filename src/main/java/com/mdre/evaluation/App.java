@@ -46,14 +46,18 @@ public class App {
                 put("projectName", projectName);
 			}});
             HashMap<String,JSONObject> results = evaluationEngine.compareModels(models, includeDependencies);
+            File originalModelFile = new File(originalModelFilePath);
+            File predictedModelFile = new File(predictedModelFilePath);
+            originalModelFile.delete();
+            predictedModelFile.delete();
             return results.toString();
         } catch (IOException e) {
-            return "Failed to save files: " + e.getMessage();
+            return "Internal Server Error: " + e.getMessage();
         }
     }
 
     private String saveFile(MultipartFile file) throws IOException {
-        String uploadDir = "/media/jawad/secondaryStorage/projects/mdre/top10/demo/";
+        String uploadDir = "/media/jawad/secondaryStorage/projects/mdre/top10/model-comparator/";
         File directory = new File(uploadDir);
         if (!directory.exists()) {
             directory.mkdirs();
