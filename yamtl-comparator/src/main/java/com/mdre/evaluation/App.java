@@ -57,7 +57,7 @@ public class App {
     }
 
     private String saveFile(MultipartFile file) throws IOException {
-        String uploadDir = "/media/jawad/secondaryStorage/projects/mdre/top10/model-comparator/";
+        String uploadDir = "/media/jawad/secondaryStorage/projects/mdre/top10/model-comparator/yamtl-comparator";
         File directory = new File(uploadDir);
         if (!directory.exists()) {
             directory.mkdirs();
