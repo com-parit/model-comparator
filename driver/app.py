@@ -24,6 +24,7 @@ def post_endpoint():
 
     groundTruthModel = request.files['groundTruthModel']
     predictedModel = request.files['predictedModel']
+    projectName = request.form["projectName"]
 
     if groundTruthModel.filename == '':
         return jsonify({'error': 'No ground truth selected file'}), 400
@@ -43,7 +44,7 @@ def post_endpoint():
               groundTruthModelEmfatic = Adapter.get_emfatic(groundTruthModel)
               predictedModelEmfatic = Adapter.get_emfatic(predictedModel)
         with open(groundTruthModelFilePath, 'rb') as groundTruthModel, open(predictedModelFilePath, 'rb') as predictedModel:
-              result = Adapter.get_yamlt_comparator_results(groundTruthModel, predictedModel)
+              result = Adapter.get_yamlt_comparator_results(groundTruthModel, predictedModel, projectName)
 		
 		
         

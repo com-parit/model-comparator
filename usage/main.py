@@ -278,7 +278,7 @@ class Main:
             df = self.reorder_class_level_df(df)
             df = self.rename_class_level_columns(df)
             class_csv_path = f'class-analysis.csv'
-            # df.to_csv(class_csv_path)
+            df.to_csv(class_csv_path)
             list_of_class_level_csv_paths.append(class_csv_path)
 
             model_level_json[project]["model2_identifier"] = model_level_json[project]["model2_identifier"][model_level_json[project]["model2_identifier"].rfind("/") + 1: len(model_level_json[project]["model2_identifier"])]
@@ -287,7 +287,7 @@ class Main:
             df_model = self.reorder_model_level_df(df_model)
             df_model = self.rename_model_level_columns(df_model)
             model_csv_path = f'model-analysis.csv'
-            # df_model.to_csv(model_csv_path)
+            df_model.to_csv(model_csv_path)
             list_of_model_level_csv_paths.append(model_csv_path)
         paths_to_csvs = {
             "model": list_of_model_level_csv_paths,
@@ -301,7 +301,7 @@ class Main:
         model_csv_path = 'model-analysis-consolidated.csv'
         model_json_path = 'model-analysis-consolidated.json'
         df_model.to_csv(model_csv_path)
-        df_model.to_json(model_json_path)        
+        df_model.T.to_json(model_json_path)        
         consolidated_csv_paths.append(model_csv_path)
         return consolidated_csv_paths      
             
@@ -313,10 +313,14 @@ class Main:
         with open("ecommerce.ecore") as groundTruthModel, open("ecommerce_gpt_coarse.ecore") as predictedModel:
             response = requests.post(
                 comparator_url,
-                files={"groundTruthModel": groundTruthModel, "predictedModel": predictedModel}
+                files={"groundTruthModel": groundTruthModel, "predictedModel": predictedModel},
+                data={
+                    "projectName": "ecommerce"
+                }
             )
             model_level_json = response.json()['result']["modelLevelJson"]
             class_level_json = response.json()['result']["classLevelJson"]
+            print(model_level_json)
 
 
             

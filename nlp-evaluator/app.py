@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from semantic_similarity import SemanticSimilarity
+import nltk
 
+nltk.download('punkt')
 app = Flask(__name__)
 
 @app.route('/nlp-compare', methods=['POST'])

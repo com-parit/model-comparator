@@ -6,12 +6,12 @@ load_dotenv()
 yamtl_comparator_url = os.getenv("yamtl_comparator_url")
 nlp_comparator_url = os.getenv("nlp_comparator_url")
 class Adapter:
-	def get_yamlt_comparator_results(ground_truth_ecore_model, predicted_ecore_model):
+	def get_yamlt_comparator_results(ground_truth_ecore_model, predicted_ecore_model, projectName):
 		yamtl_comparator_endpoint = f'{yamtl_comparator_url}/compare'
 		response = requests.post(
 			yamtl_comparator_endpoint, files={"groundTruthModel": ground_truth_ecore_model, "predictedModel": predicted_ecore_model}, 
 			data={
-    			"projectName": "tech1"
+    			"projectName": projectName
 			}
 		)
 		return response.json()

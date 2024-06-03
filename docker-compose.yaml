@@ -19,6 +19,8 @@ services:
     environment:
       - nlp_comparator_url=http://nlp-evaluator:4040
       - yamtl_comparator_url=http://yamtl-comparator:8080
+    volumes:
+      - ./driver:/driver
 
   nlp-evaluator:
     build:
@@ -26,3 +28,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4040:4040"
+    volumes:
+      - ./nlp-evaluator:/nlp-evaluator
