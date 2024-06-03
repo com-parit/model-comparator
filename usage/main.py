@@ -300,7 +300,9 @@ class Main:
         df_model = self.reorder_model_level_df(df_model)
         df_model = self.rename_model_level_columns(df_model)
         model_csv_path = 'model-analysis-consolidated.csv'
-        df_model.to_csv(model_csv_path)        
+        model_json_path = 'model-analysis-consolidated.json'
+        df_model.to_csv(model_csv_path)
+        df_model.to_json(model_json_path)        
         consolidated_csv_paths.append(model_csv_path)
         return consolidated_csv_paths      
             
@@ -309,7 +311,7 @@ class Main:
         class_level_json = {}
 
         comparator_url = "http://localhost:5050/compare"
-        with open("modelsToCompare/ecommerce.ecore") as groundTruthModel, open("modelsToCompare/ecommerce.ecore") as predictedModel:
+        with open("modelsToCompare/btopenlinkjavacoremodel.ecore") as groundTruthModel, open("modelsToCompare/mediapipe.ecore") as predictedModel:
             response = requests.post(
                 comparator_url,
                 files={"groundTruthModel": groundTruthModel, "predictedModel": predictedModel}
