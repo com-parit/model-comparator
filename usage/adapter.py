@@ -31,5 +31,5 @@ class Adapter:
                 comparator_url,
                 files={"ecoreModel":emfaticModel}
             )
-        with open(ecoreModelFilePath.replace(".emf", ".ecore"), "w") as file:
+        with open(ecoreModelFilePath.replace(".ecore", ".emf"), "w") as file:
             file.write(ecoreFromEmfaticResponse.text)
