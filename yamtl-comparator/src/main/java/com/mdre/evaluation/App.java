@@ -18,6 +18,7 @@ import java.nio.file.Files;
 
 import com.mdre.evaluation.EvaluateClasses;
 import com.mdre.evaluation.EcoreToEmfaticService;
+import com.mdre.evaluation.EmfaticToEcoreModelService;
 
 @SpringBootApplication
 @RestController
@@ -33,17 +34,36 @@ public class App {
       return String.format("Hello %s!", name);
     }
 
-    @PostMapping("/emfatic")
-    public String getEmfatic(@RequestParam("ecoreModel") MultipartFile ecoreModel) {
+    @PostMapping("/ecore2emfatic")
+    public String getEmfaticFromEcore(@RequestParam("ecoreModel") MultipartFile ecoreModel) {
         try {
 			EcoreToEmfaticService generator = new EcoreToEmfaticService();
-            String modelFilePath = saveEcoreFile(ecoreModel);
+            String modelFilePath = saveFile(ecoreModel, ".ecore");
             System.out.println(rootProjectPath);
             System.out.println(modelFilePath);
             generator.run(modelFilePath, rootProjectPath);
             Path path = Paths.get(modelFilePath.substring(0, modelFilePath.length() - ".ecore".length()) + ".emf");
             String response = Files.readString(path);
             Files.delete(path);
+            Files.delete(Paths.get(modelFilePath));
+            return response;
+        } catch (Exception e) {
+            return "Could not generate emfatic file " + e;
+        }
+    }
+
+    @PostMapping("/emfatic2ecore")
+    public String getEcoreFromEmfatic(@RequestParam("emfaticModel") MultipartFile emfaticModel) {
+        try {
+            EmfaticToEcoreModelService emf2ecore = new EmfaticToEcoreModelService();
+            String emfaticFilePath = saveFile(emfaticModel, "");
+            System.out.println(rootProjectPath);
+            System.out.println(emfaticFilePath);
+            emf2ecore.run(emfaticFilePath);
+            Path path = Paths.get(emfaticFilePath.substring(0, emfaticFilePath.length() - ".emf".length()) + ".ecore");
+            String response = Files.readString(path);
+            Files.delete(path);
+            Files.delete(Paths.get(emfaticFilePath));
             return response;
         } catch (Exception e) {
             return "Could not generate emfatic file " + e;
@@ -57,8 +77,8 @@ public class App {
         @RequestParam("projectName") String projectName
         ) {
         try {
-            String originalModelFilePath = saveEcoreFile(groundTruthModel);
-            String predictedModelFilePath = saveEcoreFile(predictedModel);
+            String originalModelFilePath = saveFile(groundTruthModel, ".ecore");
+            String predictedModelFilePath = saveFile(predictedModel, ".ecore");
     		EvaluateClasses evaluationEngine = new EvaluateClasses();
             Boolean includeDependencies = true;
             ArrayList<HashMap<String, String>> models = new ArrayList<HashMap<String, String>>();
@@ -78,13 +98,13 @@ public class App {
         }
     }
 
-    private String saveEcoreFile(MultipartFile file) throws IOException {
+    private String saveFile(MultipartFile file, String extension) throws IOException {
         String uploadDir = rootProjectPath;
         File directory = new File(uploadDir);
         if (!directory.exists()) {
             directory.mkdirs();
         }
-        String filePath = uploadDir + file.getOriginalFilename() + ".ecore";
+        String filePath = uploadDir + file.getOriginalFilename() + extension;
         File dest = new File(filePath);
         file.transferTo(dest);
         return filePath;
