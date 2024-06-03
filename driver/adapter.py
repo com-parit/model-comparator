@@ -17,7 +17,7 @@ class Adapter:
 		return response.json()
 	
 	def get_emfatic(ecore_model):
-		yamtl_comparator_endpoint = f'{yamtl_comparator_url}/emfatic'
+		yamtl_comparator_endpoint = f'{yamtl_comparator_url}/ecore2emfatic'
 		response = requests.post(
 			yamtl_comparator_endpoint, files={"ecoreModel": ecore_model})
 		return response.text

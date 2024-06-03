@@ -304,13 +304,23 @@ class Main:
         df_model.T.to_json(model_json_path)        
         consolidated_csv_paths.append(model_csv_path)
         return consolidated_csv_paths      
-            
+    
+    def get_ecore_model_from_emfatic(emfaticFilePath):
+        comparator_url = "http://localhost:8080/emfatic2ecore"
+        with open(emfaticFilePath) as emfaticModel:
+            ecoreFromEmfaticResponse = requests.post(
+                comparator_url,
+                files={"emfaticModel":emfaticModel}
+            )
+        with open(emfaticFilePath.replace(".emf", ".ecore"), "w") as file:
+            file.write(ecoreFromEmfaticResponse.text)        
+
     def run(self, ):
         model_level_json = {}
         class_level_json = {}
 
         comparator_url = "http://localhost:5050/compare"
-        with open("ecommerce.ecore") as groundTruthModel, open("ecommerce_gpt_coarse.ecore") as predictedModel:
+        with open("btopenlinkjavacoremodel.ecore") as groundTruthModel, open("bt_openlink.ecore") as predictedModel:
             response = requests.post(
                 comparator_url,
                 files={"groundTruthModel": groundTruthModel, "predictedModel": predictedModel},

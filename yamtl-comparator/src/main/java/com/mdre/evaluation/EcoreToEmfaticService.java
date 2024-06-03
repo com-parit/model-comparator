@@ -3,14 +3,8 @@ package com.mdre.evaluation;
 import java.io.File;
 import java.io.FileWriter; 
 import org.eclipse.emf.emfatic.core.generator.emfatic.EmfaticGenerator;
-import java.io.ByteArrayInputStream;
 import java.util.*; 
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;

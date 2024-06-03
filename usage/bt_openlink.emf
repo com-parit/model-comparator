@@ -1,0 +1,794 @@
+
+@namespace(uri="http://yamtl.github.io/openlink", prefix="openlink")
+package openlink;
+
+
+
+abstract class StanzaBuilder {
+    attr EString[0..1] ~id;
+    ref J[0..1] to;
+    ref J[0..1] from;
+}
+    
+class PhoneNumber extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op PhoneNumber[0..1] from(AbstractType[0..1] type);
+}
+    
+class KeyColor extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyColor[0..1] from(AbstractType[0..1] type);
+}
+    
+class CallFeatureDeviceKey extends CallFeature {
+    attr long[0..1] serialVersionUID;
+    ref DeviceKey[0..*] deviceKeys;
+}
+    
+class CallFeatureTextValue extends CallFeature {
+    attr long[0..1] serialVersionUID;
+    attr EString[0..1] value;
+}
+    
+class ActiveFeature extends Feature {
+    attr long[0..1] serialVersionUID;
+    attr EString[0..1] value1;
+    attr EString[0..1] value2;
+    attr EString[0..1] value3;
+}
+    
+class HistoricalCall {
+    attr long[0..1] serialVersionUID;
+    attr CallState[0..1] state;
+    attr CallDirection[0..1] direction;
+    attr EString[0..1] callerName;
+    attr EString[0..1] calledName;
+    ref CallId[0..1] callId;
+    ref UserId[0..1] userId;
+    ref InterestId[0..1] interestId;
+    ref PhoneNumber[0..1] callerNumber;
+    ref PhoneNumber[0..1] calledNumber;
+    ref Instant[0..1] startTime;
+    ref Duration[0..1] duration;
+    ref J[0..1] tsc;
+}
+    
+class CallFeatureHandset extends CallFeature {
+    attr long[0..1] serialVersionUID;
+    attr EBooleanObject[0..1] enabled;
+    attr EBooleanObject[0..1] microphoneEnabled;
+}
+    
+class OriginatorReference {
+    attr long[0..1] serialVersionUID;
+    attr EString[0..1] key;
+    attr EString[0..1] value;
+    op boolean[0..1] equals(EJavaObject[0..1] o);
+    op int[0..1] hashCode();
+}
+    
+class DeviceKey extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op DeviceKey[0..1] from(AbstractType[0..1] type);
+}
+    
+class VoiceMessage {
+    attr long[0..1] serialVersionUID;
+    attr EString[0..1] label;
+    attr VoiceMessageStatus[0..1] status;
+    attr ManageVoiceMessageAction[0..1] action;
+    ref Duration[0..1] messageLength;
+    ref Instant[0..1] creationDate;
+    ref PhoneNumber[0..1] extension;
+}
+    
+class Site extends Serializable {
+    attr long[0..1] serialVersionUID;
+    attr ELongObject[0..1] ~id;
+    attr EBooleanObject[0..1] isDefault;
+    attr EString[0..1] name;
+    attr EString[0..1] type;
+}
+    
+class DeviceStatus {
+    attr long[0..1] serialVersionUID;
+    attr EBooleanObject[0..1] online;
+    ref ProfileId[0..1] profileId;
+    ref DeviceId[0..1] deviceId;
+    ref VoiceMessageFeature[0..*] features;
+}
+    
+class RequestActionValue extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op AbstractType[0..1] from(EString[0..1] type);
+}
+    
+class RecorderPort extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op RecorderPort[0..1] from(AbstractType[0..1] type);
+}
+    
+class VoiceMessageFeature {
+    attr long[0..1] serialVersionUID;
+    ref FeatureId[0..1] featureId;
+    ref VoiceMessage[0..1] voiceMessage;
+}
+    
+class InterestType extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op InterestType[0..1] from(AbstractType[0..1] type);
+}
+    
+class Interest {
+    attr long[0..1] serialVersionUID;
+    attr EString[0..1] label;
+    attr EBooleanObject[0..1] isDefault;
+    attr EIntegerObject[0..1] maxCalls;
+    ref InterestId[0..1] interestId;
+    ref InterestType[0..1] interestType;
+    ref CallStatus[0..1] callStatus;
+    ref PhoneNumber[0..1] number;
+    ref PhoneNumber[0..1] callForward;
+}
+    
+class KeyPageModule extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyPageModule[0..1] from(AbstractType[0..1] type);
+}
+    
+class KeyLabel extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyLabel[0..1] from(AbstractType[0..1] type);
+}
+    
+class CallFeatureBoolean extends CallFeature {
+    attr long[0..1] serialVersionUID;
+    attr EBooleanObject[0..1] enabled;
+}
+    
+class RecorderNumber extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op RecorderNumber[0..1] from(AbstractType[0..1] type);
+}
+    
+class KeyModifier extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyModifier[0..1] from(AbstractType[0..1] type);
+}
+    
+class KeyFunction extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op AbstractType[0..1] from(EString[0..1] type);
+}
+    
+class KeyId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyId[0..1] from(AbstractType[0..1] type);
+}
+    
+class FeatureId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op FeatureId[0..1] from(AbstractType[0..1] type);
+}
+    
+class PubSubNodeId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op PubSubNodeId[0..1] from(AbstractType[0..1] type);
+    op InterestId[0..1] toInterestId();
+}
+    
+class CallFeatureSpeakerChannel extends CallFeature {
+    attr long[0..1] serialVersionUID;
+    attr ELongObject[0..1] channel;
+    attr EBooleanObject[0..1] microphoneActive;
+    attr EBooleanObject[0..1] muteRequested;
+}
+    
+class ConferenceId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op ConferenceId[0..1] from(AbstractType[0..1] type);
+}
+    
+class KeyQualifier extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyQualifier[0..1] from(AbstractType[0..1] type);
+}
+    
+class KeyPageLabel extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyPageLabel[0..1] from(AbstractType[0..1] type);
+}
+    
+abstract class CallFeature extends Feature {
+    attr long[0..1] serialVersionUID;
+}
+    
+class KeyPageId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyPageId[0..1] from(AbstractType[0..1] type);
+}
+    
+class ItemId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op ItemId[0..1] random();
+    op ItemId[0..1] from(AbstractType[0..1] type);
+}
+    
+class Key {
+    attr long[0..1] serialVersionUID;
+    ref KeyId[0..1] ~id;
+    ref KeyLabel[0..1] label;
+    ref KeyFunction[0..1] function;
+    ref KeyModifier[0..1] modifier;
+    ref KeyQualifier[0..1] qualifier;
+    ref KeyColor[0..1] color;
+    ref KeyInterest[0..1] interest;
+}
+    
+class DeviceType extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op DeviceType[0..1] from(AbstractType[0..1] type);
+}
+    
+class KeyPage {
+    attr long[0..1] serialVersionUID;
+    ref KeyPageId[0..1] keyPageId;
+    ref KeyPageLabel[0..1] keyPageLabel;
+    ref KeyPageModule[0..1] keyPageModule;
+    ref KeyPageLocalKeyPage[0..1] localKeyPage;
+    ref Key[0..*] keys;
+}
+    
+class KeyPageLocalKeyPage extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyPageLocalKeyPage[0..1] from(AbstractType[0..1] type);
+}
+    
+class DeviceId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op DeviceId[0..1] from(AbstractType[0..1] type);
+}
+    
+class VoiceRecorderInfo {
+    attr long[0..1] serialVersionUID;
+    ref RecorderNumber[0..1] recorderNumber;
+    ref RecorderPort[0..1] recorderPort;
+    ref RecorderChannel[0..1] recorderChannel;
+    ref RecorderType[0..1] recorderType;
+}
+    
+class ProfileId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op ProfileId[0..1] from(AbstractType[0..1] type);
+}
+    
+class Participant {
+    attr long[0..1] serialVersionUID;
+    attr EString[0..1] jid;
+    attr ParticipantType[0..1] participantType;
+    attr ParticipantCategory[0..1] participantCategory;
+    attr CallDirection[0..1] direction;
+    ref PhoneNumber[0..1] number;
+    ref PhoneNumber[0..*] e164Numbers;
+    ref PhoneNumber[0..1] destinationNumber;
+    ref Instant[0..1] startTime;
+    ref Duration[0..1] duration;
+}
+    
+class CallId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op CallId[0..1] from(AbstractType[0..1] type);
+}
+    
+class RecorderChannel extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op RecorderChannel[0..1] from(AbstractType[0..1] type);
+}
+    
+class InterestId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op InterestId[0..1] from(AbstractType[0..1] type);
+    op PubSubNodeId[0..1] toPubSubNodeId();
+}
+    
+class UserId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op UserId[0..1] from(AbstractType[0..1] type);
+}
+    
+class MakeCallFeature {
+    attr EString[0..1] value1;
+    attr EString[0..1] value2;
+    ref FeatureId[0..1] featureId;
+    op Optional[0..1] stringToOptionalBoolean(EString[0..1] val1);
+}
+    
+class TelephonyCallId extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op TelephonyCallId[0..1] from(AbstractType[0..1] type);
+}
+    
+class KeyInterest extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op KeyInterest[0..1] from(AbstractType[0..1] type);
+}
+    
+class Call {
+    attr long[0..1] serialVersionUID;
+    attr Changed[0..1] changed;
+    attr CallState[0..1] state;
+    attr CallDirection[0..1] direction;
+    attr EString[0..1] callerName;
+    attr EString[0..1] calledName;
+    attr RequestAction[0..*] actions;
+    ref CallId[0..1] callId;
+    ref TelephonyCallId[0..1] telephonyCallId;
+    ref ConferenceId[0..1] conferenceId;
+    ref Site[0..1] site;
+    ref ProfileId[0..1] profileId;
+    ref DeviceId[0..1] deviceId;
+    ref UserId[0..1] userId;
+    ref InterestId[0..1] interestId;
+    ref PhoneNumber[0..1] callerNumber;
+    ref PhoneNumber[0..*] callerE164Numbers;
+    ref PhoneNumber[0..1] calledNumber;
+    ref PhoneNumber[0..1] calledDestination;
+    ref PhoneNumber[0..*] calledE164Numbers;
+    ref OriginatorReference[0..*] originatorReferences;
+    ref Instant[0..1] startTime;
+    ref Duration[0..1] duration;
+    ref CallFeature[0..*] features;
+    ref Participant[0..*] participants;
+    op CallStatus[0..1] toCallStatus(boolean[0..1] callStatusBusy);
+}
+    
+class RecorderType extends AbstractType {
+    attr long[0..1] serialVersionUID;
+    op RecorderType[0..1] from(AbstractType[0..1] type);
+}
+    
+abstract class AbstractType extends Serializable, Comparable_AbstractType_T__ {
+    attr long[0..1] serialVersionUID;
+    ref T[1..1] value;
+    op boolean[0..1] equals(EJavaObject[0..1] o);
+    op int[0..1] hashCode();
+    op int[0..1] compareTo(AbstractType[0..1] that);
+}
+    
+class Feature {
+    attr long[0..1] serialVersionUID;
+    attr FeatureType[0..1] featureType;
+    attr EString[0..1] label;
+    ref FeatureId[0..1] featureId;
+}
+    
+class CallFeatureVoiceRecorder extends CallFeature {
+    attr long[0..1] serialVersionUID;
+    ref VoiceRecorderInfo[0..1] voiceRecorderInfo;
+}
+    
+class CallStatus {
+    attr long[0..1] serialVersionUID;
+    attr EBooleanObject[0..1] callStatusBusy;
+    ref PhoneNumber[0..1] callForward;
+    ref Call[0..*] calls;
+}
+    
+class Profile extends Serializable {
+    attr long[0..1] serialVersionUID;
+    attr EBooleanObject[0..1] isDefault;
+    attr EString[0..1] label;
+    attr EBooleanObject[0..1] online;
+    ref ProfileId[0..1] profileId;
+    ref DeviceType[0..1] deviceType;
+    ref DeviceId[0..1] deviceId;
+    ref Site[0..1] site;
+    ref KeyPage[0..*] keyPages;
+    ref List[0..*] actions;
+}
+    
+abstract class PubSubMessageBuilder extends StanzaBuilder {
+    ref Instant[0..1] delay;
+    ref PubSubNodeId[0..1] pubSubNodeId;
+    ref ItemId[0..1] itemId;
+    op void validate(List[0..*] errors);
+}
+    
+abstract class DeviceStatusMessageBuilder extends PubSubMessageBuilder {
+    ref DeviceStatus[0..1] deviceStatus;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class CallStatusMessageBuilder extends PubSubMessageBuilder {
+    ref CallStatus[0..1] callStatus;
+    op void validate(List[0..*] errors);
+    op void validateCallsAreOnTheCorrectInterest(CallStatus[0..1] callStatus, Consumer[0..1] errorConsumer);
+}
+    
+abstract class GetProfileRequestBuilder extends IQBuilder {
+    ref ProfileId[0..1] profileId;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class PubSubPublishRequestBuilder extends IQBuilder {
+    ref PubSubNodeId[0..1] pubSubNodeId;
+    ref CallStatus[0..1] callStatus;
+    ref DeviceStatus[0..1] deviceStatus;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+    op void validateCallsAreOnTheCorrectInterest(CallStatus[0..1] callStatus, Consumer[0..1] errorConsumer);
+}
+    
+abstract class GetInterestsRequestBuilder extends IQBuilder {
+    ref ProfileId[0..1] profileId;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class GetFeaturesResultBuilder extends IQBuilder {
+    ref ProfileId[0..1] profileId;
+    ref Feature[0..*] features;
+    op B[0..1] addFeature(Feature[0..1] feature);
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+    op void validateUniqueness(Consumer[0..1] errorConsumer);
+}
+    
+abstract class GetCallHistoryRequestBuilder extends IQBuilder {
+    attr EString[0..1] caller;
+    attr EString[0..1] called;
+    attr CallType[0..1] callType;
+    attr ELongObject[0..1] start;
+    attr ELongObject[0..1] count;
+    ref J[0..1] jid;
+    ref LocalDate[0..1] fromDate;
+    ref LocalDate[0..1] upToDate;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class ManageVoiceMessageRequestBuilder extends IQBuilder {
+    attr ManageVoiceMessageAction[0..1] action;
+    attr EString[0..1] label;
+    ref ProfileId[0..1] profileId;
+    ref FeatureId[0..*] features;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+    op B[0..1] addFeature(FeatureId[0..1] feature);
+}
+    
+abstract class RequestActionRequestBuilder extends IQBuilder {
+    attr RequestAction[0..1] requestAction;
+    ref InterestId[0..1] interestId;
+    ref CallId[0..1] callId;
+    ref RequestActionValue[0..1] value2;
+    ref RequestActionValue[0..1] value1;
+    ref MakeCallFeature[0..*] features;
+    op B[0..1] addFeatures(List[0..*] features);
+    op B[0..1] addFeature(MakeCallFeature[0..1] feature);
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+    op void checkValuesArePResent(RequestAction[0..1] requestActionToCheck, List[0..*] errors);
+}
+    
+abstract class GetProfileResultBuilder extends IQBuilder {
+    ref Profile[0..1] profile;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class PubSubSubscriptionRequestResultBuilder extends IQBuilder {
+    attr SubscriptionState[0..1] subscriptionState;
+    ref PubSubNodeId[0..1] pubSubNodeId;
+    ref J[0..1] jid;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class IQBuilder extends StanzaBuilder {
+    ref T[0..1] iqType;
+    op void validate(List[0..*] errors);
+}
+    
+abstract class GetInterestResultBuilder extends IQBuilder {
+    ref Interest[0..1] interest;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class QueryFeaturesResultBuilder extends IQBuilder {
+    ref ActiveFeature[0..*] features;
+    op B[0..1] addFeature(ActiveFeature[0..1] feature);
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class GetCallHistoryResultBuilder extends IQBuilder {
+    attr ELongObject[0..1] totalRecordCount;
+    attr ELongObject[0..1] firstRecordNumber;
+    attr ELongObject[0..1] recordCountInBatch;
+    ref HistoricalCall[0..*] calls;
+    op B[0..1] addCall(HistoricalCall[0..1] call);
+    op B[0..1] addCalls(List[0..*] calls);
+    op void validate(List[0..1] errors, boolean[0..1] checkIQFields);
+}
+    
+class ManageVoiceMessageResultBuilder extends IQBuilder {
+    ref DeviceStatus[0..1] deviceStatus;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+class SetFeaturesRequestBuilder extends IQBuilder {
+    attr EString[0..1] value1;
+    attr EString[0..1] value2;
+    attr EString[0..1] value3;
+    ref ProfileId[0..1] profileId;
+    ref FeatureId[0..1] featureId;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class GetInterestRequestBuilder extends IQBuilder {
+    ref InterestId[0..1] interestId;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class GetProfilesRequestBuilder extends IQBuilder {
+    ref J[0..1] jid;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class GetFeaturesRequestBuilder extends IQBuilder {
+    ref ProfileId[0..1] profileId;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+class QueryFeaturesRequestBuilder extends IQBuilder {
+    ref ProfileId[0..1] profileId;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class RequestActionResultBuilder extends IQBuilder, B, J, T {
+    ref CallStatus[0..1] callStatus;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class GetInterestsResultBuilder extends IQBuilder {
+    ref Interest[0..*] interests;
+    op B[0..1] addInterest(Interest[0..1] interest);
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+    op void validateUniqueness(Consumer[0..1] errorConsumer);
+}
+    
+abstract class MakeCallRequestBuilder extends IQBuilder {
+    ref J[0..1] jid;
+    ref ProfileId[0..1] profileId;
+    ref InterestId[0..1] interestId;
+    ref PhoneNumber[0..1] destination;
+    ref MakeCallFeature[0..*] features;
+    ref OriginatorReference[0..*] originatorReferences;
+    op B[0..1] addFeature(MakeCallFeature[0..1] feature);
+    op B[0..1] addOriginatorReference(OriginatorReference[0..1] originatorReference);
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+abstract class GetProfilesResultBuilder extends IQBuilder {
+    ref Profile[0..*] profiles;
+    op B[0..1] addProfile(Profile[0..1] profile);
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+    op void validateUniqueness(Consumer[0..1] errorConsumer);
+}
+    
+abstract class MakeCallResultBuilder extends IQBuilder {
+    ref CallStatus[0..1] callStatus;
+    op void validate(List[0..*] errors, boolean[0..1] checkIQFields);
+}
+    
+@dependency
+abstract class J {
+}
+    
+@dependency
+abstract class Instant {
+}
+    
+@dependency
+abstract class Duration {
+}
+    
+@dependency
+abstract class Object {
+}
+    
+@dependency
+abstract interface Serializable {
+}
+    
+@dependency
+abstract class Optional {
+}
+    
+@dependency
+abstract interface Comparable_AbstractType_T__ {
+}
+    
+@dependency
+abstract interface T {
+}
+    
+@dependency
+abstract class List {
+}
+    
+@dependency
+abstract class Consumer {
+}
+    
+@dependency
+abstract class B {
+}
+    
+@dependency
+abstract class LocalDate {
+}
+    
+enum OpenlinkXmppNamespace {
+	XMPP_PUBSUB;
+	XMPP_PUBSUB_EVENT;
+	XMPP_DISCO_INFO;
+	XMPP_DISCO_ITEMS;
+	XMPP_COMMANDS;
+	XMPP_IO_DATA;
+	OPENLINK_GET_PROFILES;
+	OPENLINK_GET_PROFILE;
+	OPENLINK_PROFILES;
+	OPENLINK_PROFILE;
+	OPENLINK_GET_INTERESTS;
+	OPENLINK_GET_INTEREST;
+	OPENLINK_INTERESTS;
+	OPENLINK_GET_FEATURES;
+	OPENLINK_FEATURES;
+	OPENLINK_MAKE_CALL;
+	OPENLINK_REQUEST_ACTION;
+	OPENLINK_MAKE_INTERCOM_CALL;
+	OPENLINK_MANAGE_VOICE_MESSAGE;
+	OPENLINK_VOICE_MESSAGE;
+	OPENLINK_MANAGE_VOICE_BLAST;
+	OPENLINK_MANAGE_VOICE_BRIDGE;
+	OPENLINK_MANAGE_INTERESTS;
+	OPENLINK_SET_FEATURES;
+	OPENLINK_QUERY_FEATURES;
+	OPENLINK_GET_CALL_HISTORY;
+	OPENLINK_CALL_STATUS;
+	OPENLINK_DEVICE_STATUS;
+	OPENLINK_DEVICE_KEY;
+	OPENLINK_SPEAKER_CHANNEL;
+	OPENLINK_VOICE_RECORDER;
+	OPENLINK_CALL_HISTORY;
+
+}
+enum ParticipantType {
+	Active;
+	Alerting;
+	Inactive;
+
+}
+enum VoiceMessageStatus {
+	OK;
+	ERROR;
+	WARN;
+	UNKNOWN;
+
+}
+enum ManageVoiceMessageAction {
+	CREATE;
+	RECORD;
+	EDIT;
+	PLAYBACK;
+	SAVE;
+	ARCHIVE;
+	DELETE;
+	QUERY;
+	SEARCH;
+
+}
+enum FeatureType {
+	MESSAGE_WAITING;
+	MICROPHONE_GAIN;
+	MICROPHONE_MUTE;
+	RINGER_STATUS;
+	SPEAKER_MUTE;
+	SPEED_DIAL;
+	GROUP_INTERCOM;
+	SPEAKER_CHANNEL;
+	VOICE_MESSAGE;
+	VOICE_MESSAGE_PLAYLIST;
+	VOICE_RECORDER;
+	VOICE_BRIDGE;
+	PRIVACY;
+	HANDSET;
+	HEADSET;
+	DO_NOT_DISTURN;
+	CALL_FORWARD;
+	CALL_BACK;
+	CONFERENCE;
+	MEDIA_STREAM;
+	DEVICE_KEYS;
+
+}
+enum CallType {
+	INBOUND;
+	OUTBOUND;
+	MISSED;
+
+}
+enum SubscriptionState {
+	NONE;
+	PENDING;
+	UNCONFIGURED;
+	SUBSCRIBED;
+
+}
+enum RequestAction {
+	ANSWER_CALL;
+	HOLD_CALL;
+	INTERCOM_TRANSFER;
+	JOIN_CALL;
+	RETRIEVE_CALL;
+	CONSULTATION_CALL;
+	TRANSFER_CALL;
+	CONFERENCE_CALL;
+	SINGLE_STEP_TRANSFER;
+	SEND_DIGIT;
+	SEND_DIGITS;
+	CLEAR_CONFERENCE;
+	CLEAR_CONNECTION;
+	CLEAR_CALL;
+	START_VOICE_DROP;
+	STOP_VOICE_DROP;
+	PRIVATE_CALL;
+	PUBLIC_CALL;
+	ADD_THIRD_PARTY;
+	REMOVE_THIRD_PARTY;
+	CONNECT_SPEAKER;
+	DISCONNECT_SPEAKER;
+
+}
+enum Changed {
+	STATE;
+	ACTIONS;
+	PARTICIPANT;
+	CALLER;
+	CALLED;
+	PRIVACY;
+	VOICE_MESSAGE;
+	MICROPHONE;
+	HANDSET;
+
+}
+enum CallState {
+	CALL_ORIGINATED;
+	CALL_DELIVERED;
+	CALL_ESTABLISHED;
+	CALL_FAILED;
+	CALL_CONFERENCED;
+	CALL_BUSY;
+	CALL_HELD;
+	CALL_HELD_ELSEWHERE;
+	CALL_TRANSFERRING;
+	CALL_TRANSFERRED;
+	TRANSFER_COMPLETED;
+	CONNECTION_BUSY;
+	CONNECTION_CLEARED;
+	CALL_MISSED;
+
+}
+enum ParticipantCategory {
+	CONF;
+	ADD3P;
+	BARGE;
+	VOICE_DROP;
+
+}
+enum CallDirection {
+	Outgoing;
+	Incoming;
+
+}
+enum Type {
+	Avaya;
+	BTSM;
+	Cisco;
+	IPT;
+	ITS;
+
+}
