@@ -43,14 +43,21 @@ def post_endpoint():
 		
 		
         
-        nlp_compare_result = Adapter.get_emfatic_comparison(groundTruthModelEmfatic, predictedModelEmfatic)
-        nlp_compare_result = json.loads(nlp_compare_result)
-        modelName = list(result["modelLevelJson"].keys())[0]
-        result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] = nlp_compare_result['cosine_similarity_tfidf']
-        result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] = nlp_compare_result['cosine_similarity_word2vec']
-        result["modelLevelJson"][modelName]["ragas_faithfulness"] = nlp_compare_result['ragas_similarity']['faithfulness'] if nlp_compare_result['ragas_similarity'] else -1
-        result["modelLevelJson"][modelName]["ragas_answer_similarity"] = nlp_compare_result['ragas_similarity']['answer_similarity'] if nlp_compare_result['ragas_similarity'] else -1
-        result["modelLevelJson"][modelName]["semantic_similarity_average"] = (result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] + result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] + result["modelLevelJson"][modelName]["ragas_faithfulness"] + result["modelLevelJson"][modelName]["ragas_answer_similarity"])/4
+        try:
+            nlp_compare_result = Adapter.get_emfatic_comparison(groundTruthModelEmfatic, predictedModelEmfatic)
+            nlp_compare_result = json.loads(nlp_compare_result)
+            modelName = list(result["modelLevelJson"].keys())[0]
+            result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] = nlp_compare_result['cosine_similarity_tfidf']
+            result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] = nlp_compare_result['cosine_similarity_word2vec']
+            result["modelLevelJson"][modelName]["ragas_faithfulness"] = nlp_compare_result['ragas_similarity']['faithfulness'] if nlp_compare_result['ragas_similarity'] else -1
+            result["modelLevelJson"][modelName]["ragas_answer_similarity"] = nlp_compare_result['ragas_similarity']['answer_similarity'] if nlp_compare_result['ragas_similarity'] else -1
+            result["modelLevelJson"][modelName]["semantic_similarity_average"] = (result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] + result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] + result["modelLevelJson"][modelName]["ragas_faithfulness"] + result["modelLevelJson"][modelName]["ragas_answer_similarity"])/4
+        except Exception as e:
+            result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] = None
+            result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] = None
+            result["modelLevelJson"][modelName]["ragas_faithfulness"] = None 
+            result["modelLevelJson"][modelName]["ragas_answer_similarity"] = None
+            result["modelLevelJson"][modelName]["semantic_similarity_average"] = None 
 
         return jsonify({
             'message': 'success', 
