@@ -18,9 +18,9 @@ class Adapter:
 		return response.text
 
 	def get_emfatic_comparison(groundTruthModelEmfatic, predictedModelEmfatic):
-		yamtl_comparator_url = "http://localhost:4040/nlp-compare"
+		nlp_comparator_url = "http://localhost:4040/nlp-compare"
 		response = requests.post(
-			yamtl_comparator_url,
+			nlp_comparator_url,
 			headers={'Content-Type': 'application/json'},
 			json={"groundTruthModelEmfatic": groundTruthModelEmfatic, "predictedModelEmfatic": predictedModelEmfatic}
 		)

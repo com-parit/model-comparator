@@ -1,9 +1,8 @@
 import json
 import pandas as pd
 import os
-import config as CONFIG
 from visualizations import Visualizations as visualizations
-from semantic_similarity import SemanticSimilarity
+import requests
 
 class Main:
     def reorder_model_level_df(self, model_level_df):
@@ -280,7 +279,7 @@ class Main:
             df = self.reorder_class_level_df(df)
             df = self.rename_class_level_columns(df)
             class_csv_path = f'{root_path_for_csv}/class-analysis.csv'
-            df.to_csv(class_csv_path)
+            # df.to_csv(class_csv_path)
             list_of_class_level_csv_paths.append(class_csv_path)
 
             model_level_json[project]["model2_identifier"] = model_level_json[project]["model2_identifier"][model_level_json[project]["model2_identifier"].rfind("/") + 1: len(model_level_json[project]["model2_identifier"])]
@@ -289,7 +288,7 @@ class Main:
             df_model = self.reorder_model_level_df(df_model)
             df_model = self.rename_model_level_columns(df_model)
             model_csv_path = f'{root_path_for_csv}/model-analysis.csv'
-            df_model.to_csv(model_csv_path)
+            # df_model.to_csv(model_csv_path)
             list_of_model_level_csv_paths.append(model_csv_path)
         paths_to_csvs = {
             "model": list_of_model_level_csv_paths,
@@ -300,38 +299,31 @@ class Main:
         df_model = pd.DataFrame.from_dict(model_level_json, orient='index')
         df_model = self.reorder_model_level_df(df_model)
         df_model = self.rename_model_level_columns(df_model)
-        model_csv_path = f'{CONFIG.EVALUATION_OUTPUT_PATH}/model-analysis-consolidated.csv' if CONFIG.EVALUATION_OUTPUT_PATH else f'{root_path_for_csv[0: root_path_for_csv.rfind("/")]}/model-analysis-consolidated.csv'
+        model_csv_path = 'model-analysis-consolidated.csv'
         df_model.to_csv(model_csv_path)        
         consolidated_csv_paths.append(model_csv_path)
         return consolidated_csv_paths      
             
+    def run(self, ):
+        model_level_json = {}
+        class_level_json = {}
 
-    def replace_extension(self, input_string, new_extension):
-        last_index = input_string.rfind(".ecore")
-        if last_index != -1:
-            return input_string[:last_index] + new_extension
-        else:
-            return input_string
+        comparator_url = "http://localhost:5050/compare"
+        with open("modelsToCompare/ecommerce.ecore") as groundTruthModel, open("modelsToCompare/ecommerce.ecore") as predictedModel:
+            response = requests.post(
+                comparator_url,
+                files={"groundTruthModel": groundTruthModel, "predictedModel": predictedModel}
+            )
+            model_level_json = response.json()['result']["modelLevelJson"]
+            class_level_json = response.json()['result']["classLevelJson"]
 
-    def run(self, model_level_json, class_level_json, ground_truth_model_emfatic, predicted_model_emfatic):
-        for model in list(model_level_json.keys()):
-            semanticSimilarity = SemanticSimilarity()
-            result_object = semanticSimilarity.compare_emfatic_files(ground_truth_model_emfatic, predicted_model_emfatic)
+
             
-            model_level_json[model]["cosine_similarity_tfidf"] = result_object['cosine_similarity_tfidf']
-            model_level_json[model]["cosine_similarity_word2vec"] = result_object['cosine_similarity_word2vec']
-            model_level_json[model]["ragas_faithfulness"] = result_object['ragas_similarity']['faithfulness'] if result_object['ragas_similarity'] else -1
-            model_level_json[model]["ragas_answer_similarity"] = result_object['ragas_similarity']['answer_similarity'] if result_object['ragas_similarity'] else -1
-            model_level_json[model]["semantic_similarity_average"] = (model_level_json[model]["cosine_similarity_tfidf"] + model_level_json[model]["cosine_similarity_word2vec"] + model_level_json[model]["ragas_faithfulness"] + model_level_json[model]["ragas_answer_similarity"])/4
         consolidated_csv_paths = self.create_csv(model_level_json, class_level_json)
         
-        if CONFIG.GENERATE_VISUALIZATIONS:
-            for consolidated_csv in consolidated_csv_paths:
-                print(consolidated_csv[0:consolidated_csv.rindex("/")])
-                if CONFIG.EVALUATION_OUTPUT_PATH:
-                    visualizations.box_and_whisker_for_model_level_metrics_from_consolidated(consolidated_csv, CONFIG.EVALUATION_OUTPUT_PATH)
-                    visualizations.box_and_whisker_for_model_level_counts_from_consolidated(consolidated_csv, CONFIG.EVALUATION_OUTPUT_PATH)                
-                else:
-                    visualizations.box_and_whisker_for_model_level_metrics_from_consolidated(consolidated_csv, consolidated_csv[0:consolidated_csv.rindex("/")])
-                    visualizations.box_and_whisker_for_model_level_counts_from_consolidated(consolidated_csv, consolidated_csv[0:consolidated_csv.rindex("/")])                
-                                        
+        for consolidated_csv in consolidated_csv_paths:
+            visualizations.box_and_whisker_for_model_level_metrics_from_consolidated(consolidated_csv, "viz_output")
+            visualizations.box_and_whisker_for_model_level_counts_from_consolidated(consolidated_csv, "viz_output")                
+
+if __name__ == '__main__':
+    Main().run()

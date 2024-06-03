@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 # Apply the default theme
-import config as CONFIG
 import json
 from matplotlib.backends.backend_pdf import PdfPages
 import os
