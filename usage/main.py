@@ -3,7 +3,7 @@ import pandas as pd
 import os
 from visualizations import Visualizations as visualizations
 import requests
-
+from adapter import Adapter
 class Main:
     def reorder_model_level_df(self, model_level_df):
         desired_order_model_level = [
@@ -305,35 +305,18 @@ class Main:
         consolidated_csv_paths.append(model_csv_path)
         return consolidated_csv_paths      
     
-    def get_ecore_model_from_emfatic(emfaticFilePath):
-        comparator_url = "http://localhost:8080/emfatic2ecore"
-        with open(emfaticFilePath) as emfaticModel:
-            ecoreFromEmfaticResponse = requests.post(
-                comparator_url,
-                files={"emfaticModel":emfaticModel}
-            )
-        with open(emfaticFilePath.replace(".emf", ".ecore"), "w") as file:
-            file.write(ecoreFromEmfaticResponse.text)        
-
     def run(self, ):
         model_level_json = {}
         class_level_json = {}
 
-        comparator_url = "http://localhost:5050/compare"
-        with open("btopenlinkjavacoremodel.ecore") as groundTruthModel, open("bt_openlink.ecore") as predictedModel:
-            response = requests.post(
-                comparator_url,
-                files={"groundTruthModel": groundTruthModel, "predictedModel": predictedModel},
-                data={
-                    "projectName": "ecommerce"
-                }
-            )
-            model_level_json = response.json()['result']["modelLevelJson"]
-            class_level_json = response.json()['result']["classLevelJson"]
-            print(model_level_json)
+        groundTruthModel = "btopenlinkjavacoremodel.ecore"
+        predictedModel = "bt_openlink.ecore"
+        projectName = "bt"
+        response = Adapter.compare_ecore_models(groundTruthModel, predictedModel, projectName)
+        model_level_json = response['result']["modelLevelJson"]
+        class_level_json = response['result']["classLevelJson"]
+        print(model_level_json)
 
-
-            
         consolidated_csv_paths = self.create_csv(model_level_json, class_level_json)
         
         for consolidated_csv in consolidated_csv_paths:
