@@ -10,6 +10,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+@app.route('/heartbeat', methods=["GET"])
+def heartbeat():
+    return "blop"
+
 @app.route('/compare', methods=['POST'])
 def post_endpoint():
     if 'groundTruthModel' not in request.files:
@@ -53,6 +57,7 @@ def post_endpoint():
             result["modelLevelJson"][modelName]["ragas_answer_similarity"] = nlp_compare_result['ragas_similarity']['answer_similarity'] if nlp_compare_result['ragas_similarity'] else -1
             result["modelLevelJson"][modelName]["semantic_similarity_average"] = (result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] + result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] + result["modelLevelJson"][modelName]["ragas_faithfulness"] + result["modelLevelJson"][modelName]["ragas_answer_similarity"])/4
         except Exception as e:
+            modelName = list(result["modelLevelJson"].keys())[0]
             result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] = None
             result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] = None
             result["modelLevelJson"][modelName]["ragas_faithfulness"] = None 

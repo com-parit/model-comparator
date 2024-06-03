@@ -274,20 +274,19 @@ class Main:
         list_of_model_level_csv_paths = []
         consolidated_csv_paths = []
         for project in sorted(list(class_level_json.keys())):
-            root_path_for_csv = model_level_json[project]["model2_identifier"][0:model_level_json[project]["model2_identifier"].rfind("/")]
             df = pd.DataFrame.from_dict(class_level_json[project], orient='index')
             df = self.reorder_class_level_df(df)
             df = self.rename_class_level_columns(df)
-            class_csv_path = f'{root_path_for_csv}/class-analysis.csv'
+            class_csv_path = f'class-analysis.csv'
             # df.to_csv(class_csv_path)
             list_of_class_level_csv_paths.append(class_csv_path)
 
             model_level_json[project]["model2_identifier"] = model_level_json[project]["model2_identifier"][model_level_json[project]["model2_identifier"].rfind("/") + 1: len(model_level_json[project]["model2_identifier"])]
-            model_level_json[project]["model1_identifier"] = f'../model/{model_level_json[project]["model1_identifier"][model_level_json[project]["model1_identifier"].rfind("/") + 1: len(model_level_json[project]["model1_identifier"])]}'
+            model_level_json[project]["model1_identifier"] = f'{model_level_json[project]["model1_identifier"][model_level_json[project]["model1_identifier"].rfind("/") + 1: len(model_level_json[project]["model1_identifier"])]}'
             df_model = pd.DataFrame.from_dict({"values":model_level_json[project]}, orient='index')
             df_model = self.reorder_model_level_df(df_model)
             df_model = self.rename_model_level_columns(df_model)
-            model_csv_path = f'{root_path_for_csv}/model-analysis.csv'
+            model_csv_path = f'model-analysis.csv'
             # df_model.to_csv(model_csv_path)
             list_of_model_level_csv_paths.append(model_csv_path)
         paths_to_csvs = {
@@ -311,7 +310,7 @@ class Main:
         class_level_json = {}
 
         comparator_url = "http://localhost:5050/compare"
-        with open("modelsToCompare/btopenlinkjavacoremodel.ecore") as groundTruthModel, open("modelsToCompare/mediapipe.ecore") as predictedModel:
+        with open("ecommerce.ecore") as groundTruthModel, open("ecommerce_gpt_coarse.ecore") as predictedModel:
             response = requests.post(
                 comparator_url,
                 files={"groundTruthModel": groundTruthModel, "predictedModel": predictedModel}
@@ -324,8 +323,8 @@ class Main:
         consolidated_csv_paths = self.create_csv(model_level_json, class_level_json)
         
         for consolidated_csv in consolidated_csv_paths:
-            visualizations.box_and_whisker_for_model_level_metrics_from_consolidated(consolidated_csv, "viz_output")
-            visualizations.box_and_whisker_for_model_level_counts_from_consolidated(consolidated_csv, "viz_output")                
+            visualizations.box_and_whisker_for_model_level_metrics_from_consolidated(consolidated_csv)
+            visualizations.box_and_whisker_for_model_level_counts_from_consolidated(consolidated_csv)                
 
 if __name__ == '__main__':
     Main().run()

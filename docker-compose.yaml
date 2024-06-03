@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  yamtl-comparator:
+    build:
+      context: ./yamtl-comparator
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - /tmp
+
+  driver:
+    build:
+      context: ./driver
+      dockerfile: Dockerfile
+    ports:
+      - "5050:5050"
+    environment:
+      - nlp_comparator_url=http://nlp-evaluator:4040
+      - yamtl_comparator_url=http://yamtl-comparator:8080
+
+  nlp-evaluator:
+    build:
+      context: ./nlp-evaluator
+      dockerfile: Dockerfile
+    ports:
+      - "4040:4040"
