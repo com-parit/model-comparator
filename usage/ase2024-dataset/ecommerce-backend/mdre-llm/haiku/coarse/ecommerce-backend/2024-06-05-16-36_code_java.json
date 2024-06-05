@@ -1,0 +1,454 @@
+[
+    {
+        "topLevelClasses": [
+            {
+                "name": "EcommerceApplication",
+                "classHeader": "\n\n\n\n@SpringBootApplication public class EcommerceApplication",
+                "modifiers": [],
+                "parent": "",
+                "fields": {},
+                "fieldTypes": {},
+                "methods": {
+                    "main": {
+                        "name": "main",
+                        "signature": "void main(String[] args) ;"
+                    }
+                },
+                "innerClasses": {},
+                "constructors": []
+            }
+        ],
+        "importDeclarations": [
+            "import org.springframework.boot.SpringApplication;",
+            "import org.springframework.boot.autoconfigure.SpringBootApplication;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "OrderRepository",
+                "classHeader": "\n\n\npublic interface OrderRepository extends extends",
+                "modifiers": [],
+                "parent": "",
+                "fields": {},
+                "fieldTypes": {},
+                "methods": {},
+                "innerClasses": {},
+                "constructors": []
+            }
+        ],
+        "importDeclarations": [
+            "import com.metsoft.ecommerce.model.Order;",
+            "import org.springframework.data.jpa.repository.JpaRepository;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.repository;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "Category",
+                "classHeader": "\n\n\n@Data @Entity @Table(name=\"categories\") @AllArgsConstructor @NoArgsConstructor public class Category",
+                "modifiers": [],
+                "parent": "",
+                "fields": {
+                    "id": {
+                        "name": "id",
+                        "declaration": "\n@Id @GeneratedValue(strategy=GenerationType.IDENTITY) @Column(name=\"id\") private int id;"
+                    },
+                    "categoryName": {
+                        "name": "categoryName",
+                        "declaration": "\n@Column(name=\"category_name\") private String categoryName;"
+                    },
+                    "products": {
+                        "name": "products",
+                        "declaration": "\n@OneToMany(mappedBy=\"category\",cascade=CascadeType.ALL,orphanRemoval=true) @JsonIgnore private Set<Product> products;"
+                    }
+                },
+                "fieldTypes": {
+                    "id": "int",
+                    "categoryName": "String",
+                    "products": "Set<Product>"
+                },
+                "methods": {},
+                "innerClasses": {},
+                "constructors": []
+            }
+        ],
+        "importDeclarations": [
+            "import com.fasterxml.jackson.annotation.JsonIgnore;",
+            "import lombok.AllArgsConstructor;",
+            "import lombok.Data;",
+            "import lombok.NoArgsConstructor;",
+            "import javax.persistence.*;",
+            "import java.util.Set;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.model;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "Order",
+                "classHeader": "\n\n\n\n\n@Data @Entity @AllArgsConstructor @NoArgsConstructor @Table(name=\"orders\") public class Order",
+                "modifiers": [],
+                "parent": "",
+                "fields": {
+                    "id": {
+                        "name": "id",
+                        "declaration": "\n@Id @GeneratedValue(strategy=GenerationType.IDENTITY) @Column(name=\"id\") private int id;"
+                    },
+                    "creationDate": {
+                        "name": "creationDate",
+                        "declaration": "\n@Column(name=\"creation_date\") private Date creationDate;"
+                    },
+                    "status": {
+                        "name": "status",
+                        "declaration": "\n@Column(name=\"status\") @Enumerated(EnumType.STRING) private OrderStatus status;"
+                    },
+                    "products": {
+                        "name": "products",
+                        "declaration": "\n@ManyToMany() @JoinTable(name=\"order_items\",joinColumns=@JoinColumn(name=\"orderItem_id\"),inverseJoinColumns=@JoinColumn(name=\"product_id\")) private List<Product> products;"
+                    },
+                    "productQuantities": {
+                        "name": "productQuantities",
+                        "declaration": "\n@ElementCollection @CollectionTable(name=\"order_product_quantities\",joinColumns=@JoinColumn(name=\"order_id\")) @MapKeyJoinColumn(name=\"product_id\") @Column(name=\"quantity\") private java.util.Map<Product, Integer> productQuantities = new HashMap<>();"
+                    }
+                },
+                "fieldTypes": {
+                    "id": "int",
+                    "creationDate": "Date",
+                    "status": "OrderStatus",
+                    "products": "List<Product>",
+                    "productQuantities": "java.util.Map<Product,Integer>"
+                },
+                "methods": {
+                    "setCreationDate": {
+                        "name": "setCreationDate",
+                        "signature": "void setCreationDate(Date date) ;"
+                    }
+                },
+                "innerClasses": {},
+                "constructors": []
+            }
+        ],
+        "importDeclarations": [
+            "import lombok.AllArgsConstructor;",
+            "import lombok.Data;",
+            "import lombok.NoArgsConstructor;",
+            "import javax.persistence.*;",
+            "import java.util.Date;",
+            "import java.util.List;",
+            "import java.util.HashMap;",
+            "import java.util.Map;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.model;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "ProductRepository",
+                "classHeader": "\n\n\npublic interface ProductRepository extends extends",
+                "modifiers": [],
+                "parent": "",
+                "fields": {},
+                "fieldTypes": {},
+                "methods": {},
+                "innerClasses": {},
+                "constructors": []
+            }
+        ],
+        "importDeclarations": [
+            "import com.metsoft.ecommerce.model.Product;",
+            "import org.springframework.data.jpa.repository.JpaRepository;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.repository;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "CategoryRepository",
+                "classHeader": "\n\n\npublic interface CategoryRepository extends extends",
+                "modifiers": [],
+                "parent": "",
+                "fields": {},
+                "fieldTypes": {},
+                "methods": {},
+                "innerClasses": {},
+                "constructors": []
+            }
+        ],
+        "importDeclarations": [
+            "import com.metsoft.ecommerce.model.Category;",
+            "import org.springframework.data.jpa.repository.JpaRepository;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.repository;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "Product",
+                "classHeader": "\n\n\n@Data @Entity @AllArgsConstructor @NoArgsConstructor @Table(name=\"products\") public class Product",
+                "modifiers": [],
+                "parent": "",
+                "fields": {
+                    "id": {
+                        "name": "id",
+                        "declaration": "\n@Id @GeneratedValue(strategy=GenerationType.IDENTITY) @Column(name=\"id\") private int id;"
+                    },
+                    "productName": {
+                        "name": "productName",
+                        "declaration": "\n@Column(name=\"product_name\") private String productName;"
+                    },
+                    "description": {
+                        "name": "description",
+                        "declaration": "\n@Column(name=\"description\") private String description;"
+                    },
+                    "price": {
+                        "name": "price",
+                        "declaration": "\n@Column(name=\"price\") private double price;"
+                    },
+                    "createDate": {
+                        "name": "createDate",
+                        "declaration": "\n@Column(name=\"createDate\") private Date createDate;"
+                    },
+                    "category": {
+                        "name": "category",
+                        "declaration": "\n@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name=\"category_id\") private Category category;"
+                    },
+                    "orderItems": {
+                        "name": "orderItems",
+                        "declaration": "\n@ManyToMany() @JsonIgnore private List<Order> orderItems;"
+                    }
+                },
+                "fieldTypes": {
+                    "id": "int",
+                    "productName": "String",
+                    "description": "String",
+                    "price": "double",
+                    "createDate": "Date",
+                    "category": "Category",
+                    "orderItems": "List<Order>"
+                },
+                "methods": {},
+                "innerClasses": {},
+                "constructors": [
+                    "public Product(String productName, String description, double price, Date createDate, Category category) {\n        this.category = category;\n    }"
+                ]
+            }
+        ],
+        "importDeclarations": [
+            "import com.fasterxml.jackson.annotation.JsonIgnore;",
+            "import lombok.AllArgsConstructor;",
+            "import lombok.Data;",
+            "import lombok.NoArgsConstructor;",
+            "import javax.persistence.*;",
+            "import java.util.Date;",
+            "import java.util.List;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.model;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "OrdersController",
+                "classHeader": "\n\n\n@RequestMapping(\"/api/orders/\") @RestController public class OrdersController",
+                "modifiers": [],
+                "parent": "",
+                "fields": {
+                    "orderRepository": {
+                        "name": "orderRepository",
+                        "declaration": "\nprivate OrderRepository orderRepository;"
+                    }
+                },
+                "fieldTypes": {
+                    "orderRepository": "OrderRepository"
+                },
+                "methods": {
+                    "getAll": {
+                        "name": "getAll",
+                        "signature": "List<Order> getAll() ;"
+                    }
+                },
+                "innerClasses": {},
+                "constructors": [
+                    "@Autowired public OrdersController(OrderRepository orderRepository) {\n        this.orderRepository = orderRepository;\n    }"
+                ]
+            }
+        ],
+        "importDeclarations": [
+            "import com.metsoft.ecommerce.model.Order;",
+            "import com.metsoft.ecommerce.repository.OrderRepository;",
+            "import org.springframework.beans.factory.annotation.Autowired;",
+            "import org.springframework.web.bind.annotation.GetMapping;",
+            "import org.springframework.web.bind.annotation.RequestMapping;",
+            "import org.springframework.web.bind.annotation.RestController;",
+            "import java.util.List;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.controller;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "ProductQueryResolver",
+                "classHeader": "\n\n\n@Component public class ProductQueryResolver implements GraphQLQueryResolver",
+                "modifiers": [],
+                "parent": "",
+                "fields": {
+                    "productRepository": {
+                        "name": "productRepository",
+                        "declaration": "\nprivate ProductRepository productRepository;"
+                    }
+                },
+                "fieldTypes": {
+                    "productRepository": "ProductRepository"
+                },
+                "methods": {
+                    "getProducts": {
+                        "name": "getProducts",
+                        "signature": "List<Product> getProducts() ;"
+                    },
+                    "getProductById": {
+                        "name": "getProductById",
+                        "signature": "Optional<Product> getProductById(int id) ;"
+                    }
+                },
+                "innerClasses": {},
+                "constructors": [
+                    "@Autowired public ProductQueryResolver(ProductRepository productRepository) {\n        this.productRepository=productRepository;\n    }"
+                ]
+            }
+        ],
+        "importDeclarations": [
+            "import com.coxautodev.graphql.tools.GraphQLQueryResolver;",
+            "import com.metsoft.ecommerce.model.Product;",
+            "import com.metsoft.ecommerce.repository.ProductRepository;",
+            "import org.springframework.beans.factory.annotation.Autowired;",
+            "import org.springframework.stereotype.Component;",
+            "import java.util.List;",
+            "import java.util.Optional;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.query;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "ProductMutationResolver",
+                "classHeader": "\n\n\n@Component public class ProductMutationResolver implements GraphQLMutationResolver",
+                "modifiers": [],
+                "parent": "",
+                "fields": {
+                    "productRepository": {
+                        "name": "productRepository",
+                        "declaration": "\nprivate final ProductRepository productRepository;"
+                    }
+                },
+                "fieldTypes": {
+                    "productRepository": "ProductRepository"
+                },
+                "methods": {
+                    "saveProduct": {
+                        "name": "saveProduct",
+                        "signature": "Product saveProduct(Product product) ;"
+                    },
+                    "updateProduct": {
+                        "name": "updateProduct",
+                        "signature": "Product updateProduct(Product product) ;"
+                    },
+                    "deleteProduct": {
+                        "name": "deleteProduct",
+                        "signature": "String deleteProduct(int id) ;"
+                    }
+                },
+                "innerClasses": {},
+                "constructors": [
+                    "@Autowired public ProductMutationResolver(ProductRepository productRepository) {\n        this.productRepository = productRepository;\n    }"
+                ]
+            }
+        ],
+        "importDeclarations": [
+            "import com.coxautodev.graphql.tools.GraphQLMutationResolver;",
+            "import com.metsoft.ecommerce.model.Product;",
+            "import com.metsoft.ecommerce.repository.ProductRepository;",
+            "import org.springframework.beans.factory.annotation.Autowired;",
+            "import org.springframework.stereotype.Component;",
+            "import java.util.Date;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.mutation;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "CategoriesController",
+                "classHeader": "\n\n\n@RestController @RequestMapping(\"/api/categories/\") public class CategoriesController",
+                "modifiers": [],
+                "parent": "",
+                "fields": {
+                    "categoryRepository": {
+                        "name": "categoryRepository",
+                        "declaration": "\nprivate CategoryRepository categoryRepository;"
+                    }
+                },
+                "fieldTypes": {
+                    "categoryRepository": "CategoryRepository"
+                },
+                "methods": {
+                    "getCategories": {
+                        "name": "getCategories",
+                        "signature": "List<Category> getCategories() ;"
+                    },
+                    "getCategoryById": {
+                        "name": "getCategoryById",
+                        "signature": "ResponseEntity getCategoryById(@PathVariable int id) ;"
+                    },
+                    "saveCategory": {
+                        "name": "saveCategory",
+                        "signature": "ResponseEntity saveCategory(@RequestBody Category category) ;"
+                    },
+                    "updateCategory": {
+                        "name": "updateCategory",
+                        "signature": "ResponseEntity updateCategory(@RequestBody Category category) ;"
+                    },
+                    "deleteCategory": {
+                        "name": "deleteCategory",
+                        "signature": "ResponseEntity deleteCategory(@RequestBody Category category) ;"
+                    }
+                },
+                "innerClasses": {},
+                "constructors": [
+                    "@Autowired public CategoriesController(CategoryRepository categoryRepository) {\n        this.categoryRepository = categoryRepository;\n    }"
+                ]
+            }
+        ],
+        "importDeclarations": [
+            "import com.metsoft.ecommerce.model.Category;",
+            "import com.metsoft.ecommerce.repository.CategoryRepository;",
+            "import org.springframework.beans.factory.annotation.Autowired;",
+            "import org.springframework.http.ResponseEntity;",
+            "import org.springframework.web.bind.annotation.*;",
+            "import java.util.List;",
+            "import java.util.Optional;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.controller;"
+    },
+    [
+        {
+            "topLevelClasses": [
+                {
+                    "name": "OrderStatus",
+                    "classHeader": "public enum OrderStatus { NEW,PROCESSING,SHIPPED,DELIVERED }",
+                    "modifiers": [
+                        "public"
+                    ],
+                    "parent": null,
+                    "fields": {},
+                    "fieldTypes": {},
+                    "methods": {},
+                    "innerClasses": {},
+                    "constructors": []
+                }
+            ],
+            "importDeclarations": [],
+            "packageDeclaration": "\npackage com.metsoft.ecommerce.model;"
+        }
+    ]
+]
