@@ -47,6 +47,46 @@
     {
         "topLevelClasses": [
             {
+                "name": "CategoryRepository",
+                "classHeader": "\n\n\npublic interface CategoryRepository extends extends",
+                "modifiers": [],
+                "parent": "",
+                "fields": {},
+                "fieldTypes": {},
+                "methods": {},
+                "innerClasses": {},
+                "constructors": []
+            }
+        ],
+        "importDeclarations": [
+            "import com.metsoft.ecommerce.model.Category;",
+            "import org.springframework.data.jpa.repository.JpaRepository;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.repository;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "ProductRepository",
+                "classHeader": "\n\n\npublic interface ProductRepository extends extends",
+                "modifiers": [],
+                "parent": "",
+                "fields": {},
+                "fieldTypes": {},
+                "methods": {},
+                "innerClasses": {},
+                "constructors": []
+            }
+        ],
+        "importDeclarations": [
+            "import com.metsoft.ecommerce.model.Product;",
+            "import org.springframework.data.jpa.repository.JpaRepository;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.repository;"
+    },
+    {
+        "topLevelClasses": [
+            {
                 "name": "Category",
                 "classHeader": "\n\n\n@Data @Entity @Table(name=\"categories\") @AllArgsConstructor @NoArgsConstructor public class Category",
                 "modifiers": [],
@@ -84,6 +124,45 @@
             "import java.util.Set;"
         ],
         "packageDeclaration": "\npackage com.metsoft.ecommerce.model;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "OrdersController",
+                "classHeader": "\n\n\n@RequestMapping(\"/api/orders/\") @RestController public class OrdersController",
+                "modifiers": [],
+                "parent": "",
+                "fields": {
+                    "orderRepository": {
+                        "name": "orderRepository",
+                        "declaration": "\nprivate OrderRepository orderRepository;"
+                    }
+                },
+                "fieldTypes": {
+                    "orderRepository": "OrderRepository"
+                },
+                "methods": {
+                    "getAll": {
+                        "name": "getAll",
+                        "signature": "List<Order> getAll() ;"
+                    }
+                },
+                "innerClasses": {},
+                "constructors": [
+                    "@Autowired public OrdersController(OrderRepository orderRepository) {\n        this.orderRepository = orderRepository;\n    }"
+                ]
+            }
+        ],
+        "importDeclarations": [
+            "import com.metsoft.ecommerce.model.Order;",
+            "import com.metsoft.ecommerce.repository.OrderRepository;",
+            "import org.springframework.beans.factory.annotation.Autowired;",
+            "import org.springframework.web.bind.annotation.GetMapping;",
+            "import org.springframework.web.bind.annotation.RequestMapping;",
+            "import org.springframework.web.bind.annotation.RestController;",
+            "import java.util.List;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.controller;"
     },
     {
         "topLevelClasses": [
@@ -146,42 +225,45 @@
     {
         "topLevelClasses": [
             {
-                "name": "ProductRepository",
-                "classHeader": "\n\n\npublic interface ProductRepository extends extends",
+                "name": "ProductQueryResolver",
+                "classHeader": "\n\n\n@Component public class ProductQueryResolver implements GraphQLQueryResolver",
                 "modifiers": [],
                 "parent": "",
-                "fields": {},
-                "fieldTypes": {},
-                "methods": {},
+                "fields": {
+                    "productRepository": {
+                        "name": "productRepository",
+                        "declaration": "\nprivate ProductRepository productRepository;"
+                    }
+                },
+                "fieldTypes": {
+                    "productRepository": "ProductRepository"
+                },
+                "methods": {
+                    "getProducts": {
+                        "name": "getProducts",
+                        "signature": "List<Product> getProducts() ;"
+                    },
+                    "getProductById": {
+                        "name": "getProductById",
+                        "signature": "Optional<Product> getProductById(int id) ;"
+                    }
+                },
                 "innerClasses": {},
-                "constructors": []
+                "constructors": [
+                    "@Autowired public ProductQueryResolver(ProductRepository productRepository) {\n        this.productRepository=productRepository;\n    }"
+                ]
             }
         ],
         "importDeclarations": [
+            "import com.coxautodev.graphql.tools.GraphQLQueryResolver;",
             "import com.metsoft.ecommerce.model.Product;",
-            "import org.springframework.data.jpa.repository.JpaRepository;"
+            "import com.metsoft.ecommerce.repository.ProductRepository;",
+            "import org.springframework.beans.factory.annotation.Autowired;",
+            "import org.springframework.stereotype.Component;",
+            "import java.util.List;",
+            "import java.util.Optional;"
         ],
-        "packageDeclaration": "\npackage com.metsoft.ecommerce.repository;"
-    },
-    {
-        "topLevelClasses": [
-            {
-                "name": "CategoryRepository",
-                "classHeader": "\n\n\npublic interface CategoryRepository extends extends",
-                "modifiers": [],
-                "parent": "",
-                "fields": {},
-                "fieldTypes": {},
-                "methods": {},
-                "innerClasses": {},
-                "constructors": []
-            }
-        ],
-        "importDeclarations": [
-            "import com.metsoft.ecommerce.model.Category;",
-            "import org.springframework.data.jpa.repository.JpaRepository;"
-        ],
-        "packageDeclaration": "\npackage com.metsoft.ecommerce.repository;"
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.query;"
     },
     {
         "topLevelClasses": [
@@ -250,134 +332,6 @@
     {
         "topLevelClasses": [
             {
-                "name": "OrdersController",
-                "classHeader": "\n\n\n@RequestMapping(\"/api/orders/\") @RestController public class OrdersController",
-                "modifiers": [],
-                "parent": "",
-                "fields": {
-                    "orderRepository": {
-                        "name": "orderRepository",
-                        "declaration": "\nprivate OrderRepository orderRepository;"
-                    }
-                },
-                "fieldTypes": {
-                    "orderRepository": "OrderRepository"
-                },
-                "methods": {
-                    "getAll": {
-                        "name": "getAll",
-                        "signature": "List<Order> getAll() ;"
-                    }
-                },
-                "innerClasses": {},
-                "constructors": [
-                    "@Autowired public OrdersController(OrderRepository orderRepository) {\n        this.orderRepository = orderRepository;\n    }"
-                ]
-            }
-        ],
-        "importDeclarations": [
-            "import com.metsoft.ecommerce.model.Order;",
-            "import com.metsoft.ecommerce.repository.OrderRepository;",
-            "import org.springframework.beans.factory.annotation.Autowired;",
-            "import org.springframework.web.bind.annotation.GetMapping;",
-            "import org.springframework.web.bind.annotation.RequestMapping;",
-            "import org.springframework.web.bind.annotation.RestController;",
-            "import java.util.List;"
-        ],
-        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.controller;"
-    },
-    {
-        "topLevelClasses": [
-            {
-                "name": "ProductQueryResolver",
-                "classHeader": "\n\n\n@Component public class ProductQueryResolver implements GraphQLQueryResolver",
-                "modifiers": [],
-                "parent": "",
-                "fields": {
-                    "productRepository": {
-                        "name": "productRepository",
-                        "declaration": "\nprivate ProductRepository productRepository;"
-                    }
-                },
-                "fieldTypes": {
-                    "productRepository": "ProductRepository"
-                },
-                "methods": {
-                    "getProducts": {
-                        "name": "getProducts",
-                        "signature": "List<Product> getProducts() ;"
-                    },
-                    "getProductById": {
-                        "name": "getProductById",
-                        "signature": "Optional<Product> getProductById(int id) ;"
-                    }
-                },
-                "innerClasses": {},
-                "constructors": [
-                    "@Autowired public ProductQueryResolver(ProductRepository productRepository) {\n        this.productRepository=productRepository;\n    }"
-                ]
-            }
-        ],
-        "importDeclarations": [
-            "import com.coxautodev.graphql.tools.GraphQLQueryResolver;",
-            "import com.metsoft.ecommerce.model.Product;",
-            "import com.metsoft.ecommerce.repository.ProductRepository;",
-            "import org.springframework.beans.factory.annotation.Autowired;",
-            "import org.springframework.stereotype.Component;",
-            "import java.util.List;",
-            "import java.util.Optional;"
-        ],
-        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.query;"
-    },
-    {
-        "topLevelClasses": [
-            {
-                "name": "ProductMutationResolver",
-                "classHeader": "\n\n\n@Component public class ProductMutationResolver implements GraphQLMutationResolver",
-                "modifiers": [],
-                "parent": "",
-                "fields": {
-                    "productRepository": {
-                        "name": "productRepository",
-                        "declaration": "\nprivate final ProductRepository productRepository;"
-                    }
-                },
-                "fieldTypes": {
-                    "productRepository": "ProductRepository"
-                },
-                "methods": {
-                    "saveProduct": {
-                        "name": "saveProduct",
-                        "signature": "Product saveProduct(Product product) ;"
-                    },
-                    "updateProduct": {
-                        "name": "updateProduct",
-                        "signature": "Product updateProduct(Product product) ;"
-                    },
-                    "deleteProduct": {
-                        "name": "deleteProduct",
-                        "signature": "String deleteProduct(int id) ;"
-                    }
-                },
-                "innerClasses": {},
-                "constructors": [
-                    "@Autowired public ProductMutationResolver(ProductRepository productRepository) {\n        this.productRepository = productRepository;\n    }"
-                ]
-            }
-        ],
-        "importDeclarations": [
-            "import com.coxautodev.graphql.tools.GraphQLMutationResolver;",
-            "import com.metsoft.ecommerce.model.Product;",
-            "import com.metsoft.ecommerce.repository.ProductRepository;",
-            "import org.springframework.beans.factory.annotation.Autowired;",
-            "import org.springframework.stereotype.Component;",
-            "import java.util.Date;"
-        ],
-        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.mutation;"
-    },
-    {
-        "topLevelClasses": [
-            {
                 "name": "CategoriesController",
                 "classHeader": "\n\n\n@RestController @RequestMapping(\"/api/categories/\") public class CategoriesController",
                 "modifiers": [],
@@ -429,6 +383,52 @@
             "import java.util.Optional;"
         ],
         "packageDeclaration": "\npackage com.metsoft.ecommerce.api.controller;"
+    },
+    {
+        "topLevelClasses": [
+            {
+                "name": "ProductMutationResolver",
+                "classHeader": "\n\n\n@Component public class ProductMutationResolver implements GraphQLMutationResolver",
+                "modifiers": [],
+                "parent": "",
+                "fields": {
+                    "productRepository": {
+                        "name": "productRepository",
+                        "declaration": "\nprivate final ProductRepository productRepository;"
+                    }
+                },
+                "fieldTypes": {
+                    "productRepository": "ProductRepository"
+                },
+                "methods": {
+                    "saveProduct": {
+                        "name": "saveProduct",
+                        "signature": "Product saveProduct(Product product) ;"
+                    },
+                    "updateProduct": {
+                        "name": "updateProduct",
+                        "signature": "Product updateProduct(Product product) ;"
+                    },
+                    "deleteProduct": {
+                        "name": "deleteProduct",
+                        "signature": "String deleteProduct(int id) ;"
+                    }
+                },
+                "innerClasses": {},
+                "constructors": [
+                    "@Autowired public ProductMutationResolver(ProductRepository productRepository) {\n        this.productRepository = productRepository;\n    }"
+                ]
+            }
+        ],
+        "importDeclarations": [
+            "import com.coxautodev.graphql.tools.GraphQLMutationResolver;",
+            "import com.metsoft.ecommerce.model.Product;",
+            "import com.metsoft.ecommerce.repository.ProductRepository;",
+            "import org.springframework.beans.factory.annotation.Autowired;",
+            "import org.springframework.stereotype.Component;",
+            "import java.util.Date;"
+        ],
+        "packageDeclaration": "\npackage com.metsoft.ecommerce.api.mutation;"
     },
     [
         {

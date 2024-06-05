@@ -1,0 +1,13 @@
+Illegal characters in 'String[]' replaced to form 'String__'
+Added abstract class for undefined class: String__
+Added abstract class for undefined class: extends
+Added abstract class for undefined class: OrderStatus
+Added abstract class for undefined class: Map
+Added abstract interface for undefined class: GraphQLQueryResolver
+Added abstract interface for undefined class: GraphQLMutationResolver
+Added abstract interface for undefined class: RestController
+Converted attribute to reference in Order: status
+Corrected opposite for Product.category to RepairAction.OPPOSITE_MISMATCH
+Corrected opposite for Product.orderItems to products
+Corrected opposite for Order.products to orderItems
+Interface CategoryRepository made ABSTRACT
