@@ -1,0 +1,13 @@
+Added abstract class for undefined class: extends
+Added abstract class for undefined class: java.util.Date
+Added abstract class for undefined class: OrderStatus
+Added abstract class for undefined class: java.util.Map
+Added abstract interface for undefined class: org.springframework.web.bind.annotation.RestController
+Added abstract interface for undefined class: com.coxautodev.graphql.tools.GraphQLQueryResolver
+Added abstract class for undefined class: org.springframework.http.ResponseEntity
+Added abstract interface for undefined class: com.coxautodev.graphql.tools.GraphQLMutationResolver
+Converted attribute to reference in Order: creationDate
+Converted attribute to reference in Order: status
+Converted attribute to reference in Product: createDate
+Corrected opposite for Product.category to products
+Interface CategoryRepository made ABSTRACT
