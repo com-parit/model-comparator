@@ -10,7 +10,7 @@ import os
 sns.set_theme()
 
 class Visualizations:    
-	def draw_box_and_whisker_for_groovy_statistics(df, selected_columns):
+	def draw_box_and_whisker_for_groovy_statistics(df, selected_columns, output_dir):
 		plot_values = {
 			"modelset": {
 				
@@ -19,7 +19,7 @@ class Visualizations:
 		for i in selected_columns:
 			plot_values["modelset"][i] = [i for i in df[i].values.tolist() if i < 100]
 
-		with PdfPages('box_and_whisker_statistics_groovy_categories.pdf') as pdf:
+		with PdfPages(f'{output_dir}/box_and_whisker_statistics_groovy_categories.pdf') as pdf:
 			# transform json into longdata format
 			data = []
 			
@@ -40,10 +40,10 @@ class Visualizations:
 			plt.tight_layout()
 			plt.xlabel("", fontsize=19)
 			pdf.savefig()
-			plt.savefig(f'box_and_whisker_statistics_groovy_categories.png')
+			plt.savefig(f'{output_dir}/box_and_whisker_statistics_groovy_categories.png')
 			plt.close()
 
-	def box_and_whisker_for_model_level_metrics_from_consolidated(consolidated_models_csv_path):
+	def box_and_whisker_for_model_level_metrics_from_consolidated(consolidated_models_csv_path, output_dir):
 		# Dictionary to store metrics values for each metric
 		all_metrics_values = {
 		"mdre-llm":{
@@ -81,7 +81,7 @@ class Visualizations:
 		del all_metrics_values["mdre-llm"]["ragas_answer_similarity"]
 
 		# Consolidate box plots for all metrics into one figure
-		with PdfPages(f'box_and_whisker_for_model_level_metrics.pdf') as pdf:
+		with PdfPages(f'{output_dir}/box_and_whisker_for_model_level_metrics.pdf') as pdf:
 			# transform json into longdata format
 			data = []
 			
@@ -106,10 +106,10 @@ class Visualizations:
 			plt.tight_layout()
 			pdf.savefig()
 			# Save as PNG
-			plt.savefig(f'box_and_whisker_for_model_level_metrics.png')
+			plt.savefig(f'{output_dir}/box_and_whisker_for_model_level_metrics.png')
 			plt.close()
 
-	def box_and_whisker_for_model_level_counts_from_consolidated(consolidated_models_csv_path):
+	def box_and_whisker_for_model_level_counts_from_consolidated(consolidated_models_csv_path, output_dir):
 		# Dictionary to store metrics values for each metric
 		all_metrics_values = {
 		"ground-truth":{
@@ -149,7 +149,7 @@ class Visualizations:
 		all_metrics_values["mdre-llm"]["references"] = [i for i in consolidated_df["references_model2_total"]]
 
 		# Consolidate box plots for all metrics into one figure
-		with PdfPages('box_and_whisker_for_model_level_total_counts.pdf') as pdf:
+		with PdfPages(f'{output_dir}/box_and_whisker_for_model_level_total_counts.pdf') as pdf:
 			# transform json into longdata format
 			data = []
 			
@@ -167,5 +167,5 @@ class Visualizations:
 			plt.ylabel("")
 			plt.tight_layout()
 			pdf.savefig()
-			plt.savefig('box_and_whisker_for_model_level_counts.png')
+			plt.savefig(f'{output_dir}/box_and_whisker_for_model_level_counts.png')
 			plt.close()

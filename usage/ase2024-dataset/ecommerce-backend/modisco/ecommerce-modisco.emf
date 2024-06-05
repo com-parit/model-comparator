@@ -1,0 +1,405 @@
+@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="root model")
+@namespace(uri="http:///rootmodel.ecore", prefix="rootmodel")
+package rootmodel;
+
+@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="E-Commerce-Backend-master")
+@namespace(uri="http:///rootmodel/ECommerceBackendmaster.ecore", prefix="rootmodel.ECommerceBackendmaster")
+package ECommerceBackendmaster {
+	@namespace(uri="http:///rootmodel/ECommerceBackendmaster/com.ecore", prefix="rootmodel.ECommerceBackendmaster.com")
+	package com {
+		@namespace(uri="http:///rootmodel/ECommerceBackendmaster/com/metsoft.ecore", prefix="rootmodel.ECommerceBackendmaster.com.metsoft")
+		package metsoft {
+			@namespace(uri="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce.ecore", prefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce")
+			package ecommerce {
+				class EcommerceApplication {
+					!ordered op CommonJavadatatypes.~void main(!ordered externals.java.lang.String[*] args);
+				}
+
+				class EcommerceApplicationTests {
+					!ordered op CommonJavadatatypes.~void contextLoads();
+				}
+
+				@namespace(uri="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/api.ecore", prefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.api")
+				package api {
+					@namespace(uri="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/api/controller.ecore", prefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.api.controller")
+					package controller {
+						class CategoriesController {
+							!ordered op void CategoriesController(!ordered repository.CategoryRepository categoryRepository);
+							!ordered op model.Category[*] getCategories();
+							!ordered op externals.RequestMapping getCategoryById(!ordered CommonJavadatatypes.int ~id);
+							!ordered op externals.RequestMapping saveCategory(!ordered model.Category category);
+							!ordered op externals.RequestMapping updateCategory(!ordered model.Category category);
+							!ordered op externals.RequestMapping deleteCategory(!ordered model.Category category);
+							!ordered ref repository.CategoryRepository categoryRepository;
+						}
+
+						class OrdersController {
+							!ordered op void OrdersController(!ordered repository.OrderRepository orderRepository);
+							!ordered op model.Order[*] getAll();
+							!ordered ref repository.OrderRepository orderRepository;
+						}
+
+					}
+
+					@namespace(uri="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/api/mutation.ecore", prefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.api.mutation")
+					package mutation {
+						class ProductMutationResolver extends externals.orgspringframeworkhttpResponseEntity {
+							!ordered op void ProductMutationResolver(!ordered repository.ProductRepository productRepository);
+							!ordered op model.Product saveProduct(!ordered model.Product product);
+							!ordered op model.Product updateProduct(!ordered model.Product product);
+							!ordered op externals.java.lang.String deleteProduct(!ordered CommonJavadatatypes.int ~id);
+							!ordered ref repository.ProductRepository productRepository;
+						}
+
+					}
+
+					@namespace(uri="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/api/query.ecore", prefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.api.query")
+					package query {
+						class ProductQueryResolver extends externals.orgspringframeworkwebbindannotation {
+							!ordered op void ProductQueryResolver(!ordered repository.ProductRepository productRepository);
+							!ordered op model.Product[*] getProducts();
+							!ordered op externals.java.util.javautilOptionalcommetsoftecommercemodelProduct getProductById(!ordered CommonJavadatatypes.int ~id);
+							!ordered ref repository.ProductRepository productRepository;
+						}
+
+					}
+
+				}
+
+				@namespace(uri="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/repository.ecore", prefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.repository")
+				package repository {
+					abstract interface OrderRepository {
+					}
+
+					abstract interface ProductRepository {
+					}
+
+					abstract interface CategoryRepository {
+					}
+
+				}
+
+				@namespace(uri="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/model.ecore", prefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.model")
+				package model {
+					class Order {
+						!ordered attr CommonJavadatatypes.int ~id;
+						!ordered ref externals.java.util.Date creationDate;
+						!ordered ref Product[*] products;
+					}
+
+					class Product {
+						!ordered attr CommonJavadatatypes.int ~id;
+						!ordered ref externals.java.lang.String productName;
+						!ordered ref externals.java.lang.String description;
+						!ordered attr CommonJavadatatypes.double price;
+						!ordered ref externals.java.util.Date createDate;
+						!ordered ref Category category;
+						!ordered ref Order[*] orderItems;
+					}
+
+					class Category {
+						!ordered attr CommonJavadatatypes.int ~id;
+						!ordered ref externals.java.lang.String categoryName;
+						!ordered ref Product[*] products;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Common Java datatypes")
+	@namespace(uri="http:///rootmodel/ECommerceBackendmaster/CommonJavadatatypes.ecore", prefix="rootmodel.ECommerceBackendmaster.CommonJavadatatypes")
+	package CommonJavadatatypes {
+		datatype long : long;
+
+		datatype float : float;
+
+		datatype double : double;
+
+		datatype boolean : boolean;
+
+		datatype ~void : "void";
+
+		datatype char : char;
+
+		datatype short : short;
+
+		datatype byte : byte;
+
+		datatype string : string;
+
+		datatype int : int;
+
+	}
+
+}
+
+@namespace(uri="http:///rootmodel/externals.ecore", prefix="rootmodel.externals")
+package externals {
+	abstract interface GraphQLMutationResolver {
+	}
+
+	abstract interface GraphQLQueryResolver {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.boot.SpringApplication")
+	abstract interface orgspringframeworkbootSpringApplication {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.boot.autoconfigure.SpringBootApplication")
+	abstract interface orgspringframeworkbootautoconfigureSpringBootApplication {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.beans.factory.annotation.Autowired")
+	abstract interface orgspringframeworkbeansfactoryannotationAutowired {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.http.ResponseEntity")
+	abstract interface orgspringframeworkhttpResponseEntity {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.web.bind.annotation")
+	abstract interface orgspringframeworkwebbindannotation {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.web.bind.annotation.GetMapping")
+	abstract interface orgspringframeworkwebbindannotationGetMapping {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.web.bind.annotation.RequestMapping")
+	abstract interface orgspringframeworkwebbindannotationRequestMapping {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.web.bind.annotation.RestController")
+	abstract interface orgspringframeworkwebbindannotationRestController {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="com.coxautodev.graphql.tools.GraphQLMutationResolver")
+	abstract interface comcoxautodevgraphqltoolsGraphQLMutationResolver {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.stereotype.Component")
+	abstract interface orgspringframeworkstereotypeComponent {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="com.coxautodev.graphql.tools.GraphQLQueryResolver")
+	abstract interface comcoxautodevgraphqltoolsGraphQLQueryResolver {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="com.fasterxml.jackson.annotation.JsonIgnore")
+	abstract interface comfasterxmljacksonannotationJsonIgnore {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="lombok.AllArgsConstructor")
+	abstract interface lombokAllArgsConstructor {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="lombok.Data")
+	abstract interface lombokData {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="lombok.NoArgsConstructor")
+	abstract interface lombokNoArgsConstructor {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="javax.persistence")
+	abstract interface javaxpersistence {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.data.jpa.repository.JpaRepository")
+	abstract interface orgspringframeworkdatajparepositoryJpaRepository {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.junit.jupiter.api.Test")
+	abstract interface orgjunitjupiterapiTest {
+	}
+
+	@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="org.springframework.boot.test.context.SpringBootTest")
+	abstract interface orgspringframeworkboottestcontextSpringBootTest {
+	}
+
+	abstract interface ResponseEntity {
+	}
+
+	abstract interface SpringBootApplication {
+	}
+
+	abstract interface SpringBootTest {
+	}
+
+	abstract interface Test {
+	}
+
+	abstract interface RestController {
+	}
+
+	abstract interface RequestMapping {
+	}
+
+	abstract interface Autowired {
+	}
+
+	abstract interface GetMapping {
+	}
+
+	abstract interface PathVariable {
+	}
+
+	abstract interface PostMapping {
+	}
+
+	abstract interface RequestBody {
+	}
+
+	abstract interface PatchMapping {
+	}
+
+	abstract interface DeleteMapping {
+	}
+
+	abstract interface Component {
+	}
+
+	abstract interface Data {
+	}
+
+	abstract interface Entity {
+	}
+
+	abstract interface Table {
+	}
+
+	abstract interface AllArgsConstructor {
+	}
+
+	abstract interface NoArgsConstructor {
+	}
+
+	abstract interface Id {
+	}
+
+	abstract interface GeneratedValue {
+	}
+
+	abstract interface Column {
+	}
+
+	abstract interface OneToMany {
+	}
+
+	abstract interface JsonIgnore {
+	}
+
+	abstract interface ManyToMany {
+	}
+
+	abstract interface JoinTable {
+	}
+
+	abstract interface ManyToOne {
+	}
+
+	abstract interface JoinColumn {
+	}
+
+	@namespace(uri="http:///rootmodel/externals/java.ecore", prefix="rootmodel.externals.java")
+	package java {
+		@namespace(uri="http:///rootmodel/externals/java/lang.ecore", prefix="rootmodel.externals.java.lang")
+		package lang {
+			class String extends io.Serializable, Comparable, CharSequence, constant.Constable, constant.ConstantDesc {
+			}
+
+			abstract interface Comparable {
+			}
+
+			class T {
+			}
+
+			abstract interface CharSequence {
+			}
+
+			abstract interface Iterable {
+			}
+
+			abstract interface Cloneable {
+			}
+
+			class Integer extends Number, Comparable, constant.Constable, constant.ConstantDesc {
+			}
+
+			class Number extends io.Serializable {
+			}
+
+			@namespace(uri="http:///rootmodel/externals/java/lang/constant.ecore", prefix="rootmodel.externals.java.lang.constant")
+			package constant {
+				abstract interface Constable {
+				}
+
+				abstract interface ConstantDesc {
+				}
+
+			}
+
+		}
+
+		@namespace(uri="http:///rootmodel/externals/java/io.ecore", prefix="rootmodel.externals.java.io")
+		package io {
+			abstract interface Serializable {
+			}
+
+		}
+
+		@namespace(uri="http:///rootmodel/externals/java/util.ecore", prefix="rootmodel.externals.java.util")
+		package util {
+			abstract interface List extends Collection {
+			}
+
+			abstract interface Collection extends lang.Iterable {
+			}
+
+			class E {
+			}
+
+			class Optional {
+				!ordered op void isEmpty();
+			}
+
+			@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="java.util.List<com.metsoft.ecommerce.model.Category>")
+			abstract interface javautilListcommetsoftecommercemodelCategory {
+			}
+
+			@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="java.util.List<com.metsoft.ecommerce.model.Order>")
+			abstract interface javautilListcommetsoftecommercemodelOrder {
+			}
+
+			@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="java.util.List<com.metsoft.ecommerce.model.Product>")
+			abstract interface javautilListcommetsoftecommercemodelProduct {
+			}
+
+			@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="java.util.Optional<com.metsoft.ecommerce.model.Category>")
+			class javautilOptionalcommetsoftecommercemodelCategory {
+			}
+
+			@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="java.util.Optional<com.metsoft.ecommerce.model.Product>")
+			class javautilOptionalcommetsoftecommercemodelProduct {
+			}
+
+			class Date extends io.Serializable, lang.Cloneable, lang.Comparable {
+				!ordered op void Date();
+			}
+
+		}
+
+	}
+
+}
+
+@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="source references")
+@namespace(uri="http:///rootmodel/sourcereferences.ecore", prefix="rootmodel.sourcereferences")
+package sourcereferences {
+}
+

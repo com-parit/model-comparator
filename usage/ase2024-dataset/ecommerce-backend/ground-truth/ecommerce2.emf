@@ -1,0 +1,98 @@
+@namespace(uri="https://github.com/MET-DEV/E-Commerce-Backend", prefix="E-Commerce-Backend")
+package ECommerceBackend;
+
+class CategoriesController {
+	op Category[*] getCategories();
+	op ResponseEntity getCategoryById(int _id);
+	op ResponseEntity SaveCategory(Category category);
+	op ResponseEntity updateCategory(Category category);
+	op ResponseEntity deleteCategory(Category category);
+	ref CategoryRepository[1] categoryRepository;
+}
+
+class OrdersController {
+	op Order[*] getAll();
+	ref OrderRepository[1] orderRepository;
+}
+
+class ProductMutationResolver extends GraphQLMutationResolver {
+	op Product saveProduct(Product product);
+	op Product updateProduct(Product product);
+	op String deleteProduct(int _id);
+	ref ProductRepository[1] productRepository;
+}
+
+class ProductQueryResolver extends GraphQLQueryResolver {
+	op Product[*] getProducts();
+	op Product getProductById();
+	ref ProductRepository[1] productRepository;
+}
+
+class Category {
+	attr int _id;
+	attr String categoryName;
+	unique ordered ref Product[*] products;
+}
+
+class Order {
+	attr int _id;
+	attr EDate creationDate;
+	ref Product[*] products;
+	ref MapEntry[0..*] productQuantities;
+}
+
+class MapEntry {
+	ref Product[1] key;
+	attr String[1] value;
+}
+
+
+class Product {
+	attr int _id;
+	attr String productName;
+	attr String description;
+	attr double price;
+	attr EDate createDate;
+	ref Category category;
+	ref Order[*] orderItems;
+}
+
+class CategoryRepository extends JpaRepository {
+	ref Category[*] Category;
+}
+
+class OrderRepository extends JpaRepository {
+	ref Order[*] Order;
+}
+
+class ProductRepository extends JpaRepository {
+	ref Product[*] product;
+}
+
+class EcommerceApplication {
+	attr String args;
+}
+
+class EcommerceApplicationTest {
+	op void main(String[*] args);
+}
+
+class GraphQLMutationResolver {
+}
+
+class ResponseEntity {
+}
+
+class JpaRepository {
+}
+
+class GraphQLQueryResolver {
+}
+
+enum OrderStatus {
+	NEW;
+	PROCESSING;
+	SHIPPED;
+	DELIVERED;
+
+}
