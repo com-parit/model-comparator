@@ -1,0 +1,16 @@
+Illegal characters in 'String\[\]' replaced to form 'String____'
+Added abstract class for undefined class: String____
+Added abstract class for undefined class: java.util.Date
+Added abstract class for undefined class: OrderStatus
+Added abstract class for undefined class: java.util.Map
+Added abstract class for undefined class: extends
+Added abstract interface for undefined class: org.springframework.web.bind.annotation.RestController
+Added abstract interface for undefined class: com.coxautodev.graphql.tools.GraphQLQueryResolver
+Added abstract interface for undefined class: com.coxautodev.graphql.tools.GraphQLMutationResolver
+Converted attribute to reference in Order: creationDate
+Converted attribute to reference in Order: status
+Converted attribute to reference in Product: createDate
+Corrected opposite for Product.category to products
+Corrected opposite for Product.orderItems to products
+Corrected opposite for Order.products to orderItems
+Interface CategoryRepository made ABSTRACT

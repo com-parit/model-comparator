@@ -1,0 +1,164 @@
+
+    @namespace(uri="http://yamtl.github.io/code", prefix="code")
+    package root;
+    
+
+
+@dependency
+abstract class extends {
+}
+    
+@dependency
+abstract class OrderStatus {
+}
+    
+package com {
+
+package coxautodev {
+
+package graphql {
+
+package tools {
+
+@dependency
+abstract interface GraphQLQueryResolver {
+}
+    
+@dependency
+abstract interface GraphQLMutationResolver {
+}
+    
+}
+}
+}
+package metsoft {
+
+package ecommerce {
+
+class EcommerceApplication {
+    op void main(EString[0..*] args);
+}
+    
+package api {
+
+package query {
+
+class ProductQueryResolver extends com.coxautodev.graphql.tools.GraphQLQueryResolver {
+    ref com.metsoft.ecommerce.repository.ProductRepository[1..1] productRepository;
+}
+    
+}
+package mutation {
+
+class ProductMutationResolver extends com.coxautodev.graphql.tools.GraphQLMutationResolver {
+    ref com.metsoft.ecommerce.repository.ProductRepository[1..1] productRepository;
+    op com.metsoft.ecommerce.model.Product[1..1] saveProduct(com.metsoft.ecommerce.model.Product[1..1] product);
+    op com.metsoft.ecommerce.model.Product[1..1] updateProduct(com.metsoft.ecommerce.model.Product[1..1] product);
+    op String[0..1] deleteProduct(int[0..1] ~id);
+}
+    
+}
+package controller {
+
+class OrdersController extends org.springframework.web.bind.annotation.RestController {
+    ref com.metsoft.ecommerce.repository.OrderRepository[1..1] orderRepository;
+}
+    
+class CategoriesController {
+    ref com.metsoft.ecommerce.repository.CategoryRepository[1..1] categoryRepository;
+    op org.springframework.http.ResponseEntity[0..1] saveCategory(com.metsoft.ecommerce.model.Category[0..1] category);
+    op org.springframework.http.ResponseEntity[0..1] updateCategory(com.metsoft.ecommerce.model.Category[0..1] category);
+    op org.springframework.http.ResponseEntity[0..1] deleteCategory(com.metsoft.ecommerce.model.Category[0..1] category);
+}
+    
+}
+}
+package repository {
+
+abstract interface OrderRepository {
+}
+    
+abstract interface CategoryRepository extends extends {
+}
+    
+abstract interface ProductRepository {
+}
+    
+}
+package model {
+
+class Category {
+    attr int[0..1] ~id;
+    attr EString[0..1] categoryName;
+    val Product[0..*]#category products;
+}
+    
+class Order {
+    attr int[0..1] ~id;
+    ref Product[0..*]#order products;
+    val java.util.Map[0..*] productQuantities;
+    ref java.util.Date[0..1] creationDate;
+    ref OrderStatus[0..1] status;
+}
+    
+class Product {
+    attr int[0..1] ~id;
+    attr EString[0..1] productName;
+    attr EString[0..1] description;
+    attr double[0..1] price;
+    ref Category[0..1]#products category;
+    ref Order[0..*]#orderItems orderItems;
+    ref java.util.Date[0..1] createDate;
+}
+    
+enum OrderStatus {
+	NEW;
+	PROCESSING;
+	SHIPPED;
+	DELIVERED;
+
+}
+}
+}
+}
+}
+package org {
+
+package springframework {
+
+package web {
+
+package bind {
+
+package annotation {
+
+@dependency
+abstract interface RestController {
+}
+    
+}
+}
+}
+package http {
+
+@dependency
+abstract class ResponseEntity {
+}
+    
+}
+}
+}
+package java {
+
+package util {
+
+@dependency
+abstract class Date {
+}
+    
+@dependency
+abstract class Map {
+}
+    
+}
+}
