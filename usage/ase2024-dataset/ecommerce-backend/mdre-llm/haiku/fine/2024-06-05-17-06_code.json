@@ -138,6 +138,34 @@
         "parent_entity": ""
     },
     {
+        "name": "OrdersController",
+        "is_abstract": false,
+        "is_interface": false,
+        "description": "Represents the controller class for handling order-related API requests.",
+        "attributes": [],
+        "references": [
+            {
+                "field_name": "orderRepository",
+                "collaborator_entity": "OrderRepository",
+                "lower_bound": 1,
+                "upper_bound": 1,
+                "unique": true,
+                "ordered": true,
+                "opposite": "",
+                "has_opposite": false,
+                "containment": false
+            }
+        ],
+        "operations": [],
+        "bounded_context": "com.metsoft.ecommerce.api.controller",
+        "extended_entities": [],
+        "implemented_interfaces": [
+            "RestController"
+        ],
+        "annotation": "",
+        "parent_entity": ""
+    },
+    {
         "name": "Order",
         "is_abstract": false,
         "is_interface": false,
@@ -153,7 +181,7 @@
             },
             {
                 "field_name": "creationDate",
-                "datatype": "java.util.Date",
+                "datatype": "Date",
                 "lower_bound": 0,
                 "upper_bound": 1,
                 "unique": true,
@@ -182,7 +210,7 @@
             },
             {
                 "field_name": "productQuantities",
-                "collaborator_entity": "java.util.Map",
+                "collaborator_entity": "Map",
                 "lower_bound": 0,
                 "upper_bound": -1,
                 "unique": false,
@@ -200,34 +228,6 @@
         "parent_entity": ""
     },
     {
-        "name": "OrdersController",
-        "is_abstract": false,
-        "is_interface": false,
-        "description": "Represents the controller class for handling order-related API requests.",
-        "attributes": [],
-        "references": [
-            {
-                "field_name": "orderRepository",
-                "collaborator_entity": "com.metsoft.ecommerce.repository.OrderRepository",
-                "lower_bound": 1,
-                "upper_bound": 1,
-                "unique": true,
-                "ordered": true,
-                "opposite": "",
-                "has_opposite": false,
-                "containment": false
-            }
-        ],
-        "operations": [],
-        "bounded_context": "com.metsoft.ecommerce.api.controller",
-        "extended_entities": [],
-        "implemented_interfaces": [
-            "org.springframework.web.bind.annotation.RestController"
-        ],
-        "annotation": "",
-        "parent_entity": ""
-    },
-    {
         "name": "ProductQueryResolver",
         "is_abstract": false,
         "is_interface": false,
@@ -236,7 +236,7 @@
         "references": [
             {
                 "field_name": "productRepository",
-                "collaborator_entity": "com.metsoft.ecommerce.repository.ProductRepository",
+                "collaborator_entity": "ProductRepository",
                 "lower_bound": 1,
                 "upper_bound": 1,
                 "unique": true,
@@ -250,7 +250,7 @@
         "bounded_context": "com.metsoft.ecommerce.api.query",
         "extended_entities": [],
         "implemented_interfaces": [
-            "com.coxautodev.graphql.tools.GraphQLQueryResolver"
+            "GraphQLQueryResolver"
         ],
         "annotation": "",
         "parent_entity": ""
@@ -295,7 +295,7 @@
             },
             {
                 "field_name": "createDate",
-                "datatype": "java.util.Date",
+                "datatype": "Date",
                 "lower_bound": 0,
                 "upper_bound": 1,
                 "unique": true,
@@ -342,7 +342,7 @@
         "references": [
             {
                 "field_name": "categoryRepository",
-                "collaborator_entity": "com.metsoft.ecommerce.repository.CategoryRepository",
+                "collaborator_entity": "CategoryRepository",
                 "lower_bound": 1,
                 "upper_bound": 1,
                 "unique": true,
@@ -357,7 +357,7 @@
                 "method_name": "saveCategory",
                 "return_type": {
                     "param_name": "return",
-                    "param_type": "org.springframework.http.ResponseEntity",
+                    "param_type": "ResponseEntity",
                     "lower_bound": 0,
                     "upper_bound": 1,
                     "unique": true,
@@ -366,7 +366,7 @@
                 "parameters": [
                     {
                         "param_name": "category",
-                        "param_type": "com.metsoft.ecommerce.model.Category",
+                        "param_type": "Category",
                         "lower_bound": 0,
                         "upper_bound": 1,
                         "unique": true,
@@ -383,7 +383,7 @@
                 "method_name": "updateCategory",
                 "return_type": {
                     "param_name": "return",
-                    "param_type": "org.springframework.http.ResponseEntity",
+                    "param_type": "ResponseEntity",
                     "lower_bound": 0,
                     "upper_bound": 1,
                     "unique": true,
@@ -392,7 +392,7 @@
                 "parameters": [
                     {
                         "param_name": "category",
-                        "param_type": "com.metsoft.ecommerce.model.Category",
+                        "param_type": "Category",
                         "lower_bound": 0,
                         "upper_bound": 1,
                         "unique": true,
@@ -409,7 +409,7 @@
                 "method_name": "deleteCategory",
                 "return_type": {
                     "param_name": "return",
-                    "param_type": "org.springframework.http.ResponseEntity",
+                    "param_type": "ResponseEntity",
                     "lower_bound": 0,
                     "upper_bound": 1,
                     "unique": true,
@@ -418,7 +418,7 @@
                 "parameters": [
                     {
                         "param_name": "category",
-                        "param_type": "com.metsoft.ecommerce.model.Category",
+                        "param_type": "Category",
                         "lower_bound": 0,
                         "upper_bound": 1,
                         "unique": true,
@@ -447,7 +447,7 @@
         "references": [
             {
                 "field_name": "productRepository",
-                "collaborator_entity": "com.metsoft.ecommerce.repository.ProductRepository",
+                "collaborator_entity": "ProductRepository",
                 "lower_bound": 1,
                 "upper_bound": 1,
                 "unique": true,
@@ -462,7 +462,7 @@
                 "method_name": "saveProduct",
                 "return_type": {
                     "param_name": "return",
-                    "param_type": "com.metsoft.ecommerce.model.Product",
+                    "param_type": "Product",
                     "lower_bound": 1,
                     "upper_bound": 1,
                     "unique": true,
@@ -471,7 +471,7 @@
                 "parameters": [
                     {
                         "param_name": "product",
-                        "param_type": "com.metsoft.ecommerce.model.Product",
+                        "param_type": "Product",
                         "lower_bound": 1,
                         "upper_bound": 1,
                         "unique": true,
@@ -488,7 +488,7 @@
                 "method_name": "updateProduct",
                 "return_type": {
                     "param_name": "return",
-                    "param_type": "com.metsoft.ecommerce.model.Product",
+                    "param_type": "Product",
                     "lower_bound": 1,
                     "upper_bound": 1,
                     "unique": true,
@@ -497,7 +497,7 @@
                 "parameters": [
                     {
                         "param_name": "product",
-                        "param_type": "com.metsoft.ecommerce.model.Product",
+                        "param_type": "Product",
                         "lower_bound": 1,
                         "upper_bound": 1,
                         "unique": true,
@@ -540,7 +540,7 @@
         "bounded_context": "com.metsoft.ecommerce.api.mutation",
         "extended_entities": [],
         "implemented_interfaces": [
-            "com.coxautodev.graphql.tools.GraphQLMutationResolver"
+            "GraphQLMutationResolver"
         ],
         "annotation": "",
         "parent_entity": ""

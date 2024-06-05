@@ -311,7 +311,7 @@ class Main:
 
         projectName = "ecommerce-backend"
         groundTruthModel = "ase2024-dataset/ecommerce-backend/ground-truth/ecommerce2.ecore"
-        predictedModel_emf = "ase2024-dataset/ecommerce-backend/mdre-llm/haiku/fine/ecommerce-backend/ecommerce-backend.emf"
+        predictedModel_emf = "ase2024-dataset/ecommerce-backend/mdre-llm/haiku/fine/ecommerce-backend.emf"
 
         output_dir = f'{os.path.dirname(predictedModel_emf)}/stats'
         os.makedirs(output_dir, exist_ok=True)

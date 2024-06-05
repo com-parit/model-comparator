@@ -1,0 +1,94 @@
+
+@namespace(uri="http://yamtl.github.io/code", prefix="code")
+package code;
+
+
+
+class EcommerceApplication {
+    op void main(String__[0..*] args);
+}
+    
+abstract interface OrderRepository {
+}
+    
+abstract interface CategoryRepository extends extends {
+}
+    
+class Product {
+    attr int[0..1] ~id;
+    attr EString[0..1] productName;
+    attr EString[0..1] description;
+    attr double[0..1] price;
+    attr EDate[0..1] createDate;
+    ref Category[0..1]#RepairAction.OPPOSITE_MISMATCH category;
+    ref Order[0..*]#products orderItems;
+}
+    
+abstract interface ProductRepository {
+}
+    
+class Order {
+    attr int[0..1] ~id;
+    attr EDate[0..1] creationDate;
+    ref Product[0..*]#orderItems products;
+    ref Map[0..*] productQuantities;
+    ref OrderStatus[0..1] status;
+}
+    
+class Category {
+    attr int[0..1] ~id;
+    attr EString[0..1] categoryName;
+    val Product[0..*]#category products;
+}
+    
+class ProductQueryResolver extends GraphQLQueryResolver {
+    ref ProductRepository[0..1] productRepository;
+}
+    
+class ProductMutationResolver extends GraphQLMutationResolver {
+    ref ProductRepository[1..1] productRepository;
+}
+    
+class CategoriesController {
+    ref CategoryRepository[0..1] categoryRepository;
+}
+    
+class OrdersController extends RestController {
+    ref OrderRepository[0..1] orderRepository;
+}
+    
+@dependency
+abstract class String__ {
+}
+    
+@dependency
+abstract class extends {
+}
+    
+@dependency
+abstract class OrderStatus {
+}
+    
+@dependency
+abstract class Map {
+}
+    
+@dependency
+abstract interface GraphQLQueryResolver {
+}
+    
+@dependency
+abstract interface GraphQLMutationResolver {
+}
+    
+@dependency
+abstract interface RestController {
+}
+    
+enum OrderStatus {
+	NEW;
+	PROCESSING;
+	SHIPPED;
+	DELIVERED;
+
+}

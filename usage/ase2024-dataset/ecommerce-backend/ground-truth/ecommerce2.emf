@@ -1,5 +1,5 @@
 @namespace(uri="https://github.com/MET-DEV/E-Commerce-Backend", prefix="E-Commerce-Backend")
-package ECommerceBackend;
+package code;
 
 class CategoriesController {
 	op Category[*] getCategories();
