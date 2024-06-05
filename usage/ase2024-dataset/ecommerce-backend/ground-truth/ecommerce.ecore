@@ -46,14 +46,17 @@
   <eClassifiers xsi:type="ecore:EClass" name="Category">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="_id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="categoryName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="products" upperBound="-1"
-        eType="#//Product" eOpposite="#//Product/category"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="products" ordered="false"
+        upperBound="-1" eType="#//Product" eOpposite="#//Product/category"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Order">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="_id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="creationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="products" upperBound="-1"
         eType="#//Product" eOpposite="#//Product/orderItems"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//OrderStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="productQuantities" lowerBound="1"
+        eType="#//Map"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Product">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="_id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -66,20 +69,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="orderItems" upperBound="-1"
         eType="#//Order" eOpposite="#//Order/products"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CategoryRepository" interface="true"
-      eSuperTypes="#//JpaRepository">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="Category" upperBound="-1"
-        eType="#//Category"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="OrderRepository" interface="true" eSuperTypes="#//JpaRepository.2">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="Order" upperBound="-1"
-        eType="#//Order"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProductRepository" interface="true"
-      eSuperTypes="#//JpaRepository.1">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="product" upperBound="-1"
-        eType="#//Product"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CategoryRepository" abstract="true"
+      interface="true" eSuperTypes="#//JpaRepository"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderRepository" abstract="true" interface="true"
+      eSuperTypes="#//JpaRepository.2"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ProductRepository" abstract="true" interface="true"
+      eSuperTypes="#//JpaRepository.1"/>
   <eClassifiers xsi:type="ecore:EClass" name="EcommerceApplication">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="args" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -88,19 +83,31 @@
       <eParameters name="args" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GraphQLMutationResolver" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphQLMutationResolver" abstract="true"
+      interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="ResponseEntity"/>
-  <eClassifiers xsi:type="ecore:EClass" name="JpaRepository" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="JpaRepository" abstract="true" interface="true">
     <eAnnotations source="http://www.obeo.fr/dsl/dnc/archetype">
       <details key="archetype" value="Role"/>
     </eAnnotations>
-    <eTypeParameters name="Category,Integer"/>
+    <eTypeParameters name="Category"/>
+    <eTypeParameters name="Integer"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GraphQLQueryResolver" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="JpaRepository" interface="true">
-    <eTypeParameters name="Product,Integer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphQLQueryResolver" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JpaRepository" abstract="true" interface="true">
+    <eTypeParameters name="Product"/>
+    <eTypeParameters name="Integer"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="JpaRepository" interface="true">
-    <eTypeParameters name="Order,Integer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JpaRepository" abstract="true" interface="true">
+    <eTypeParameters name="Order"/>
+    <eTypeParameters name="Integer"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="OrderStatus">
+    <eLiterals name="NEW"/>
+    <eLiterals name="PROCESSING" value="1"/>
+    <eLiterals name="SHIPPED" value="2"/>
+    <eLiterals name="DELIVERED" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Map" instanceClassName="java.util.MapEntry"/>
 </ecore:EPackage>

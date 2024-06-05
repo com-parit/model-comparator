@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rootmodel" nsURI="http:///rootmodel.ecore" nsPrefix="rootmodel">
+  <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <details key="originalName" value="root model"/>
+  </eAnnotations>
+  <eSubpackages name="ECommerceBackendmaster" nsURI="http:///rootmodel/ECommerceBackendmaster.ecore"
+      nsPrefix="rootmodel.ECommerceBackendmaster">
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="E-Commerce-Backend-master"/>
+    </eAnnotations>
+    <eSubpackages name="com" nsURI="http:///rootmodel/ECommerceBackendmaster/com.ecore"
+        nsPrefix="rootmodel.ECommerceBackendmaster.com">
+      <eSubpackages name="metsoft" nsURI="http:///rootmodel/ECommerceBackendmaster/com/metsoft.ecore"
+          nsPrefix="rootmodel.ECommerceBackendmaster.com.metsoft">
+        <eSubpackages name="ecommerce" nsURI="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce.ecore"
+            nsPrefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce">
+          <eClassifiers xsi:type="ecore:EClass" name="EcommerceApplication">
+            <eOperations name="main" ordered="false" eType="#//ECommerceBackendmaster/CommonJavadatatypes/void">
+              <eParameters name="args" ordered="false" upperBound="-1" eType="#//externals/java/lang/String"/>
+            </eOperations>
+          </eClassifiers>
+          <eClassifiers xsi:type="ecore:EClass" name="EcommerceApplicationTests">
+            <eOperations name="contextLoads" ordered="false" eType="#//ECommerceBackendmaster/CommonJavadatatypes/void"/>
+          </eClassifiers>
+          <eSubpackages name="api" nsURI="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/api.ecore"
+              nsPrefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.api">
+            <eSubpackages name="controller" nsURI="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/api/controller.ecore"
+                nsPrefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.api.controller">
+              <eClassifiers xsi:type="ecore:EClass" name="CategoriesController">
+                <eOperations name="CategoriesController" ordered="false" lowerBound="1">
+                  <eParameters name="categoryRepository" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/repository/CategoryRepository"/>
+                </eOperations>
+                <eOperations name="getCategories" ordered="false" upperBound="-1"
+                    eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Category"/>
+                <eOperations name="getCategoryById" ordered="false" eType="#//externals/RequestMapping">
+                  <eParameters name="id" ordered="false" eType="#//ECommerceBackendmaster/CommonJavadatatypes/int"/>
+                </eOperations>
+                <eOperations name="saveCategory" ordered="false" eType="#//externals/RequestMapping">
+                  <eParameters name="category" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Category"/>
+                </eOperations>
+                <eOperations name="updateCategory" ordered="false" eType="#//externals/RequestMapping">
+                  <eParameters name="category" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Category"/>
+                </eOperations>
+                <eOperations name="deleteCategory" ordered="false" eType="#//externals/RequestMapping">
+                  <eParameters name="category" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Category"/>
+                </eOperations>
+                <eStructuralFeatures xsi:type="ecore:EReference" name="categoryRepository"
+                    ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/repository/CategoryRepository"/>
+              </eClassifiers>
+              <eClassifiers xsi:type="ecore:EClass" name="OrdersController">
+                <eOperations name="OrdersController" ordered="false" lowerBound="1">
+                  <eParameters name="orderRepository" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/repository/OrderRepository"/>
+                </eOperations>
+                <eOperations name="getAll" ordered="false" upperBound="-1" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Order"/>
+                <eStructuralFeatures xsi:type="ecore:EReference" name="orderRepository"
+                    ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/repository/OrderRepository"/>
+              </eClassifiers>
+            </eSubpackages>
+            <eSubpackages name="mutation" nsURI="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/api/mutation.ecore"
+                nsPrefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.api.mutation">
+              <eClassifiers xsi:type="ecore:EClass" name="ProductMutationResolver"
+                  eSuperTypes="#//externals/orgspringframeworkhttpResponseEntity">
+                <eOperations name="ProductMutationResolver" ordered="false" lowerBound="1">
+                  <eParameters name="productRepository" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/repository/ProductRepository"/>
+                </eOperations>
+                <eOperations name="saveProduct" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Product">
+                  <eParameters name="product" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Product"/>
+                </eOperations>
+                <eOperations name="updateProduct" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Product">
+                  <eParameters name="product" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Product"/>
+                </eOperations>
+                <eOperations name="deleteProduct" ordered="false" eType="#//externals/java/lang/String">
+                  <eParameters name="id" ordered="false" eType="#//ECommerceBackendmaster/CommonJavadatatypes/int"/>
+                </eOperations>
+                <eStructuralFeatures xsi:type="ecore:EReference" name="productRepository"
+                    ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/repository/ProductRepository"/>
+              </eClassifiers>
+            </eSubpackages>
+            <eSubpackages name="query" nsURI="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/api/query.ecore"
+                nsPrefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.api.query">
+              <eClassifiers xsi:type="ecore:EClass" name="ProductQueryResolver" eSuperTypes="#//externals/orgspringframeworkwebbindannotation">
+                <eOperations name="ProductQueryResolver" ordered="false" lowerBound="1">
+                  <eParameters name="productRepository" ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/repository/ProductRepository"/>
+                </eOperations>
+                <eOperations name="getProducts" ordered="false" upperBound="-1" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Product"/>
+                <eOperations name="getProductById" ordered="false" eType="#//externals/java/util/javautilOptionalcommetsoftecommercemodelProduct">
+                  <eParameters name="id" ordered="false" eType="#//ECommerceBackendmaster/CommonJavadatatypes/int"/>
+                </eOperations>
+                <eStructuralFeatures xsi:type="ecore:EReference" name="productRepository"
+                    ordered="false" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/repository/ProductRepository"/>
+              </eClassifiers>
+            </eSubpackages>
+          </eSubpackages>
+          <eSubpackages name="repository" nsURI="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/repository.ecore"
+              nsPrefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.repository">
+            <eClassifiers xsi:type="ecore:EClass" name="OrderRepository" abstract="true"
+                interface="true"/>
+            <eClassifiers xsi:type="ecore:EClass" name="ProductRepository" abstract="true"
+                interface="true"/>
+            <eClassifiers xsi:type="ecore:EClass" name="CategoryRepository" abstract="true"
+                interface="true"/>
+          </eSubpackages>
+          <eSubpackages name="model" nsURI="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce/model.ecore"
+              nsPrefix="rootmodel.ECommerceBackendmaster.com.metsoft.ecommerce.model">
+            <eClassifiers xsi:type="ecore:EClass" name="Order">
+              <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false"
+                  eType="#//ECommerceBackendmaster/CommonJavadatatypes/int"/>
+              <eStructuralFeatures xsi:type="ecore:EReference" name="creationDate"
+                  ordered="false" eType="#//externals/java/util/Date"/>
+              <eStructuralFeatures xsi:type="ecore:EReference" name="products" ordered="false"
+                  upperBound="-1" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Product"/>
+            </eClassifiers>
+            <eClassifiers xsi:type="ecore:EClass" name="Product">
+              <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false"
+                  eType="#//ECommerceBackendmaster/CommonJavadatatypes/int"/>
+              <eStructuralFeatures xsi:type="ecore:EReference" name="productName"
+                  ordered="false" eType="#//externals/java/lang/String"/>
+              <eStructuralFeatures xsi:type="ecore:EReference" name="description"
+                  ordered="false" eType="#//externals/java/lang/String"/>
+              <eStructuralFeatures xsi:type="ecore:EAttribute" name="price" ordered="false"
+                  eType="#//ECommerceBackendmaster/CommonJavadatatypes/double"/>
+              <eStructuralFeatures xsi:type="ecore:EReference" name="createDate" ordered="false"
+                  eType="#//externals/java/util/Date"/>
+              <eStructuralFeatures xsi:type="ecore:EReference" name="category" ordered="false"
+                  eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Category"/>
+              <eStructuralFeatures xsi:type="ecore:EReference" name="orderItems" ordered="false"
+                  upperBound="-1" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Order"/>
+            </eClassifiers>
+            <eClassifiers xsi:type="ecore:EClass" name="Category">
+              <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false"
+                  eType="#//ECommerceBackendmaster/CommonJavadatatypes/int"/>
+              <eStructuralFeatures xsi:type="ecore:EReference" name="categoryName"
+                  ordered="false" eType="#//externals/java/lang/String"/>
+              <eStructuralFeatures xsi:type="ecore:EReference" name="products" ordered="false"
+                  upperBound="-1" eType="#//ECommerceBackendmaster/com/metsoft/ecommerce/model/Product"/>
+            </eClassifiers>
+          </eSubpackages>
+        </eSubpackages>
+      </eSubpackages>
+    </eSubpackages>
+    <eSubpackages name="CommonJavadatatypes" nsURI="http:///rootmodel/ECommerceBackendmaster/CommonJavadatatypes.ecore"
+        nsPrefix="rootmodel.ECommerceBackendmaster.CommonJavadatatypes">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="Common Java datatypes"/>
+      </eAnnotations>
+      <eClassifiers xsi:type="ecore:EDataType" name="long" instanceClassName="long"/>
+      <eClassifiers xsi:type="ecore:EDataType" name="float" instanceClassName="float"/>
+      <eClassifiers xsi:type="ecore:EDataType" name="double" instanceClassName="double"/>
+      <eClassifiers xsi:type="ecore:EDataType" name="boolean" instanceClassName="boolean"/>
+      <eClassifiers xsi:type="ecore:EDataType" name="void" instanceClassName="void"/>
+      <eClassifiers xsi:type="ecore:EDataType" name="char" instanceClassName="char"/>
+      <eClassifiers xsi:type="ecore:EDataType" name="short" instanceClassName="short"/>
+      <eClassifiers xsi:type="ecore:EDataType" name="byte" instanceClassName="byte"/>
+      <eClassifiers xsi:type="ecore:EDataType" name="string" instanceClassName="string"/>
+      <eClassifiers xsi:type="ecore:EDataType" name="int" instanceClassName="int"/>
+    </eSubpackages>
+  </eSubpackages>
+  <eSubpackages name="externals" nsURI="http:///rootmodel/externals.ecore" nsPrefix="rootmodel.externals">
+    <eClassifiers xsi:type="ecore:EClass" name="GraphQLMutationResolver" abstract="true"
+        interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="GraphQLQueryResolver" abstract="true"
+        interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkbootSpringApplication"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.boot.SpringApplication"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkbootautoconfigureSpringBootApplication"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.boot.autoconfigure.SpringBootApplication"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkbeansfactoryannotationAutowired"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.beans.factory.annotation.Autowired"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkhttpResponseEntity"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.http.ResponseEntity"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkwebbindannotation"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.web.bind.annotation"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkwebbindannotationGetMapping"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.web.bind.annotation.GetMapping"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkwebbindannotationRequestMapping"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.web.bind.annotation.RequestMapping"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkwebbindannotationRestController"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.web.bind.annotation.RestController"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="comcoxautodevgraphqltoolsGraphQLMutationResolver"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="com.coxautodev.graphql.tools.GraphQLMutationResolver"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkstereotypeComponent"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.stereotype.Component"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="comcoxautodevgraphqltoolsGraphQLQueryResolver"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="com.coxautodev.graphql.tools.GraphQLQueryResolver"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="comfasterxmljacksonannotationJsonIgnore"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="com.fasterxml.jackson.annotation.JsonIgnore"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="lombokAllArgsConstructor" abstract="true"
+        interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="lombok.AllArgsConstructor"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="lombokData" abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="lombok.Data"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="lombokNoArgsConstructor" abstract="true"
+        interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="lombok.NoArgsConstructor"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="javaxpersistence" abstract="true"
+        interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="javax.persistence"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkdatajparepositoryJpaRepository"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.data.jpa.repository.JpaRepository"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgjunitjupiterapiTest" abstract="true"
+        interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.junit.jupiter.api.Test"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkboottestcontextSpringBootTest"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="org.springframework.boot.test.context.SpringBootTest"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ResponseEntity" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SpringBootApplication" abstract="true"
+        interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SpringBootTest" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Test" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RestController" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RequestMapping" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Autowired" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="GetMapping" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="PathVariable" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="PostMapping" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="RequestBody" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="PatchMapping" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DeleteMapping" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Data" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Entity" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Table" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="AllArgsConstructor" abstract="true"
+        interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="NoArgsConstructor" abstract="true"
+        interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Id" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="GeneratedValue" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Column" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="OneToMany" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="JsonIgnore" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ManyToMany" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="JoinTable" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ManyToOne" abstract="true" interface="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="JoinColumn" abstract="true" interface="true"/>
+    <eSubpackages name="java" nsURI="http:///rootmodel/externals/java.ecore" nsPrefix="rootmodel.externals.java">
+      <eSubpackages name="lang" nsURI="http:///rootmodel/externals/java/lang.ecore"
+          nsPrefix="rootmodel.externals.java.lang">
+        <eClassifiers xsi:type="ecore:EClass" name="String" eSuperTypes="#//externals/java/io/Serializable #//externals/java/lang/Comparable #//externals/java/lang/CharSequence #//externals/java/lang/constant/Constable #//externals/java/lang/constant/ConstantDesc"/>
+        <eClassifiers xsi:type="ecore:EClass" name="Comparable" abstract="true" interface="true"/>
+        <eClassifiers xsi:type="ecore:EClass" name="T"/>
+        <eClassifiers xsi:type="ecore:EClass" name="CharSequence" abstract="true"
+            interface="true"/>
+        <eClassifiers xsi:type="ecore:EClass" name="Iterable" abstract="true" interface="true"/>
+        <eClassifiers xsi:type="ecore:EClass" name="Cloneable" abstract="true" interface="true"/>
+        <eClassifiers xsi:type="ecore:EClass" name="Integer" eSuperTypes="#//externals/java/lang/Number #//externals/java/lang/Comparable #//externals/java/lang/constant/Constable #//externals/java/lang/constant/ConstantDesc"/>
+        <eClassifiers xsi:type="ecore:EClass" name="Number" eSuperTypes="#//externals/java/io/Serializable"/>
+        <eSubpackages name="constant" nsURI="http:///rootmodel/externals/java/lang/constant.ecore"
+            nsPrefix="rootmodel.externals.java.lang.constant">
+          <eClassifiers xsi:type="ecore:EClass" name="Constable" abstract="true" interface="true"/>
+          <eClassifiers xsi:type="ecore:EClass" name="ConstantDesc" abstract="true"
+              interface="true"/>
+        </eSubpackages>
+      </eSubpackages>
+      <eSubpackages name="io" nsURI="http:///rootmodel/externals/java/io.ecore" nsPrefix="rootmodel.externals.java.io">
+        <eClassifiers xsi:type="ecore:EClass" name="Serializable" abstract="true"
+            interface="true"/>
+      </eSubpackages>
+      <eSubpackages name="util" nsURI="http:///rootmodel/externals/java/util.ecore"
+          nsPrefix="rootmodel.externals.java.util">
+        <eClassifiers xsi:type="ecore:EClass" name="List" abstract="true" interface="true"
+            eSuperTypes="#//externals/java/util/Collection"/>
+        <eClassifiers xsi:type="ecore:EClass" name="Collection" abstract="true" interface="true"
+            eSuperTypes="#//externals/java/lang/Iterable"/>
+        <eClassifiers xsi:type="ecore:EClass" name="E"/>
+        <eClassifiers xsi:type="ecore:EClass" name="Optional">
+          <eOperations name="isEmpty" ordered="false" lowerBound="1"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="javautilListcommetsoftecommercemodelCategory"
+            abstract="true" interface="true">
+          <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details key="originalName" value="java.util.List&lt;com.metsoft.ecommerce.model.Category>"/>
+          </eAnnotations>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="javautilListcommetsoftecommercemodelOrder"
+            abstract="true" interface="true">
+          <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details key="originalName" value="java.util.List&lt;com.metsoft.ecommerce.model.Order>"/>
+          </eAnnotations>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="javautilListcommetsoftecommercemodelProduct"
+            abstract="true" interface="true">
+          <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details key="originalName" value="java.util.List&lt;com.metsoft.ecommerce.model.Product>"/>
+          </eAnnotations>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="javautilOptionalcommetsoftecommercemodelCategory">
+          <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details key="originalName" value="java.util.Optional&lt;com.metsoft.ecommerce.model.Category>"/>
+          </eAnnotations>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="javautilOptionalcommetsoftecommercemodelProduct">
+          <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details key="originalName" value="java.util.Optional&lt;com.metsoft.ecommerce.model.Product>"/>
+          </eAnnotations>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="Date" eSuperTypes="#//externals/java/io/Serializable #//externals/java/lang/Cloneable #//externals/java/lang/Comparable">
+          <eOperations name="Date" ordered="false" lowerBound="1"/>
+        </eClassifiers>
+      </eSubpackages>
+    </eSubpackages>
+  </eSubpackages>
+  <eSubpackages name="sourcereferences" nsURI="http:///rootmodel/sourcereferences.ecore"
+      nsPrefix="rootmodel.sourcereferences">
+    <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details key="originalName" value="source references"/>
+    </eAnnotations>
+  </eSubpackages>
+</ecore:EPackage>

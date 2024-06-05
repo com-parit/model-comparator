@@ -21,8 +21,11 @@ class Adapter:
                 comparator_url,
                 files={"emfaticModel":emfaticModel}
             )
-        with open(emfaticFilePath.replace(".emf", ".ecore"), "w") as file:
+
+        ecore_path = emfaticFilePath.replace(".emf", ".ecore")
+        with open(ecore_path, "w") as file:
             file.write(ecoreFromEmfaticResponse.text)  
+        return ecore_path
             
     def get_emfatic_from_ecore(ecoreModelFilePath):
         comparator_url = f'{yamtl_comparator_url}/ecore2emfatic'
@@ -31,5 +34,7 @@ class Adapter:
                 comparator_url,
                 files={"ecoreModel":emfaticModel}
             )
-        with open(ecoreModelFilePath.replace(".ecore", ".emf"), "w") as file:
+        emf_path = ecoreModelFilePath.replace(".ecore", ".emf")
+        with open(emf_path, "w") as file:
             file.write(ecoreFromEmfaticResponse.text)
+        return emf_path
