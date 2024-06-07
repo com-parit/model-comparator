@@ -43,6 +43,9 @@ dependencies {
 	implementation 'net.openhft:zero-allocation-hashing:0.16'
 	implementation 'org.json:json:20171018'
     implementation 'org.apache.opennlp:opennlp-tools:2.0.0'
+    implementation files('org.eclipse.uml2.uml_5.5.0.v20210228-1829.jar')
+    implementation files('org.eclipse.uml2.types_2.5.0.v20210228-1829.jar')
+    implementation files('org.eclipse.uml2.common_2.5.0.v20210228-1829.jar')
 }
 application {
     mainClass = 'com.mdre.evaluation.App'

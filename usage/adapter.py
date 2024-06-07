@@ -33,3 +33,13 @@ class Adapter:
             )
         with open(ecoreModelFilePath.replace(".ecore", ".emf"), "w") as file:
             file.write(ecoreFromEmfaticResponse.text)
+            
+    def get_ecore_from_uml(umlModelFilePath):
+        comparator_url = f'{yamtl_comparator_url}/uml2ecore'
+        with open(umlModelFilePath) as umlModel:
+            ecoreFromUmlResponse = requests.post(
+                comparator_url,
+                files={"umlModel":umlModel}
+            )
+        with open(umlModelFilePath.replace(".uml", ".ecore"), "w") as file:
+            file.write(ecoreFromUmlResponse.text)

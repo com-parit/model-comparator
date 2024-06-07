@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import com.mdre.evaluation.EvaluateClasses;
 import com.mdre.evaluation.EcoreToEmfaticService;
 import com.mdre.evaluation.EmfaticToEcoreModelService;
+import com.mdre.evaluation.Uml2Ecore;
 
 @SpringBootApplication
 @RestController
@@ -26,7 +27,7 @@ public class App {
     String rootProjectPath = "/media/jawad/secondaryStorage/projects/mdre/top10/model-comparator/yamtl-comparator/";
 
     public static void main(String[] args) {
-      SpringApplication.run(App.class, args);
+        SpringApplication.run(App.class, args);
     }
 
     @GetMapping("/hello")
@@ -66,7 +67,31 @@ public class App {
             Files.delete(Paths.get(emfaticFilePath));
             return response;
         } catch (Exception e) {
-            return "Could not generate emfatic file " + e;
+            return "Could not generate ecore file " + e;
+        }
+    }
+
+   @PostMapping("/uml2ecore")
+    public String getEcoreFromUml(@RequestParam("umlModel") MultipartFile umlModel) {
+        try {
+            Uml2Ecore uml2ecore = new Uml2Ecore();
+            String umlFilePath = saveFile(umlModel, "");
+            System.out.println(rootProjectPath);
+            System.out.println(umlFilePath);
+            String ecoreFilePath = umlFilePath.substring(0, umlFilePath.length() - ".uml".length()) + ".ecore";
+            System.out.println(ecoreFilePath);
+			Uml2Ecore.convertUmlToEcore(
+				umlFilePath, 
+                ecoreFilePath
+            );
+            Path path = Paths.get(ecoreFilePath);
+            String response = Files.readString(path);
+            System.out.print(response);
+            Files.delete(path);
+            Files.delete(Paths.get(umlFilePath));
+            return response;
+        } catch (Exception e) {
+            return "Could not generate uml file " + e;
         }
     }
 
