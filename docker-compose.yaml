@@ -8,7 +8,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - /tmp
+      - ./yamtl-comparator:/app
 
   driver:
     build:
@@ -29,4 +29,4 @@ services:
     ports:
       - "4040:4040"
     volumes:
-      - ./nlp-evaluator:/nlp-evaluator
+      - ./nlp-evaluator:/app

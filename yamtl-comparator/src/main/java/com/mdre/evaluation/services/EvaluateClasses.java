@@ -1,4 +1,4 @@
-package com.mdre.evaluation;
+package com.mdre.evaluation.services;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.json.*;
 import java.io.FileNotFoundException;
 import java.io.File;
 
-import com.mdre.evaluation.Compare;
+import com.mdre.evaluation.ModelComparisonUtils;
 
 import org.eclipse.emf.ecore.EcorePackage;
 
@@ -307,7 +307,7 @@ public class EvaluateClasses extends YAMTLModule {
 		for (EReference eref: references) {
 			Boolean found = false;
 			for (EReference erefContainment: containments) {
-				if (Compare.compareNames(eref.getName(), erefContainment.getName())) {
+				if (ModelComparisonUtils.compareNames(eref.getName(), erefContainment.getName())) {
 					found = true;
 				}
 			}
@@ -553,7 +553,7 @@ public static HashMap<String, Object> createModelLevelMetricsFromClassLevelMetri
 				Boolean matched = false;
 				for (Object classLiteralPredicted: allClassLiteralsForGeneratedlModel) {
 					EClass erefPredicted = (EClass) classLiteralPredicted;
-					if (Compare.compareNames(erefOriginal.getName(), erefPredicted.getName())) {
+					if (ModelComparisonUtils.compareNames(erefOriginal.getName(), erefPredicted.getName())) {
 						matched = true;
 						HashMap<String, Object> classLevelMetrics = compareClasses(erefOriginal, erefPredicted);
 						matchedClassMetrics.put(erefOriginal.getName(), classLevelMetrics);
@@ -575,7 +575,7 @@ public static HashMap<String, Object> createModelLevelMetricsFromClassLevelMetri
 				Boolean matched = false;
 				for (Object classLiteral: allClassLiteralsForOriginalModel) {
 					EClass erefOriginal = (EClass) classLiteral;
-					if (Compare.compareNames(erefPredicted.getName(), erefOriginal.getName())) {
+					if (ModelComparisonUtils.compareNames(erefPredicted.getName(), erefOriginal.getName())) {
 						matched = true;
 					}
 				}
