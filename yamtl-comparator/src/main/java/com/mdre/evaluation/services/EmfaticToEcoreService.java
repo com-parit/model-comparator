@@ -1,9 +1,9 @@
-package com.mdre.evaluation;
+package com.mdre.evaluation.services;
 
 import java.io.File;
 import org.eclipse.emf.emfatic.core.generator.ecore.EcoreGenerator;
 
-public class EmfaticToEcoreModelService {
+public class EmfaticToEcoreService {
     public void run(String EMFATIC_FILE_PATH) {
         try {
             File file = new File(EMFATIC_FILE_PATH);
