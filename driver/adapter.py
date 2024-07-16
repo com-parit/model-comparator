@@ -15,6 +15,16 @@ class Adapter:
 			}
 		)
 		return response.json()
+
+	def get_yamlt_comparator_hash_results(ground_truth_ecore_model, predicted_ecore_model, projectName):
+		yamtl_comparator_endpoint = f'{yamtl_comparator_url}/compare-hash'
+		response = requests.post(
+			yamtl_comparator_endpoint, files={"groundTruthModel": ground_truth_ecore_model, "predictedModel": predicted_ecore_model}, 
+			data={
+    			"projectName": projectName
+			}
+		)
+		return response.json()
 	
 	def get_emfatic(ecore_model):
 		yamtl_comparator_endpoint = f'{yamtl_comparator_url}/ecore2emfatic'

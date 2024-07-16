@@ -13,6 +13,17 @@ class Adapter:
 					"projectName": projectName
 				})
             return response.json()
+
+    def compare_ecore_models_using_hashing(ground_truth_model, predicted_model, projectName):
+        comparator_url = "http://localhost:5050/compare-hash"
+        with open(ground_truth_model) as groundTruthModel, open(predicted_model) as predictedModel:
+            response = requests.post(
+				comparator_url,
+				files={"groundTruthModel": groundTruthModel, "predictedModel": predictedModel},
+				data={
+					"projectName": projectName
+				})
+            return response.json()
     
     def get_ecore_model_from_emfatic(emfaticFilePath):
         comparator_url = f'{yamtl_comparator_url}/emfatic2ecore'

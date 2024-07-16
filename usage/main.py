@@ -319,7 +319,7 @@ class Main:
         predictedModel = Adapter.get_ecore_model_from_emfatic(predictedModel_emf)
 
 
-        response = Adapter.compare_ecore_models(groundTruthModel, predictedModel, projectName)
+        response = Adapter.compare_ecore_models_using_hashing("bt_openlink.ecore", "btopenlinkjavacoremodel.ecore", projectName)
         model_level_json = response['result']["modelLevelJson"]
         class_level_json = response['result']["classLevelJson"]
         print(model_level_json)

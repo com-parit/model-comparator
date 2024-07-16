@@ -19,7 +19,7 @@ import com.mdre.evaluation.Utils.FileUtils;
 
 @RestController
 public class EcoreToEmfaticController {
-    String rootProjectPath = "/"
+    String rootProjectPath = "/media/jawad/secondaryStorage/projects/thesis/";
     @PostMapping("/ecore2emfatic")
     public String getEmfaticFromEcore(@RequestParam("ecoreModel") MultipartFile ecoreModel) {
         try {
