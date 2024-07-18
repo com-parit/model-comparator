@@ -36,7 +36,7 @@ public class HashingService extends AbstractClassComparisonService {
 	private double HASHING_THRESHOLD;
 	public HashingService(JSONObject configuration) {
 		// configuration
-		HASHING_THRESHOLD = configuration.getDouble("hashingThreshold");
+		HASHING_THRESHOLD = configuration.getDouble("HASHING_THRESHOLD");
 	}
 
     public static long computeCRC32(String input) {

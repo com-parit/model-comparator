@@ -1,0 +1,50 @@
+@startuml
+
+package modelComparisonService {
+
+	class ModelComparisonService {
+		+ HashMap<String, JSONObject> compareModels(ArrayList<HashMap<String, String>> models, Boolean includeDependencies)
+		+ HashMap<String, Object> getClassLevelMetrics(EClass erefOriginal, EClass erefPredicted)
+		+ HashMap<String, Object> getModelLevelMetricsFromClassLevelMetrics(
+			HashMap<String, HashMap<String, Object>> allMatchedClassesMetrics,
+			ArrayList<HashMap<String, Integer>> allOriginalClassesMetricsNotMatched,
+			ArrayList<HashMap<String, Integer>> allPredictedClassesMetricsNotMatched,
+			HashMap<String, Integer> enumerationConfusionMatrix,
+			Integer total_enumerations_model1,
+			Integer total_enumerations_model2)
+	}
+
+    abstract class AbstractClassComparisonService {
+        + ArrayList<HashMap<String, String>> getComparableObjectArrayForEAtrributes(List<EAttribute> eAttributesArray)
+        + ArrayList<HashMap<String, String>> getComparableObjectArrayForEnums(Object[] enumsArray)
+        + ArrayList<HashMap<String, String>> getComparableObjectArrayForEClasses(Object[] enumsArray)
+        + ArrayList<HashMap<String, String>> getComparableObjectArrayForEClasses(List<EClass> eClassesArray)
+        + ArrayList<HashMap<String, String>> getComparableObjectArrayForEParameters(List<EParameter> eParametersArray)
+        + ArrayList<HashMap<String, String>> getComparableObjectArrayForEOperations(List<EOperation> eOperationsArray)
+        + ArrayList<HashMap<String, String>> getComparableObjectArrayForEReferences(List<EReference> eReferencesArray)
+        + HashMap<String, Object> computeSimilarity(ArrayList<HashMap<String, String>> originalDigest, ArrayList<HashMap<String, String>> predictedDigest)
+    }
+
+    class DigestService {
+        + ArrayList<HashMap<String, String>> getComparableObjectForEAtrribute(EAttribute eAttribute)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEClass(EClass eClass)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEParameter(EParameter eParameter)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEOperation(EOperation eOperation)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEReference(EReference eReference)
+    }
+
+    class HashingService {
+        + ArrayList<HashMap<String, String>> getComparableObjectForEAtrribute(EAttribute eAttribute)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEClass(EClass eClass)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEParameter(EParameter eParameter)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEOperation(EOperation eOperation)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEReference(EReference eReference)
+    }
+
+    AbstractClassComparisonService <|-- DigestService
+    AbstractClassComparisonService <|-- HashingService
+	ModelComparisonService --> AbstractClassComparisonService: uses
+
+}
+
+@enduml

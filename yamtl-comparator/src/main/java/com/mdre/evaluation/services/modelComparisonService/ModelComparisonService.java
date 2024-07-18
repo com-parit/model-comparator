@@ -40,10 +40,10 @@ public class ModelComparisonService {
 	AbstractClassComparisonService comparisonService;
 
 	public ModelComparisonService(JSONObject configuration) {
-		Boolean USE_HASHING = configuration.getBoolean("useHashing");
-		double HASHING_THRESHOLD = configuration.getDouble("hashingThreshold");
+		Boolean USE_HASHING = configuration.getBoolean("USE_HASHING");
+		double HASHING_THRESHOLD = configuration.getDouble("HASHING_THRESHOLD");
 		JSONObject hashingConfiguration = new JSONObject();
-		hashingConfiguration.put("hashingThreshold", HASHING_THRESHOLD);
+		hashingConfiguration.put("HASHING_THRESHOLD", HASHING_THRESHOLD);
 		if (USE_HASHING) {
 			comparisonService = new HashingService(hashingConfiguration);
 		} else {
