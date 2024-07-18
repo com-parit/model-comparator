@@ -24,6 +24,7 @@ def post_endpoint():
 
     groundTruthModel = request.files['groundTruthModel']
     predictedModel = request.files['predictedModel']
+    config = request.files["config"]
     projectName = request.form["projectName"]
 
     if groundTruthModel.filename == '':
@@ -44,7 +45,7 @@ def post_endpoint():
               groundTruthModelEmfatic = Adapter.get_emfatic(groundTruthModel)
               predictedModelEmfatic = Adapter.get_emfatic(predictedModel)
         with open(groundTruthModelFilePath, 'rb') as groundTruthModel, open(predictedModelFilePath, 'rb') as predictedModel:
-              result = Adapter.get_yamlt_comparator_results(groundTruthModel, predictedModel, projectName)
+              result = Adapter.get_yamlt_comparator_results(groundTruthModel, predictedModel, projectName, config)
 		
 		
         
@@ -70,8 +71,6 @@ def post_endpoint():
             'result': result, 
 		}), 200
 
-@app.route('/compare-hash', methods=['POST'])
-def get_hash_comparison():
     if 'groundTruthModel' not in request.files:
         return jsonify({'error': 'No Ground Truth Model File'}), 400
 
@@ -81,6 +80,7 @@ def get_hash_comparison():
     groundTruthModel = request.files['groundTruthModel']
     predictedModel = request.files['predictedModel']
     projectName = request.form["projectName"]
+    config = request.form["config"]
 
     if groundTruthModel.filename == '':
         return jsonify({'error': 'No ground truth selected file'}), 400
@@ -100,7 +100,7 @@ def get_hash_comparison():
               groundTruthModelEmfatic = Adapter.get_emfatic(groundTruthModel)
               predictedModelEmfatic = Adapter.get_emfatic(predictedModel)
         with open(groundTruthModelFilePath, 'rb') as groundTruthModel, open(predictedModelFilePath, 'rb') as predictedModel:
-              result = Adapter.get_yamlt_comparator_hash_results(groundTruthModel, predictedModel, projectName)
+              result = Adapter.get_yamlt_comparator_results(groundTruthModel, predictedModel, projectName, config)
 		
 		
         

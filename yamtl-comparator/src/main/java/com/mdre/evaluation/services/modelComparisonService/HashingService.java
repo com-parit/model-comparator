@@ -12,12 +12,12 @@ import org.json.*;
 import java.io.FileNotFoundException;
 import java.io.File;
 import java.util.zip.CRC32;
-
-import org.eclipse.emf.ecore.EcorePackage;
+import org.json.JSONObject;
 
 import subtyping.EMFSubtyping;
 import yamtl.core.YAMTLModule;
 
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EOperation;
@@ -30,7 +30,14 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
 
-public class HashingService {
+import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
+
+public class HashingService extends AbstractClassComparisonService {
+	private double HASHING_THRESHOLD;
+	public HashingService(JSONObject configuration) {
+		// configuration
+		HASHING_THRESHOLD = configuration.getDouble("hashingThreshold");
+	}
 
     public static long computeCRC32(String input) {
             CRC32 crc32 = new CRC32();
@@ -57,7 +64,7 @@ public class HashingService {
         return (double) distance / maxLength;
     }
 
-	public static String getHashForEReference(EReference eref) {
+	public String getComparableObjectForEReference(EReference eref) {
         long totalChecksum = 0;
         totalChecksum += computeCRC32(eref.getName().toLowerCase());
         totalChecksum += computeCRC32(Integer.toString(eref.getLowerBound()));
@@ -70,21 +77,21 @@ public class HashingService {
         return binaryHash;
 	}
 
-	public static String getHashForEClass(EClass eClass) {
+	public String getComparableObjectForEClass(EClass eClass) {
         long totalChecksum = 0;
         totalChecksum += computeCRC32(eClass.getName().toLowerCase());
         String binaryHash = Long.toBinaryString(totalChecksum);
         return binaryHash;
 	}
 
-	public static String getHashForEnum(EEnum enumeration) {
+	public String getComparableObjectForEnum(EEnum enumeration) {
         long totalChecksum = 0;
         totalChecksum += computeCRC32(enumeration.getName().toLowerCase());
         String binaryHash = Long.toBinaryString(totalChecksum);
         return binaryHash;
 	}
 
-	public static String getHashForEAttribute(EAttribute eAtt) {
+	public String getComparableObjectForEAttribute(EAttribute eAtt) {
         long totalChecksum = 0;
         totalChecksum += computeCRC32(eAtt.getName().toLowerCase());
 		if (eAtt.getEContainingClass() != null) {
@@ -101,22 +108,22 @@ public class HashingService {
 		return binaryHash;
 	}
 
-	public static String getHashForEoperation(EOperation eop) {
+	public String getComparableObjectForEoperation(EOperation eop) {
         long totalChecksum = 0;
         totalChecksum += computeCRC32(eop.getName().toLowerCase());
 		if (eop.getEContainingClass() != null) {
 	        totalChecksum += computeCRC32(eop.getEContainingClass().getName().toLowerCase());
 		}
-		// ArrayList<String> parametershash = getHashArrayForEParameters(eop.getEParameters());
+		// ArrayList<HashMap<String, String>> parametershash = getComparableObjectArrayForEParameters(eop.getEParameters());
 		// for (String hash : parametershash) {
-        //     long numericHash = Long.parseLong(hash);;
+        //     long numericHash = Long.parseLonghash);;
         //     totalChecksum += numericHash;
         // }
         String binaryHash = Long.toBinaryString(totalChecksum);
 		return binaryHash;
 	}
 
-	public static String getHashForEParameter(EParameter eparam) {
+	public String getComparableObjectForEParameter(EParameter eparam) {
         long totalChecksum = 0;
         totalChecksum += computeCRC32(eparam.getName().toLowerCase());
         totalChecksum += computeCRC32(eparam.getName().toLowerCase());
@@ -130,86 +137,99 @@ public class HashingService {
 		return binaryHash;
 	}
 
-	public static ArrayList<String> getHashArrayForEReferences(List<EReference> eReferencesArray) {
-		ArrayList<String> arrayOfHashes = new ArrayList<String>();
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEReferences(List<EReference> eReferencesArray) {
+		ArrayList<HashMap<String, String>> arrayOfHashes = new ArrayList<HashMap<String, String>>();
 		for(EReference eref: eReferencesArray) {
-			String hash = getHashForEReference(eref);
-			arrayOfHashes.add(hash);
+			String hash = getComparableObjectForEReference(eref);
+			HashMap<String, String> hashValue = new HashMap<String, String>();
+			hashValue.put("value", hash);
+			arrayOfHashes.add(hashValue);
 		}
 		return arrayOfHashes;
 	}
 
-	public static ArrayList<String> getHashArrayForEClasses(List<EClass> eClassesArray) {
-		ArrayList<String> arrayOfHashes = new ArrayList<String>();
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEClasses(List<EClass> eClassesArray) {
+		ArrayList<HashMap<String, String>> arrayOfHashes = new ArrayList<HashMap<String, String>>();
 		for(EClass eclass: eClassesArray) {
-			String hash = getHashForEClass(eclass);
-			arrayOfHashes.add(hash);
+			String hash = getComparableObjectForEClass(eclass);
+			HashMap<String, String> hashValue = new HashMap<String, String>();
+			hashValue.put("value", hash);
+			arrayOfHashes.add(hashValue);
 		}
 		return arrayOfHashes;
 	}
 
-	public static ArrayList<String> getHashArrayForEnums(Object[] enumsArray) {
-		ArrayList<String> arrayOfHashes = new ArrayList<String>();
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEnums(Object[] enumsArray) {
+		ArrayList<HashMap<String, String>> arrayOfHashes = new ArrayList<HashMap<String, String>>();
 		for(Object object: enumsArray) {
 			EEnum enumObject = (EEnum) object; 
-			String hash = getHashForEnum(enumObject);
-			arrayOfHashes.add(hash);
+			String hash = getComparableObjectForEnum(enumObject);
+			HashMap<String, String> hashValue = new HashMap<String, String>();
+			hashValue.put("value", hash);
+			arrayOfHashes.add(hashValue);
 		}
 		return arrayOfHashes;
 	}
 
-	public static ArrayList<String> getHashArrayForEClasses(Object[] eClassesArray) {
-		ArrayList<String> arrayOfHashes = new ArrayList<String>();
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEClasses(Object[] eClassesArray) {
+		ArrayList<HashMap<String, String>> arrayOfHashes = new ArrayList<HashMap<String, String>>();
 		for(Object a: eClassesArray) {
 			EClass eclass = (EClass) a;
-			String hash = getHashForEClass(eclass);
-			arrayOfHashes.add(hash);
+			String hash = getComparableObjectForEClass(eclass);
+			HashMap<String, String> hashValue = new HashMap<String, String>();
+			hashValue.put("value", hash);
+			arrayOfHashes.add(hashValue);
 		}
 		return arrayOfHashes;
 	}
 
-	public static ArrayList<String> getHashArrayForEAtrributes(List<EAttribute> eAttributesArray) {
-		ArrayList<String> arrayOfHashes = new ArrayList<String>();
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEAtrributes(List<EAttribute> eAttributesArray) {
+		ArrayList<HashMap<String, String>> arrayOfHashes = new ArrayList<HashMap<String, String>>();
 		for(EAttribute eAtt: eAttributesArray) {
-			String hash = getHashForEAttribute(eAtt);
-			arrayOfHashes.add(hash);
+			String hash = getComparableObjectForEAttribute(eAtt);
+			HashMap<String, String> hashValue = new HashMap<String, String>();
+			hashValue.put("value", hash);
+			arrayOfHashes.add(hashValue);
 		}
 		return arrayOfHashes;
 	}
 
-	 public static ArrayList<String> getHashArrayForEOperations(List<EOperation> eOperationsArray) {
-	 	ArrayList<String> arrayOfHashes = new ArrayList<String>();
+	 public ArrayList<HashMap<String, String>> getComparableObjectArrayForEOperations(List<EOperation> eOperationsArray) {
+	 	ArrayList<HashMap<String, String>> arrayOfHashes = new ArrayList<HashMap<String, String>>();
 	 	for(Object a: eOperationsArray) {
 	 		EOperation eop = (EOperation) a;
-	 		String hash = getHashForEoperation(eop);
-			arrayOfHashes.add(hash);
+	 		String hash = getComparableObjectForEoperation(eop);
+			HashMap<String, String> hashValue = new HashMap<String, String>();
+			hashValue.put("value", hash);
+			arrayOfHashes.add(hashValue);
 	 	}
 	 	return arrayOfHashes;
 	 }
 
-	 public static ArrayList<String> getHashArrayForEParameters(List<EParameter> eParametersArray) {
-	 	ArrayList<String> arrayOfHashes = new ArrayList<String>();
+	 public ArrayList<HashMap<String, String>> getComparableObjectArrayForEParameters(List<EParameter> eParametersArray) {
+	 	ArrayList<HashMap<String, String>> arrayOfHashes = new ArrayList<HashMap<String, String>>();
 	 	for(EParameter eparam: eParametersArray) {
-	 		String hash = getHashForEParameter(eparam);
-	 		arrayOfHashes.add(hash);
+	 		String hash = getComparableObjectForEParameter(eparam);
+	 		HashMap<String, String> hashValue = new HashMap<String, String>();
+			hashValue.put("value", hash);
+			arrayOfHashes.add(hashValue);
 	 	}
 	 	return arrayOfHashes;
 	 }	
 
-    public static HashMap<String, Object> computeSimilarityForHashes(
-		ArrayList<String> originalhashes, 
-		ArrayList<String> predictedhashes
+    public HashMap<String, Object> computeSimilarity(
+		ArrayList<HashMap<String, String>> originalhashes, 
+		ArrayList<HashMap<String, String>> predictedhashes
 		) {
         Integer truePositives = 0;
         Integer falsePositives = 0;
         Integer falseNegatives = 0;
-		double threshold = 0.7;
 
-        for (String hash1 : originalhashes) {
+        for (HashMap<String, String> hash1 : originalhashes) {
             boolean matchFound = false;
-            for (String hash2 : predictedhashes) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
-                if (normalizedHammingDist < threshold ) {
+            for (HashMap<String, String> hash2 : predictedhashes) {
+				double normalizedHammingDist = normalizedHammingDistance(hash1.get("value"), hash2.get("value"));
+                if (normalizedHammingDist < HASHING_THRESHOLD ) {
                     truePositives++;
                     matchFound = true;
 					String description = "\npredicted: " + hash2.toString();

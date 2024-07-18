@@ -29,9 +29,15 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
 
-public class DigestService {
+import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
 
-	public static HashMap<String, String> getDigestForEReference(EReference eref) {
+public class DigestService extends AbstractClassComparisonService {
+
+	public DigestService() {
+		// configuration
+	}
+
+	public HashMap<String, String> getComparableObjectForEReference(EReference eref) {
 		HashMap<String, String> digest = new HashMap<String, String>();
 		digest.put("name", eref.getName().toLowerCase());
 		digest.put("lowerBound", Integer.toString(eref.getLowerBound()));
@@ -43,25 +49,19 @@ public class DigestService {
 		return digest;
 	}
 
-	public static HashMap<String, String> getDigsetForEClass(EClass eClass) {
+	public HashMap<String, String> getComparableObjectForEClass(EClass eClass) {
 		HashMap<String, String> digest = new HashMap<String, String>();
 		digest.put("name", eClass.getName().toLowerCase());
-		// digest.put("instanceClassName", eClass.getInstanceClassName());
-		// digest.put("abstract", Boolean.toString(eClass.isAbstract()));
-		// digest.put("interface", Boolean.toString(eClass.isInterface()));
 		return digest;
 	}
 
-	public static HashMap<String, String> getDigestForEnum(EEnum enumeration) {
+	public HashMap<String, String> getComparableObjectForEnum(EEnum enumeration) {
 		HashMap<String, String> digest = new HashMap<String, String>();
 		digest.put("name", enumeration.getName().toLowerCase());
-		// digest.put("instanceClassName", eClass.getInstanceClassName());
-		// digest.put("abstract", Boolean.toString(eClass.isAbstract()));
-		// digest.put("interface", Boolean.toString(eClass.isInterface()));
 		return digest;
 	}
 
-	public static HashMap<String, String> getDigestForEAttribute(EAttribute eAtt) {
+	public HashMap<String, String> getComparableObjectForEAttribute(EAttribute eAtt) {
 		HashMap<String, String> digest = new HashMap<String, String>();
 		digest.put("name", eAtt.getName().toLowerCase());
 		if (eAtt.getEContainingClass() != null) {
@@ -77,19 +77,19 @@ public class DigestService {
 		return digest;
 	}
 
-	public static HashMap<String, String> getDigestForEoperation(EOperation eop) {
+	public HashMap<String, String> getComparableObjectForEoperation(EOperation eop) {
 		HashMap<String, String> digest = new HashMap<String, String>();
 		digest.put("name", eop.getName().toLowerCase());
 		if (eop.getEContainingClass() != null) {
 			digest.put("containerClassName", eop.getEContainingClass().getName().toLowerCase());
 		}
-		ArrayList<HashMap<String, String>> parametersDigest = getDigestArrayForEParameters(eop.getEParameters());
+		ArrayList<HashMap<String, String>> parametersDigest = getComparableObjectArrayForEParameters(eop.getEParameters());
 		Collections.sort(parametersDigest, Comparator.comparing((HashMap<String, String> map) -> map.get("name")));
 		digest.put("parametersDigest", parametersDigest.toString());
 		return digest;
 	}
 
-	public static HashMap<String, String> getDigestForEParameter(EParameter eparam) {
+	public HashMap<String, String> getComparableObjectForEParameter(EParameter eparam) {
 		HashMap<String, String> digest = new HashMap<String, String>();
 		digest.put("name", eparam.getName().toLowerCase());
 		if (eparam.getEType() != null) {
@@ -101,73 +101,73 @@ public class DigestService {
 		return digest;
 	}
 
-	public static ArrayList<HashMap<String, String>> getDigestArrayForEReferences(List<EReference> eReferencesArray) {
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEReferences(List<EReference> eReferencesArray) {
 		ArrayList<HashMap<String, String>> arrayOfDigests = new ArrayList<HashMap<String, String>>();
 		for(EReference eref: eReferencesArray) {
-			HashMap<String, String> digest = getDigestForEReference(eref);
+			HashMap<String, String> digest = getComparableObjectForEReference(eref);
 			arrayOfDigests.add(digest);
 		}
 		return arrayOfDigests;
 	}
 
-	public static ArrayList<HashMap<String, String>> getDigestArrayForEClasses(List<EClass> eClassesArray) {
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEClasses(List<EClass> eClassesArray) {
 		ArrayList<HashMap<String, String>> arrayOfDigests = new ArrayList<HashMap<String, String>>();
 		for(EClass eclass: eClassesArray) {
-			HashMap<String, String> digest = getDigsetForEClass(eclass);
+			HashMap<String, String> digest = getComparableObjectForEClass(eclass);
 			arrayOfDigests.add(digest);
 		}
 		return arrayOfDigests;
 	}
 
-	public static ArrayList<HashMap<String, String>> getDigestArrayForEnums(Object[] enumsArray) {
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEnums(Object[] enumsArray) {
 		ArrayList<HashMap<String, String>> arrayOfDigests = new ArrayList<HashMap<String, String>>();
 		for(Object object: enumsArray) {
 			EEnum enumObject = (EEnum) object; 
-			HashMap<String, String> digest = getDigestForEnum(enumObject);
+			HashMap<String, String> digest = getComparableObjectForEnum(enumObject);
 			arrayOfDigests.add(digest);
 		}
 		return arrayOfDigests;
 	}
 
-	public static ArrayList<HashMap<String, String>> getDigestArrayForEClasses(Object[] eClassesArray) {
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEClasses(Object[] eClassesArray) {
 		ArrayList<HashMap<String, String>> arrayOfDigests = new ArrayList<HashMap<String, String>>();
 		for(Object a: eClassesArray) {
 			EClass eclass = (EClass) a;
-			HashMap<String, String> digest = getDigsetForEClass(eclass);
+			HashMap<String, String> digest = getComparableObjectForEClass(eclass);
 			arrayOfDigests.add(digest);
 		}
 		return arrayOfDigests;
 	}
 
-	public static ArrayList<HashMap<String, String>> getDigestArrayForEAtrributes(List<EAttribute> eAttributesArray) {
+	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEAtrributes(List<EAttribute> eAttributesArray) {
 		ArrayList<HashMap<String, String>> arrayOfDigests = new ArrayList<HashMap<String, String>>();
 		for(EAttribute eAtt: eAttributesArray) {
-			HashMap<String, String> digest = getDigestForEAttribute(eAtt);
+			HashMap<String, String> digest = getComparableObjectForEAttribute(eAtt);
 			arrayOfDigests.add(digest);
 		}
 		return arrayOfDigests;
 	}
 
-	 public static ArrayList<HashMap<String, String>> getDigestArrayForEOperations(List<EOperation> eOperationsArray) {
+	 public ArrayList<HashMap<String, String>> getComparableObjectArrayForEOperations(List<EOperation> eOperationsArray) {
 	 	ArrayList<HashMap<String, String>> arrayOfDigests = new ArrayList<HashMap<String, String>>();
 	 	for(Object a: eOperationsArray) {
 	 		EOperation eop = (EOperation) a;
-	 		HashMap<String, String> digest = getDigestForEoperation(eop);
+	 		HashMap<String, String> digest = getComparableObjectForEoperation(eop);
 			arrayOfDigests.add(digest);
 	 	}
 	 	return arrayOfDigests;
 	 }
 
-	 public static ArrayList<HashMap<String, String>> getDigestArrayForEParameters(List<EParameter> eParametersArray) {
+	 public ArrayList<HashMap<String, String>> getComparableObjectArrayForEParameters(List<EParameter> eParametersArray) {
 	 	ArrayList<HashMap<String, String>> arrayOfDigests = new ArrayList<HashMap<String, String>>();
 	 	for(EParameter eparam: eParametersArray) {
-	 		HashMap<String, String> digest = getDigestForEParameter(eparam);
+	 		HashMap<String, String> digest = getComparableObjectForEParameter(eparam);
 	 		arrayOfDigests.add(digest);
 	 	}
 	 	return arrayOfDigests;
 	 }	
 
-    public static HashMap<String, Object> computeSimilarityForDigests(
+    public HashMap<String, Object> computeSimilarity(
 		ArrayList<HashMap<String, String>> originalDigest, 
 		ArrayList<HashMap<String, String>> predictedDigest
 		) {

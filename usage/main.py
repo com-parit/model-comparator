@@ -310,6 +310,7 @@ class Main:
         class_level_json = {}
 
         projectName = "ecommerce-backend"
+        config = "config.json"
         groundTruthModel = "ase2024-dataset/ecommerce-backend/ground-truth/ecommerce2.ecore"
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/mdre-llm/haiku/fine/ecommerce-backend.emf"
 
@@ -318,8 +319,7 @@ class Main:
 
         predictedModel = Adapter.get_ecore_model_from_emfatic(predictedModel_emf)
 
-
-        response = Adapter.compare_ecore_models_using_hashing("bt_openlink.ecore", "btopenlinkjavacoremodel.ecore", projectName)
+        response = Adapter.compare_ecore_models("bt_openlink.ecore", "btopenlinkjavacoremodel.ecore", projectName, config)
         model_level_json = response['result']["modelLevelJson"]
         class_level_json = response['result']["classLevelJson"]
         print(model_level_json)

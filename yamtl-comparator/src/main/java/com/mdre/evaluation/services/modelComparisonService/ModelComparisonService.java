@@ -12,8 +12,10 @@ import java.io.IOException;
 import org.json.*;
 import java.io.FileNotFoundException;
 import java.io.File;
+import org.json.JSONObject;
 
 import com.mdre.evaluation.ModelComparisonUtils;
+import com.mdre.evaluation.services.modelComparisonService.HashingService;
 import com.mdre.evaluation.services.modelComparisonService.DigestService;
 import com.mdre.evaluation.services.modelComparisonService.MetricsComputationService;
 import com.mdre.evaluation.services.modelComparisonService.YamtlService;
@@ -31,15 +33,32 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
 
+import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
+
 public class ModelComparisonService {
-	public static HashMap<String, Object> compareClassElementsUsingDigests(EClass erefOriginal, EClass erefPredicted) {
+
+	AbstractClassComparisonService comparisonService;
+
+	public ModelComparisonService(JSONObject configuration) {
+		Boolean USE_HASHING = configuration.getBoolean("useHashing");
+		double HASHING_THRESHOLD = configuration.getDouble("hashingThreshold");
+		JSONObject hashingConfiguration = new JSONObject();
+		hashingConfiguration.put("hashingThreshold", HASHING_THRESHOLD);
+		if (USE_HASHING) {
+			comparisonService = new HashingService(hashingConfiguration);
+		} else {
+			comparisonService = new DigestService();
+		}
+	}
+
+	public HashMap<String, Object> getClassLevelMetrics(EClass erefOriginal, EClass erefPredicted) {
 		HashMap<String, Object> classLevelMetrics = new HashMap<String, Object>();
 		classLevelMetrics.put("class_name_model1", erefOriginal.getName());
 		classLevelMetrics.put("class_name_model2", erefPredicted.getName());
 
-		HashMap<String, Object> attributeResultObject = DigestService.computeSimilarityForDigests(
-			DigestService.getDigestArrayForEAtrributes(erefOriginal.getEAttributes()),
-			DigestService.getDigestArrayForEAtrributes(erefPredicted.getEAttributes())
+		HashMap<String, Object> attributeResultObject = comparisonService.computeSimilarity(
+			comparisonService.getComparableObjectArrayForEAtrributes(erefOriginal.getEAttributes()),
+			comparisonService.getComparableObjectArrayForEAtrributes(erefPredicted.getEAttributes())
 		);
 		HashMap<String, Integer> attributeConfusionMatrix = (HashMap<String, Integer>) attributeResultObject.get("confusionMatrix");
 		classLevelMetrics.put("class_attributes_model1", erefOriginal.getEAttributes().size());
@@ -50,9 +69,9 @@ public class ModelComparisonService {
 		classLevelMetrics.put("attributes_fp", attributeConfusionMatrix.get("fp"));
 		classLevelMetrics.put("attributes_fn", attributeConfusionMatrix.get("fn"));
 
-		HashMap<String, Object> referenceResultObject = DigestService.computeSimilarityForDigests(
-			DigestService.getDigestArrayForEReferences(erefOriginal.getEReferences()),
-			DigestService.getDigestArrayForEReferences(erefPredicted.getEReferences())
+		HashMap<String, Object> referenceResultObject = comparisonService.computeSimilarity(
+			comparisonService.getComparableObjectArrayForEReferences(erefOriginal.getEReferences()),
+			comparisonService.getComparableObjectArrayForEReferences(erefPredicted.getEReferences())
 		);
 		HashMap<String, Integer> referenceConfusionMatrix = (HashMap<String, Integer>) referenceResultObject.get("confusionMatrix");
 		classLevelMetrics.put("class_references_model1", erefOriginal.getEReferences().size());
@@ -63,9 +82,9 @@ public class ModelComparisonService {
 		classLevelMetrics.put("references_fp", referenceConfusionMatrix.get("fp"));
 		classLevelMetrics.put("references_fn", referenceConfusionMatrix.get("fn"));
 
-		HashMap<String, Object> operationResultObject = DigestService.computeSimilarityForDigests(
-			DigestService.getDigestArrayForEOperations(erefOriginal.getEOperations()),
-			DigestService.getDigestArrayForEOperations(erefPredicted.getEOperations())
+		HashMap<String, Object> operationResultObject = comparisonService.computeSimilarity(
+			comparisonService.getComparableObjectArrayForEOperations(erefOriginal.getEOperations()),
+			comparisonService.getComparableObjectArrayForEOperations(erefPredicted.getEOperations())
 		);
 		HashMap<String, Integer> operationConfusionMatrix = (HashMap<String, Integer>) operationResultObject.get("confusionMatrix");
 		classLevelMetrics.put("class_operations_model1", erefOriginal.getEOperations().size());
@@ -76,9 +95,9 @@ public class ModelComparisonService {
 		classLevelMetrics.put("operations_fp", operationConfusionMatrix.get("fp"));
 		classLevelMetrics.put("operations_fn", operationConfusionMatrix.get("fn"));
 
-		HashMap<String, Object> superTypesResultObject = DigestService.computeSimilarityForDigests(
-			DigestService.getDigestArrayForEClasses(erefOriginal.getESuperTypes()),
-			DigestService.getDigestArrayForEClasses(erefPredicted.getESuperTypes())
+		HashMap<String, Object> superTypesResultObject = comparisonService.computeSimilarity(
+			comparisonService.getComparableObjectArrayForEClasses(erefOriginal.getESuperTypes()),
+			comparisonService.getComparableObjectArrayForEClasses(erefPredicted.getESuperTypes())
 		);
 		HashMap<String, Integer> superTypeConfusionMatrix = (HashMap<String, Integer>) superTypesResultObject.get("confusionMatrix");
 		classLevelMetrics.put("class_superTypes_model1", erefOriginal.getESuperTypes().size());
@@ -114,7 +133,7 @@ public class ModelComparisonService {
 		return classLevelMetrics;
 	}
 
-	public static HashMap<String, Object> createModelLevelMetricsFromClassLevelMetrics(
+	public HashMap<String, Object> getModelLevelMetricsFromClassLevelMetrics(
 			HashMap<String, HashMap<String, Object>> allMatchedClassesMetrics,
 			ArrayList<HashMap<String, Integer>> allOriginalClassesMetricsNotMatched,
 			ArrayList<HashMap<String, Integer>> allPredictedClassesMetricsNotMatched,
@@ -223,7 +242,7 @@ public class ModelComparisonService {
 			* models: ArrayList<HashMap<String, String>>. Example: [{"original: <ecore model file path>, "generated": <ecore model file path>}]
 			* includeDependencies: Boolean.
 	*/
-	public static HashMap<String, JSONObject> compareModels(ArrayList<HashMap<String, String>> models, Boolean includeDependencies) {
+	public HashMap<String, JSONObject> compareModels(ArrayList<HashMap<String, String>> models, Boolean includeDependencies) {
 		// initialize class level analysis object for matched classes
 		HashMap<String, Object> allMatchedClassesMetrics = new HashMap<String, Object>();
 
@@ -263,7 +282,7 @@ public class ModelComparisonService {
 					EClass erefPredicted = (EClass) classLiteralPredicted;
 					if (ModelComparisonUtils.compareNames(erefOriginal.getName(), erefPredicted.getName())) {
 						matched = true;
-						HashMap<String, Object> classLevelMetrics = compareClassElementsUsingDigests(erefOriginal, erefPredicted);
+						HashMap<String, Object> classLevelMetrics = getClassLevelMetrics(erefOriginal, erefPredicted);
 						matchedClassMetrics.put(erefOriginal.getName(), classLevelMetrics);
 					}
 				}
@@ -298,9 +317,9 @@ public class ModelComparisonService {
 			}
 
 			// compute confusion matrix for enumerations
-			HashMap<String, Object> enumerationResultObject = DigestService.computeSimilarityForDigests(
-				DigestService.getDigestArrayForEnums(countEngine.getAllLiterals(original_model).get("enumerations")),
-				DigestService.getDigestArrayForEnums(countEngine.getAllLiterals(generated_model).get("enumerations"))
+			HashMap<String, Object> enumerationResultObject = comparisonService.computeSimilarity(
+				comparisonService.getComparableObjectArrayForEnums(countEngine.getAllLiterals(original_model).get("enumerations")),
+				comparisonService.getComparableObjectArrayForEnums(countEngine.getAllLiterals(generated_model).get("enumerations"))
 			);
 			HashMap<String, Integer> enumerationConfusionMatrix = (HashMap<String, Integer>) enumerationResultObject.get("confusionMatrix");
 			Integer total_enumerations_model1 = original_literal_counts.get("enumerations");
@@ -308,7 +327,7 @@ public class ModelComparisonService {
 
 			// Create model level metrics object informed from class level analysis
 			System.out.println("Generating Model Level Metrics");
-			HashMap<String, Object> modelLevelMetrics = createModelLevelMetricsFromClassLevelMetrics(
+			HashMap<String, Object> modelLevelMetrics = getModelLevelMetricsFromClassLevelMetrics(
 				matchedClassMetrics, 
 				allOriginalClassesMetricsNotMatched,
 				allPredictedClassesMetricsNotMatched,
