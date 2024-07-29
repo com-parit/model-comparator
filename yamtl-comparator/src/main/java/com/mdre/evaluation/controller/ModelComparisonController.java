@@ -19,10 +19,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mdre.evaluation.services.modelComparisonService.ModelComparisonService;
-import com.mdre.evaluation.Utils.FileUtils;
+import com.mdre.evaluation.utils.FileUtils;
+import com.mdre.evaluation.utils.JSONtoDTOMapper;
+import com.mdre.evaluation.services.JsonSchemaValidatorService;
+import com.mdre.evaluation.config.Constants;
+import com.mdre.evaluation.dtos.ModelComparisonConfigurationDTO;
 
 @RestController
 public class ModelComparisonController {
+    private JsonSchemaValidatorService jsonSchemaValidatorService = new JsonSchemaValidatorService();
+
     @PostMapping("/compare")
     public Object compareUsingDigests(
         @RequestParam("groundTruthModel") MultipartFile groundTruthModel, 
@@ -41,8 +47,16 @@ public class ModelComparisonController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            // validate schema for configuration
+            try {
+                jsonSchemaValidatorService.validate(configuration.toString(), Constants.CONFIGURATION_SCHEMA_KEY);
+            } catch (Exception e) {
+                System.out.println("Incorrect config in request");
+                return new JSONObject("{\"response\":\"The configuration file does not conform to the schema\"}").toString();
+            }
             System.out.println(configuration);
-       		ModelComparisonService evaluationEngine = new ModelComparisonService(configuration);
+            ModelComparisonConfigurationDTO modelComparisonConfigurationDTO = JSONtoDTOMapper.mapToModelComparisonConfigurationDTO(configuration);
+       		ModelComparisonService evaluationEngine = new ModelComparisonService(modelComparisonConfigurationDTO);
             Boolean includeDependencies = true;
             ArrayList<HashMap<String, String>> models = new ArrayList<HashMap<String, String>>();
             models.add(new HashMap<String, String>(){{

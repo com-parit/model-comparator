@@ -59,12 +59,18 @@ def post_endpoint():
             result["modelLevelJson"][modelName]["ragas_answer_similarity"] = nlp_compare_result['ragas_similarity']['answer_similarity'] if nlp_compare_result['ragas_similarity'] else -1
             result["modelLevelJson"][modelName]["semantic_similarity_average"] = (result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] + result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] + result["modelLevelJson"][modelName]["ragas_faithfulness"] + result["modelLevelJson"][modelName]["ragas_answer_similarity"])/4
         except Exception as e:
-            modelName = list(result["modelLevelJson"].keys())[0]
-            result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] = None
-            result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] = None
-            result["modelLevelJson"][modelName]["ragas_faithfulness"] = None 
-            result["modelLevelJson"][modelName]["ragas_answer_similarity"] = None
-            result["modelLevelJson"][modelName]["semantic_similarity_average"] = None 
+            try:
+                modelName = list(result["modelLevelJson"].keys())[0]
+                result["modelLevelJson"][modelName]["cosine_similarity_tfidf"] = None
+                result["modelLevelJson"][modelName]["cosine_similarity_word2vec"] = None
+                result["modelLevelJson"][modelName]["ragas_faithfulness"] = None 
+                result["modelLevelJson"][modelName]["ragas_answer_similarity"] = None
+                result["modelLevelJson"][modelName]["semantic_similarity_average"] = None 
+            except Exception as e:
+                return jsonify({
+                    'message': 'success', 
+                    'result': result, 
+                }), 500               
 
         return jsonify({
             'message': 'success', 

@@ -31,12 +31,14 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
 
 import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
+import com.mdre.evaluation.config.Constants;
+import com.mdre.evaluation.dtos.HashingConfigurationDTO;
 
 public class HashingService extends AbstractClassComparisonService {
-	private double HASHING_THRESHOLD;
-	public HashingService(JSONObject configuration) {
-		// configuration
-		HASHING_THRESHOLD = configuration.getDouble("HASHING_THRESHOLD");
+	private HashingConfigurationDTO hashingConfiguration;
+
+	public HashingService(HashingConfigurationDTO configuration) {
+		this.hashingConfiguration = configuration;
 	}
 
     public static long computeCRC32(String input) {
@@ -125,7 +127,6 @@ public class HashingService extends AbstractClassComparisonService {
 
 	public String getComparableObjectForEParameter(EParameter eparam) {
         long totalChecksum = 0;
-        totalChecksum += computeCRC32(eparam.getName().toLowerCase());
         totalChecksum += computeCRC32(eparam.getName().toLowerCase());
 		if (eparam.getEType() != null) {
 	        totalChecksum += computeCRC32(eparam.getEType().getName().toLowerCase());
@@ -229,7 +230,7 @@ public class HashingService extends AbstractClassComparisonService {
             boolean matchFound = false;
             for (HashMap<String, String> hash2 : predictedhashes) {
 				double normalizedHammingDist = normalizedHammingDistance(hash1.get("value"), hash2.get("value"));
-                if (normalizedHammingDist < HASHING_THRESHOLD ) {
+                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
                     truePositives++;
                     matchFound = true;
 					String description = "\npredicted: " + hash2.toString();

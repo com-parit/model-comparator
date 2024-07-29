@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mdre.evaluation.services.EmfaticToEcoreService;
-import com.mdre.evaluation.Utils.FileUtils;
+import com.mdre.evaluation.utils.FileUtils;
 
 @RestController
 public class EmfaticToEcoreController {

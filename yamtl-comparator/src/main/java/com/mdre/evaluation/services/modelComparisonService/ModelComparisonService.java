@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.File;
 import org.json.JSONObject;
 
-import com.mdre.evaluation.ModelComparisonUtils;
+import com.mdre.evaluation.utils.ModelComparisonUtils;
 import com.mdre.evaluation.services.modelComparisonService.HashingService;
 import com.mdre.evaluation.services.modelComparisonService.DigestService;
 import com.mdre.evaluation.services.modelComparisonService.MetricsComputationService;
@@ -34,17 +34,16 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
 
 import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
+import com.mdre.evaluation.dtos.ModelComparisonConfigurationDTO;
+import com.mdre.evaluation.dtos.HashingConfigurationDTO;
 
 public class ModelComparisonService {
 
 	AbstractClassComparisonService comparisonService;
 
-	public ModelComparisonService(JSONObject configuration) {
-		Boolean USE_HASHING = configuration.getBoolean("USE_HASHING");
-		double HASHING_THRESHOLD = configuration.getDouble("HASHING_THRESHOLD");
-		JSONObject hashingConfiguration = new JSONObject();
-		hashingConfiguration.put("HASHING_THRESHOLD", HASHING_THRESHOLD);
-		if (USE_HASHING) {
+	public ModelComparisonService(ModelComparisonConfigurationDTO configuration) {
+		if (configuration.USE_HASHING) {
+			HashingConfigurationDTO hashingConfiguration = configuration.hashingConfiguration;
 			comparisonService = new HashingService(hashingConfiguration);
 		} else {
 			comparisonService = new DigestService();

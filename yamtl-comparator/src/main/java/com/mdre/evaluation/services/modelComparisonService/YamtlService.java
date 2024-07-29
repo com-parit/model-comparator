@@ -114,6 +114,9 @@ public class YamtlService extends YAMTLModule {
 		return result;
 	}	
 
+	// use yamtl's pattern matching to compute differences and build on that.
+
+	// case
 	private static void println(Object text) {
 		System.out.println(text);
 	}

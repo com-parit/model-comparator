@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "USE_HASHING": {
+            "type": "boolean"
+        },
+        "HASHING_THRESHOLD": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "INCLUDE_ATTRIBUTES": {
+            "type": "boolean"
+        },
+        "INCLUDE_ENUMS": {
+            "type": "boolean"
+        },
+        "INCLUDE_OPERATIONS": {
+            "type": "boolean"
+        },
+        "INCLUDE_PARAMETERS": {
+            "type": "boolean"
+        },
+        "INCLUDE_REFERENCES": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "USE_HASHING"
+    ],
+    "additionalProperties": false
+}

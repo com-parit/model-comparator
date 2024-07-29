@@ -1,4 +1,4 @@
-package com.mdre.evaluation;
+package com.mdre.evaluation.utils;
 
 public class ModelComparisonUtils {
 	public static Boolean compareNames(String name1, String name2) {

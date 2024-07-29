@@ -43,6 +43,7 @@ dependencies {
 	implementation 'net.openhft:zero-allocation-hashing:0.16'
 	implementation 'org.json:json:20171018'
     implementation 'org.apache.opennlp:opennlp-tools:2.0.0'
+	implementation 'org.everit.json:org.everit.json.schema:1.0.0'
 }
 application {
     mainClass = 'com.mdre.evaluation.App'

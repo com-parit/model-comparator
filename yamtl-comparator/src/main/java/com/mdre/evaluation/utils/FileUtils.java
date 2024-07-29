@@ -1,4 +1,4 @@
-package com.mdre.evaluation.Utils;
+package com.mdre.evaluation.utils;
 
 import java.io.File;
 import java.io.IOException;
