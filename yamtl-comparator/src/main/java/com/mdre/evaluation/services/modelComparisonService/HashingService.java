@@ -68,13 +68,27 @@ public class HashingService extends AbstractClassComparisonService {
 
 	public String getComparableObjectForEReference(EReference eref) {
         long totalChecksum = 0;
-        totalChecksum += computeCRC32(eref.getName().toLowerCase());
-        totalChecksum += computeCRC32(Integer.toString(eref.getLowerBound()));
-        totalChecksum += computeCRC32(Integer.toString(eref.getUpperBound()));
-        totalChecksum += computeCRC32(Boolean.toString(eref.isContainment()));
-        totalChecksum += computeCRC32(eref.getEContainingClass().getName().toLowerCase());
-        totalChecksum += computeCRC32(Boolean.toString(eref.isOrdered()));
-        totalChecksum += computeCRC32(Boolean.toString(eref.isUnique()));
+		if (hashingConfiguration.INCLUDE_REFERENCES_NAME) {
+	        totalChecksum += computeCRC32(eref.getName().toLowerCase());
+		}
+		if (hashingConfiguration.INCLUDE_REFERENCES_LOWER_BOUND) {
+	        totalChecksum += computeCRC32(Integer.toString(eref.getLowerBound()));
+		}
+		if (hashingConfiguration.INCLUDE_REFERENCES_UPPER_BOUND) {
+	        totalChecksum += computeCRC32(Integer.toString(eref.getUpperBound()));
+		}
+		if (hashingConfiguration.INCLUDE_REFERENCES_IS_CONTAINMENT) {
+	        totalChecksum += computeCRC32(Boolean.toString(eref.isContainment()));
+		}
+		if (hashingConfiguration.INCLUDE_REFERENCES_CONTAINING_CLASS) {
+	        totalChecksum += computeCRC32(eref.getEContainingClass().getName().toLowerCase());
+		}
+		if (hashingConfiguration.INCLUDE_REFERENCES_IS_ORDERED) {
+	        totalChecksum += computeCRC32(Boolean.toString(eref.isOrdered()));
+		}
+		if (hashingConfiguration.INCLUDE_REFERENCES_IS_UNIQUE) {
+	        totalChecksum += computeCRC32(Boolean.toString(eref.isUnique()));
+		}
         String binaryHash = Long.toBinaryString(totalChecksum);
         return binaryHash;
 	}
@@ -88,54 +102,99 @@ public class HashingService extends AbstractClassComparisonService {
 
 	public String getComparableObjectForEnum(EEnum enumeration) {
         long totalChecksum = 0;
-        totalChecksum += computeCRC32(enumeration.getName().toLowerCase());
+		if (hashingConfiguration.INCLUDE_ENUM_NAME) {
+	        totalChecksum += computeCRC32(enumeration.getName().toLowerCase());
+		}
         String binaryHash = Long.toBinaryString(totalChecksum);
         return binaryHash;
 	}
 
 	public String getComparableObjectForEAttribute(EAttribute eAtt) {
         long totalChecksum = 0;
-        totalChecksum += computeCRC32(eAtt.getName().toLowerCase());
-		if (eAtt.getEContainingClass() != null) {
-	        totalChecksum += computeCRC32(eAtt.getEContainingClass().getName().toLowerCase());
+		if (hashingConfiguration.INCLUDE_ATTRIBUTE_NAME) {
+	        totalChecksum += computeCRC32(eAtt.getName().toLowerCase());
 		}
-		if (eAtt.getEAttributeType() != null) {
-	        totalChecksum += computeCRC32(eAtt.getEAttributeType().getName().toLowerCase());
+		if (hashingConfiguration.INCLUDE_ATTRIBUTE_CONTAINING_CLASS) {
+			if (eAtt.getEContainingClass() != null) {
+				totalChecksum += computeCRC32(eAtt.getEContainingClass().getName().toLowerCase());
+			}
 		}
-        totalChecksum += computeCRC32(Integer.toString(eAtt.getLowerBound()));
-        totalChecksum += computeCRC32(Integer.toString(eAtt.getUpperBound()));
-        totalChecksum += computeCRC32(Boolean.toString(eAtt.isOrdered()));
-        totalChecksum += computeCRC32(Boolean.toString(eAtt.isUnique()));
+		if (hashingConfiguration.INCLUDE_ATTRIBUTE_TYPE) {
+			if (eAtt.getEAttributeType() != null) {
+				totalChecksum += computeCRC32(eAtt.getEAttributeType().getName().toLowerCase());
+			}
+		}
+		if (hashingConfiguration.INCLUDE_ATTRIBUTE_LOWER_BOUND) {
+	        totalChecksum += computeCRC32(Integer.toString(eAtt.getLowerBound()));
+		}
+		if (hashingConfiguration.INCLUDE_ATTRIBUTE_UPPER_BOUND) {
+	        totalChecksum += computeCRC32(Integer.toString(eAtt.getUpperBound()));
+		}
+		if (hashingConfiguration.INCLUDE_ATTRIBUTE_IS_ORDERED) {
+	        totalChecksum += computeCRC32(Boolean.toString(eAtt.isOrdered()));
+		}
+		if (hashingConfiguration.INCLUDE_ATTRIBUTE_IS_UNIQUE) {
+	        totalChecksum += computeCRC32(Boolean.toString(eAtt.isUnique()));
+		}
         String binaryHash = Long.toBinaryString(totalChecksum);
 		return binaryHash;
 	}
 
 	public String getComparableObjectForEoperation(EOperation eop) {
         long totalChecksum = 0;
-        totalChecksum += computeCRC32(eop.getName().toLowerCase());
-		if (eop.getEContainingClass() != null) {
-	        totalChecksum += computeCRC32(eop.getEContainingClass().getName().toLowerCase());
+		if (hashingConfiguration.INCLUDE_OPERATION_NAME) {
+	        totalChecksum += computeCRC32(eop.getName().toLowerCase());
 		}
-		// ArrayList<HashMap<String, String>> parametershash = getComparableObjectArrayForEParameters(eop.getEParameters());
-		// for (String hash : parametershash) {
-        //     long numericHash = Long.parseLonghash);;
-        //     totalChecksum += numericHash;
-        // }
+		if (hashingConfiguration.INCLUDE_OPERATION_CONTAINING_CLASS) {
+			if (eop.getEContainingClass() != null) {
+				totalChecksum += computeCRC32(eop.getEContainingClass().getName().toLowerCase());
+			}
+		}
+		if (hashingConfiguration.INCLUDE_OPERATION_PARAMETERS) {
+			for(EParameter eparam: eop.getEParameters()) {
+				long hash = getHashForOperationParameters(eparam);
+			    totalChecksum += hash;
+			}
+		}
         String binaryHash = Long.toBinaryString(totalChecksum);
 		return binaryHash;
 	}
 
 	public String getComparableObjectForEParameter(EParameter eparam) {
         long totalChecksum = 0;
-        totalChecksum += computeCRC32(eparam.getName().toLowerCase());
-		if (eparam.getEType() != null) {
-	        totalChecksum += computeCRC32(eparam.getEType().getName().toLowerCase());
+		if (hashingConfiguration.INCLUDE_PARAMETER_NAME) {
+	        totalChecksum += computeCRC32(eparam.getName().toLowerCase());
 		}
-		if (eparam.getEOperation() != null) {
-	        totalChecksum += computeCRC32(eparam.getEOperation().getName().toLowerCase());
-		}		
+		if (hashingConfiguration.INCLUDE_PARAMETER_TYPE) {
+			if (eparam.getEType() != null) {
+				totalChecksum += computeCRC32(eparam.getEType().getName().toLowerCase());
+			}
+		}
+		if (hashingConfiguration.INCLUDE_PARAMETER_OPERATION_NAME) {
+			if (eparam.getEOperation() != null) {
+				totalChecksum += computeCRC32(eparam.getEOperation().getName().toLowerCase());
+			}
+		}
         String binaryHash = Long.toBinaryString(totalChecksum);
 		return binaryHash;
+	}
+
+	public long getHashForOperationParameters(EParameter eparam) {
+        long totalChecksum = 0;
+		if (hashingConfiguration.INCLUDE_PARAMETER_NAME) {
+	        totalChecksum += computeCRC32(eparam.getName().toLowerCase());
+		}
+		if (hashingConfiguration.INCLUDE_PARAMETER_TYPE) {
+			if (eparam.getEType() != null) {
+				totalChecksum += computeCRC32(eparam.getEType().getName().toLowerCase());
+			}
+		}
+		if (hashingConfiguration.INCLUDE_PARAMETER_OPERATION_NAME) {
+			if (eparam.getEOperation() != null) {
+				totalChecksum += computeCRC32(eparam.getEOperation().getName().toLowerCase());
+			}
+		}
+		return totalChecksum;
 	}
 
 	public ArrayList<HashMap<String, String>> getComparableObjectArrayForEReferences(List<EReference> eReferencesArray) {
