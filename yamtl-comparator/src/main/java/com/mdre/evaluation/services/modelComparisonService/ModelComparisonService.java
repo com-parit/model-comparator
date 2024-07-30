@@ -19,6 +19,7 @@ import com.mdre.evaluation.services.modelComparisonService.HashingService;
 import com.mdre.evaluation.services.modelComparisonService.DigestService;
 import com.mdre.evaluation.services.modelComparisonService.MetricsComputationService;
 import com.mdre.evaluation.services.modelComparisonService.YamtlService;
+import com.mdre.evaluation.config.Constants;
 
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.common.util.EList;
@@ -40,14 +41,38 @@ import com.mdre.evaluation.dtos.HashingConfigurationDTO;
 public class ModelComparisonService {
 
 	AbstractClassComparisonService comparisonService;
+	ModelComparisonConfigurationDTO modelComparisonConfiguration;
+	ArrayList<String> includedElements = new ArrayList<String>();
+	ArrayList<String> elementsIncludedInScoring = new ArrayList<String>();
 
 	public ModelComparisonService(ModelComparisonConfigurationDTO configuration) {
-		if (configuration.USE_HASHING) {
-			HashingConfigurationDTO hashingConfiguration = configuration.hashingConfiguration;
+		this.modelComparisonConfiguration = configuration;
+		if (modelComparisonConfiguration.USE_HASHING) {
+			HashingConfigurationDTO hashingConfiguration = modelComparisonConfiguration.hashingConfiguration;
 			comparisonService = new HashingService(hashingConfiguration);
 		} else {
 			comparisonService = new DigestService();
 		}
+		if (modelComparisonConfiguration.INCLUDE_CLASS_ATTRIBUTES) {
+			includedElements.add(Constants.ATTRIBUTES_IDENTIFIER);
+			elementsIncludedInScoring.add(Constants.ATTRIBUTES_IDENTIFIER);
+		}
+		if (modelComparisonConfiguration.INCLUDE_CLASS_OPERATIONS) {
+			includedElements.add(Constants.OPERATIONS_IDENTIFIER);
+			elementsIncludedInScoring.add(Constants.OPERATIONS_IDENTIFIER);
+		}
+		if (modelComparisonConfiguration.INCLUDE_CLASS_REFERENCES) {
+			includedElements.add(Constants.REFERENCES_IDENTIFIER);
+			elementsIncludedInScoring.add(Constants.REFERENCES_IDENTIFIER);
+		}
+		if (modelComparisonConfiguration.INCLUDE_CLASS_SUPERTYPES) {
+			includedElements.add(Constants.SUPERTYPES_IDENTIFIER);
+			elementsIncludedInScoring.add(Constants.SUPERTYPES_IDENTIFIER);
+		}
+		if (modelComparisonConfiguration.INCLUDE_ENUMS) {
+			elementsIncludedInScoring.add(Constants.ENUMS_IDENTIFIER);
+		}
+		elementsIncludedInScoring.add(Constants.CLASSES_IDENTIFIER);
 	}
 
 	public HashMap<String, Object> getClassLevelMetrics(EClass erefOriginal, EClass erefPredicted) {
@@ -107,16 +132,10 @@ public class ModelComparisonService {
 		classLevelMetrics.put("superTypes_fp", superTypeConfusionMatrix.get("fp"));
 		classLevelMetrics.put("superTypes_fn", superTypeConfusionMatrix.get("fn"));
 
-		String[] entitiesToCompare = new String[]{
-			"attributes",
-			"references",
-			"operations",
-			"superTypes",
-		};
 		Integer truePositives = 0;
 		Integer falsePositives = 0;
 		Integer falseNegatives = 0;
-		for(String entity: entitiesToCompare) {
+		for(String entity: includedElements) {
 			truePositives = truePositives + (Integer) classLevelMetrics.get(entity + "_tp");
 			falsePositives = falsePositives + (Integer) classLevelMetrics.get(entity + "_fp");
 			falseNegatives = falseNegatives + (Integer) classLevelMetrics.get(entity + "_fn");
@@ -167,12 +186,7 @@ public class ModelComparisonService {
 			modelLevelMetrics.put("total_enumerations_diff_model1_minus_model2", total_enumerations_model1 - total_enumerations_model2);
 			modelLevelMetrics.put("total_enumerations_diff_model2_minus_model1", total_enumerations_model2 - total_enumerations_model1);
 
-			// attributes, references, operations, superTypes
-			String[] metrics = {
-				"attributes", "references", "operations", "superTypes"
-			};
-
-			for (String metric : metrics) {
+			for (String metric : includedElements) {
 				int tp = 0, fn = 0, fp = 0;
 				for (Object model : allMatchedClassesMetrics.values()) {
 					HashMap<String, Object> modelParsed = (HashMap<String, Object>) model;
@@ -193,7 +207,7 @@ public class ModelComparisonService {
 				modelLevelMetrics.put(metric + "_fp", fp);
 			}
 
-			for (String metric : metrics) {
+			for (String metric : includedElements) {
 				int total_model1 = 0, total_model2 = 0;
 				for (Object model : allMatchedClassesMetrics.values()) {
 					HashMap<String, Object> modelParsed = (HashMap<String, Object>) model;
@@ -215,11 +229,8 @@ public class ModelComparisonService {
 			}
 
 			// Compute aggregate metrics
-			String[] allMetrics = {
-				"classes", "attributes", "references", "operations", "superTypes", "enumerations"
-			};
 			int truePositives_aggregate = 0, falsePositives_aggregate = 0, falseNegatives_aggregate = 0;
-			for (String metric : allMetrics) {
+			for (String metric : elementsIncludedInScoring) {
 				truePositives_aggregate += (Integer) modelLevelMetrics.get(metric + "_tp");
 				falsePositives_aggregate += (Integer) modelLevelMetrics.get(metric + "_fp");
 				falseNegatives_aggregate += (Integer) modelLevelMetrics.get(metric + "_fn");
@@ -287,10 +298,18 @@ public class ModelComparisonService {
 				}
 				if (!matched) {
 					HashMap<String, Integer> metricsNotMatched = new HashMap<String, Integer>();
-					metricsNotMatched.put("attributes", erefOriginal.getEAttributes().size());
-					metricsNotMatched.put("references", erefOriginal.getEReferences().size());
-					metricsNotMatched.put("operations", erefOriginal.getEOperations().size());
-					metricsNotMatched.put("superTypes", erefOriginal.getESuperTypes().size());
+					if (modelComparisonConfiguration.INCLUDE_CLASS_ATTRIBUTES) {
+						metricsNotMatched.put(Constants.ATTRIBUTES_IDENTIFIER, erefOriginal.getEAttributes().size());
+					}
+					if (modelComparisonConfiguration.INCLUDE_CLASS_REFERENCES) {
+						metricsNotMatched.put(Constants.REFERENCES_IDENTIFIER, erefOriginal.getEReferences().size());
+					}
+					if (modelComparisonConfiguration.INCLUDE_CLASS_OPERATIONS) {
+						metricsNotMatched.put(Constants.OPERATIONS_IDENTIFIER, erefOriginal.getEOperations().size());
+					}
+					if (modelComparisonConfiguration.INCLUDE_CLASS_SUPERTYPES) {
+						metricsNotMatched.put(Constants.SUPERTYPES_IDENTIFIER, erefOriginal.getESuperTypes().size());
+					}
 					allOriginalClassesMetricsNotMatched.add(metricsNotMatched);
 				}
 			}
@@ -307,10 +326,18 @@ public class ModelComparisonService {
 				}
 				if (!matched) {
 					HashMap<String, Integer> metricsNotMatched = new HashMap<String, Integer>();
-					metricsNotMatched.put("attributes", erefPredicted.getEAttributes().size());
-					metricsNotMatched.put("references", erefPredicted.getEReferences().size());
-					metricsNotMatched.put("operations", erefPredicted.getEOperations().size());
-					metricsNotMatched.put("superTypes", erefPredicted.getESuperTypes().size());
+					if (modelComparisonConfiguration.INCLUDE_CLASS_ATTRIBUTES) {
+						metricsNotMatched.put(Constants.ATTRIBUTES_IDENTIFIER, erefPredicted.getEAttributes().size());
+					}
+					if (modelComparisonConfiguration.INCLUDE_CLASS_REFERENCES) {
+						metricsNotMatched.put(Constants.REFERENCES_IDENTIFIER, erefPredicted.getEReferences().size());
+					}
+					if (modelComparisonConfiguration.INCLUDE_CLASS_OPERATIONS) {
+						metricsNotMatched.put(Constants.OPERATIONS_IDENTIFIER, erefPredicted.getEOperations().size());
+					}
+					if (modelComparisonConfiguration.INCLUDE_CLASS_SUPERTYPES) {
+						metricsNotMatched.put(Constants.SUPERTYPES_IDENTIFIER, erefPredicted.getESuperTypes().size());
+					}
 					allPredictedClassesMetricsNotMatched.add(metricsNotMatched);
 				}
 			}

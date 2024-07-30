@@ -2,13 +2,9 @@ package com.mdre.evaluation.dtos;
 
 public class HashingConfigurationDTO {
 	public double HASHING_THRESHOLD = 0.5;
-	public Boolean INCLUDE_ENUMS = true;
-	public Boolean INCLUDE_ENUM_NAME = true;
 
-	public Boolean INCLUDE_CLASS_ATTRIBUTES = true;
-	public Boolean INCLUDE_CLASS_OPERATIONS = true;
+	public Boolean INCLUDE_ENUM_NAME = true;
 	public Boolean INCLUDE_CLASS_PARAMETERS = true;
-	public Boolean INCLUDE_CLASS_REFERENCES = true;
 
 	public Boolean INCLUDE_ATTRIBUTE_NAME = true;
 	public Boolean INCLUDE_ATTRIBUTE_CONTAINING_CLASS = true;	

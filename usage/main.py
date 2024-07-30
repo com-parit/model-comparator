@@ -322,7 +322,7 @@ class Main:
         response = Adapter.compare_ecore_models("bt_openlink.ecore", "btopenlinkjavacoremodel.ecore", projectName, config)
         model_level_json = response['result']["modelLevelJson"]
         class_level_json = response['result']["classLevelJson"]
-        print(model_level_json)
+        print(json.dumps(model_level_json, indent=4))
 
         consolidated_csv_paths = self.create_csv(model_level_json, class_level_json, output_dir)
         

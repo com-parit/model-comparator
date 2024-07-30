@@ -16,27 +16,28 @@ public class JSONtoDTOMapper {
 		}
 
 		try {
-			hashingConfigurationDTO.HASHING_THRESHOLD = jsonObject.getDouble("HASHING_THRESHOLD");
-		} catch (Exception e) {
-			System.out.println("Incorrect configuration provided for HASHING_THRESHOLD; using default configuration");
-		}
-
-		try {
-			hashingConfigurationDTO.INCLUDE_CLASS_ATTRIBUTES = jsonObject.getBoolean("INCLUDE_CLASS_ATTRIBUTES");
+			modelComparisonConfigurationDTO.INCLUDE_CLASS_ATTRIBUTES = jsonObject.getBoolean("INCLUDE_CLASS_ATTRIBUTES");
 		} catch (Exception e) {
 			System.out.println("Incorrect configuration provided for INCLUDE_CLASS_ATTRIBUTES; using default configuration");
 		}
 
 		try {
-			hashingConfigurationDTO.INCLUDE_ENUMS = jsonObject.getBoolean("INCLUDE_ENUMS");
+			modelComparisonConfigurationDTO.INCLUDE_ENUMS = jsonObject.getBoolean("INCLUDE_ENUMS");
 		} catch (Exception e) {
 			System.out.println("Incorrect configuration provided for INCLUDE_ENUMS; using default configuration");
 		}
 
 		try {
-			hashingConfigurationDTO.INCLUDE_CLASS_OPERATIONS = jsonObject.getBoolean("INCLUDE_CLASS_OPERATIONS");
+			modelComparisonConfigurationDTO.INCLUDE_CLASS_OPERATIONS = jsonObject.getBoolean("INCLUDE_CLASS_OPERATIONS");
 		} catch (Exception e) {
 			System.out.println("Incorrect configuration provided for INCLUDE_CLASS_OPERATIONS; using default configuration");
+		}
+
+
+		try {
+			modelComparisonConfigurationDTO.INCLUDE_CLASS_REFERENCES = jsonObject.getBoolean("INCLUDE_CLASS_REFERENCES");
+		} catch (Exception e) {
+			System.out.println("Incorrect configuration provided for INCLUDE_CLASS_REFERENCES; using default configuration");
 		}
 
 		try {
@@ -46,10 +47,11 @@ public class JSONtoDTOMapper {
 		}
 
 		try {
-			hashingConfigurationDTO.INCLUDE_CLASS_REFERENCES = jsonObject.getBoolean("INCLUDE_CLASS_REFERENCES");
+			hashingConfigurationDTO.HASHING_THRESHOLD = jsonObject.getDouble("HASHING_THRESHOLD");
 		} catch (Exception e) {
-			System.out.println("Incorrect configuration provided for INCLUDE_CLASS_REFERENCES; using default configuration");
+			System.out.println("Incorrect configuration provided for HASHING_THRESHOLD; using default configuration");
 		}
+
 
 		try {
 			hashingConfigurationDTO.INCLUDE_ENUM_NAME = jsonObject.getBoolean("INCLUDE_ENUM_NAME");

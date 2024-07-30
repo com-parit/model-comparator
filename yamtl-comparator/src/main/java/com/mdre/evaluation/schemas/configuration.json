@@ -35,6 +35,10 @@
             "type": "boolean",
             "default": true
         },
+        "INCLUDE_CLASS_SUPERTYPES": {
+            "type": "boolean",
+            "default": true
+        },
         "INCLUDE_ATTRIBUTE_NAME": {
             "type": "boolean",
             "default": true
