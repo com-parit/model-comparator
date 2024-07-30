@@ -27,14 +27,17 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
+import com.mdre.evaluation.dtos.VenDiagramClassesDTO;
+import com.mdre.evaluation.dtos.VenDiagramEEnumsDTO;
+import com.mdre.evaluation.dtos.VenDiagramEAttributesDTO;
+import com.mdre.evaluation.dtos.VenDiagramEReferencesDTO;
+import com.mdre.evaluation.dtos.VenDiagramEOperationsDTO;
 
 abstract class AbstractClassComparisonService {
-	public abstract ArrayList<HashMap<String, String>> getComparableObjectArrayForEAtrributes(List<EAttribute> eAttributesArray);
-	public abstract ArrayList<HashMap<String, String>> getComparableObjectArrayForEnums(Object[] enumsArray);
-	public abstract ArrayList<HashMap<String, String>> getComparableObjectArrayForEClasses(Object[] enumsArray);
-	public abstract ArrayList<HashMap<String, String>> getComparableObjectArrayForEClasses(List<EClass> eClassesArray);
-	public abstract ArrayList<HashMap<String, String>> getComparableObjectArrayForEParameters(List<EParameter> eParametersArray);
-	public abstract ArrayList<HashMap<String, String>> getComparableObjectArrayForEOperations(List<EOperation> eOperationsArray);
-	public abstract ArrayList<HashMap<String, String>> getComparableObjectArrayForEReferences(List<EReference> eReferencesArray);
+	public abstract VenDiagramClassesDTO getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2);
+	public abstract VenDiagramEEnumsDTO getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2);
+	public abstract VenDiagramEAttributesDTO getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2);
+	public abstract VenDiagramEReferencesDTO getVenDiagramForEReferences(List<EReference> ereferencesClass1, List<EReference> ereferencesClass2);
+	public abstract VenDiagramEOperationsDTO getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2);
     public abstract HashMap<String, Object> computeSimilarity(ArrayList<HashMap<String, String>> originalDigest, ArrayList<HashMap<String, String>> predictedDigest);
 }
