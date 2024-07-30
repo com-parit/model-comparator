@@ -314,7 +314,7 @@ class Main:
         groundTruthModel = "ase2024-dataset/ecommerce-backend/ground-truth/ecommerce2.ecore"
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/mdre-llm/haiku/fine/ecommerce-backend.emf"
 
-        output_dir = f'{os.path.dirname(predictedModel_emf)}/stats'
+        output_dir = f'output'
         os.makedirs(output_dir, exist_ok=True)
 
         predictedModel = Adapter.get_ecore_model_from_emfatic(predictedModel_emf)
