@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.EAnnotation;
 import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
 import com.mdre.evaluation.dtos.ModelComparisonConfigurationDTO;
 import com.mdre.evaluation.dtos.HashingConfigurationDTO;
+import com.mdre.evaluation.dtos.DigestConfigurationDTO;
 
 public class ModelComparisonService {
 
@@ -51,7 +52,8 @@ public class ModelComparisonService {
 			HashingConfigurationDTO hashingConfiguration = modelComparisonConfiguration.hashingConfiguration;
 			comparisonService = new HashingService(hashingConfiguration);
 		} else {
-			comparisonService = new DigestService();
+			DigestConfigurationDTO digestConfiguration = modelComparisonConfiguration.digestConfiguration;
+			comparisonService = new DigestService(digestConfiguration);
 		}
 		if (modelComparisonConfiguration.INCLUDE_CLASS_ATTRIBUTES) {
 			includedElements.add(Constants.ATTRIBUTES_IDENTIFIER);

@@ -30,22 +30,39 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
 
 import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
+import com.mdre.evaluation.config.Constants;
+import com.mdre.evaluation.dtos.DigestConfigurationDTO;
 
 public class DigestService extends AbstractClassComparisonService {
+	private DigestConfigurationDTO configuration;
 
-	public DigestService() {
-		// configuration
+	public DigestService(DigestConfigurationDTO configuration) {
+		this.configuration = configuration;
 	}
 
 	public HashMap<String, String> getComparableObjectForEReference(EReference eref) {
 		HashMap<String, String> digest = new HashMap<String, String>();
-		digest.put("name", eref.getName().toLowerCase());
-		digest.put("lowerBound", Integer.toString(eref.getLowerBound()));
-		digest.put("upperBound", Integer.toString(eref.getUpperBound()));
-		digest.put("isContainment", Boolean.toString(eref.isContainment()));
-		digest.put("containingClass", eref.getEContainingClass().getName().toLowerCase());
-		digest.put("order", Boolean.toString(eref.isOrdered()));
-		digest.put("unique", Boolean.toString(eref.isUnique()));
+		if (configuration.INCLUDE_REFERENCES_NAME) {
+			digest.put("name", eref.getName().toLowerCase());
+		}
+		if (configuration.INCLUDE_REFERENCES_LOWER_BOUND) {
+			digest.put("lowerBound", Integer.toString(eref.getLowerBound()));
+		}
+		if (configuration.INCLUDE_REFERENCES_UPPER_BOUND) {
+			digest.put("upperBound", Integer.toString(eref.getUpperBound()));
+		}
+		if (configuration.INCLUDE_REFERENCES_IS_CONTAINMENT) {
+			digest.put("isContainment", Boolean.toString(eref.isContainment()));
+		}
+		if (configuration.INCLUDE_REFERENCES_CONTAINING_CLASS) {
+			digest.put("containingClass", eref.getEContainingClass().getName().toLowerCase());
+		}
+		if (configuration.INCLUDE_REFERENCES_IS_ORDERED) {
+			digest.put("order", Boolean.toString(eref.isOrdered()));
+		}
+		if (configuration.INCLUDE_REFERENCES_IS_UNIQUE) {
+			digest.put("unique", Boolean.toString(eref.isUnique()));
+		}
 		return digest;
 	}
 
@@ -57,47 +74,75 @@ public class DigestService extends AbstractClassComparisonService {
 
 	public HashMap<String, String> getComparableObjectForEnum(EEnum enumeration) {
 		HashMap<String, String> digest = new HashMap<String, String>();
-		digest.put("name", enumeration.getName().toLowerCase());
+		if (configuration.INCLUDE_ENUM_NAME) {
+			digest.put("name", enumeration.getName().toLowerCase());
+		}
 		return digest;
 	}
 
 	public HashMap<String, String> getComparableObjectForEAttribute(EAttribute eAtt) {
 		HashMap<String, String> digest = new HashMap<String, String>();
-		digest.put("name", eAtt.getName().toLowerCase());
-		if (eAtt.getEContainingClass() != null) {
-			digest.put("containerClassName", eAtt.getEContainingClass().getName().toLowerCase());
+		if (configuration.INCLUDE_ATTRIBUTE_NAME) {
+			digest.put("name", eAtt.getName().toLowerCase());
 		}
-		if (eAtt.getEAttributeType() != null) {
-			digest.put("attributeType", eAtt.getEAttributeType().getName().toLowerCase());
+		if (configuration.INCLUDE_ATTRIBUTE_CONTAINING_CLASS) {
+			if (eAtt.getEContainingClass() != null) {
+				digest.put("containerClassName", eAtt.getEContainingClass().getName().toLowerCase());
+			}
 		}
-		digest.put("lowerBound", Integer.toString(eAtt.getLowerBound()));
-		digest.put("upperBound", Integer.toString(eAtt.getUpperBound()));
-		digest.put("order", Boolean.toString(eAtt.isOrdered()));
-		digest.put("unique", Boolean.toString(eAtt.isUnique()));
+		if (configuration.INCLUDE_ATTRIBUTE_TYPE) {
+			if (eAtt.getEAttributeType() != null) {
+				digest.put("attributeType", eAtt.getEAttributeType().getName().toLowerCase());
+			}
+		}
+		if (configuration.INCLUDE_ATTRIBUTE_LOWER_BOUND) {
+			digest.put("lowerBound", Integer.toString(eAtt.getLowerBound()));
+		}
+		if (configuration.INCLUDE_ATTRIBUTE_UPPER_BOUND) {
+			digest.put("upperBound", Integer.toString(eAtt.getUpperBound()));
+		}
+		if (configuration.INCLUDE_ATTRIBUTE_IS_ORDERED) {
+			digest.put("order", Boolean.toString(eAtt.isOrdered()));
+		}
+		if (configuration.INCLUDE_ATTRIBUTE_IS_UNIQUE) {
+			digest.put("unique", Boolean.toString(eAtt.isUnique()));
+		}
 		return digest;
 	}
 
 	public HashMap<String, String> getComparableObjectForEoperation(EOperation eop) {
 		HashMap<String, String> digest = new HashMap<String, String>();
-		digest.put("name", eop.getName().toLowerCase());
-		if (eop.getEContainingClass() != null) {
-			digest.put("containerClassName", eop.getEContainingClass().getName().toLowerCase());
+		if (configuration.INCLUDE_OPERATION_NAME) {
+			digest.put("name", eop.getName().toLowerCase());
 		}
-		ArrayList<HashMap<String, String>> parametersDigest = getComparableObjectArrayForEParameters(eop.getEParameters());
-		Collections.sort(parametersDigest, Comparator.comparing((HashMap<String, String> map) -> map.get("name")));
-		digest.put("parametersDigest", parametersDigest.toString());
+		if (configuration.INCLUDE_OPERATION_CONTAINING_CLASS) {
+			if (eop.getEContainingClass() != null) {
+				digest.put("containerClassName", eop.getEContainingClass().getName().toLowerCase());
+			}
+		}
+		if (configuration.INCLUDE_OPERATION_PARAMETERS) {
+			ArrayList<HashMap<String, String>> parametersDigest = getComparableObjectArrayForEParameters(eop.getEParameters());
+			Collections.sort(parametersDigest, Comparator.comparing((HashMap<String, String> map) -> map.get("name")));
+			digest.put("parametersDigest", parametersDigest.toString());
+		}
 		return digest;
 	}
 
 	public HashMap<String, String> getComparableObjectForEParameter(EParameter eparam) {
 		HashMap<String, String> digest = new HashMap<String, String>();
-		digest.put("name", eparam.getName().toLowerCase());
-		if (eparam.getEType() != null) {
-			digest.put("type", eparam.getEType().getName().toLowerCase());
+		if (configuration.INCLUDE_PARAMETER_NAME) {
+			digest.put("name", eparam.getName().toLowerCase());
 		}
-		if (eparam.getEOperation() != null) {
-			digest.put("containingMethodName", eparam.getEOperation().getName().toLowerCase());
-		}		
+		if (configuration.INCLUDE_PARAMETER_TYPE) {
+			if (eparam.getEType() != null) {
+				digest.put("type", eparam.getEType().getName().toLowerCase());
+			}
+		}
+		if (configuration.INCLUDE_PARAMETER_OPERATION_NAME) {
+			if (eparam.getEOperation() != null) {
+				digest.put("containingMethodName", eparam.getEOperation().getName().toLowerCase());
+			}		
+		}
 		return digest;
 	}
 
