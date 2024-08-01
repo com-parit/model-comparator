@@ -54,7 +54,6 @@ public class ModelComparisonController {
                 System.out.println("Incorrect config in request");
                 return new JSONObject("{\"response\":\"The configuration file does not conform to the schema\"}").toString();
             }
-            System.out.println(configuration);
             ModelComparisonConfigurationDTO modelComparisonConfigurationDTO = JSONtoDTOMapper.mapToModelComparisonConfigurationDTO(configuration);
        		ModelComparisonService evaluationEngine = new ModelComparisonService(modelComparisonConfigurationDTO);
             Boolean includeDependencies = true;
