@@ -39,5 +39,4 @@ abstract class AbstractClassComparisonService {
 	public abstract VenDiagramEAttributesDTO getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2);
 	public abstract VenDiagramEReferencesDTO getVenDiagramForEReferences(List<EReference> ereferencesClass1, List<EReference> ereferencesClass2);
 	public abstract VenDiagramEOperationsDTO getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2);
-    public abstract HashMap<String, Object> computeSimilarity(ArrayList<HashMap<String, String>> originalDigest, ArrayList<HashMap<String, String>> predictedDigest);
 }

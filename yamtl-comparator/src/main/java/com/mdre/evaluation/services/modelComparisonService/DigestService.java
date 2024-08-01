@@ -439,39 +439,4 @@ public class DigestService extends AbstractClassComparisonService {
 		result.onlyInModel2 = onlyInModel2;
 		return result;
 	}
-
-	public HashMap<String, Object> computeSimilarity(
-		ArrayList<HashMap<String, String>> originalDigest, 
-		ArrayList<HashMap<String, String>> predictedDigest
-		) {
-        Integer truePositives = 0;
-        Integer falsePositives = 0;
-        Integer falseNegatives = 0;
-
-        for (HashMap<String, String> digest1 : originalDigest) {
-            boolean matchFound = false;
-            for (HashMap<String, String> digest2 : predictedDigest) {
-                if (digest1.equals(digest2)) {
-                    truePositives++;
-                    matchFound = true;
-					String description = "\npredicted: " + digest2.toString();
-                    break;
-                }
-            }
-            if (!matchFound) {
-				String description = "original entity not found in predicted.\n ";
-                falseNegatives++;
-            }
-        }
-        falsePositives = predictedDigest.size() - truePositives;
-
-		HashMap<String, Integer> confusionMatrix = new HashMap<String, Integer>();
-		confusionMatrix.put("tp", truePositives);
-		confusionMatrix.put("fp", falsePositives);
-		confusionMatrix.put("fn", falseNegatives);
-
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		result.put("confusionMatrix", confusionMatrix);
-        return result;
-    }
 }

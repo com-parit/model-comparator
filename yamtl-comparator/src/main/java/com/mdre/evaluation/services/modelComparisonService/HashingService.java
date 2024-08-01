@@ -489,40 +489,4 @@ public class HashingService extends AbstractClassComparisonService {
 		result.onlyInModel2 = onlyInModel2;
 		return result;
 	}
-
-    public HashMap<String, Object> computeSimilarity(
-		ArrayList<HashMap<String, String>> originalhashes, 
-		ArrayList<HashMap<String, String>> predictedhashes
-		) {
-        Integer truePositives = 0;
-        Integer falsePositives = 0;
-        Integer falseNegatives = 0;
-
-        for (HashMap<String, String> hash1 : originalhashes) {
-            boolean matchFound = false;
-            for (HashMap<String, String> hash2 : predictedhashes) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1.get("value"), hash2.get("value"));
-                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
-                    truePositives++;
-                    matchFound = true;
-					String description = "\npredicted: " + hash2.toString();
-                    break;
-                }
-            }
-            if (!matchFound) {
-				String description = "original entity not found in predicted.\n ";
-                falseNegatives++;
-            }
-        }
-        falsePositives = predictedhashes.size() - truePositives;
-
-		HashMap<String, Integer> confusionMatrix = new HashMap<String, Integer>();
-		confusionMatrix.put("tp", truePositives);
-		confusionMatrix.put("fp", falsePositives);
-		confusionMatrix.put("fn", falseNegatives);
-
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		result.put("confusionMatrix", confusionMatrix);
-        return result;
-    }
 }
