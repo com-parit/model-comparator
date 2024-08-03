@@ -235,6 +235,8 @@ public class ModelComparisonService {
 		}
 
 	public HashMap<String, JSONObject> compareModels(ArrayList<HashMap<String, String>> models, Boolean includeDependencies) {
+		long startTime = System.currentTimeMillis();
+
 		// initialize class level analysis object for matched classes
 		HashMap<String, Object> allMatchedClassesMetrics = new HashMap<String, Object>();
 
@@ -359,6 +361,11 @@ public class ModelComparisonService {
 		HashMap<String, JSONObject> results = new HashMap<String, JSONObject>();
 		results.put("classLevelJson", jsonResultsClass);
 		results.put("modelLevelJson", jsonResultsModel);
+		long endTime = System.currentTimeMillis();
+		long duration = endTime - startTime;
+		JSONObject performance = new JSONObject();
+		performance.put("time in milliseconds for syntantic comparison", Long.toString(duration));
+		results.put("time", performance);
 		return results;
 	}
 

@@ -333,7 +333,9 @@ class Main:
         try:
             model_level_json = response['result']["modelLevelJson"]
             class_level_json = response['result']["classLevelJson"]
+            time = response['result']['time']
             print(json.dumps(model_level_json, indent=4))
+            print(time)
 
             consolidated_csv_paths = self.create_csv(
                 model_level_json, class_level_json, output_dir)
