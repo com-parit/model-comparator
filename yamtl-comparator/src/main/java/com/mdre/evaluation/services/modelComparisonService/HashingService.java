@@ -83,9 +83,9 @@ public class HashingService extends AbstractClassComparisonService {
 		String concatHash = hashA + "-" + hashB;
 		String cHash = computeCRC32(concatHash);
 		// check cache
-		// if (this.cache.containsKey(cHash)) {
-		// 	return this.cache.get(cHash);
-		// }
+		if (this.cache.containsKey(cHash)) {
+			return this.cache.get(cHash);
+		}
 
         if (hashA.length() != hashB.length()) {
             throw new IllegalArgumentException("Hashes must be of the same length");
