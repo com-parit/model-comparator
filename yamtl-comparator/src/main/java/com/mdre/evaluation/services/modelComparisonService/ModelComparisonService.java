@@ -38,16 +38,8 @@ import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparis
 import com.mdre.evaluation.dtos.ModelComparisonConfigurationDTO;
 import com.mdre.evaluation.dtos.HashingConfigurationDTO;
 import com.mdre.evaluation.dtos.DigestConfigurationDTO;
-import com.mdre.evaluation.dtos.VenDiagramClassesDTO;
-import com.mdre.evaluation.dtos.MatchedClassesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEEnumsDTO;
-import com.mdre.evaluation.dtos.MatchedEEnumsDTO;
-import com.mdre.evaluation.dtos.VenDiagramEAttributesDTO;
-import com.mdre.evaluation.dtos.MatchedEAttributesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEReferencesDTO;
-import com.mdre.evaluation.dtos.MatchedEReferencesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEOperationsDTO;
-import com.mdre.evaluation.dtos.MatchedEOperationsDTO;
+import com.mdre.evaluation.dtos.VenDiagramDTO;
+import com.mdre.evaluation.dtos.MatchedElementsDTO;
 
 public class ModelComparisonService {
 
@@ -92,7 +84,7 @@ public class ModelComparisonService {
 		classLevelMetrics.put("class_name_model1", erefOriginal.getName());
 		classLevelMetrics.put("class_name_model2", erefPredicted.getName());
 
-		VenDiagramEAttributesDTO attributeResultObject = comparisonService.getVenDiagramForEAttributes(erefOriginal.getEAttributes(), erefPredicted.getEAttributes());
+		VenDiagramDTO<EAttribute> attributeResultObject = comparisonService.getVenDiagramForEAttributes(erefOriginal.getEAttributes(), erefPredicted.getEAttributes());
 		classLevelMetrics.put("class_attributes_model1", erefOriginal.getEAttributes().size());
 		classLevelMetrics.put("class_attributes_model2", erefPredicted.getEAttributes().size());
 		classLevelMetrics.put("class_attributes_diff_model1_minus_model2", (Integer) classLevelMetrics.get("class_attributes_model1") - (Integer) classLevelMetrics.get("class_attributes_model2"));
@@ -101,7 +93,7 @@ public class ModelComparisonService {
 		classLevelMetrics.put("attributes_fp", attributeResultObject.onlyInModel2.size());
 		classLevelMetrics.put("attributes_fn", attributeResultObject.onlyInModel1.size());
 
-		VenDiagramEReferencesDTO referenceResultObject = comparisonService.getVenDiagramForEReferences(erefOriginal.getEReferences(), erefPredicted.getEReferences());
+		VenDiagramDTO<EReference> referenceResultObject = comparisonService.getVenDiagramForEReferences(erefOriginal.getEReferences(), erefPredicted.getEReferences());
 		classLevelMetrics.put("class_references_model1", erefOriginal.getEReferences().size());
 		classLevelMetrics.put("class_references_model2", erefPredicted.getEReferences().size());
 		classLevelMetrics.put("class_references_diff_model1_minus_model2", (Integer) classLevelMetrics.get("class_references_model1") - (Integer) classLevelMetrics.get("class_references_model2"));
@@ -110,7 +102,7 @@ public class ModelComparisonService {
 		classLevelMetrics.put("references_fp", referenceResultObject.onlyInModel2.size());
 		classLevelMetrics.put("references_fn", referenceResultObject.onlyInModel1.size());
 
-		VenDiagramEOperationsDTO operationResultObject = comparisonService.getVenDiagramForEOperations(erefOriginal.getEOperations(), erefPredicted.getEOperations());
+		VenDiagramDTO<EOperation> operationResultObject = comparisonService.getVenDiagramForEOperations(erefOriginal.getEOperations(), erefPredicted.getEOperations());
 		classLevelMetrics.put("class_operations_model1", erefOriginal.getEOperations().size());
 		classLevelMetrics.put("class_operations_model2", erefPredicted.getEOperations().size());
 		classLevelMetrics.put("class_operations_diff_model1_minus_model2", (Integer) classLevelMetrics.get("class_operations_model1") - (Integer) classLevelMetrics.get("class_operations_model2"));
@@ -119,7 +111,7 @@ public class ModelComparisonService {
 		classLevelMetrics.put("operations_fp", operationResultObject.onlyInModel2.size());
 		classLevelMetrics.put("operations_fn", operationResultObject.onlyInModel1.size());
 
-		VenDiagramClassesDTO superTypesResultObject = comparisonService.getVenDiagramForClasses(erefOriginal.getESuperTypes(), erefPredicted.getESuperTypes());
+		VenDiagramDTO<EClass> superTypesResultObject = comparisonService.getVenDiagramForClasses(erefOriginal.getESuperTypes(), erefPredicted.getESuperTypes());
 		classLevelMetrics.put("class_superTypes_model1", erefOriginal.getESuperTypes().size());
 		classLevelMetrics.put("class_superTypes_model2", erefPredicted.getESuperTypes().size());
 		classLevelMetrics.put("class_superTypes_diff_model1_minus_model2", (Integer) classLevelMetrics.get("class_superTypes_model1") - (Integer) classLevelMetrics.get("class_superTypes_model2"));
@@ -274,7 +266,7 @@ public class ModelComparisonService {
 				EClass eclass = (EClass) classObject;
 				classesModel2.add(eclass);
 			}
-			VenDiagramClassesDTO venDiagramClasses = comparisonService.getVenDiagramForClasses(classesModel1, classesModel2);
+			VenDiagramDTO<EClass> venDiagramClasses = comparisonService.getVenDiagramForClasses(classesModel1, classesModel2);
 
 			// initialize class level analysis object
 			HashMap<String, HashMap<String, Object>> matchedClassMetrics = new HashMap<String, HashMap<String, Object>>();
@@ -285,7 +277,7 @@ public class ModelComparisonService {
 			// initialize class level analysis object for predicted classes not matched
 			ArrayList<HashMap<String, Integer>> allPredictedClassesMetricsNotMatched = new ArrayList<HashMap<String, Integer>>();
 
-			for (MatchedClassesDTO eclassesMatchedPairs: venDiagramClasses.matched) {
+			for (MatchedElementsDTO<EClass> eclassesMatchedPairs: venDiagramClasses.matched) {
 				EClass erefOriginal = eclassesMatchedPairs.model1;
 				EClass erefPredicted = eclassesMatchedPairs.model2;
 				HashMap<String, Object> classLevelMetrics = getClassLevelMetrics(erefOriginal, erefPredicted);
@@ -337,7 +329,7 @@ public class ModelComparisonService {
 				EEnum eenum = (EEnum) enumObject;
 				enumsModel2.add(eenum);
 			}
-			VenDiagramEEnumsDTO enumerationResultObject = comparisonService.getVenDiagramForEnumerations(enumsModel1, enumsModel2);
+			VenDiagramDTO<EEnum> enumerationResultObject = comparisonService.getVenDiagramForEnumerations(enumsModel1, enumsModel2);
 			HashMap<String, Integer> enumerationConfusionMatrix = new HashMap<String, Integer>();
 			enumerationConfusionMatrix.put("tp", enumerationResultObject.matched.size());
 			enumerationConfusionMatrix.put("fn", enumerationResultObject.onlyInModel1.size());

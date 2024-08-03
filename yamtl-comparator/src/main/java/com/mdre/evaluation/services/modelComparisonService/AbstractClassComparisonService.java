@@ -27,17 +27,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
-import com.mdre.evaluation.dtos.VenDiagramClassesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEEnumsDTO;
-import com.mdre.evaluation.dtos.VenDiagramEAttributesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEReferencesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEOperationsDTO;
+import com.mdre.evaluation.dtos.VenDiagramDTO;
+import com.mdre.evaluation.dtos.MatchedElementsDTO;
 
 abstract class AbstractClassComparisonService {
 	public abstract double computeSimilarity(Object comparisonObject1, Object comparisonObject2);
-	public abstract VenDiagramClassesDTO getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2);
-	public abstract VenDiagramEEnumsDTO getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2);
-	public abstract VenDiagramEAttributesDTO getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2);
-	public abstract VenDiagramEReferencesDTO getVenDiagramForEReferences(List<EReference> ereferencesClass1, List<EReference> ereferencesClass2);
-	public abstract VenDiagramEOperationsDTO getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2);
+	public abstract VenDiagramDTO<EClass>  getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2);
+	public abstract VenDiagramDTO<EEnum> getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2);
+	public abstract VenDiagramDTO<EAttribute> getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2);
+	public abstract VenDiagramDTO<EReference> getVenDiagramForEReferences(List<EReference> ereferencesClass1, List<EReference> ereferencesClass2);
+	public abstract VenDiagramDTO<EOperation> getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2);
 }

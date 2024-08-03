@@ -34,16 +34,8 @@ import com.mdre.evaluation.utils.Tuple;
 import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
 import com.mdre.evaluation.config.Constants;
 import com.mdre.evaluation.dtos.HashingConfigurationDTO;
-import com.mdre.evaluation.dtos.VenDiagramClassesDTO;
-import com.mdre.evaluation.dtos.MatchedClassesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEEnumsDTO;
-import com.mdre.evaluation.dtos.MatchedEEnumsDTO;
-import com.mdre.evaluation.dtos.VenDiagramEAttributesDTO;
-import com.mdre.evaluation.dtos.MatchedEAttributesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEReferencesDTO;
-import com.mdre.evaluation.dtos.MatchedEReferencesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEOperationsDTO;
-import com.mdre.evaluation.dtos.MatchedEOperationsDTO;
+import com.mdre.evaluation.dtos.VenDiagramDTO;
+import com.mdre.evaluation.dtos.MatchedElementsDTO;
 
 public class HashingService extends AbstractClassComparisonService {
 	private HashingConfigurationDTO hashingConfiguration;
@@ -133,9 +125,10 @@ public class HashingService extends AbstractClassComparisonService {
         return binaryHash;
 	}
 
-	public String getComparableObjectForEClass(EClass eClass) {
+	public static String getComparableObjectForEClass(Object obj) {
+		EClass eclass = (EClass) obj;
         long totalChecksum = 0;
-        totalChecksum += computeCRC32(eClass.getName().toLowerCase());
+        totalChecksum += computeCRC32(eclass.getName().toLowerCase());
         String binaryHash = String.format("%32s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
         return binaryHash;
 	}
@@ -237,33 +230,38 @@ public class HashingService extends AbstractClassComparisonService {
 		return totalChecksum;
 	}
 
-	public VenDiagramClassesDTO getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2) {
-		VenDiagramClassesDTO result = new VenDiagramClassesDTO();
-		ArrayList<MatchedClassesDTO> intersection = new ArrayList<MatchedClassesDTO>();
-		ArrayList<EClass> onlyInModel1 = new ArrayList<EClass>();
-		ArrayList<EClass> onlyInModel2 = new ArrayList<EClass>();
+	@FunctionalInterface
+	interface ComparisonFunction {
+		String apply(Object t);
+	}
 
-		HashMap<String, EClass> hashIndexModel1 = new HashMap<String, EClass>();
-		HashMap<String, EClass> hashIndexModel2 = new HashMap<String, EClass>();
+	public <T> VenDiagramDTO<T> computeIntersection(List<T> model1elements, List<T> model2elements, ComparisonFunction processor) {
+		VenDiagramDTO<T> result = new VenDiagramDTO<T>();
+		ArrayList<MatchedElementsDTO<T>> intersection = new ArrayList<MatchedElementsDTO<T>>();
+		ArrayList<T> onlyInModel1 = new ArrayList<T>();
+		ArrayList<T> onlyInModel2 = new ArrayList<T>();
 
-		ArrayList<String> model1EClassshash = new ArrayList<String>();
-		for(EClass eclass: classesModel1) {
-			String hash = getComparableObjectForEClass(eclass);
-			model1EClassshash.add(hash);
-			hashIndexModel1.put(hash, eclass);
+		HashMap<String, T> hashIndexModel1 = new HashMap<String, T>();
+		HashMap<String, T> hashIndexModel2 = new HashMap<String, T>();
+
+		ArrayList<String> model1ElementsHashes = new ArrayList<String>();
+		for(T obj: model1elements) {
+			String hash = (String) processor.apply(obj);
+			model1ElementsHashes.add(hash);
+			hashIndexModel1.put(hash, obj);
 		}
 
-		ArrayList<String> model2EClassshash = new ArrayList<String>();
-		for(EClass eclass: classesModel2) {
-			String hash = getComparableObjectForEClass(eclass);
-			model2EClassshash.add(hash);
-			hashIndexModel2.put(hash, eclass);
+		ArrayList<String> model2ElementsHashes = new ArrayList<String>();
+		for(T obj: model2elements) {
+			String hash = (String) processor.apply(obj);
+			model2ElementsHashes.add(hash);
+			hashIndexModel2.put(hash, obj);
 		}
 
-        for (String hash1 : model1EClassshash) {
+        for (String hash1 : model1ElementsHashes) {
 			double maxSimilarity = -1.0;
 			Tuple<String, String> candidateToPop = new Tuple<String, String>(null, null);
-            for (String hash2 : model2EClassshash) {
+            for (String hash2 : model2ElementsHashes) {
 				Tuple<String, String> matchedCandidate = new Tuple<String, String>(hash1, hash2);
 				double similarity = computeSimilarity(hash1, hash2);
 				if (similarity > maxSimilarity) {
@@ -272,29 +270,34 @@ public class HashingService extends AbstractClassComparisonService {
 				}
             }
 			if (maxSimilarity > hashingConfiguration.HASHING_THRESHOLD) { // match found
-				model2EClassshash.remove(candidateToPop.second);
-				MatchedClassesDTO matchedClasses = new MatchedClassesDTO();
-				matchedClasses.model1 = hashIndexModel1.get(candidateToPop.first);
-				matchedClasses.model2 = hashIndexModel2.get(candidateToPop.second);
-				intersection.add(matchedClasses);
+				model2ElementsHashes.remove(candidateToPop.second);
+				MatchedElementsDTO<T> matchedElements = new MatchedElementsDTO<T>();
+				matchedElements.model1 = hashIndexModel1.get(candidateToPop.first);
+				matchedElements.model2 = hashIndexModel2.get(candidateToPop.second);
+				intersection.add(matchedElements);
 			} else {
 				onlyInModel1.add(hashIndexModel1.get(hash1));
 			}
         }
 
-		for (String hash2: model2EClassshash) {
+		for (String hash2: model2ElementsHashes) {
 			onlyInModel2.add(hashIndexModel2.get(hash2));
 		}
 
 		result.matched = intersection;
 		result.onlyInModel1 = onlyInModel1;
 		result.onlyInModel2 = onlyInModel2;
+		return result;		
+	}
+
+	public VenDiagramDTO<EClass> getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2) {
+		VenDiagramDTO<EClass> result = computeIntersection(classesModel1, classesModel2, (eclass) -> getComparableObjectForEClass(eclass));
 		return result;
 	}
 
-	public VenDiagramEEnumsDTO getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2) {
-		VenDiagramEEnumsDTO result = new VenDiagramEEnumsDTO();
-		ArrayList<MatchedEEnumsDTO> intersection = new ArrayList<MatchedEEnumsDTO>();
+	public VenDiagramDTO<EEnum> getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2) {
+		VenDiagramDTO<EEnum> result = new VenDiagramDTO<EEnum>();
+		ArrayList<MatchedElementsDTO<EEnum>> intersection = new ArrayList<MatchedElementsDTO<EEnum>>();
 		ArrayList<EEnum> onlyInModel1 = new ArrayList<EEnum>();
 		ArrayList<EEnum> onlyInModel2 = new ArrayList<EEnum>();
 
@@ -321,7 +324,7 @@ public class HashingService extends AbstractClassComparisonService {
 				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
                 if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
                     matchFound = true;
-					MatchedEEnumsDTO matchedEnums = new MatchedEEnumsDTO();
+					MatchedElementsDTO<EEnum> matchedEnums = new MatchedElementsDTO<EEnum>();
 					matchedEnums.model1 = hashIndexModel1.get(hash1);
 					matchedEnums.model2 = hashIndexModel2.get(hash2);
                     intersection.add(matchedEnums);
@@ -353,9 +356,9 @@ public class HashingService extends AbstractClassComparisonService {
 		return result;
 	}
 
-	public VenDiagramEAttributesDTO getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2) {
-		VenDiagramEAttributesDTO result = new VenDiagramEAttributesDTO();
-		ArrayList<MatchedEAttributesDTO> intersection = new ArrayList<MatchedEAttributesDTO>();
+	public VenDiagramDTO<EAttribute> getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2) {
+		VenDiagramDTO<EAttribute> result = new VenDiagramDTO<EAttribute>();
+		ArrayList<MatchedElementsDTO<EAttribute>> intersection = new ArrayList<MatchedElementsDTO<EAttribute>>();
 		ArrayList<EAttribute> onlyInModel1 = new ArrayList<EAttribute>();
 		ArrayList<EAttribute> onlyInModel2 = new ArrayList<EAttribute>();
 
@@ -382,7 +385,7 @@ public class HashingService extends AbstractClassComparisonService {
 				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
                 if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
                     matchFound = true;
-					MatchedEAttributesDTO matchedAttributes = new MatchedEAttributesDTO();
+					MatchedElementsDTO<EAttribute> matchedAttributes = new MatchedElementsDTO<EAttribute>();
 					matchedAttributes.model1 = hashIndexModel1.get(hash1);
 					matchedAttributes.model2 = hashIndexModel2.get(hash2);
                     intersection.add(matchedAttributes);
@@ -414,9 +417,9 @@ public class HashingService extends AbstractClassComparisonService {
 		return result;
 	}
 
-	public VenDiagramEReferencesDTO getVenDiagramForEReferences(List<EReference> referencesClass1, List<EReference> referencesClass2) {
-		VenDiagramEReferencesDTO result = new VenDiagramEReferencesDTO();
-		ArrayList<MatchedEReferencesDTO> intersection = new ArrayList<MatchedEReferencesDTO>();
+	public VenDiagramDTO<EReference> getVenDiagramForEReferences(List<EReference> referencesClass1, List<EReference> referencesClass2) {
+		VenDiagramDTO<EReference> result = new VenDiagramDTO<EReference>();
+		ArrayList<MatchedElementsDTO<EReference>> intersection = new ArrayList<MatchedElementsDTO<EReference>>();
 		ArrayList<EReference> onlyInModel1 = new ArrayList<EReference>();
 		ArrayList<EReference> onlyInModel2 = new ArrayList<EReference>();
 
@@ -443,7 +446,7 @@ public class HashingService extends AbstractClassComparisonService {
 				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
                 if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
                     matchFound = true;
-					MatchedEReferencesDTO matchedReferences = new MatchedEReferencesDTO();
+					MatchedElementsDTO<EReference> matchedReferences = new MatchedElementsDTO<EReference>();
 					matchedReferences.model1 = hashIndexModel1.get(hash1);
 					matchedReferences.model2 = hashIndexModel2.get(hash2);
                     intersection.add(matchedReferences);
@@ -475,9 +478,9 @@ public class HashingService extends AbstractClassComparisonService {
 		return result;
 	}
 
-	public VenDiagramEOperationsDTO getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2) {
-		VenDiagramEOperationsDTO result = new VenDiagramEOperationsDTO();
-		ArrayList<MatchedEOperationsDTO> intersection = new ArrayList<MatchedEOperationsDTO>();
+	public VenDiagramDTO<EOperation> getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2) {
+		VenDiagramDTO<EOperation> result = new VenDiagramDTO<EOperation>();
+		ArrayList<MatchedElementsDTO<EOperation>> intersection = new ArrayList<MatchedElementsDTO<EOperation>>();
 		ArrayList<EOperation> onlyInModel1 = new ArrayList<EOperation>();
 		ArrayList<EOperation> onlyInModel2 = new ArrayList<EOperation>();
 
@@ -504,7 +507,7 @@ public class HashingService extends AbstractClassComparisonService {
 				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
                 if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
                     matchFound = true;
-					MatchedEOperationsDTO matchedElements = new MatchedEOperationsDTO();
+					MatchedElementsDTO<EOperation> matchedElements = new MatchedElementsDTO<EOperation>();
 					matchedElements.model1 = hashIndexModel1.get(hash1);
 					matchedElements.model2 = hashIndexModel2.get(hash2);
                     intersection.add(matchedElements);

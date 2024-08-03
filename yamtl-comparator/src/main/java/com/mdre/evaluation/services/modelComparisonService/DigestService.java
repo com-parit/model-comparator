@@ -32,16 +32,8 @@ import org.eclipse.emf.ecore.EAnnotation;
 import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
 import com.mdre.evaluation.config.Constants;
 import com.mdre.evaluation.dtos.DigestConfigurationDTO;
-import com.mdre.evaluation.dtos.MatchedClassesDTO;
-import com.mdre.evaluation.dtos.VenDiagramClassesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEEnumsDTO;
-import com.mdre.evaluation.dtos.MatchedEEnumsDTO;
-import com.mdre.evaluation.dtos.VenDiagramEAttributesDTO;
-import com.mdre.evaluation.dtos.MatchedEAttributesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEReferencesDTO;
-import com.mdre.evaluation.dtos.MatchedEReferencesDTO;
-import com.mdre.evaluation.dtos.VenDiagramEOperationsDTO;
-import com.mdre.evaluation.dtos.MatchedEOperationsDTO;
+import com.mdre.evaluation.dtos.VenDiagramDTO;
+import com.mdre.evaluation.dtos.MatchedElementsDTO;
 
 public class DigestService extends AbstractClassComparisonService {
 	private DigestConfigurationDTO configuration;
@@ -169,9 +161,9 @@ public class DigestService extends AbstractClassComparisonService {
 		return digest;
 	}
 
-	public VenDiagramClassesDTO getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2) {
-		VenDiagramClassesDTO result = new VenDiagramClassesDTO();
-		ArrayList<MatchedClassesDTO> intersection = new ArrayList<MatchedClassesDTO>();
+	public VenDiagramDTO<EClass> getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2) {
+		VenDiagramDTO<EClass> result = new VenDiagramDTO<EClass>();
+		ArrayList<MatchedElementsDTO<EClass>> intersection = new ArrayList<MatchedElementsDTO<EClass>>();
 		ArrayList<EClass> onlyInModel1 = new ArrayList<EClass>();
 		ArrayList<EClass> onlyInModel2 = new ArrayList<EClass>();
 
@@ -179,7 +171,7 @@ public class DigestService extends AbstractClassComparisonService {
 			Boolean matched = false;
 			for (EClass eclassPredicted: classesModel2) {
 				if (eclassOriginal.getName().equals(eclassPredicted.getName())) {
-					MatchedClassesDTO matchedClasses = new MatchedClassesDTO();
+					MatchedElementsDTO<EClass> matchedClasses = new MatchedElementsDTO<EClass>();
 					matchedClasses.model1 = eclassOriginal;
 					matchedClasses.model2 = eclassPredicted;
 					intersection.add(matchedClasses);
@@ -208,9 +200,9 @@ public class DigestService extends AbstractClassComparisonService {
 		return result;
 	}
 
-	public VenDiagramEEnumsDTO getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2) {
-		VenDiagramEEnumsDTO result = new VenDiagramEEnumsDTO();
-		ArrayList<MatchedEEnumsDTO> intersection = new ArrayList<MatchedEEnumsDTO>();
+	public VenDiagramDTO<EEnum> getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2) {
+		VenDiagramDTO<EEnum> result = new VenDiagramDTO<EEnum>();
+		ArrayList<MatchedElementsDTO<EEnum>> intersection = new ArrayList<MatchedElementsDTO<EEnum>>();
 		ArrayList<EEnum> onlyInModel1 = new ArrayList<EEnum>();
 		ArrayList<EEnum> onlyInModel2 = new ArrayList<EEnum>();
 
@@ -236,7 +228,7 @@ public class DigestService extends AbstractClassComparisonService {
             for (HashMap<String, String> digest2 : model2EEnumsDigest) {
                 if (digest1.equals(digest2)) {
                     matchFound = true;
-					MatchedEEnumsDTO matchedEnums = new MatchedEEnumsDTO();
+					MatchedElementsDTO<EEnum> matchedEnums = new MatchedElementsDTO<EEnum>();
 					matchedEnums.model1 = digestIndexModel1.get(digest1.toString());
 					matchedEnums.model2 = digestIndexModel2.get(digest2.toString());
                     intersection.add(matchedEnums);
@@ -267,9 +259,9 @@ public class DigestService extends AbstractClassComparisonService {
 		return result;
 	}
 
-	public VenDiagramEAttributesDTO getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2) {
-		VenDiagramEAttributesDTO result = new VenDiagramEAttributesDTO();
-		ArrayList<MatchedEAttributesDTO> intersection = new ArrayList<MatchedEAttributesDTO>();
+	public VenDiagramDTO<EAttribute> getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2) {
+		VenDiagramDTO<EAttribute> result = new VenDiagramDTO<EAttribute>();
+		ArrayList<MatchedElementsDTO<EAttribute>> intersection = new ArrayList<MatchedElementsDTO<EAttribute>>();
 		ArrayList<EAttribute> onlyInModel1 = new ArrayList<EAttribute>();
 		ArrayList<EAttribute> onlyInModel2 = new ArrayList<EAttribute>();
 
@@ -295,7 +287,7 @@ public class DigestService extends AbstractClassComparisonService {
             for (HashMap<String, String> digest2 : model2eAttributesDigest) {
                 if (digest1.equals(digest2)) {
                     matchFound = true;
-					MatchedEAttributesDTO matchedAttributes = new MatchedEAttributesDTO();
+					MatchedElementsDTO<EAttribute> matchedAttributes = new MatchedElementsDTO<EAttribute>();
 					matchedAttributes.model1 = digestIndexModel1.get(digest1.toString());
 					matchedAttributes.model2 = digestIndexModel2.get(digest2.toString());
                     intersection.add(matchedAttributes);
@@ -326,9 +318,9 @@ public class DigestService extends AbstractClassComparisonService {
 		return result;
 	}
 
-	public VenDiagramEReferencesDTO getVenDiagramForEReferences(List<EReference> referencesClass1, List<EReference> referencesClass2) {
-		VenDiagramEReferencesDTO result = new VenDiagramEReferencesDTO();
-		ArrayList<MatchedEReferencesDTO> intersection = new ArrayList<MatchedEReferencesDTO>();
+	public VenDiagramDTO<EReference> getVenDiagramForEReferences(List<EReference> referencesClass1, List<EReference> referencesClass2) {
+		VenDiagramDTO<EReference> result = new VenDiagramDTO<EReference>();
+		ArrayList<MatchedElementsDTO<EReference>> intersection = new ArrayList<MatchedElementsDTO<EReference>>();
 		ArrayList<EReference> onlyInModel1 = new ArrayList<EReference>();
 		ArrayList<EReference> onlyInModel2 = new ArrayList<EReference>();
 
@@ -354,7 +346,7 @@ public class DigestService extends AbstractClassComparisonService {
             for (HashMap<String, String> digest2 : model2EReferencesDigest) {
                 if (digest1.equals(digest2)) {
                     matchFound = true;
-					MatchedEReferencesDTO matchedElements = new MatchedEReferencesDTO();
+					MatchedElementsDTO<EReference> matchedElements = new MatchedElementsDTO<EReference>();
 					matchedElements.model1 = digestIndexModel1.get(digest1.toString());
 					matchedElements.model2 = digestIndexModel2.get(digest2.toString());
                     intersection.add(matchedElements);
@@ -385,9 +377,9 @@ public class DigestService extends AbstractClassComparisonService {
 		return result;
 	}
 
-	public VenDiagramEOperationsDTO getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2) {
-		VenDiagramEOperationsDTO result = new VenDiagramEOperationsDTO();
-		ArrayList<MatchedEOperationsDTO> intersection = new ArrayList<MatchedEOperationsDTO>();
+	public VenDiagramDTO<EOperation> getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2) {
+		VenDiagramDTO<EOperation> result = new VenDiagramDTO<EOperation>();
+		ArrayList<MatchedElementsDTO<EOperation>> intersection = new ArrayList<MatchedElementsDTO<EOperation>>();
 		ArrayList<EOperation> onlyInModel1 = new ArrayList<EOperation>();
 		ArrayList<EOperation> onlyInModel2 = new ArrayList<EOperation>();
 
@@ -413,7 +405,7 @@ public class DigestService extends AbstractClassComparisonService {
             for (HashMap<String, String> digest2 : model2Digests) {
                 if (digest1.equals(digest2)) {
                     matchFound = true;
-					MatchedEOperationsDTO matchedElements = new MatchedEOperationsDTO();
+					MatchedElementsDTO<EOperation> matchedElements = new MatchedElementsDTO<EOperation>();
 					matchedElements.model1 = digestIndexModel1.get(digest1.toString());
 					matchedElements.model2 = digestIndexModel2.get(digest2.toString());
                     intersection.add(matchedElements);
