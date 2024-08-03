@@ -46,7 +46,8 @@ public class DigestService extends AbstractClassComparisonService {
 		return 1.0;
 	}
 
-	public HashMap<String, String> getComparableObjectForEReference(EReference eref) {
+	public HashMap<String, String> getComparableObjectForEReference(Object obj) {
+		EReference eref = (EReference) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
 		if (configuration.INCLUDE_REFERENCES_NAME) {
 			digest.put("name", eref.getName().toLowerCase());
@@ -72,13 +73,15 @@ public class DigestService extends AbstractClassComparisonService {
 		return digest;
 	}
 
-	public HashMap<String, String> getComparableObjectForEClass(EClass eClass) {
+	public HashMap<String, String> getComparableObjectForEClass(Object obj) {
+		EClass eclass = (EClass) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
-		digest.put("name", eClass.getName().toLowerCase());
+		digest.put("name", eclass.getName().toLowerCase());
 		return digest;
 	}
 
-	public HashMap<String, String> getComparableObjectForEnum(EEnum enumeration) {
+	public HashMap<String, String> getComparableObjectForEnum(Object obj) {
+		EEnum enumeration = (EEnum) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
 		if (configuration.INCLUDE_ENUM_NAME) {
 			digest.put("name", enumeration.getName().toLowerCase());
@@ -86,7 +89,8 @@ public class DigestService extends AbstractClassComparisonService {
 		return digest;
 	}
 
-	public HashMap<String, String> getComparableObjectForEAttribute(EAttribute eAtt) {
+	public HashMap<String, String> getComparableObjectForEAttribute(Object obj) {
+		EAttribute eAtt = (EAttribute) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
 		if (configuration.INCLUDE_ATTRIBUTE_NAME) {
 			digest.put("name", eAtt.getName().toLowerCase());
@@ -125,7 +129,8 @@ public class DigestService extends AbstractClassComparisonService {
 	 	return arrayOfDigests;
 	}
 	
-	public HashMap<String, String> getComparableObjectForEOperation(EOperation eop) {
+	public HashMap<String, String> getComparableObjectForEOperation(Object obj) {
+		EOperation eop = (EOperation) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
 		if (configuration.INCLUDE_OPERATION_NAME) {
 			digest.put("name", eop.getName().toLowerCase());
@@ -143,7 +148,8 @@ public class DigestService extends AbstractClassComparisonService {
 		return digest;
 	}
 
-	public HashMap<String, String> getComparableObjectForEParameter(EParameter eparam) {
+	public HashMap<String, String> getComparableObjectForEParameter(Object obj) {
+		EParameter eparam = (EParameter) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
 		if (configuration.INCLUDE_PARAMETER_NAME) {
 			digest.put("name", eparam.getName().toLowerCase());
@@ -161,278 +167,92 @@ public class DigestService extends AbstractClassComparisonService {
 		return digest;
 	}
 
-	public VenDiagramDTO<EClass> getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2) {
-		VenDiagramDTO<EClass> result = new VenDiagramDTO<EClass>();
-		ArrayList<MatchedElementsDTO<EClass>> intersection = new ArrayList<MatchedElementsDTO<EClass>>();
-		ArrayList<EClass> onlyInModel1 = new ArrayList<EClass>();
-		ArrayList<EClass> onlyInModel2 = new ArrayList<EClass>();
+	@FunctionalInterface
+	interface ComparisonFunction {
+		HashMap<String, String> apply(Object t);
+	}
 
-		for (EClass eclassOriginal: classesModel1) {
-			Boolean matched = false;
-			for (EClass eclassPredicted: classesModel2) {
-				if (eclassOriginal.getName().equals(eclassPredicted.getName())) {
-					MatchedElementsDTO<EClass> matchedClasses = new MatchedElementsDTO<EClass>();
-					matchedClasses.model1 = eclassOriginal;
-					matchedClasses.model2 = eclassPredicted;
-					intersection.add(matchedClasses);
-					matched = true;
-				}
-			}
-			if (!matched) {
-				onlyInModel1.add(eclassOriginal);
-			}
+	public <T> VenDiagramDTO<T> computeIntersection(List<T> model1elements, List<T> model2elements, ComparisonFunction processor) {
+		VenDiagramDTO<T> result = new VenDiagramDTO<T>();
+		ArrayList<MatchedElementsDTO<T>> intersection = new ArrayList<MatchedElementsDTO<T>>();
+		ArrayList<T> onlyInModel1 = new ArrayList<T>();
+		ArrayList<T> onlyInModel2 = new ArrayList<T>();
+
+		HashMap<String, T> digestIndexModel1 = new HashMap<String, T>();
+		HashMap<String, T> digestIndexModel2 = new HashMap<String, T>();
+
+		ArrayList<HashMap<String, String>> model1ElementsDigest = new ArrayList<HashMap<String, String>>();
+		for(T obj: model1elements) {
+			HashMap<String, String> digest = processor.apply(obj);
+			model1ElementsDigest.add(digest);
+			digestIndexModel1.put(digest.toString(), obj);
 		}
 
-		for (EClass eclassPredicted: classesModel2) {
-			Boolean matched = false;
-			for (EClass eclassOriginal: classesModel1) {
-				if (eclassOriginal.getName() == eclassPredicted.getName()) {
-					matched = true;
-				}
-			}
-			if (!matched) {
-				onlyInModel2.add(eclassPredicted);
-			}
+		ArrayList<HashMap<String, String>> model2ElementsDigest = new ArrayList<HashMap<String, String>>();
+		for(T obj: model2elements) {
+			HashMap<String, String> digest = processor.apply(obj);
+			model2ElementsDigest.add(digest);
+			digestIndexModel2.put(digest.toString(), obj);
 		}
+
+        for (HashMap<String, String> digest1 : model1ElementsDigest) {
+            boolean matchFound = false;
+            for (HashMap<String, String> digest2 : model2ElementsDigest) {
+                if (digest1.equals(digest2)) {
+                    matchFound = true;
+					MatchedElementsDTO<T> matchedElements = new MatchedElementsDTO<T>();
+					matchedElements.model1 = digestIndexModel1.get(digest1.toString());
+					matchedElements.model2 = digestIndexModel2.get(digest2.toString());
+                    intersection.add(matchedElements);
+                    break;
+                }
+            }
+            if (!matchFound) {
+				onlyInModel1.add(digestIndexModel1.get(digest1.toString()));
+            }
+        }
+
+        for (HashMap<String, String> digest2 : model2ElementsDigest) {
+            boolean matchFound = false;
+            for (HashMap<String, String> digest1 : model1ElementsDigest) {
+                if (digest1.equals(digest2)) {
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (!matchFound) {
+				onlyInModel2.add(digestIndexModel2.get(digest2.toString()));
+            }
+        }
+
 		result.matched = intersection;
 		result.onlyInModel1 = onlyInModel1;
 		result.onlyInModel2 = onlyInModel2;
+		return result;		
+	}
+
+	public VenDiagramDTO<EClass> getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2) {
+		VenDiagramDTO<EClass> result = computeIntersection(classesModel1, classesModel2, (obj) -> getComparableObjectForEClass(obj));
 		return result;
 	}
 
 	public VenDiagramDTO<EEnum> getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2) {
-		VenDiagramDTO<EEnum> result = new VenDiagramDTO<EEnum>();
-		ArrayList<MatchedElementsDTO<EEnum>> intersection = new ArrayList<MatchedElementsDTO<EEnum>>();
-		ArrayList<EEnum> onlyInModel1 = new ArrayList<EEnum>();
-		ArrayList<EEnum> onlyInModel2 = new ArrayList<EEnum>();
-
-		HashMap<String, EEnum> digestIndexModel1 = new HashMap<String, EEnum>();
-		HashMap<String, EEnum> digestIndexModel2 = new HashMap<String, EEnum>();
-
-		ArrayList<HashMap<String, String>> model1EEnumsDigest = new ArrayList<HashMap<String, String>>();
-		for(EEnum eenum: enumsModel1) {
-			HashMap<String, String> digest = getComparableObjectForEnum(eenum);
-			model1EEnumsDigest.add(digest);
-			digestIndexModel1.put(digest.toString(), eenum);
-		}
-
-		ArrayList<HashMap<String, String>> model2EEnumsDigest = new ArrayList<HashMap<String, String>>();
-		for(EEnum eenum: enumsModel2) {
-			HashMap<String, String> digest = getComparableObjectForEnum(eenum);
-			model2EEnumsDigest.add(digest);
-			digestIndexModel2.put(digest.toString(), eenum);
-		}
-
-        for (HashMap<String, String> digest1 : model1EEnumsDigest) {
-            boolean matchFound = false;
-            for (HashMap<String, String> digest2 : model2EEnumsDigest) {
-                if (digest1.equals(digest2)) {
-                    matchFound = true;
-					MatchedElementsDTO<EEnum> matchedEnums = new MatchedElementsDTO<EEnum>();
-					matchedEnums.model1 = digestIndexModel1.get(digest1.toString());
-					matchedEnums.model2 = digestIndexModel2.get(digest2.toString());
-                    intersection.add(matchedEnums);
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel1.add(digestIndexModel1.get(digest1.toString()));
-            }
-        }
-
-        for (HashMap<String, String> digest2 : model2EEnumsDigest) {
-            boolean matchFound = false;
-            for (HashMap<String, String> digest1 : model1EEnumsDigest) {
-                if (digest1.equals(digest2)) {
-                    matchFound = true;
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel2.add(digestIndexModel2.get(digest2));
-            }
-        }
-
-		result.matched = intersection;
-		result.onlyInModel1 = onlyInModel1;
-		result.onlyInModel2 = onlyInModel2;
+		VenDiagramDTO<EEnum> result = computeIntersection(enumsModel1, enumsModel2, (obj) -> getComparableObjectForEnum(obj));
 		return result;
 	}
 
 	public VenDiagramDTO<EAttribute> getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2) {
-		VenDiagramDTO<EAttribute> result = new VenDiagramDTO<EAttribute>();
-		ArrayList<MatchedElementsDTO<EAttribute>> intersection = new ArrayList<MatchedElementsDTO<EAttribute>>();
-		ArrayList<EAttribute> onlyInModel1 = new ArrayList<EAttribute>();
-		ArrayList<EAttribute> onlyInModel2 = new ArrayList<EAttribute>();
-
-		HashMap<String, EAttribute> digestIndexModel1 = new HashMap<String, EAttribute>();
-		HashMap<String, EAttribute> digestIndexModel2 = new HashMap<String, EAttribute>();
-
-		ArrayList<HashMap<String, String>> model1eAttributesDigest = new ArrayList<HashMap<String, String>>();
-		for(EAttribute eAttribute: attributesClass1) {
-			HashMap<String, String> digest = getComparableObjectForEAttribute(eAttribute);
-			model1eAttributesDigest.add(digest);
-			digestIndexModel1.put(digest.toString(), eAttribute);
-		}
-
-		ArrayList<HashMap<String, String>> model2eAttributesDigest = new ArrayList<HashMap<String, String>>();
-		for(EAttribute eAttribute: attributesClass2) {
-			HashMap<String, String> digest = getComparableObjectForEAttribute(eAttribute);
-			model2eAttributesDigest.add(digest);
-			digestIndexModel2.put(digest.toString(), eAttribute);
-		}
-
-        for (HashMap<String, String> digest1 : model1eAttributesDigest) {
-            boolean matchFound = false;
-            for (HashMap<String, String> digest2 : model2eAttributesDigest) {
-                if (digest1.equals(digest2)) {
-                    matchFound = true;
-					MatchedElementsDTO<EAttribute> matchedAttributes = new MatchedElementsDTO<EAttribute>();
-					matchedAttributes.model1 = digestIndexModel1.get(digest1.toString());
-					matchedAttributes.model2 = digestIndexModel2.get(digest2.toString());
-                    intersection.add(matchedAttributes);
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel1.add(digestIndexModel1.get(digest1.toString()));
-            }
-        }
-
-        for (HashMap<String, String> digest2 : model2eAttributesDigest) {
-            boolean matchFound = false;
-            for (HashMap<String, String> digest1 : model1eAttributesDigest) {
-                if (digest1.equals(digest2)) {
-                    matchFound = true;
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel2.add(digestIndexModel2.get(digest2));
-            }
-        }
-
-		result.matched = intersection;
-		result.onlyInModel1 = onlyInModel1;
-		result.onlyInModel2 = onlyInModel2;
+		VenDiagramDTO<EAttribute> result = computeIntersection(attributesClass1, attributesClass2, (obj) -> getComparableObjectForEAttribute(obj));
 		return result;
 	}
 
 	public VenDiagramDTO<EReference> getVenDiagramForEReferences(List<EReference> referencesClass1, List<EReference> referencesClass2) {
-		VenDiagramDTO<EReference> result = new VenDiagramDTO<EReference>();
-		ArrayList<MatchedElementsDTO<EReference>> intersection = new ArrayList<MatchedElementsDTO<EReference>>();
-		ArrayList<EReference> onlyInModel1 = new ArrayList<EReference>();
-		ArrayList<EReference> onlyInModel2 = new ArrayList<EReference>();
-
-		HashMap<String, EReference> digestIndexModel1 = new HashMap<String, EReference>();
-		HashMap<String, EReference> digestIndexModel2 = new HashMap<String, EReference>();
-
-		ArrayList<HashMap<String, String>> model1EReferencesDigest = new ArrayList<HashMap<String, String>>();
-		for(EReference obj: referencesClass1) {
-			HashMap<String, String> digest = getComparableObjectForEReference(obj);
-			model1EReferencesDigest.add(digest);
-			digestIndexModel1.put(digest.toString(), obj);
-		}
-
-		ArrayList<HashMap<String, String>> model2EReferencesDigest = new ArrayList<HashMap<String, String>>();
-		for(EReference obj: referencesClass2) {
-			HashMap<String, String> digest = getComparableObjectForEReference(obj);
-			model2EReferencesDigest.add(digest);
-			digestIndexModel2.put(digest.toString(), obj);
-		}
-
-        for (HashMap<String, String> digest1 : model1EReferencesDigest) {
-            boolean matchFound = false;
-            for (HashMap<String, String> digest2 : model2EReferencesDigest) {
-                if (digest1.equals(digest2)) {
-                    matchFound = true;
-					MatchedElementsDTO<EReference> matchedElements = new MatchedElementsDTO<EReference>();
-					matchedElements.model1 = digestIndexModel1.get(digest1.toString());
-					matchedElements.model2 = digestIndexModel2.get(digest2.toString());
-                    intersection.add(matchedElements);
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel1.add(digestIndexModel1.get(digest1.toString()));
-            }
-        }
-
-        for (HashMap<String, String> digest2 : model2EReferencesDigest) {
-            boolean matchFound = false;
-            for (HashMap<String, String> digest1 : model1EReferencesDigest) {
-                if (digest1.equals(digest2)) {
-                    matchFound = true;
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel2.add(digestIndexModel2.get(digest2));
-            }
-        }
-
-		result.matched = intersection;
-		result.onlyInModel1 = onlyInModel1;
-		result.onlyInModel2 = onlyInModel2;
+		VenDiagramDTO<EReference> result = computeIntersection(referencesClass1, referencesClass2, (obj) -> getComparableObjectForEReference(obj));
 		return result;
 	}
 
 	public VenDiagramDTO<EOperation> getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2) {
-		VenDiagramDTO<EOperation> result = new VenDiagramDTO<EOperation>();
-		ArrayList<MatchedElementsDTO<EOperation>> intersection = new ArrayList<MatchedElementsDTO<EOperation>>();
-		ArrayList<EOperation> onlyInModel1 = new ArrayList<EOperation>();
-		ArrayList<EOperation> onlyInModel2 = new ArrayList<EOperation>();
-
-		HashMap<String, EOperation> digestIndexModel1 = new HashMap<String, EOperation>();
-		HashMap<String, EOperation> digestIndexModel2 = new HashMap<String, EOperation>();
-
-		ArrayList<HashMap<String, String>> model1Digests = new ArrayList<HashMap<String, String>>();
-		for(EOperation obj: eoperationsClass1) {
-			HashMap<String, String> digest = getComparableObjectForEOperation(obj);
-			model1Digests.add(digest);
-			digestIndexModel1.put(digest.toString(), obj);
-		}
-
-		ArrayList<HashMap<String, String>> model2Digests = new ArrayList<HashMap<String, String>>();
-		for(EOperation obj: eoperationsClass2) {
-			HashMap<String, String> digest = getComparableObjectForEOperation(obj);
-			model2Digests.add(digest);
-			digestIndexModel2.put(digest.toString(), obj);
-		}
-
-        for (HashMap<String, String> digest1 : model1Digests) {
-            boolean matchFound = false;
-            for (HashMap<String, String> digest2 : model2Digests) {
-                if (digest1.equals(digest2)) {
-                    matchFound = true;
-					MatchedElementsDTO<EOperation> matchedElements = new MatchedElementsDTO<EOperation>();
-					matchedElements.model1 = digestIndexModel1.get(digest1.toString());
-					matchedElements.model2 = digestIndexModel2.get(digest2.toString());
-                    intersection.add(matchedElements);
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel1.add(digestIndexModel1.get(digest1.toString()));
-            }
-        }
-
-        for (HashMap<String, String> digest2 : model2Digests) {
-            boolean matchFound = false;
-            for (HashMap<String, String> digest1 : model1Digests) {
-                if (digest1.equals(digest2)) {
-                    matchFound = true;
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel2.add(digestIndexModel2.get(digest2));
-            }
-        }
-
-		result.matched = intersection;
-		result.onlyInModel1 = onlyInModel1;
-		result.onlyInModel2 = onlyInModel2;
+		VenDiagramDTO<EOperation> result = computeIntersection(eoperationsClass1, eoperationsClass2, (obj) -> getComparableObjectForEOperation(obj));
 		return result;
 	}
 }

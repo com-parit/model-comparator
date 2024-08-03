@@ -123,7 +123,6 @@ public class HashingService extends AbstractClassComparisonService {
 	        totalChecksum += computeCRC32(Boolean.toString(eref.isUnique()));
 		}
         String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
-		System.out.println(binaryHash.length());
         return binaryHash;
 	}
 
