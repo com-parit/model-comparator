@@ -98,7 +98,8 @@ public class HashingService extends AbstractClassComparisonService {
 	}
 
 
-	public String getComparableObjectForEReference(EReference eref) {
+	public String getComparableObjectForEReference(Object obj) {
+		EReference eref = (EReference) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_REFERENCES_NAME) {
 	        totalChecksum += computeCRC32(eref.getName().toLowerCase());
@@ -121,7 +122,8 @@ public class HashingService extends AbstractClassComparisonService {
 		if (hashingConfiguration.INCLUDE_REFERENCES_IS_UNIQUE) {
 	        totalChecksum += computeCRC32(Boolean.toString(eref.isUnique()));
 		}
-        String binaryHash = Long.toBinaryString(totalChecksum);
+        String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
+		System.out.println(binaryHash.length());
         return binaryHash;
 	}
 
@@ -129,20 +131,22 @@ public class HashingService extends AbstractClassComparisonService {
 		EClass eclass = (EClass) obj;
         long totalChecksum = 0;
         totalChecksum += computeCRC32(eclass.getName().toLowerCase());
-        String binaryHash = String.format("%32s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
+        String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
         return binaryHash;
 	}
 
-	public String getComparableObjectForEnum(EEnum enumeration) {
+	public String getComparableObjectForEnum(Object obj) {
+		EEnum enumeration = (EEnum) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_ENUM_NAME) {
 	        totalChecksum += computeCRC32(enumeration.getName().toLowerCase());
 		}
-        String binaryHash = Long.toBinaryString(totalChecksum);
+        String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
         return binaryHash;
 	}
 
-	public String getComparableObjectForEAttribute(EAttribute eAtt) {
+	public String getComparableObjectForEAttribute(Object obj) {
+		EAttribute eAtt = (EAttribute) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_NAME) {
 	        totalChecksum += computeCRC32(eAtt.getName().toLowerCase());
@@ -169,11 +173,12 @@ public class HashingService extends AbstractClassComparisonService {
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_IS_UNIQUE) {
 	        totalChecksum += computeCRC32(Boolean.toString(eAtt.isUnique()));
 		}
-        String binaryHash = Long.toBinaryString(totalChecksum);
+        String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
 		return binaryHash;
 	}
 
-	public String getComparableObjectForEOperation(EOperation eop) {
+	public String getComparableObjectForEOperation(Object obj) {
+		EOperation eop = (EOperation) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_OPERATION_NAME) {
 	        totalChecksum += computeCRC32(eop.getName().toLowerCase());
@@ -189,11 +194,12 @@ public class HashingService extends AbstractClassComparisonService {
 			    totalChecksum += hash;
 			}
 		}
-        String binaryHash = Long.toBinaryString(totalChecksum);
+        String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
 		return binaryHash;
 	}
 
-	public String getComparableObjectForEParameter(EParameter eparam) {
+	public String getComparableObjectForEParameter(Object obj) {
+		EParameter eparam = (EParameter) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_PARAMETER_NAME) {
 	        totalChecksum += computeCRC32(eparam.getName().toLowerCase());
@@ -208,11 +214,12 @@ public class HashingService extends AbstractClassComparisonService {
 				totalChecksum += computeCRC32(eparam.getEOperation().getName().toLowerCase());
 			}
 		}
-        String binaryHash = Long.toBinaryString(totalChecksum);
+        String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
 		return binaryHash;
 	}
 
-	public long getHashForOperationParameters(EParameter eparam) {
+	public long getHashForOperationParameters(Object obj) {
+		EParameter eparam = (EParameter) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_PARAMETER_NAME) {
 	        totalChecksum += computeCRC32(eparam.getName().toLowerCase());
@@ -291,251 +298,27 @@ public class HashingService extends AbstractClassComparisonService {
 	}
 
 	public VenDiagramDTO<EClass> getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2) {
-		VenDiagramDTO<EClass> result = computeIntersection(classesModel1, classesModel2, (eclass) -> getComparableObjectForEClass(eclass));
+		VenDiagramDTO<EClass> result = computeIntersection(classesModel1, classesModel2, (obj) -> getComparableObjectForEClass(obj));
 		return result;
 	}
 
 	public VenDiagramDTO<EEnum> getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2) {
-		VenDiagramDTO<EEnum> result = new VenDiagramDTO<EEnum>();
-		ArrayList<MatchedElementsDTO<EEnum>> intersection = new ArrayList<MatchedElementsDTO<EEnum>>();
-		ArrayList<EEnum> onlyInModel1 = new ArrayList<EEnum>();
-		ArrayList<EEnum> onlyInModel2 = new ArrayList<EEnum>();
-
-		HashMap<String, EEnum> hashIndexModel1 = new HashMap<String, EEnum>();
-		HashMap<String, EEnum> hashIndexModel2 = new HashMap<String, EEnum>();
-
-		ArrayList<String> model1EEnumshash = new ArrayList<String>();
-		for(EEnum eenum: enumsModel1) {
-			String hash = getComparableObjectForEnum(eenum);
-			model1EEnumshash.add(hash);
-			hashIndexModel1.put(hash, eenum);
-		}
-
-		ArrayList<String> model2EEnumshash = new ArrayList<String>();
-		for(EEnum eenum: enumsModel2) {
-			String hash = getComparableObjectForEnum(eenum);
-			model2EEnumshash.add(hash);
-			hashIndexModel2.put(hash, eenum);
-		}
-
-        for (String hash1 : model1EEnumshash) {
-            boolean matchFound = false;
-            for (String hash2 : model2EEnumshash) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
-                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
-                    matchFound = true;
-					MatchedElementsDTO<EEnum> matchedEnums = new MatchedElementsDTO<EEnum>();
-					matchedEnums.model1 = hashIndexModel1.get(hash1);
-					matchedEnums.model2 = hashIndexModel2.get(hash2);
-                    intersection.add(matchedEnums);
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel1.add(hashIndexModel1.get(hash1));
-            }
-        }
-
-        for (String hash2 : model2EEnumshash) {
-            boolean matchFound = false;
-            for (String hash1 : model1EEnumshash) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
-                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
-                    matchFound = true;
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel2.add(hashIndexModel2.get(hash2));
-            }
-        }
-
-		result.matched = intersection;
-		result.onlyInModel1 = onlyInModel1;
-		result.onlyInModel2 = onlyInModel2;
+		VenDiagramDTO<EEnum> result = computeIntersection(enumsModel1, enumsModel2, (obj) -> getComparableObjectForEnum(obj));
 		return result;
 	}
 
 	public VenDiagramDTO<EAttribute> getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2) {
-		VenDiagramDTO<EAttribute> result = new VenDiagramDTO<EAttribute>();
-		ArrayList<MatchedElementsDTO<EAttribute>> intersection = new ArrayList<MatchedElementsDTO<EAttribute>>();
-		ArrayList<EAttribute> onlyInModel1 = new ArrayList<EAttribute>();
-		ArrayList<EAttribute> onlyInModel2 = new ArrayList<EAttribute>();
-
-		HashMap<String, EAttribute> hashIndexModel1 = new HashMap<String, EAttribute>();
-		HashMap<String, EAttribute> hashIndexModel2 = new HashMap<String, EAttribute>();
-
-		ArrayList<String> model1Hashes = new ArrayList<String>();
-		for(EAttribute eAttribute: attributesClass1) {
-			String hash = getComparableObjectForEAttribute(eAttribute);
-			model1Hashes.add(hash);
-			hashIndexModel1.put(hash, eAttribute);
-		}
-
-		ArrayList<String> model2Hashes = new ArrayList<String>();
-		for(EAttribute eAttribute: attributesClass2) {
-			String hash = getComparableObjectForEAttribute(eAttribute);
-			model2Hashes.add(hash);
-			hashIndexModel2.put(hash, eAttribute);
-		}
-
-        for (String hash1 : model1Hashes) {
-            boolean matchFound = false;
-            for (String hash2 : model2Hashes) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
-                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
-                    matchFound = true;
-					MatchedElementsDTO<EAttribute> matchedAttributes = new MatchedElementsDTO<EAttribute>();
-					matchedAttributes.model1 = hashIndexModel1.get(hash1);
-					matchedAttributes.model2 = hashIndexModel2.get(hash2);
-                    intersection.add(matchedAttributes);
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel1.add(hashIndexModel1.get(hash1));
-            }
-        }
-
-        for (String hash2 : model2Hashes) {
-            boolean matchFound = false;
-            for (String hash1 : model1Hashes) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
-                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
-                    matchFound = true;
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel2.add(hashIndexModel2.get(hash2));
-            }
-        }
-
-		result.matched = intersection;
-		result.onlyInModel1 = onlyInModel1;
-		result.onlyInModel2 = onlyInModel2;
+		VenDiagramDTO<EAttribute> result = computeIntersection(attributesClass1, attributesClass2, (obj) -> getComparableObjectForEAttribute(obj));
 		return result;
 	}
 
 	public VenDiagramDTO<EReference> getVenDiagramForEReferences(List<EReference> referencesClass1, List<EReference> referencesClass2) {
-		VenDiagramDTO<EReference> result = new VenDiagramDTO<EReference>();
-		ArrayList<MatchedElementsDTO<EReference>> intersection = new ArrayList<MatchedElementsDTO<EReference>>();
-		ArrayList<EReference> onlyInModel1 = new ArrayList<EReference>();
-		ArrayList<EReference> onlyInModel2 = new ArrayList<EReference>();
-
-		HashMap<String, EReference> hashIndexModel1 = new HashMap<String, EReference>();
-		HashMap<String, EReference> hashIndexModel2 = new HashMap<String, EReference>();
-
-		ArrayList<String> model1Hashes = new ArrayList<String>();
-		for(EReference refObject: referencesClass1) {
-			String hash = getComparableObjectForEReference(refObject);
-			model1Hashes.add(hash);
-			hashIndexModel1.put(hash, refObject);
-		}
-
-		ArrayList<String> model2Hashes = new ArrayList<String>();
-		for(EReference refObject: referencesClass2) {
-			String hash = getComparableObjectForEReference(refObject);
-			model2Hashes.add(hash);
-			hashIndexModel2.put(hash, refObject);
-		}
-
-        for (String hash1 : model1Hashes) {
-            boolean matchFound = false;
-            for (String hash2 : model2Hashes) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
-                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
-                    matchFound = true;
-					MatchedElementsDTO<EReference> matchedReferences = new MatchedElementsDTO<EReference>();
-					matchedReferences.model1 = hashIndexModel1.get(hash1);
-					matchedReferences.model2 = hashIndexModel2.get(hash2);
-                    intersection.add(matchedReferences);
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel1.add(hashIndexModel1.get(hash1));
-            }
-        }
-
-        for (String hash2 : model2Hashes) {
-            boolean matchFound = false;
-            for (String hash1 : model1Hashes) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
-                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
-                    matchFound = true;
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel2.add(hashIndexModel2.get(hash2));
-            }
-        }
-
-		result.matched = intersection;
-		result.onlyInModel1 = onlyInModel1;
-		result.onlyInModel2 = onlyInModel2;
+		VenDiagramDTO<EReference> result = computeIntersection(referencesClass1, referencesClass2, (obj) -> getComparableObjectForEReference(obj));
 		return result;
 	}
 
 	public VenDiagramDTO<EOperation> getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2) {
-		VenDiagramDTO<EOperation> result = new VenDiagramDTO<EOperation>();
-		ArrayList<MatchedElementsDTO<EOperation>> intersection = new ArrayList<MatchedElementsDTO<EOperation>>();
-		ArrayList<EOperation> onlyInModel1 = new ArrayList<EOperation>();
-		ArrayList<EOperation> onlyInModel2 = new ArrayList<EOperation>();
-
-		HashMap<String, EOperation> hashIndexModel1 = new HashMap<String, EOperation>();
-		HashMap<String, EOperation> hashIndexModel2 = new HashMap<String, EOperation>();
-
-		ArrayList<String> model1Hashes = new ArrayList<String>();
-		for(EOperation obj: eoperationsClass1) {
-			String hash = getComparableObjectForEOperation(obj);
-			model1Hashes.add(hash);
-			hashIndexModel1.put(hash, obj);
-		}
-
-		ArrayList<String> model2Hashes = new ArrayList<String>();
-		for(EOperation obj: eoperationsClass2) {
-			String hash = getComparableObjectForEOperation(obj);
-			model2Hashes.add(hash);
-			hashIndexModel2.put(hash, obj);
-		}
-
-        for (String hash1 : model1Hashes) {
-            boolean matchFound = false;
-            for (String hash2 : model2Hashes) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
-                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
-                    matchFound = true;
-					MatchedElementsDTO<EOperation> matchedElements = new MatchedElementsDTO<EOperation>();
-					matchedElements.model1 = hashIndexModel1.get(hash1);
-					matchedElements.model2 = hashIndexModel2.get(hash2);
-                    intersection.add(matchedElements);
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel1.add(hashIndexModel1.get(hash1));
-            }
-        }
-
-        for (String hash2 : model2Hashes) {
-            boolean matchFound = false;
-            for (String hash1 : model1Hashes) {
-				double normalizedHammingDist = normalizedHammingDistance(hash1, hash2);
-                if (normalizedHammingDist < hashingConfiguration.HASHING_THRESHOLD ) {
-                    matchFound = true;
-                    break;
-                }
-            }
-            if (!matchFound) {
-				onlyInModel2.add(hashIndexModel2.get(hash2));
-            }
-        }
-
-		result.matched = intersection;
-		result.onlyInModel1 = onlyInModel1;
-		result.onlyInModel2 = onlyInModel2;
+		VenDiagramDTO<EOperation> result = computeIntersection(eoperationsClass1, eoperationsClass2, (obj) -> getComparableObjectForEOperation(obj));
 		return result;
 	}
 }
