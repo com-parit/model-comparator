@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
 
+import com.mdre.evaluation.utils.Tuple;
 import com.mdre.evaluation.services.modelComparisonService.AbstractClassComparisonService;
 import com.mdre.evaluation.config.Constants;
 import com.mdre.evaluation.dtos.HashingConfigurationDTO;
@@ -76,6 +77,35 @@ public class HashingService extends AbstractClassComparisonService {
         return (double) distance / maxLength;
     }
 
+	public double computeSimilarity(Object comparisonObject1, Object comparisonObject2) {
+		String hashA = (String) comparisonObject1;
+		String hashB = (String) comparisonObject2;
+        if (hashA.length() != hashB.length()) {
+            throw new IllegalArgumentException("Hashes must be of the same length");
+        }
+
+        int length = hashA.length();
+        int dotProduct = 0;
+        int normA = 0;
+        int normB = 0;
+
+        for (int i = 0; i < length; i++) {
+            int bitA = Character.getNumericValue(hashA.charAt(i));
+            int bitB = Character.getNumericValue(hashB.charAt(i));
+
+            dotProduct += bitA * bitB;
+            normA += bitA * bitA;
+            normB += bitB * bitB;
+        }
+
+        if (normA == 0 || normB == 0) {
+            return 0.0;
+        }
+
+        return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+	}
+
+
 	public String getComparableObjectForEReference(EReference eref) {
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_REFERENCES_NAME) {
@@ -106,7 +136,7 @@ public class HashingService extends AbstractClassComparisonService {
 	public String getComparableObjectForEClass(EClass eClass) {
         long totalChecksum = 0;
         totalChecksum += computeCRC32(eClass.getName().toLowerCase());
-        String binaryHash = Long.toBinaryString(totalChecksum);
+        String binaryHash = String.format("%32s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
         return binaryHash;
 	}
 
@@ -213,33 +243,49 @@ public class HashingService extends AbstractClassComparisonService {
 		ArrayList<EClass> onlyInModel1 = new ArrayList<EClass>();
 		ArrayList<EClass> onlyInModel2 = new ArrayList<EClass>();
 
-		for (EClass eclassOriginal: classesModel1) {
-			Boolean matched = false;
-			for (EClass eclassPredicted: classesModel2) {
-				if (eclassOriginal.getName().equals(eclassPredicted.getName())) {
-					MatchedClassesDTO matchedClasses = new MatchedClassesDTO();
-					matchedClasses.model1 = eclassOriginal;
-					matchedClasses.model2 = eclassPredicted;
-					intersection.add(matchedClasses);
-					matched = true;
-				}
-			}
-			if (!matched) {
-				onlyInModel1.add(eclassOriginal);
-			}
+		HashMap<String, EClass> hashIndexModel1 = new HashMap<String, EClass>();
+		HashMap<String, EClass> hashIndexModel2 = new HashMap<String, EClass>();
+
+		ArrayList<String> model1EClassshash = new ArrayList<String>();
+		for(EClass eclass: classesModel1) {
+			String hash = getComparableObjectForEClass(eclass);
+			model1EClassshash.add(hash);
+			hashIndexModel1.put(hash, eclass);
 		}
 
-		for (EClass eclassPredicted: classesModel2) {
-			Boolean matched = false;
-			for (EClass eclassOriginal: classesModel1) {
-				if (eclassOriginal.getName() == eclassPredicted.getName()) {
-					matched = true;
-				}
-			}
-			if (!matched) {
-				onlyInModel2.add(eclassPredicted);
-			}
+		ArrayList<String> model2EClassshash = new ArrayList<String>();
+		for(EClass eclass: classesModel2) {
+			String hash = getComparableObjectForEClass(eclass);
+			model2EClassshash.add(hash);
+			hashIndexModel2.put(hash, eclass);
 		}
+
+        for (String hash1 : model1EClassshash) {
+			double maxSimilarity = -1.0;
+			Tuple<String, String> candidateToPop = new Tuple<String, String>(null, null);
+            for (String hash2 : model2EClassshash) {
+				Tuple<String, String> matchedCandidate = new Tuple<String, String>(hash1, hash2);
+				double similarity = computeSimilarity(hash1, hash2);
+				if (similarity > maxSimilarity) {
+					maxSimilarity = similarity;
+					candidateToPop = matchedCandidate;
+				}
+            }
+			if (maxSimilarity > hashingConfiguration.HASHING_THRESHOLD) { // match found
+				model2EClassshash.remove(candidateToPop.second);
+				MatchedClassesDTO matchedClasses = new MatchedClassesDTO();
+				matchedClasses.model1 = hashIndexModel1.get(candidateToPop.first);
+				matchedClasses.model2 = hashIndexModel2.get(candidateToPop.second);
+				intersection.add(matchedClasses);
+			} else {
+				onlyInModel1.add(hashIndexModel1.get(hash1));
+			}
+        }
+
+		for (String hash2: model2EClassshash) {
+			onlyInModel2.add(hashIndexModel2.get(hash2));
+		}
+
 		result.matched = intersection;
 		result.onlyInModel1 = onlyInModel1;
 		result.onlyInModel2 = onlyInModel2;

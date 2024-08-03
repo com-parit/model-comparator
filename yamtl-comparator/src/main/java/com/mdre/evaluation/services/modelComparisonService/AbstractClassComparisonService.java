@@ -34,6 +34,7 @@ import com.mdre.evaluation.dtos.VenDiagramEReferencesDTO;
 import com.mdre.evaluation.dtos.VenDiagramEOperationsDTO;
 
 abstract class AbstractClassComparisonService {
+	public abstract double computeSimilarity(Object comparisonObject1, Object comparisonObject2);
 	public abstract VenDiagramClassesDTO getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2);
 	public abstract VenDiagramEEnumsDTO getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2);
 	public abstract VenDiagramEAttributesDTO getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2);
