@@ -359,18 +359,16 @@ class Main:
         class_level_json = {}
 
         projectName = "ecommerce-backend"
-        config = "config.json"
+        config = "resources/config.json"
         groundTruthModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco.emf"
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco-flat-without-errors.emf"
 
         output_dir = f'output'
         os.makedirs(output_dir, exist_ok=True)
 
-        groundTruthModel = Adapter.get_ecore_model_from_emfatic(
-            groundTruthModel_emf)
+        groundTruthModel = "resources/btopenlinkjavacoremodel.ecore" # Adapter.get_ecore_model_from_emfatic(groundTruthModel_emf)
 
-        predictedModel = Adapter.get_ecore_model_from_emfatic(
-            predictedModel_emf)
+        predictedModel = "resources/bt_openlink.ecore" # Adapter.get_ecore_model_from_emfatic(predictedModel_emf)
 
         response = Adapter.compare_ecore_models(
             groundTruthModel, predictedModel, projectName, config)
@@ -396,4 +394,4 @@ class Main:
 
 
 if __name__ == '__main__':
-    Main().get_results_for_dataset()
+    Main().run()
