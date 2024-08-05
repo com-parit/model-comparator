@@ -324,7 +324,7 @@ class Main:
                 class_level_json = {}
 
                 projectName = subfolder_path
-                config = "config.json"
+                config = "resources/config.json"
                 groundTruthModel_emf = model_1
                 predictedModel_emf = model_2
 

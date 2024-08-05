@@ -3,3 +3,4 @@ __pycache__/
 driver/uploads
 .env
 usage/output/
+ase2024-dataset/
