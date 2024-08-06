@@ -19,6 +19,7 @@ import com.mdre.evaluation.services.modelComparisonService.HashingService;
 import com.mdre.evaluation.services.modelComparisonService.DigestService;
 import com.mdre.evaluation.services.modelComparisonService.MetricsComputationService;
 import com.mdre.evaluation.services.modelComparisonService.YamtlService;
+// import com.mdre.evaluation.services.modelComparisonService.YamtlModelComparisonService;
 import com.mdre.evaluation.config.Constants;
 
 import org.eclipse.emf.ecore.EcorePackage;
@@ -53,6 +54,7 @@ public class ModelComparisonService {
 		if (modelComparisonConfiguration.USE_HASHING) {
 			HashingConfigurationDTO hashingConfiguration = modelComparisonConfiguration.hashingConfiguration;
 			comparisonService = new HashingService(hashingConfiguration);
+			// comparisonService = new YamtlModelComparisonService();
 		} else {
 			DigestConfigurationDTO digestConfiguration = modelComparisonConfiguration.digestConfiguration;
 			comparisonService = new DigestService(digestConfiguration);

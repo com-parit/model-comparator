@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmaClass:Package
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:fmaClass="org.fma.fmaClass"
+    name="company">
+  <classifiers
+      xsi:type="fmaClass:Class"
+      name="Person">
+    <attr name="name"
+        type="//@classifiers.2"/>
+    <attr name="age"
+        type="//@classifiers.3"/>
+    <attr name="address"
+        type="//@classifiers.2"/>
+  </classifiers>
+  <classifiers
+      xsi:type="fmaClass:Class"
+      name="Employee"
+      super="//@classifiers.0">
+    <attr name="employeeId"
+        type="//@classifiers.2"/>
+    <attr name="department"
+        type="//@classifiers.4"/>
+  </classifiers>
+  <classifiers
+      xsi:type="fmaClass:DataType"
+      name="String"/>
+  <classifiers
+      xsi:type="fmaClass:DataType"
+      name="Integer"/>
+  <classifiers
+      xsi:type="fmaClass:Class"
+      name="Department">
+    <attr name="name"
+        type="//@classifiers.2"/>
+  </classifiers>
+</fmaClass:Package>
