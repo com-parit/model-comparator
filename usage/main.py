@@ -378,6 +378,10 @@ class Main:
             time = response['result']['time']
             print(json.dumps(model_level_json, indent=4))
             print(time)
+            with open(f'{output_dir}/model_level_json.json', 'w', encoding='utf-8') as json_file:
+                json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
+            with open(f'{output_dir}/class_level_json.json', 'w', encoding='utf-8') as json_file:
+                json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
 
             consolidated_csv_paths = self.create_csv(
                 model_level_json, class_level_json, output_dir)
@@ -389,8 +393,8 @@ class Main:
                     consolidated_csv, output_dir)
         except Exception as e:
             print(response)
-        os.remove(groundTruthModel)
-        os.remove(predictedModel)
+        # os.remove(groundTruthModel)
+        # os.remove(predictedModel)
 
 
 if __name__ == '__main__':
