@@ -320,9 +320,6 @@ class Main:
             if os.path.isdir(subfolder_path):
                 model_1 = os.path.join(subfolder_path, "model_1.emf")
                 model_2 = os.path.join(subfolder_path, "model_2.emf")
-                model_level_json = {}
-                class_level_json = {}
-
                 projectName = subfolder_path
                 config = "resources/config.json"
                 groundTruthModel_emf = model_1
@@ -332,20 +329,9 @@ class Main:
                 os.makedirs(output_dir, exist_ok=True)
 
                 try:
-                    groundTruthModel = Adapter.get_ecore_model_from_emfatic(
-                        groundTruthModel_emf)
-
-                    predictedModel = Adapter.get_ecore_model_from_emfatic(
-                        predictedModel_emf)
-
-                    response = Adapter.compare_ecore_models(
-                        groundTruthModel, predictedModel, projectName, config)
+                    model_level_json, class_level_json = Adapter.compare_emfatic_models_syntactically_and_semantically(
+                        groundTruthModel_emf, predictedModel_emf, projectName, config)
                     
-                    model_level_json = response['result']["modelLevelJson"]
-                    del model_level_json[subfolder_path]["model1_identifier"]
-                    del model_level_json[subfolder_path]["model2_identifier"]
-                    class_level_json = response['result']["classLevelJson"]
-                    time = response['result']['time']
                     with open(f'{output_dir}/model_level_json.json', 'w', encoding='utf-8') as json_file:
                         json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
                     with open(f'{output_dir}/class_level_json.json', 'w', encoding='utf-8') as json_file:
@@ -355,47 +341,24 @@ class Main:
                     print(e)
 
     def run(self, ):
-        model_level_json = {}
-        class_level_json = {}
-
         projectName = "ecommerce-backend"
         config = "resources/config.json"
         groundTruthModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco.emf"
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco-flat-without-errors.emf"
+        
+        groundTruthModelEcore = "resources/btopenlinkjavacoremodel.ecore"
+        predictedModelEcore = "resources/bt_openlink.ecore"
 
         output_dir = f'output'
         os.makedirs(output_dir, exist_ok=True)
-
-        groundTruthModel = "resources/btopenlinkjavacoremodel.ecore" # Adapter.get_ecore_model_from_emfatic(groundTruthModel_emf)
-
-        predictedModel = "resources/bt_openlink.ecore" # Adapter.get_ecore_model_from_emfatic(predictedModel_emf)
-
-        response = Adapter.compare_ecore_models(
-            groundTruthModel, predictedModel, projectName, config)
-        try:
-            model_level_json = response['result']["modelLevelJson"]
-            class_level_json = response['result']["classLevelJson"]
-            time = response['result']['time']
-            print(json.dumps(model_level_json, indent=4))
-            print(time)
-            with open(f'{output_dir}/model_level_json.json', 'w', encoding='utf-8') as json_file:
-                json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
-            with open(f'{output_dir}/class_level_json.json', 'w', encoding='utf-8') as json_file:
-                json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
-
-            consolidated_csv_paths = self.create_csv(
-                model_level_json, class_level_json, output_dir)
-
-            for consolidated_csv in consolidated_csv_paths:
-                visualizations.box_and_whisker_for_model_level_metrics_from_consolidated(
-                    consolidated_csv, output_dir)
-                visualizations.box_and_whisker_for_model_level_counts_from_consolidated(
-                    consolidated_csv, output_dir)
-        except Exception as e:
-            print(response)
-        # os.remove(groundTruthModel)
-        # os.remove(predictedModel)
-
+        
+        model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(
+            groundTruthModelEcore, 
+            predictedModelEcore,
+            projectName,
+            config
+        )
+        print(json.dumps(model_level_json, indent=4))
 
 if __name__ == '__main__':
     Main().run()

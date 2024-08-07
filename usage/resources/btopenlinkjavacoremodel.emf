@@ -1,0 +1,4776 @@
+@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="bt-openlink-java-core-model")
+@namespace(uri="http:///btopenlinkjavacoremodel.ecore", prefix="btopenlinkjavacoremodel")
+package btopenlinkjavacoremodel;
+
+@namespace(uri="http:///btopenlinkjavacoremodel/java.ecore", prefix="btopenlinkjavacoremodel.java")
+package java {
+	@namespace(uri="http:///btopenlinkjavacoremodel/java/com.ecore", prefix="btopenlinkjavacoremodel.java.com")
+	package com {
+		@namespace(uri="http:///btopenlinkjavacoremodel/java/com/bt.ecore", prefix="btopenlinkjavacoremodel.java.com.bt")
+		package bt {
+			@namespace(uri="http:///btopenlinkjavacoremodel/java/com/bt/openlink.ecore", prefix="btopenlinkjavacoremodel.java.com.bt.openlink")
+			package openlink {
+				enum OpenlinkXmppNamespace {
+					XMPP_PUBSUB = 0;
+					XMPP_PUBSUB_EVENT = 1;
+					XMPP_DISCO_INFO = 2;
+					XMPP_DISCO_ITEMS = 3;
+					XMPP_COMMANDS = 4;
+					XMPP_IO_DATA = 5;
+					OPENLINK_GET_PROFILES = 6;
+					OPENLINK_GET_PROFILE = 7;
+					OPENLINK_PROFILES = 8;
+					OPENLINK_PROFILE = 9;
+					OPENLINK_GET_INTERESTS = 10;
+					OPENLINK_GET_INTEREST = 11;
+					OPENLINK_INTERESTS = 12;
+					OPENLINK_GET_FEATURES = 13;
+					OPENLINK_FEATURES = 14;
+					OPENLINK_MAKE_CALL = 15;
+					OPENLINK_REQUEST_ACTION = 16;
+					OPENLINK_MAKE_INTERCOM_CALL = 17;
+					OPENLINK_MANAGE_VOICE_MESSAGE = 18;
+					OPENLINK_VOICE_MESSAGE = 19;
+					OPENLINK_MANAGE_VOICE_BLAST = 20;
+					OPENLINK_MANAGE_VOICE_BRIDGE = 21;
+					OPENLINK_MANAGE_INTERESTS = 22;
+					OPENLINK_SET_FEATURES = 23;
+					OPENLINK_QUERY_FEATURES = 24;
+					OPENLINK_GET_CALL_HISTORY = 25;
+					OPENLINK_CALL_STATUS = 26;
+					OPENLINK_DEVICE_STATUS = 27;
+					OPENLINK_DEVICE_KEY = 28;
+					OPENLINK_SPEAKER_CHANNEL = 29;
+					OPENLINK_VOICE_RECORDER = 30;
+					OPENLINK_CALL_HISTORY = 31;
+				}
+
+				abstract class StanzaBuilder {
+					!ordered op B[1] setId(!ordered java.lang.String[1] ~id);
+					!ordered op B[1] setTo(!ordered J[1] to);
+					!ordered op B[1] setFrom(!ordered J[1] from);
+					!ordered op java.util.Optional[1] getId();
+					!ordered op java.util.Optional[1] getTo();
+					!ordered op java.util.Optional[1] getFrom();
+					!unique !ordered ref J[1] to;
+					!unique !ordered ref J[1] from;
+					!unique !ordered ref java.lang.String[1] ~id;
+				}
+
+				class J {
+				}
+
+				@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setId")
+				class StanzaBuilder_setId {
+				}
+
+				@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setTo")
+				class StanzaBuilder_setTo {
+				}
+
+				@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setFrom")
+				class StanzaBuilder_setFrom {
+				}
+
+				@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getId")
+				class StanzaBuilder_getId {
+				}
+
+				@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getTo")
+				class StanzaBuilder_getTo {
+				}
+
+				@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFrom")
+				class StanzaBuilder_getFrom {
+				}
+
+				class B {
+				}
+
+				@namespace(uri="http:///btopenlinkjavacoremodel/java/com/bt/openlink/iq.ecore", prefix="btopenlinkjavacoremodel.java.com.bt.openlink.iq")
+				package iq {
+					abstract class GetFeaturesResultBuilder extends IQBuilder {
+						!ordered op void GetFeaturesResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setProfileId(!ordered type.ProfileId[1] profileId);
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op B[1] addFeature(!ordered type.Feature[1] feature);
+						!ordered op type.Feature[*] getFeatures();
+						!ordered op void validateUniqueness(!ordered java.util.function.Consumer[1] errorConsumer);
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.ProfileId[1] profileId;
+						!unique !ordered ref type.Feature[*] features;
+					}
+
+					abstract class IQBuilder extends StanzaBuilder {
+						!ordered op void IQBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op java.lang.String[1] getExpectedIQType();
+						!ordered op B[1] setIQType(!ordered T[1] iqType);
+						!ordered op java.util.Optional[1] getIqType();
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!unique !ordered ref T[1] iqType;
+					}
+
+					class T {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="IQBuilder")
+					class IQBuilder_IQBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setIQType")
+					class IQBuilder_setIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getIqType")
+					class IQBuilder_getIqType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class IQBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class IQBuilder_validate {
+					}
+
+					class B {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetFeaturesResultBuilder")
+					class GetFeaturesResultBuilder_GetFeaturesResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetFeaturesResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class GetFeaturesResultBuilder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class GetFeaturesResultBuilder_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addFeature")
+					class GetFeaturesResultBuilder_addFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatures")
+					class GetFeaturesResultBuilder_getFeatures {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetFeaturesResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validateUniqueness")
+					class GetFeaturesResultBuilder_validateUniqueness {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetFeaturesResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetFeaturesResultBuilder_validate {
+					}
+
+					abstract class PubSubSubscriptionRequestResultBuilder extends IQBuilder {
+						!ordered op void PubSubSubscriptionRequestResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setPubSubNodeId(!ordered type.PubSubNodeId[1] pubSubNodeId);
+						!ordered op B[1] setInterestId(!ordered type.InterestId[1] interestId);
+						!ordered op java.util.Optional[1] getPubSubNodeId();
+						!ordered op java.util.Optional[1] getInterestId();
+						!ordered op B[1] setJID(!ordered J[1] jid);
+						!ordered op java.util.Optional[1] getJID();
+						!ordered op B[1] setSubscriptionState(!ordered type.SubscriptionState[1] subscriptionState);
+						!ordered op java.util.Optional[1] getSubscriptionState();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.PubSubNodeId[1] pubSubNodeId;
+						!unique !ordered ref J[1] jid;
+						!unique !ordered attr type.SubscriptionState[1] subscriptionState;
+					}
+
+					class J {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="PubSubSubscriptionRequestResultBuilder")
+					class PubSubSubscriptionRequestResultBuilder_PubSubSubscriptionRequestResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setPubSubNodeId")
+					class PubSubSubscriptionRequestResultBuilder_setPubSubNodeId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setInterestId")
+					class PubSubSubscriptionRequestResultBuilder_setInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getPubSubNodeId")
+					class PubSubSubscriptionRequestResultBuilder_getPubSubNodeId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterestId")
+					class PubSubSubscriptionRequestResultBuilder_getInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setJID")
+					class PubSubSubscriptionRequestResultBuilder_setJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getJID")
+					class PubSubSubscriptionRequestResultBuilder_getJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setSubscriptionState")
+					class PubSubSubscriptionRequestResultBuilder_setSubscriptionState {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getSubscriptionState")
+					class PubSubSubscriptionRequestResultBuilder_getSubscriptionState {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class PubSubSubscriptionRequestResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class PubSubSubscriptionRequestResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class PubSubSubscriptionRequestResultBuilder_validate {
+					}
+
+					abstract class MakeCallRequestBuilder extends IQBuilder {
+						!ordered op void MakeCallRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setJID(!ordered J[1] jid);
+						!ordered op B[1] setProfileId(!ordered type.ProfileId[1] profileId);
+						!ordered op B[1] setInterestId(!ordered type.InterestId[1] interestId);
+						!ordered op B[1] setDestination(!ordered type.PhoneNumber[1] destination);
+						!ordered op B[1] addFeature(!ordered type.MakeCallFeature[1] feature);
+						!ordered op B[1] addOriginatorReference(!ordered java.lang.String[1] key, !ordered java.lang.String[1] value);
+						!ordered op B[1] addOriginatorReference(!ordered type.OriginatorReference[1] originatorReference);
+						!ordered op java.util.Optional[1] getJID();
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op java.util.Optional[1] getInterestId();
+						!ordered op java.util.Optional[1] getDestination();
+						!ordered op type.MakeCallFeature[*] getFeatures();
+						!ordered op type.OriginatorReference[*] getOriginatorReferences();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref J[1] jid;
+						!unique !ordered ref type.ProfileId[1] profileId;
+						!unique !ordered ref type.InterestId[1] interestId;
+						!unique !ordered ref type.PhoneNumber[1] destination;
+						!unique !ordered ref type.MakeCallFeature[*] features;
+						!unique !ordered ref type.OriginatorReference[*] originatorReferences;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="MakeCallRequestBuilder")
+					class MakeCallRequestBuilder_MakeCallRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class MakeCallRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setJID")
+					class MakeCallRequestBuilder_setJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class MakeCallRequestBuilder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setInterestId")
+					class MakeCallRequestBuilder_setInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDestination")
+					class MakeCallRequestBuilder_setDestination {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addFeature")
+					class MakeCallRequestBuilder_addFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addOriginatorReference")
+					class MakeCallRequestBuilder_addOriginatorReference {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addOriginatorReference")
+					class MakeCallRequestBuilder_addOriginatorReference {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getJID")
+					class MakeCallRequestBuilder_getJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class MakeCallRequestBuilder_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterestId")
+					class MakeCallRequestBuilder_getInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDestination")
+					class MakeCallRequestBuilder_getDestination {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatures")
+					class MakeCallRequestBuilder_getFeatures {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getOriginatorReferences")
+					class MakeCallRequestBuilder_getOriginatorReferences {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class MakeCallRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class MakeCallRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class MakeCallRequestBuilder_validate {
+					}
+
+					abstract class GetInterestsResultBuilder extends IQBuilder {
+						!ordered op void GetInterestsResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] addInterest(!ordered type.Interest[1] interest);
+						!ordered op type.Interest[*] getInterests();
+						!ordered op void validateUniqueness(!ordered java.util.function.Consumer[1] errorConsumer);
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.Interest[*] interests;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetInterestsResultBuilder")
+					class GetInterestsResultBuilder_GetInterestsResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetInterestsResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addInterest")
+					class GetInterestsResultBuilder_addInterest {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterests")
+					class GetInterestsResultBuilder_getInterests {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestsResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validateUniqueness")
+					class GetInterestsResultBuilder_validateUniqueness {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestsResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestsResultBuilder_validate {
+					}
+
+					abstract class RequestActionResultBuilder extends IQBuilder {
+						!ordered op void RequestActionResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setCallStatus(!ordered type.CallStatus[1] callStatus);
+						!ordered op java.util.Optional[1] getCallStatus();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.CallStatus[1] callStatus;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="RequestActionResultBuilder")
+					class RequestActionResultBuilder_RequestActionResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class RequestActionResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallStatus")
+					class RequestActionResultBuilder_setCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallStatus")
+					class RequestActionResultBuilder_getCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class RequestActionResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class RequestActionResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class RequestActionResultBuilder_validate {
+					}
+
+					abstract class GetProfilesRequestBuilder extends IQBuilder {
+						!ordered op void GetProfilesRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setJID(!ordered J[1] jid);
+						!ordered op java.util.Optional[1] getJID();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref J[1] jid;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetProfilesRequestBuilder")
+					class GetProfilesRequestBuilder_GetProfilesRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetProfilesRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setJID")
+					class GetProfilesRequestBuilder_setJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getJID")
+					class GetProfilesRequestBuilder_getJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfilesRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfilesRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfilesRequestBuilder_validate {
+					}
+
+					class QueryFeaturesRequestBuilder extends IQBuilder {
+						!ordered op void QueryFeaturesRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setProfileId(!ordered type.ProfileId[1] profileId);
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.ProfileId[1] profileId;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="QueryFeaturesRequestBuilder")
+					class QueryFeaturesRequestBuilder_QueryFeaturesRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class QueryFeaturesRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class QueryFeaturesRequestBuilder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class QueryFeaturesRequestBuilder_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class QueryFeaturesRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class QueryFeaturesRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class QueryFeaturesRequestBuilder_validate {
+					}
+
+					abstract class GetCallHistoryRequestBuilder extends IQBuilder {
+						!ordered op void GetCallHistoryRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!ordered op B[1] setJID(!ordered J[1] jid);
+						!ordered op java.util.Optional[1] getJID();
+						!ordered op B[1] setCaller(!ordered java.lang.String[1] caller);
+						!ordered op java.util.Optional[1] getCaller();
+						!ordered op B[1] setCalled(!ordered java.lang.String[1] called);
+						!ordered op java.util.Optional[1] getCalled();
+						!ordered op B[1] setCallType(!ordered type.CallType[1] callType);
+						!ordered op java.util.Optional[1] getCallType();
+						!ordered op B[1] setFromDate(!ordered java.time.LocalDate[1] fromDate);
+						!ordered op java.util.Optional[1] getFromDate();
+						!ordered op B[1] setUpToDate(!ordered java.time.LocalDate[1] upToDate);
+						!ordered op java.util.Optional[1] getUpToDate();
+						!ordered op B[1] setStart(!ordered importedTypes.primitivetype.Long[1] start);
+						!ordered op java.util.Optional[1] getStart();
+						!ordered op B[1] setCount(!ordered importedTypes.primitivetype.Long[1] count);
+						!ordered op java.util.Optional[1] getCount();
+						!unique !ordered ref J[1] jid;
+						!unique !ordered ref java.lang.String[1] caller;
+						!unique !ordered ref java.lang.String[1] called;
+						!unique !ordered attr type.CallType[1] callType;
+						!unique !ordered ref java.time.LocalDate[1] fromDate;
+						!unique !ordered ref java.time.LocalDate[1] upToDate;
+						!unique !ordered ref importedTypes.primitivetype.Long[1] start;
+						!unique !ordered ref importedTypes.primitivetype.Long[1] count;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetCallHistoryRequestBuilder")
+					class GetCallHistoryRequestBuilder_GetCallHistoryRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetCallHistoryRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetCallHistoryRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetCallHistoryRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetCallHistoryRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setJID")
+					class GetCallHistoryRequestBuilder_setJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getJID")
+					class GetCallHistoryRequestBuilder_getJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCaller")
+					class GetCallHistoryRequestBuilder_setCaller {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCaller")
+					class GetCallHistoryRequestBuilder_getCaller {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCalled")
+					class GetCallHistoryRequestBuilder_setCalled {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCalled")
+					class GetCallHistoryRequestBuilder_getCalled {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallType")
+					class GetCallHistoryRequestBuilder_setCallType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallType")
+					class GetCallHistoryRequestBuilder_getCallType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setFromDate")
+					class GetCallHistoryRequestBuilder_setFromDate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFromDate")
+					class GetCallHistoryRequestBuilder_getFromDate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setUpToDate")
+					class GetCallHistoryRequestBuilder_setUpToDate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getUpToDate")
+					class GetCallHistoryRequestBuilder_getUpToDate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setStart")
+					class GetCallHistoryRequestBuilder_setStart {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getStart")
+					class GetCallHistoryRequestBuilder_getStart {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCount")
+					class GetCallHistoryRequestBuilder_setCount {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCount")
+					class GetCallHistoryRequestBuilder_getCount {
+					}
+
+					abstract class GetFeaturesRequestBuilder extends IQBuilder {
+						!ordered op void GetFeaturesRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setProfileId(!ordered type.ProfileId[1] profileId);
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.ProfileId[1] profileId;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetFeaturesRequestBuilder")
+					class GetFeaturesRequestBuilder_GetFeaturesRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetFeaturesRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class GetFeaturesRequestBuilder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class GetFeaturesRequestBuilder_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetFeaturesRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetFeaturesRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetFeaturesRequestBuilder_validate {
+					}
+
+					abstract class PubSubPublishRequestBuilder extends IQBuilder {
+						!ordered op void PubSubPublishRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setPubSubNodeId(!ordered type.PubSubNodeId[1] pubSubNodeId);
+						!ordered op B[1] setInterestId(!ordered type.InterestId[1] interestId);
+						!ordered op java.util.Optional[1] getPubSubNodeId();
+						!ordered op java.util.Optional[1] getInterestId();
+						!ordered op B[1] setCallStatus(!ordered type.CallStatus[1] callStatus);
+						!ordered op java.util.Optional[1] getCallStatus();
+						!ordered op B[1] setDeviceStatus(!ordered type.DeviceStatus[1] deviceStatus);
+						!ordered op java.util.Optional[1] getDeviceStatus();
+						!ordered op void validateCallsAreOnTheCorrectInterest(!ordered type.CallStatus[1] callStatus, !ordered java.util.function.Consumer[1] errorConsumer);
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.PubSubNodeId[1] pubSubNodeId;
+						!unique !ordered ref type.CallStatus[1] callStatus;
+						!unique !ordered ref type.DeviceStatus[1] deviceStatus;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="PubSubPublishRequestBuilder")
+					class PubSubPublishRequestBuilder_PubSubPublishRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class PubSubPublishRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setPubSubNodeId")
+					class PubSubPublishRequestBuilder_setPubSubNodeId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setInterestId")
+					class PubSubPublishRequestBuilder_setInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getPubSubNodeId")
+					class PubSubPublishRequestBuilder_getPubSubNodeId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterestId")
+					class PubSubPublishRequestBuilder_getInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallStatus")
+					class PubSubPublishRequestBuilder_setCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallStatus")
+					class PubSubPublishRequestBuilder_getCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDeviceStatus")
+					class PubSubPublishRequestBuilder_setDeviceStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDeviceStatus")
+					class PubSubPublishRequestBuilder_getDeviceStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class PubSubPublishRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validateCallsAreOnTheCorrectInterest")
+					class PubSubPublishRequestBuilder_validateCallsAreOnTheCorrectInterest {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class PubSubPublishRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class PubSubPublishRequestBuilder_validate {
+					}
+
+					abstract class GetProfileResultBuilder extends IQBuilder {
+						!ordered op void GetProfileResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setProfile(!ordered type.Profile[1] profile);
+						!ordered op java.util.Optional[1] getProfile();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.Profile[1] profile;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetProfileResultBuilder")
+					class GetProfileResultBuilder_GetProfileResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetProfileResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfile")
+					class GetProfileResultBuilder_setProfile {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfile")
+					class GetProfileResultBuilder_getProfile {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfileResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfileResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfileResultBuilder_validate {
+					}
+
+					abstract class QueryFeaturesResultBuilder extends IQBuilder {
+						!ordered op void QueryFeaturesResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] addFeature(!ordered type.ActiveFeature[1] feature);
+						!ordered op type.ActiveFeature[*] getFeatures();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.ActiveFeature[*] features;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="QueryFeaturesResultBuilder")
+					class QueryFeaturesResultBuilder_QueryFeaturesResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class QueryFeaturesResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addFeature")
+					class QueryFeaturesResultBuilder_addFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatures")
+					class QueryFeaturesResultBuilder_getFeatures {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class QueryFeaturesResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class QueryFeaturesResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class QueryFeaturesResultBuilder_validate {
+					}
+
+					abstract class RequestActionRequestBuilder extends IQBuilder {
+						!ordered op void RequestActionRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setInterestId(!ordered type.InterestId[1] interestId);
+						!ordered op java.util.Optional[1] getInterestId();
+						!ordered op B[1] setAction(!ordered type.RequestAction[1] requestAction);
+						!ordered op java.util.Optional[1] getAction();
+						!ordered op B[1] setCallId(!ordered type.CallId[1] callId);
+						!ordered op java.util.Optional[1] getCallId();
+						!ordered op B[1] setValue1(!ordered type.RequestActionValue[1] value1);
+						!ordered op java.util.Optional[1] getValue1();
+						!ordered op B[1] setValue2(!ordered type.RequestActionValue[1] value2);
+						!ordered op java.util.Optional[1] getValue2();
+						!ordered op B[1] addFeatures(!ordered type.MakeCallFeature[*] features);
+						!ordered op B[1] addFeature(!ordered type.MakeCallFeature[1] feature);
+						!ordered op type.MakeCallFeature[*] getFeatures();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!ordered op void checkValuesArePResent(!ordered type.RequestAction[1] requestActionToCheck, !ordered java.lang.String[*] errors);
+						!unique !ordered ref type.InterestId[1] interestId;
+						!unique !ordered attr type.RequestAction[1] requestAction;
+						!unique !ordered ref type.CallId[1] callId;
+						!unique !ordered ref type.RequestActionValue[1] value2;
+						!unique !ordered ref type.RequestActionValue[1] value1;
+						!unique !ordered ref type.MakeCallFeature[*] features;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="RequestActionRequestBuilder")
+					class RequestActionRequestBuilder_RequestActionRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class RequestActionRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setInterestId")
+					class RequestActionRequestBuilder_setInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterestId")
+					class RequestActionRequestBuilder_getInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setAction")
+					class RequestActionRequestBuilder_setAction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getAction")
+					class RequestActionRequestBuilder_getAction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallId")
+					class RequestActionRequestBuilder_setCallId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallId")
+					class RequestActionRequestBuilder_getCallId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue1")
+					class RequestActionRequestBuilder_setValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue1")
+					class RequestActionRequestBuilder_getValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue2")
+					class RequestActionRequestBuilder_setValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue2")
+					class RequestActionRequestBuilder_getValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addFeatures")
+					class RequestActionRequestBuilder_addFeatures {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addFeature")
+					class RequestActionRequestBuilder_addFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatures")
+					class RequestActionRequestBuilder_getFeatures {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class RequestActionRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class RequestActionRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class RequestActionRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="checkValuesArePResent")
+					class RequestActionRequestBuilder_checkValuesArePResent {
+					}
+
+					abstract class GetInterestResultBuilder extends IQBuilder {
+						!ordered op void GetInterestResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setInterest(!ordered type.Interest[1] interest);
+						!ordered op java.util.Optional[1] getInterest();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.Interest[1] interest;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetInterestResultBuilder")
+					class GetInterestResultBuilder_GetInterestResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetInterestResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setInterest")
+					class GetInterestResultBuilder_setInterest {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterest")
+					class GetInterestResultBuilder_getInterest {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestResultBuilder_validate {
+					}
+
+					abstract class GetProfileRequestBuilder extends IQBuilder {
+						!ordered op void GetProfileRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setProfileId(!ordered type.ProfileId[1] profileId);
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.ProfileId[1] profileId;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetProfileRequestBuilder")
+					class GetProfileRequestBuilder_GetProfileRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetProfileRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class GetProfileRequestBuilder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class GetProfileRequestBuilder_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfileRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfileRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfileRequestBuilder_validate {
+					}
+
+					abstract class GetInterestRequestBuilder extends IQBuilder {
+						!ordered op void GetInterestRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setInterestId(!ordered type.InterestId[1] interestId);
+						!ordered op java.util.Optional[1] getInterestId();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.InterestId[1] interestId;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetInterestRequestBuilder")
+					class GetInterestRequestBuilder_GetInterestRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetInterestRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setInterestId")
+					class GetInterestRequestBuilder_setInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterestId")
+					class GetInterestRequestBuilder_getInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestRequestBuilder_validate {
+					}
+
+					class ManageVoiceMessageResultBuilder extends IQBuilder {
+						!ordered op void ManageVoiceMessageResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!ordered op B[1] setDeviceStatus(!ordered type.DeviceStatus[1] deviceStatus);
+						!ordered op java.util.Optional[1] getDeviceStatus();
+						!unique !ordered ref type.DeviceStatus[1] deviceStatus;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="ManageVoiceMessageResultBuilder")
+					class ManageVoiceMessageResultBuilder_ManageVoiceMessageResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class ManageVoiceMessageResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class ManageVoiceMessageResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class ManageVoiceMessageResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class ManageVoiceMessageResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDeviceStatus")
+					class ManageVoiceMessageResultBuilder_setDeviceStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDeviceStatus")
+					class ManageVoiceMessageResultBuilder_getDeviceStatus {
+					}
+
+					abstract class ManageVoiceMessageRequestBuilder extends IQBuilder {
+						!ordered op void ManageVoiceMessageRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!ordered op type.FeatureId[*] getFeatures();
+						!ordered op java.util.Optional[1] getLabel();
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op java.util.Optional[1] getAction();
+						!ordered op B[1] addFeature(!ordered type.FeatureId[1] feature);
+						!ordered op B[1] setProfileId(!ordered type.ProfileId[1] profileId);
+						!ordered op B[1] setLabel(!ordered java.lang.String[1] label);
+						!ordered op B[1] setAction(!ordered type.ManageVoiceMessageAction[1] action);
+						!unique !ordered ref type.ProfileId[1] profileId;
+						!unique !ordered attr type.ManageVoiceMessageAction[1] action;
+						!unique !ordered ref java.lang.String[1] label;
+						!unique !ordered ref type.FeatureId[*] features;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="ManageVoiceMessageRequestBuilder")
+					class ManageVoiceMessageRequestBuilder_ManageVoiceMessageRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class ManageVoiceMessageRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class ManageVoiceMessageRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class ManageVoiceMessageRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class ManageVoiceMessageRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatures")
+					class ManageVoiceMessageRequestBuilder_getFeatures {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getLabel")
+					class ManageVoiceMessageRequestBuilder_getLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class ManageVoiceMessageRequestBuilder_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getAction")
+					class ManageVoiceMessageRequestBuilder_getAction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addFeature")
+					class ManageVoiceMessageRequestBuilder_addFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class ManageVoiceMessageRequestBuilder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setLabel")
+					class ManageVoiceMessageRequestBuilder_setLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setAction")
+					class ManageVoiceMessageRequestBuilder_setAction {
+					}
+
+					class SetFeaturesRequestBuilder extends IQBuilder {
+						!ordered op void SetFeaturesRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setProfileId(!ordered type.ProfileId[1] profileId);
+						!ordered op B[1] setFeatureId(!ordered type.FeatureId[1] featureId);
+						!ordered op java.util.Optional[1] getFeatureId();
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op java.util.Optional[1] getValue1();
+						!ordered op java.util.Optional[1] getValue2();
+						!ordered op java.util.Optional[1] getValue3();
+						!ordered op B[1] setValue1(!ordered java.lang.String[1] value1);
+						!ordered op B[1] setValue1(!ordered importedTypes.primitivetype.Boolean[1] value1);
+						!ordered op B[1] setValue1(!ordered importedTypes.primitivetype.Long[1] value1);
+						!ordered op B[1] setValue2(!ordered java.lang.String[1] value2);
+						!ordered op B[1] setValue2(!ordered importedTypes.primitivetype.Boolean[1] value2);
+						!ordered op B[1] setValue3(!ordered type.PhoneNumber[1] value2);
+						!ordered op B[1] setValue3(!ordered java.lang.String[1] value3);
+						!ordered op B[1] setValue3(!ordered importedTypes.primitivetype.Boolean[1] value3);
+						!ordered op B[1] setValue2(!ordered type.PhoneNumber[1] value3);
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.ProfileId[1] profileId;
+						!unique !ordered ref type.FeatureId[1] featureId;
+						!unique !ordered ref java.lang.String[1] value1;
+						!unique !ordered ref java.lang.String[1] value2;
+						!unique !ordered ref java.lang.String[1] value3;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="SetFeaturesRequestBuilder")
+					class SetFeaturesRequestBuilder_SetFeaturesRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class SetFeaturesRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class SetFeaturesRequestBuilder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setFeatureId")
+					class SetFeaturesRequestBuilder_setFeatureId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatureId")
+					class SetFeaturesRequestBuilder_getFeatureId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class SetFeaturesRequestBuilder_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue1")
+					class SetFeaturesRequestBuilder_getValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue2")
+					class SetFeaturesRequestBuilder_getValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue3")
+					class SetFeaturesRequestBuilder_getValue3 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue1")
+					class SetFeaturesRequestBuilder_setValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue1")
+					class SetFeaturesRequestBuilder_setValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue1")
+					class SetFeaturesRequestBuilder_setValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue2")
+					class SetFeaturesRequestBuilder_setValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue2")
+					class SetFeaturesRequestBuilder_setValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue3")
+					class SetFeaturesRequestBuilder_setValue3 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue3")
+					class SetFeaturesRequestBuilder_setValue3 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue3")
+					class SetFeaturesRequestBuilder_setValue3 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue2")
+					class SetFeaturesRequestBuilder_setValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class SetFeaturesRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class SetFeaturesRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class SetFeaturesRequestBuilder_validate {
+					}
+
+					abstract class GetProfilesResultBuilder extends IQBuilder {
+						!ordered op void GetProfilesResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] addProfile(!ordered type.Profile[1] profile);
+						!ordered op type.Profile[*] getProfiles();
+						!ordered op void validateUniqueness(!ordered java.util.function.Consumer[1] errorConsumer);
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.Profile[*] profiles;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetProfilesResultBuilder")
+					class GetProfilesResultBuilder_GetProfilesResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetProfilesResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addProfile")
+					class GetProfilesResultBuilder_addProfile {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfiles")
+					class GetProfilesResultBuilder_getProfiles {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfilesResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validateUniqueness")
+					class GetProfilesResultBuilder_validateUniqueness {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfilesResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetProfilesResultBuilder_validate {
+					}
+
+					abstract class GetInterestsRequestBuilder extends IQBuilder {
+						!ordered op void GetInterestsRequestBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setProfileId(!ordered type.ProfileId[1] profileId);
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.ProfileId[1] profileId;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetInterestsRequestBuilder")
+					class GetInterestsRequestBuilder_GetInterestsRequestBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetInterestsRequestBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class GetInterestsRequestBuilder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class GetInterestsRequestBuilder_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestsRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestsRequestBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetInterestsRequestBuilder_validate {
+					}
+
+					abstract class GetCallHistoryResultBuilder extends IQBuilder {
+						!ordered op void GetCallHistoryResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setTotalRecordCount(!ordered importedTypes.primitivetype.Long[1] totalRecordCount);
+						!ordered op B[1] setFirstRecordNumber(!ordered importedTypes.primitivetype.Long[1] firstRecordNumber);
+						!ordered op B[1] setRecordCountInBatch(!ordered importedTypes.primitivetype.Long[1] recordCountInBatch);
+						!ordered op B[1] addCall(!ordered type.HistoricalCall[1] call);
+						!ordered op B[1] addCalls(!ordered type.HistoricalCall[*] calls);
+						!ordered op java.util.Optional[1] getTotalRecordCount();
+						!ordered op java.util.Optional[1] getFirstRecordNumber();
+						!ordered op java.util.Optional[1] getRecordCountInBatch();
+						!ordered op type.HistoricalCall[*] getCalls();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref importedTypes.primitivetype.Long[1] totalRecordCount;
+						!unique !ordered ref importedTypes.primitivetype.Long[1] firstRecordNumber;
+						!unique !ordered ref importedTypes.primitivetype.Long[1] recordCountInBatch;
+						!unique !ordered ref type.HistoricalCall[*] calls;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="GetCallHistoryResultBuilder")
+					class GetCallHistoryResultBuilder_GetCallHistoryResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class GetCallHistoryResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setTotalRecordCount")
+					class GetCallHistoryResultBuilder_setTotalRecordCount {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setFirstRecordNumber")
+					class GetCallHistoryResultBuilder_setFirstRecordNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setRecordCountInBatch")
+					class GetCallHistoryResultBuilder_setRecordCountInBatch {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addCall")
+					class GetCallHistoryResultBuilder_addCall {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addCalls")
+					class GetCallHistoryResultBuilder_addCalls {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getTotalRecordCount")
+					class GetCallHistoryResultBuilder_getTotalRecordCount {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFirstRecordNumber")
+					class GetCallHistoryResultBuilder_getFirstRecordNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getRecordCountInBatch")
+					class GetCallHistoryResultBuilder_getRecordCountInBatch {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCalls")
+					class GetCallHistoryResultBuilder_getCalls {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetCallHistoryResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetCallHistoryResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class GetCallHistoryResultBuilder_validate {
+					}
+
+					abstract class MakeCallResultBuilder extends IQBuilder {
+						!ordered op void MakeCallResultBuilder(!ordered java.lang.Class[1] typeClass);
+						!ordered op B[1] setCallStatus(!ordered type.CallStatus[1] callStatus);
+						!ordered op java.util.Optional[1] getCallStatus();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.CallStatus[1] callStatus;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="MakeCallResultBuilder")
+					class MakeCallResultBuilder_MakeCallResultBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExpectedIQType")
+					class MakeCallResultBuilder_getExpectedIQType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallStatus")
+					class MakeCallResultBuilder_setCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallStatus")
+					class MakeCallResultBuilder_getCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class MakeCallResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class MakeCallResultBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class MakeCallResultBuilder_validate {
+					}
+
+				}
+
+				@namespace(uri="http:///btopenlinkjavacoremodel/java/com/bt/openlink/type.ecore", prefix="btopenlinkjavacoremodel.java.com.bt.openlink.type")
+				package type {
+					class Feature extends java.io.Serializable {
+						!ordered op void Feature(!ordered Feature_AbstractFeatureBuilder[1] builder);
+						!ordered op java.util.Optional[1] getId();
+						!ordered op java.util.Optional[1] getType();
+						!ordered op java.util.Optional[1] getLabel();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref FeatureId[1] featureId;
+						!unique !ordered attr FeatureType[1] featureType;
+						!unique !ordered ref java.lang.String[1] label;
+					}
+
+					class FeatureId extends AbstractType {
+						!ordered op void FeatureId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op FeatureId[1] from(!ordered AbstractType[1] type);
+					}
+
+					abstract class AbstractType extends java.io.Serializable, Comparable {
+						!ordered op void AbstractType(!ordered T[1] value);
+						!ordered op T[1] value();
+						!ordered op java.lang.String[1] toString();
+						!ordered op importedTypes.primitivetype.Boolean[1] equals(!ordered java.lang.Object[1] o);
+						!ordered op importedTypes.primitivetype.Integer[1] hashCode();
+						!ordered op importedTypes.primitivetype.Integer[1] compareTo(!ordered AbstractType[1] that);
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref T[1] value;
+					}
+
+					class T {
+					}
+
+					abstract interface Comparable {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="AbstractType")
+					class AbstractType_AbstractType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="value")
+					class AbstractType_value {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="toString")
+					class AbstractType_toString {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="equals")
+					class AbstractType_equals {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="hashCode")
+					class AbstractType_hashCode {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="compareTo")
+					class AbstractType_compareTo {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="FeatureId")
+					class FeatureId_FeatureId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class FeatureId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class FeatureId_from {
+					}
+
+					enum FeatureType {
+						MESSAGE_WAITING = 0;
+						MICROPHONE_GAIN = 1;
+						MICROPHONE_MUTE = 2;
+						RINGER_STATUS = 3;
+						SPEAKER_MUTE = 4;
+						SPEED_DIAL = 5;
+						GROUP_INTERCOM = 6;
+						SPEAKER_CHANNEL = 7;
+						VOICE_MESSAGE = 8;
+						VOICE_MESSAGE_PLAYLIST = 9;
+						VOICE_RECORDER = 10;
+						VOICE_BRIDGE = 11;
+						PRIVACY = 12;
+						HANDSET = 13;
+						HEADSET = 14;
+						DO_NOT_DISTURN = 15;
+						CALL_FORWARD = 16;
+						CALL_BACK = 17;
+						CONFERENCE = 18;
+						MEDIA_STREAM = 19;
+						DEVICE_KEYS = 20;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Feature")
+					class Feature_Feature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getId")
+					class Feature_getId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getType")
+					class Feature_getType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getLabel")
+					class Feature_getLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="AbstractFeatureBuilder")
+					abstract class Feature_AbstractFeatureBuilder {
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!ordered op B[1] setId(!ordered FeatureId[1] featureId);
+						!ordered op B[1] setType(!ordered FeatureType[1] featureType);
+						!ordered op B[1] setLabel(!ordered java.lang.String[1] featureLabel);
+						!ordered op java.lang.String[1] getLabel();
+						!unique !ordered ref FeatureId[1] featureId;
+						!unique !ordered attr FeatureType[1] featureType = "null";
+						!unique !ordered ref java.lang.String[1] label;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class AbstractFeatureBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class AbstractFeatureBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setId")
+					class AbstractFeatureBuilder_setId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setType")
+					class AbstractFeatureBuilder_setType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setLabel")
+					class AbstractFeatureBuilder_setLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getLabel")
+					class AbstractFeatureBuilder_getLabel {
+					}
+
+					class B {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Feature_Builder extends Feature_AbstractFeatureBuilder {
+						!ordered op void Builder();
+						!ordered op Feature_Builder[1] start();
+						!ordered op Feature[1] build();
+						!ordered op Feature[1] build(!ordered java.lang.String[*] errors);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					class PubSubNodeId extends AbstractType {
+						!ordered op void PubSubNodeId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op InterestId[1] toInterestId();
+						!ordered op PubSubNodeId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="PubSubNodeId")
+					class PubSubNodeId_PubSubNodeId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class PubSubNodeId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="toInterestId")
+					class PubSubNodeId_toInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class PubSubNodeId_from {
+					}
+
+					class InterestId extends AbstractType {
+						!ordered op void InterestId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op PubSubNodeId[1] toPubSubNodeId();
+						!ordered op InterestId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="InterestId")
+					class InterestId_InterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class InterestId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="toPubSubNodeId")
+					class InterestId_toPubSubNodeId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class InterestId_from {
+					}
+
+					enum SubscriptionState {
+						NONE = 0;
+						PENDING = 1;
+						UNCONFIGURED = 2;
+						SUBSCRIBED = 3;
+					}
+
+					class PhoneNumber extends AbstractType {
+						!ordered op void PhoneNumber(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op PhoneNumber[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="PhoneNumber")
+					class PhoneNumber_PhoneNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class PhoneNumber_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class PhoneNumber_from {
+					}
+
+					class MakeCallFeature {
+						!ordered op void MakeCallFeature(!ordered MakeCallFeature_Builder[1] builder);
+						!ordered op java.util.Optional[1] getFeatureId();
+						!ordered op java.util.Optional[1] getValue1();
+						!ordered op java.util.Optional[1] getBooleanValue1();
+						!ordered op java.util.Optional[1] stringToOptionalBoolean(!ordered java.lang.String[1] val1);
+						!ordered op java.util.Optional[1] getLongValue1();
+						!ordered op java.util.Optional[1] getValue2();
+						!ordered op java.util.Optional[1] getBooleanValue2();
+						!ordered op java.util.Optional[1] getPhoneNumberValue2();
+						!unique !ordered ref FeatureId[1] featureId;
+						!unique !ordered ref java.lang.String[1] value1;
+						!unique !ordered ref java.lang.String[1] value2;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="MakeCallFeature")
+					class MakeCallFeature_MakeCallFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatureId")
+					class MakeCallFeature_getFeatureId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue1")
+					class MakeCallFeature_getValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getBooleanValue1")
+					class MakeCallFeature_getBooleanValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="stringToOptionalBoolean")
+					class MakeCallFeature_stringToOptionalBoolean {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getLongValue1")
+					class MakeCallFeature_getLongValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue2")
+					class MakeCallFeature_getValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getBooleanValue2")
+					class MakeCallFeature_getBooleanValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getPhoneNumberValue2")
+					class MakeCallFeature_getPhoneNumberValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class MakeCallFeature_Builder {
+						!ordered op void Builder();
+						!ordered op MakeCallFeature_Builder[1] start();
+						!ordered op MakeCallFeature_Builder[1] setFeatureId(!ordered FeatureId[1] featureId);
+						!ordered op MakeCallFeature_Builder[1] setValue1(!ordered java.lang.String[1] value1);
+						!ordered op MakeCallFeature_Builder[1] setValue1(!ordered importedTypes.primitivetype.Boolean[1] value1);
+						!ordered op MakeCallFeature_Builder[1] setValue1(!ordered importedTypes.primitivetype.Long[1] value1);
+						!ordered op MakeCallFeature_Builder[1] setValue2(!ordered java.lang.String[1] value2);
+						!ordered op MakeCallFeature_Builder[1] setValue2(!ordered importedTypes.primitivetype.Boolean[1] value2);
+						!ordered op MakeCallFeature_Builder[1] setValue2(!ordered PhoneNumber[1] value2);
+						!ordered op MakeCallFeature[1] build();
+						!ordered op MakeCallFeature[1] build(!ordered java.lang.String[*] errors);
+						!unique !ordered ref FeatureId[1] featureId;
+						!unique !ordered ref java.lang.String[1] value1;
+						!unique !ordered ref java.lang.String[1] value2;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setFeatureId")
+					class Builder_setFeatureId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue1")
+					class Builder_setValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue1")
+					class Builder_setValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue1")
+					class Builder_setValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue2")
+					class Builder_setValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue2")
+					class Builder_setValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue2")
+					class Builder_setValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					class OriginatorReference extends java.io.Serializable {
+						!ordered op void OriginatorReference(!ordered java.lang.String[1] key, !ordered java.lang.String[1] value);
+						!ordered op java.lang.String[1] getKey();
+						!ordered op java.lang.String[1] getValue();
+						!ordered op java.lang.String[1] toString();
+						!ordered op importedTypes.primitivetype.Boolean[1] equals(!ordered java.lang.Object[1] o);
+						!ordered op importedTypes.primitivetype.Integer[1] hashCode();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref java.lang.String[1] key;
+						!unique !ordered ref java.lang.String[1] value;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="OriginatorReference")
+					class OriginatorReference_OriginatorReference {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getKey")
+					class OriginatorReference_getKey {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue")
+					class OriginatorReference_getValue {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="toString")
+					class OriginatorReference_toString {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="equals")
+					class OriginatorReference_equals {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="hashCode")
+					class OriginatorReference_hashCode {
+					}
+
+					class Interest extends java.io.Serializable {
+						!ordered op void Interest(!ordered Interest_Builder[1] builder);
+						!ordered op java.util.Optional[1] getId();
+						!ordered op java.util.Optional[1] getType();
+						!ordered op java.util.Optional[1] getLabel();
+						!ordered op java.util.Optional[1] isDefaultInterest();
+						!ordered op java.util.Optional[1] getCallStatus();
+						!ordered op java.util.Optional[1] getMaxCalls();
+						!ordered op java.util.Optional[1] getNumber();
+						!ordered op java.util.Optional[1] getCallForward();
+						!ordered op java.lang.String[1] toString();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref InterestId[1] interestId;
+						!unique !ordered ref InterestType[1] interestType;
+						!unique !ordered ref java.lang.String[1] label;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] isDefault;
+						!unique !ordered ref CallStatus[1] callStatus;
+						!unique !ordered attr importedTypes.primitivetype.Integer[1] maxCalls;
+						!unique !ordered ref PhoneNumber[1] number;
+						!unique !ordered ref PhoneNumber[1] callForward;
+					}
+
+					class InterestType extends AbstractType {
+						!ordered op void InterestType(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op InterestType[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="InterestType")
+					class InterestType_InterestType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class InterestType_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class InterestType_from {
+					}
+
+					class CallStatus extends java.io.Serializable {
+						!ordered op void CallStatus(!ordered CallStatus_Builder[1] builder);
+						!ordered op java.util.Optional[1] isCallStatusBusy();
+						!ordered op java.util.Optional[1] getCallForward();
+						!ordered op Call[*] getCalls();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] callStatusBusy;
+						!unique !ordered ref PhoneNumber[1] callForward;
+						!unique !ordered ref Call[*] calls;
+					}
+
+					class Call extends java.io.Serializable {
+						!ordered op void Call(!ordered Call_Builder[1] builder);
+						!ordered op java.util.Optional[1] getId();
+						!ordered op java.util.Optional[1] getTelephonyCallId();
+						!ordered op java.util.Optional[1] getConferenceId();
+						!ordered op java.util.Optional[1] getSite();
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op java.util.Optional[1] getDeviceId();
+						!ordered op java.util.Optional[1] getUserId();
+						!ordered op java.util.Optional[1] getInterestId();
+						!ordered op java.util.Optional[1] getChanged();
+						!ordered op java.util.Optional[1] getState();
+						!ordered op java.util.Optional[1] getDirection();
+						!ordered op java.util.Optional[1] getCallerNumber();
+						!ordered op java.util.Optional[1] getCallerName();
+						!ordered op PhoneNumber[*] getCallerE164Numbers();
+						!ordered op java.util.Optional[1] getCalledNumber();
+						!ordered op java.util.Optional[1] getCalledName();
+						!ordered op java.util.Optional[1] getCalledDestination();
+						!ordered op PhoneNumber[*] getCalledE164Numbers();
+						!ordered op OriginatorReference[*] getOriginatorReferences();
+						!ordered op java.util.Optional[1] getStartTime();
+						!ordered op java.util.Optional[1] getDuration();
+						!ordered op RequestAction[*] getActions();
+						!ordered op CallFeature[*] getFeatures();
+						!ordered op Participant[*] getParticipants();
+						!ordered op java.util.Optional[1] getActiveHandset();
+						!ordered op java.util.Optional[1] getActiveHeadset();
+						!ordered op java.util.Optional[1] getActiveSpeakerChannel();
+						!ordered op java.util.Optional[1] isPrivate();
+						!ordered op CallStatus[1] toCallStatus();
+						!ordered op CallStatus[1] toCallStatus(!ordered importedTypes.primitivetype.Boolean[1] callStatusBusy);
+						!ordered op java.util.Optional[1] isPublic();
+						!ordered op java.util.Optional[1] isParticipating();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref CallId[1] callId;
+						!unique !ordered ref TelephonyCallId[1] telephonyCallId;
+						!unique !ordered ref ConferenceId[1] conferenceId;
+						!unique !ordered ref Site[1] site;
+						!unique !ordered ref ProfileId[1] profileId;
+						!unique !ordered ref DeviceId[1] deviceId;
+						!unique !ordered ref UserId[1] userId;
+						!unique !ordered ref InterestId[1] interestId;
+						!unique !ordered attr Changed[1] changed;
+						!unique !ordered attr CallState[1] state;
+						!unique !ordered attr CallDirection[1] direction;
+						!unique !ordered ref PhoneNumber[1] callerNumber;
+						!unique !ordered ref java.lang.String[1] callerName;
+						!unique !ordered ref PhoneNumber[*] callerE164Numbers;
+						!unique !ordered ref PhoneNumber[1] calledNumber;
+						!unique !ordered ref java.lang.String[1] calledName;
+						!unique !ordered ref PhoneNumber[1] calledDestination;
+						!unique !ordered ref PhoneNumber[*] calledE164Numbers;
+						!unique !ordered ref OriginatorReference[*] originatorReferences;
+						!unique !ordered ref java.time.Instant[1] startTime;
+						!unique !ordered ref java.time.Duration[1] duration;
+						!unique !ordered attr RequestAction[*] actions;
+						!unique !ordered ref CallFeature[*] features;
+						!unique !ordered ref Participant[*] participants;
+					}
+
+					class CallId extends AbstractType {
+						!ordered op void CallId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op CallId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="CallId")
+					class CallId_CallId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class CallId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class CallId_from {
+					}
+
+					class TelephonyCallId extends AbstractType {
+						!ordered op void TelephonyCallId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op TelephonyCallId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="TelephonyCallId")
+					class TelephonyCallId_TelephonyCallId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class TelephonyCallId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class TelephonyCallId_from {
+					}
+
+					class ConferenceId extends AbstractType {
+						!ordered op void ConferenceId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op ConferenceId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="ConferenceId")
+					class ConferenceId_ConferenceId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class ConferenceId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class ConferenceId_from {
+					}
+
+					class Site extends java.io.Serializable {
+						!ordered op void Site(!ordered Site_Builder[1] builder);
+						!ordered op java.util.Optional[1] getId();
+						!ordered op java.util.Optional[1] isDefault();
+						!ordered op java.util.Optional[1] getType();
+						!ordered op java.util.Optional[1] getName();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref importedTypes.primitivetype.Long[1] ~id;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] isDefault;
+						!unique !ordered ref Type[1] type;
+						!unique !ordered ref java.lang.String[1] name;
+					}
+
+					class Type {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Site")
+					class Site_Site {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getId")
+					class Site_getId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isDefault")
+					class Site_isDefault {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getType")
+					class Site_getType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getName")
+					class Site_getName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Site_Builder {
+						!ordered op void Builder();
+						!ordered op Site_Builder[1] start();
+						!ordered op Site[1] build();
+						!ordered op Site[1] build(!ordered java.lang.String[*] errors);
+						!ordered op Site_Builder[1] setId(!ordered importedTypes.primitivetype.Long[1] ~id);
+						!ordered op Site_Builder[1] setDefault(!ordered importedTypes.primitivetype.Boolean[1] isDefault);
+						!ordered op Site_Builder[1] setType(!ordered Type[1] type);
+						!ordered op Site_Builder[1] setName(!ordered java.lang.String[1] name);
+						!unique !ordered ref importedTypes.primitivetype.Long[1] ~id;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] isDefault = "null";
+						!unique !ordered ref Type[1] type;
+						!unique !ordered ref java.lang.String[1] name;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setId")
+					class Builder_setId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDefault")
+					class Builder_setDefault {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setType")
+					class Builder_setType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setName")
+					class Builder_setName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Type")
+					enum Site_Type {
+						AVAYA = 0;
+						BTSM = 1;
+						CISCO = 2;
+						IPT = 3;
+						ITS = 4;
+					}
+
+					class DeviceId extends AbstractType {
+						!ordered op void DeviceId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op DeviceId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="DeviceId")
+					class DeviceId_DeviceId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class DeviceId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class DeviceId_from {
+					}
+
+					class UserId extends AbstractType {
+						!ordered op void UserId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op UserId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="UserId")
+					class UserId_UserId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class UserId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class UserId_from {
+					}
+
+					enum Changed {
+						STATE = 0;
+						ACTIONS = 1;
+						PARTICIPANT = 2;
+						CALLER = 3;
+						CALLED = 4;
+						PRIVACY = 5;
+						VOICE_MESSAGE = 6;
+						MICROPHONE = 7;
+						HANDSET = 8;
+					}
+
+					enum CallState {
+						CALL_ORIGINATED = 0;
+						CALL_DELIVERED = 1;
+						CALL_ESTABLISHED = 2;
+						CALL_FAILED = 3;
+						CALL_CONFERENCED = 4;
+						CALL_BUSY = 5;
+						CALL_HELD = 6;
+						CALL_HELD_ELSEWHERE = 7;
+						CALL_TRANSFERRING = 8;
+						CALL_TRANSFERRED = 9;
+						TRANSFER_COMPLETED = 10;
+						CONNECTION_BUSY = 11;
+						CONNECTION_CLEARED = 12;
+						CALL_MISSED = 13;
+					}
+
+					enum CallDirection {
+						OUTGOING = 0;
+						INCOMING = 1;
+					}
+
+					enum RequestAction {
+						ANSWER_CALL = 0;
+						HOLD_CALL = 1;
+						INTERCOM_TRANSFER = 2;
+						JOIN_CALL = 3;
+						RETRIEVE_CALL = 4;
+						CONSULTATION_CALL = 5;
+						TRANSFER_CALL = 6;
+						CONFERENCE_CALL = 7;
+						SINGLE_STEP_TRANSFER = 8;
+						SEND_DIGIT = 9;
+						SEND_DIGITS = 10;
+						CLEAR_CONFERENCE = 11;
+						CLEAR_CONNECTION = 12;
+						CLEAR_CALL = 13;
+						START_VOICE_DROP = 14;
+						STOP_VOICE_DROP = 15;
+						PRIVATE_CALL = 16;
+						PUBLIC_CALL = 17;
+						ADD_THIRD_PARTY = 18;
+						REMOVE_THIRD_PARTY = 19;
+						CONNECT_SPEAKER = 20;
+						DISCONNECT_SPEAKER = 21;
+					}
+
+					abstract class CallFeature extends Feature {
+						!ordered op void CallFeature(!ordered AbstractFeatureBuilder[1] builder);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="CallFeature")
+					class CallFeature_CallFeature {
+					}
+
+					class AbstractFeatureBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="AbstractCallFeatureBuilder")
+					abstract class CallFeature_AbstractCallFeatureBuilder extends AbstractFeatureBuilder {
+						!ordered op CallFeature[1] build(!ordered java.lang.String[*] parseErrors);
+					}
+
+					class Participant extends java.io.Serializable {
+						!ordered op void Participant(!ordered Participant_Builder[1] builder);
+						!ordered op java.util.Optional[1] getJID();
+						!ordered op java.util.Optional[1] getParticipantCategory();
+						!ordered op java.util.Optional[1] getNumber();
+						!ordered op PhoneNumber[*] getE164Numbers();
+						!ordered op java.util.Optional[1] getDestinationNumber();
+						!ordered op java.util.Optional[1] getType();
+						!ordered op java.util.Optional[1] getDirection();
+						!ordered op java.util.Optional[1] getStartTime();
+						!ordered op java.util.Optional[1] getDuration();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref java.lang.String[1] jid;
+						!unique !ordered ref PhoneNumber[1] number;
+						!unique !ordered ref PhoneNumber[*] e164Numbers;
+						!unique !ordered ref PhoneNumber[1] destinationNumber;
+						!unique !ordered attr ParticipantType[1] participantType;
+						!unique !ordered attr ParticipantCategory[1] participantCategory;
+						!unique !ordered attr CallDirection[1] direction;
+						!unique !ordered ref java.time.Instant[1] startTime;
+						!unique !ordered ref java.time.Duration[1] duration;
+					}
+
+					enum ParticipantType {
+						ACTIVE = 0;
+						ALERTING = 1;
+						INACTIVE = 2;
+					}
+
+					enum ParticipantCategory {
+						CONF = 0;
+						ADD3P = 1;
+						BARGE = 2;
+						VOICE_DROP = 3;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Participant")
+					class Participant_Participant {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getJID")
+					class Participant_getJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getParticipantCategory")
+					class Participant_getParticipantCategory {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getNumber")
+					class Participant_getNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getE164Numbers")
+					class Participant_getE164Numbers {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDestinationNumber")
+					class Participant_getDestinationNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getType")
+					class Participant_getType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDirection")
+					class Participant_getDirection {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getStartTime")
+					class Participant_getStartTime {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDuration")
+					class Participant_getDuration {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Participant_Builder {
+						!ordered op void Builder();
+						!ordered op Participant_Builder[1] start();
+						!ordered op Participant[1] build();
+						!ordered op Participant[1] build(!ordered java.lang.String[*] errors);
+						!ordered op Participant_Builder[1] setJID(!ordered java.lang.String[1] jid);
+						!ordered op Participant_Builder[1] setNumber(!ordered PhoneNumber[1] number);
+						!ordered op Participant_Builder[1] addE164Number(!ordered PhoneNumber[1] e164Number);
+						!ordered op Participant_Builder[1] addE164Numbers(!ordered PhoneNumber[*] e164Numbers);
+						!ordered op Participant_Builder[1] setDestinationNumber(!ordered PhoneNumber[1] destinationNumber);
+						!ordered op Participant_Builder[1] setType(!ordered ParticipantType[1] participantType);
+						!ordered op Participant_Builder[1] setParticipantCategory(!ordered ParticipantCategory[1] participantCategory);
+						!ordered op Participant_Builder[1] setDirection(!ordered CallDirection[1] direction);
+						!ordered op Participant_Builder[1] setStartTime(!ordered java.time.Instant[1] startTime);
+						!ordered op Participant_Builder[1] setDuration(!ordered java.time.Duration[1] duration);
+						!unique !ordered ref java.lang.String[1] jid;
+						!unique !ordered ref PhoneNumber[1] number;
+						!unique !ordered ref PhoneNumber[*] e164Numbers;
+						!unique !ordered ref PhoneNumber[1] destinationNumber;
+						!unique !ordered attr ParticipantType[1] participantType;
+						!unique !ordered attr ParticipantCategory[1] participantCategory;
+						!unique !ordered attr CallDirection[1] direction;
+						!unique !ordered ref java.time.Instant[1] startTime;
+						!unique !ordered ref java.time.Duration[1] duration;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setJID")
+					class Builder_setJID {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setNumber")
+					class Builder_setNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addE164Number")
+					class Builder_addE164Number {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addE164Numbers")
+					class Builder_addE164Numbers {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDestinationNumber")
+					class Builder_setDestinationNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setType")
+					class Builder_setType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setParticipantCategory")
+					class Builder_setParticipantCategory {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDirection")
+					class Builder_setDirection {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setStartTime")
+					class Builder_setStartTime {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDuration")
+					class Builder_setDuration {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Call")
+					class Call_Call {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getId")
+					class Call_getId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getTelephonyCallId")
+					class Call_getTelephonyCallId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getConferenceId")
+					class Call_getConferenceId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getSite")
+					class Call_getSite {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class Call_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDeviceId")
+					class Call_getDeviceId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getUserId")
+					class Call_getUserId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterestId")
+					class Call_getInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getChanged")
+					class Call_getChanged {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getState")
+					class Call_getState {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDirection")
+					class Call_getDirection {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallerNumber")
+					class Call_getCallerNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallerName")
+					class Call_getCallerName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallerE164Numbers")
+					class Call_getCallerE164Numbers {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCalledNumber")
+					class Call_getCalledNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCalledName")
+					class Call_getCalledName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCalledDestination")
+					class Call_getCalledDestination {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCalledE164Numbers")
+					class Call_getCalledE164Numbers {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getOriginatorReferences")
+					class Call_getOriginatorReferences {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getStartTime")
+					class Call_getStartTime {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDuration")
+					class Call_getDuration {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getActions")
+					class Call_getActions {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatures")
+					class Call_getFeatures {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getParticipants")
+					class Call_getParticipants {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getActiveHandset")
+					class Call_getActiveHandset {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getActiveHeadset")
+					class Call_getActiveHeadset {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getActiveSpeakerChannel")
+					class Call_getActiveSpeakerChannel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isPrivate")
+					class Call_isPrivate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="toCallStatus")
+					class Call_toCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="toCallStatus")
+					class Call_toCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isPublic")
+					class Call_isPublic {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isParticipating")
+					class Call_isParticipating {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Call_Builder {
+						!ordered op void Builder();
+						!ordered op Call_Builder[1] start();
+						!ordered op Call[1] build();
+						!ordered op Call[1] build(!ordered java.lang.String[*] errors);
+						!ordered op Call_Builder[1] setId(!ordered CallId[1] callId);
+						!ordered op Call_Builder[1] setTelephonyCallId(!ordered TelephonyCallId[1] telephonyCallId);
+						!ordered op Call_Builder[1] setConferenceId(!ordered ConferenceId[1] conferenceId);
+						!ordered op Call_Builder[1] setDeviceId(!ordered DeviceId[1] deviceId);
+						!ordered op Call_Builder[1] setProfile(!ordered Profile[1] profile);
+						!ordered op Call_Builder[1] setSite(!ordered Site[1] site);
+						!ordered op Call_Builder[1] setProfileId(!ordered ProfileId[1] profileId);
+						!ordered op Call_Builder[1] setUserId(!ordered UserId[1] userId);
+						!ordered op Call_Builder[1] setInterestId(!ordered InterestId[1] interestId);
+						!ordered op Call_Builder[1] setState(!ordered CallState[1] state);
+						!ordered op Call_Builder[1] setChanged(!ordered Changed[1] changed);
+						!ordered op Call_Builder[1] setDirection(!ordered CallDirection[1] direction);
+						!ordered op Call_Builder[1] setStartTime(!ordered java.time.Instant[1] startTime);
+						!ordered op Call_Builder[1] setCallerNumber(!ordered PhoneNumber[1] callerNumber);
+						!ordered op Call_Builder[1] setCallerName(!ordered java.lang.String[1] callerName);
+						!ordered op Call_Builder[1] addCallerE164Number(!ordered PhoneNumber[1] callerE164Number);
+						!ordered op Call_Builder[1] addCallerE164Numbers(!ordered PhoneNumber[*] callerE164Numbers);
+						!ordered op Call_Builder[1] setCalledNumber(!ordered PhoneNumber[1] calledNumber);
+						!ordered op Call_Builder[1] setCalledDestination(!ordered PhoneNumber[1] calledDestination);
+						!ordered op Call_Builder[1] setCalledName(!ordered java.lang.String[1] calledName);
+						!ordered op Call_Builder[1] addCalledE164Number(!ordered PhoneNumber[1] calledE164Number);
+						!ordered op Call_Builder[1] addCalledE164Numbers(!ordered PhoneNumber[*] calledE164Numbers);
+						!ordered op Call_Builder[1] addOriginatorReference(!ordered java.lang.String[1] key, !ordered java.lang.String[1] value);
+						!ordered op Call_Builder[1] addOriginatorReference(!ordered OriginatorReference[1] originatorReference);
+						!ordered op Call_Builder[1] setDuration(!ordered java.time.Duration[1] duration);
+						!ordered op Call_Builder[1] addAction(!ordered RequestAction[1] action);
+						!ordered op Call_Builder[1] addFeature(!ordered CallFeature[1] feature);
+						!ordered op Call_Builder[1] addParticipant(!ordered Participant[1] participant);
+						!unique !ordered ref CallId[1] callId;
+						!unique !ordered ref TelephonyCallId[1] telephonyCallId;
+						!unique !ordered ref ConferenceId[1] conferenceId;
+						!unique !ordered ref Site[1] site;
+						!unique !ordered ref ProfileId[1] profileId;
+						!unique !ordered ref DeviceId[1] deviceId;
+						!unique !ordered ref UserId[1] userId;
+						!unique !ordered ref InterestId[1] interestId;
+						!unique !ordered attr Changed[1] changed;
+						!unique !ordered attr CallState[1] state;
+						!unique !ordered attr CallDirection[1] direction;
+						!unique !ordered ref PhoneNumber[1] callerNumber;
+						!unique !ordered ref java.lang.String[1] callerName;
+						!unique !ordered ref PhoneNumber[*] callerE164Numbers;
+						!unique !ordered ref PhoneNumber[1] calledNumber;
+						!unique !ordered ref java.lang.String[1] calledName;
+						!unique !ordered ref PhoneNumber[1] calledDestination;
+						!unique !ordered ref PhoneNumber[*] calledE164Numbers;
+						!unique !ordered ref OriginatorReference[*] originatorReferences;
+						!unique !ordered ref java.time.Instant[1] startTime;
+						!unique !ordered ref java.time.Duration[1] duration;
+						!unique !ordered attr RequestAction[*] actions = "new ArrayList<>()";
+						!unique !ordered ref CallFeature[*] features;
+						!unique !ordered ref Participant[*] participants;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setId")
+					class Builder_setId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setTelephonyCallId")
+					class Builder_setTelephonyCallId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setConferenceId")
+					class Builder_setConferenceId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDeviceId")
+					class Builder_setDeviceId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfile")
+					class Builder_setProfile {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setSite")
+					class Builder_setSite {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class Builder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setUserId")
+					class Builder_setUserId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setInterestId")
+					class Builder_setInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setState")
+					class Builder_setState {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setChanged")
+					class Builder_setChanged {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDirection")
+					class Builder_setDirection {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setStartTime")
+					class Builder_setStartTime {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallerNumber")
+					class Builder_setCallerNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallerName")
+					class Builder_setCallerName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addCallerE164Number")
+					class Builder_addCallerE164Number {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addCallerE164Numbers")
+					class Builder_addCallerE164Numbers {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCalledNumber")
+					class Builder_setCalledNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCalledDestination")
+					class Builder_setCalledDestination {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCalledName")
+					class Builder_setCalledName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addCalledE164Number")
+					class Builder_addCalledE164Number {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addCalledE164Numbers")
+					class Builder_addCalledE164Numbers {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addOriginatorReference")
+					class Builder_addOriginatorReference {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addOriginatorReference")
+					class Builder_addOriginatorReference {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDuration")
+					class Builder_setDuration {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addAction")
+					class Builder_addAction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addFeature")
+					class Builder_addFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addParticipant")
+					class Builder_addParticipant {
+					}
+
+					class Profile extends java.io.Serializable {
+						!ordered op void Profile(!ordered Profile_Builder[1] builder);
+						!ordered op java.util.Optional[1] getId();
+						!ordered op java.util.Optional[1] isDefaultProfile();
+						!ordered op java.util.Optional[1] getDeviceType();
+						!ordered op java.util.Optional[1] getDeviceId();
+						!ordered op java.util.Optional[1] getLabel();
+						!ordered op java.util.Optional[1] isOnline();
+						!ordered op java.util.Optional[1] getSite();
+						!ordered op RequestAction[*] getActions();
+						!ordered op KeyPage[*] getKeyPages();
+						!ordered op java.lang.String[1] toString();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref ProfileId[1] profileId;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] isDefault;
+						!unique !ordered ref DeviceType[1] deviceType;
+						!unique !ordered ref DeviceId[1] deviceId;
+						!unique !ordered ref java.lang.String[1] label;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] online;
+						!unique !ordered ref Site[1] site;
+						!unique !ordered attr RequestAction[*] actions;
+						!unique !ordered ref KeyPage[*] keyPages;
+					}
+
+					class DeviceType extends AbstractType {
+						!ordered op void DeviceType(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op DeviceType[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="DeviceType")
+					class DeviceType_DeviceType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class DeviceType_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class DeviceType_from {
+					}
+
+					class KeyPage extends java.io.Serializable {
+						!ordered op void KeyPage(!ordered KeyPage_Builder[1] builder);
+						!ordered op java.util.Optional[1] getKeyPageId();
+						!ordered op java.util.Optional[1] getKeyPageLabel();
+						!ordered op java.util.Optional[1] getKeyPageModule();
+						!ordered op java.util.Optional[1] getLocalKeyPage();
+						!ordered op Key[*] getKeys();
+						!ordered op java.lang.String[1] toString();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref KeyPageId[1] keyPageId;
+						!unique !ordered ref KeyPageLabel[1] keyPageLabel;
+						!unique !ordered ref KeyPageModule[1] keyPageModule;
+						!unique !ordered ref KeyPageLocalKeyPage[1] localKeyPage;
+						!unique !ordered ref Key[*] keys;
+					}
+
+					class KeyPageId extends AbstractType {
+						!ordered op void KeyPageId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyPageId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyPageId")
+					class KeyPageId_KeyPageId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyPageId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyPageId_from {
+					}
+
+					class KeyPageLabel extends AbstractType {
+						!ordered op void KeyPageLabel(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyPageLabel[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyPageLabel")
+					class KeyPageLabel_KeyPageLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyPageLabel_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyPageLabel_from {
+					}
+
+					class KeyPageModule extends AbstractType {
+						!ordered op void KeyPageModule(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyPageModule[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyPageModule")
+					class KeyPageModule_KeyPageModule {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyPageModule_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyPageModule_from {
+					}
+
+					class KeyPageLocalKeyPage extends AbstractType {
+						!ordered op void KeyPageLocalKeyPage(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyPageLocalKeyPage[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyPageLocalKeyPage")
+					class KeyPageLocalKeyPage_KeyPageLocalKeyPage {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyPageLocalKeyPage_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyPageLocalKeyPage_from {
+					}
+
+					class Key extends java.io.Serializable {
+						!ordered op void Key(!ordered Key_Builder[1] builder);
+						!ordered op java.util.Optional[1] getId();
+						!ordered op java.util.Optional[1] getLabel();
+						!ordered op java.util.Optional[1] getFunction();
+						!ordered op java.util.Optional[1] getModifier();
+						!ordered op java.util.Optional[1] getQualifier();
+						!ordered op java.util.Optional[1] getColor();
+						!ordered op java.util.Optional[1] getInterest();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref KeyId[1] ~id;
+						!unique !ordered ref KeyLabel[1] label;
+						!unique !ordered ref KeyFunction[1] function;
+						!unique !ordered ref KeyModifier[1] modifier;
+						!unique !ordered ref KeyQualifier[1] qualifier;
+						!unique !ordered ref KeyColor[1] color;
+						!unique !ordered ref KeyInterest[1] interest;
+					}
+
+					class KeyId extends AbstractType {
+						!ordered op void KeyId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyId")
+					class KeyId_KeyId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyId_from {
+					}
+
+					class KeyLabel extends AbstractType {
+						!ordered op void KeyLabel(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyLabel[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyLabel")
+					class KeyLabel_KeyLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyLabel_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyLabel_from {
+					}
+
+					class KeyFunction extends AbstractType {
+						!ordered op void KeyFunction(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyFunction[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyFunction")
+					class KeyFunction_KeyFunction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyFunction_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyFunction_from {
+					}
+
+					class KeyModifier extends AbstractType {
+						!ordered op void KeyModifier(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyModifier[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyModifier")
+					class KeyModifier_KeyModifier {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyModifier_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyModifier_from {
+					}
+
+					class KeyQualifier extends AbstractType {
+						!ordered op void KeyQualifier(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyQualifier[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyQualifier")
+					class KeyQualifier_KeyQualifier {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyQualifier_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyQualifier_from {
+					}
+
+					class KeyColor extends AbstractType {
+						!ordered op void KeyColor(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyColor[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyColor")
+					class KeyColor_KeyColor {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyColor_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyColor_from {
+					}
+
+					class KeyInterest extends AbstractType {
+						!ordered op void KeyInterest(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op KeyInterest[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyInterest")
+					class KeyInterest_KeyInterest {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyInterest_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class KeyInterest_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Key")
+					class Key_Key {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getId")
+					class Key_getId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getLabel")
+					class Key_getLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFunction")
+					class Key_getFunction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getModifier")
+					class Key_getModifier {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getQualifier")
+					class Key_getQualifier {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getColor")
+					class Key_getColor {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterest")
+					class Key_getInterest {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Key_Builder {
+						!ordered op void Builder();
+						!ordered op Key_Builder[1] start();
+						!ordered op Key[1] build();
+						!ordered op Key[1] build(!ordered java.lang.String[*] errors);
+						!ordered op Key_Builder[1] setId(!ordered KeyId[1] ~id);
+						!ordered op Key_Builder[1] setLabel(!ordered KeyLabel[1] label);
+						!ordered op Key_Builder[1] setFunction(!ordered KeyFunction[1] function);
+						!ordered op Key_Builder[1] setModifier(!ordered KeyModifier[1] modifier);
+						!ordered op Key_Builder[1] setQualifier(!ordered KeyQualifier[1] qualifier);
+						!ordered op Key_Builder[1] setColor(!ordered KeyColor[1] color);
+						!ordered op Key_Builder[1] setInterest(!ordered KeyInterest[1] interest);
+						!unique !ordered ref KeyId[1] ~id;
+						!unique !ordered ref KeyLabel[1] label;
+						!unique !ordered ref KeyFunction[1] function;
+						!unique !ordered ref KeyModifier[1] modifier;
+						!unique !ordered ref KeyQualifier[1] qualifier;
+						!unique !ordered ref KeyColor[1] color;
+						!unique !ordered ref KeyInterest[1] interest;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setId")
+					class Builder_setId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setLabel")
+					class Builder_setLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setFunction")
+					class Builder_setFunction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setModifier")
+					class Builder_setModifier {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setQualifier")
+					class Builder_setQualifier {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setColor")
+					class Builder_setColor {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setInterest")
+					class Builder_setInterest {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="KeyPage")
+					class KeyPage_KeyPage {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getKeyPageId")
+					class KeyPage_getKeyPageId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getKeyPageLabel")
+					class KeyPage_getKeyPageLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getKeyPageModule")
+					class KeyPage_getKeyPageModule {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getLocalKeyPage")
+					class KeyPage_getLocalKeyPage {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getKeys")
+					class KeyPage_getKeys {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="toString")
+					class KeyPage_toString {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class KeyPage_Builder {
+						!ordered op void Builder();
+						!ordered op KeyPage_Builder[1] start();
+						!ordered op KeyPage[1] build();
+						!ordered op KeyPage[1] build(!ordered java.lang.String[*] errors);
+						!ordered op KeyPage_Builder[1] setkeypageId(!ordered KeyPageId[1] keypageId);
+						!ordered op KeyPage_Builder[1] setKeypageLabel(!ordered KeyPageLabel[1] keypageLabel);
+						!ordered op KeyPage_Builder[1] setKeypageModule(!ordered KeyPageModule[1] keypageModule);
+						!ordered op KeyPage_Builder[1] setLocalKeypage(!ordered KeyPageLocalKeyPage[1] localKeypage);
+						!ordered op KeyPage_Builder[1] addKey(!ordered Key[1] key);
+						!ordered op KeyPage_Builder[1] addKeys(!ordered Key[*] keys);
+						!unique !ordered ref KeyPageId[1] keypageId;
+						!unique !ordered ref KeyPageLabel[1] keypageLabel;
+						!unique !ordered ref KeyPageModule[1] keypageModule;
+						!unique !ordered ref KeyPageLocalKeyPage[1] localKeypage;
+						!unique !ordered ref Key[*] keys;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setkeypageId")
+					class Builder_setkeypageId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setKeypageLabel")
+					class Builder_setKeypageLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setKeypageModule")
+					class Builder_setKeypageModule {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setLocalKeypage")
+					class Builder_setLocalKeypage {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addKey")
+					class Builder_addKey {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addKeys")
+					class Builder_addKeys {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Profile")
+					class Profile_Profile {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getId")
+					class Profile_getId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isDefaultProfile")
+					class Profile_isDefaultProfile {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDeviceType")
+					class Profile_getDeviceType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDeviceId")
+					class Profile_getDeviceId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getLabel")
+					class Profile_getLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isOnline")
+					class Profile_isOnline {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getSite")
+					class Profile_getSite {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getActions")
+					class Profile_getActions {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getKeyPages")
+					class Profile_getKeyPages {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="toString")
+					class Profile_toString {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Profile_Builder {
+						!ordered op void Builder();
+						!ordered op Profile_Builder[1] start();
+						!ordered op Profile[1] build();
+						!ordered op Profile[1] build(!ordered java.lang.String[*] errors);
+						!ordered op Profile_Builder[1] setId(!ordered ProfileId[1] profileId);
+						!ordered op Profile_Builder[1] setDefault(!ordered importedTypes.primitivetype.Boolean[1] isDefault);
+						!ordered op Profile_Builder[1] setDeviceType(!ordered DeviceType[1] deviceType);
+						!ordered op Profile_Builder[1] setDeviceId(!ordered DeviceId[1] deviceId);
+						!ordered op Profile_Builder[1] setLabel(!ordered java.lang.String[1] label);
+						!ordered op Profile_Builder[1] setOnline(!ordered importedTypes.primitivetype.Boolean[1] online);
+						!ordered op Profile_Builder[1] setSite(!ordered Site[1] site);
+						!ordered op Profile_Builder[1] addAction(!ordered RequestAction[1] action);
+						!ordered op Profile_Builder[1] addKeyPage(!ordered KeyPage[1] keyPage);
+						!ordered op Profile_Builder[1] addKeyPages(!ordered KeyPage[*] keyPages);
+						!unique !ordered ref ProfileId[1] profileId;
+						!unique !ordered ref Site[1] site;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] isDefault;
+						!unique !ordered ref DeviceType[1] deviceType;
+						!unique !ordered ref DeviceId[1] deviceId;
+						!unique !ordered ref java.lang.String[1] label;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] online;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] keyPageProfile;
+						!unique !ordered attr RequestAction[*] actions = "new ArrayList<>()";
+						!unique !ordered ref KeyPage[*] keyPages;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setId")
+					class Builder_setId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDefault")
+					class Builder_setDefault {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDeviceType")
+					class Builder_setDeviceType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDeviceId")
+					class Builder_setDeviceId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setLabel")
+					class Builder_setLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setOnline")
+					class Builder_setOnline {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setSite")
+					class Builder_setSite {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addAction")
+					class Builder_addAction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addKeyPage")
+					class Builder_addKeyPage {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addKeyPages")
+					class Builder_addKeyPages {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="CallStatus")
+					class CallStatus_CallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isCallStatusBusy")
+					class CallStatus_isCallStatusBusy {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallForward")
+					class CallStatus_getCallForward {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCalls")
+					class CallStatus_getCalls {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class CallStatus_Builder {
+						!ordered op CallStatus_Builder[1] start();
+						!ordered op CallStatus_Builder[1] setCallForward(!ordered PhoneNumber[1] callForward);
+						!ordered op CallStatus_Builder[1] setCallStatusBusy(!ordered importedTypes.primitivetype.Boolean[1] callStatusBusy);
+						!ordered op CallStatus_Builder[1] addCall(!ordered Call[1] call);
+						!ordered op CallStatus_Builder[1] addCalls(!ordered Call[*] calls);
+						!ordered op CallStatus[1] build();
+						!ordered op CallStatus[1] build(!ordered java.lang.String[*] errors);
+						!ordered op void validateUniqueness(!ordered java.util.function.Consumer[1] errorConsumer);
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] callStatusBusy;
+						!unique !ordered ref PhoneNumber[1] callForward;
+						!unique !ordered ref Call[*] calls;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallForward")
+					class Builder_setCallForward {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallStatusBusy")
+					class Builder_setCallStatusBusy {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addCall")
+					class Builder_addCall {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addCalls")
+					class Builder_addCalls {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validateUniqueness")
+					class Builder_validateUniqueness {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Interest")
+					class Interest_Interest {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getId")
+					class Interest_getId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getType")
+					class Interest_getType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getLabel")
+					class Interest_getLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isDefaultInterest")
+					class Interest_isDefaultInterest {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallStatus")
+					class Interest_getCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getMaxCalls")
+					class Interest_getMaxCalls {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getNumber")
+					class Interest_getNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallForward")
+					class Interest_getCallForward {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="toString")
+					class Interest_toString {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Interest_Builder {
+						!ordered op void Builder();
+						!ordered op Interest_Builder[1] start();
+						!ordered op Interest[1] build();
+						!ordered op Interest[1] build(!ordered java.lang.String[*] errors);
+						!ordered op Interest_Builder[1] setId(!ordered InterestId[1] interestId);
+						!ordered op Interest_Builder[1] setType(!ordered InterestType[1] interestType);
+						!ordered op Interest_Builder[1] setLabel(!ordered java.lang.String[1] label);
+						!ordered op Interest_Builder[1] setDefault(!ordered importedTypes.primitivetype.Boolean[1] isDefault);
+						!ordered op Interest_Builder[1] setCallStatus(!ordered CallStatus[1] callStatus);
+						!ordered op Interest_Builder[1] setMaxCalls(!ordered importedTypes.primitivetype.Integer[1] maxCalls);
+						!ordered op Interest_Builder[1] setNumber(!ordered PhoneNumber[1] number);
+						!ordered op Interest_Builder[1] setCallForward(!ordered PhoneNumber[1] callForward);
+						!unique !ordered ref InterestId[1] interestId;
+						!unique !ordered ref InterestType[1] interestType;
+						!unique !ordered ref java.lang.String[1] label;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] isDefault = "null";
+						!unique !ordered ref CallStatus[1] callStatus;
+						!unique !ordered attr importedTypes.primitivetype.Integer[1] maxCalls = "null";
+						!unique !ordered ref PhoneNumber[1] number;
+						!unique !ordered ref PhoneNumber[1] callForward;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setId")
+					class Builder_setId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setType")
+					class Builder_setType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setLabel")
+					class Builder_setLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDefault")
+					class Builder_setDefault {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallStatus")
+					class Builder_setCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setMaxCalls")
+					class Builder_setMaxCalls {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setNumber")
+					class Builder_setNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallForward")
+					class Builder_setCallForward {
+					}
+
+					enum CallType {
+						INBOUND = 0;
+						OUTBOUND = 1;
+						MISSED = 2;
+					}
+
+					class DeviceStatus extends java.io.Serializable {
+						!ordered op void DeviceStatus(!ordered DeviceStatus_Builder[1] builder);
+						!ordered op java.util.Optional[1] isOnline();
+						!ordered op java.util.Optional[1] getProfileId();
+						!ordered op java.util.Optional[1] getDeviceId();
+						!ordered op VoiceMessageFeature[*] getFeatures();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] online;
+						!unique !ordered ref ProfileId[1] profileId;
+						!unique !ordered ref DeviceId[1] deviceId;
+						!unique !ordered ref VoiceMessageFeature[*] features;
+					}
+
+					class VoiceMessageFeature extends java.io.Serializable {
+						!ordered op void VoiceMessageFeature(!ordered VoiceMessageFeature_Builder[1] builder);
+						!ordered op java.util.Optional[1] getId();
+						!ordered op java.util.Optional[1] getVoiceMessage();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref FeatureId[1] featureId;
+						!unique !ordered ref VoiceMessage[1] voiceMessage;
+					}
+
+					class VoiceMessage extends java.io.Serializable {
+						!ordered op void VoiceMessage(!ordered VoiceMessage_Builder[1] builder);
+						!ordered op java.util.Optional[1] getCreationDate();
+						!ordered op java.util.Optional[1] getMessageLength();
+						!ordered op java.util.Optional[1] getAction();
+						!ordered op java.util.Optional[1] getExtension();
+						!ordered op java.util.Optional[1] getLabel();
+						!ordered op java.util.Optional[1] getStatus();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref java.lang.String[1] label;
+						!unique !ordered attr VoiceMessageStatus[1] status;
+						!unique !ordered attr ManageVoiceMessageAction[1] action;
+						!unique !ordered ref java.time.Duration[1] messageLength;
+						!unique !ordered ref java.time.Instant[1] creationDate;
+						!unique !ordered ref PhoneNumber[1] extension;
+					}
+
+					enum VoiceMessageStatus {
+						OK = 0;
+						ERROR = 1;
+						WARN = 2;
+						UNKNOWN = 3;
+					}
+
+					enum ManageVoiceMessageAction {
+						CREATE = 0;
+						RECORD = 1;
+						EDIT = 2;
+						PLAYBACK = 3;
+						SAVE = 4;
+						ARCHIVE = 5;
+						DELETE = 6;
+						QUERY = 7;
+						SEARCH = 8;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="VoiceMessage")
+					class VoiceMessage_VoiceMessage {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCreationDate")
+					class VoiceMessage_getCreationDate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getMessageLength")
+					class VoiceMessage_getMessageLength {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getAction")
+					class VoiceMessage_getAction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getExtension")
+					class VoiceMessage_getExtension {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getLabel")
+					class VoiceMessage_getLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getStatus")
+					class VoiceMessage_getStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class VoiceMessage_Builder {
+						!ordered op void Builder();
+						!ordered op VoiceMessage_Builder[1] start();
+						!ordered op VoiceMessage_Builder[1] setExtension(!ordered PhoneNumber[1] extension);
+						!ordered op VoiceMessage_Builder[1] setCreationDate(!ordered java.time.Instant[1] creationDate);
+						!ordered op VoiceMessage_Builder[1] setMessageLength(!ordered java.time.Duration[1] messageLength);
+						!ordered op VoiceMessage_Builder[1] setAction(!ordered ManageVoiceMessageAction[1] action);
+						!ordered op VoiceMessage_Builder[1] setLabel(!ordered java.lang.String[1] label);
+						!ordered op VoiceMessage_Builder[1] setStatus(!ordered VoiceMessageStatus[1] status);
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!ordered op VoiceMessage[1] build();
+						!ordered op VoiceMessage[1] build(!ordered java.lang.String[*] errors);
+						!unique !ordered ref java.lang.String[1] label;
+						!unique !ordered attr VoiceMessageStatus[1] status = "null";
+						!unique !ordered attr ManageVoiceMessageAction[1] action = "null";
+						!unique !ordered ref java.time.Duration[1] messageLength;
+						!unique !ordered ref java.time.Instant[1] creationDate;
+						!unique !ordered ref PhoneNumber[1] extension;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setExtension")
+					class Builder_setExtension {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCreationDate")
+					class Builder_setCreationDate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setMessageLength")
+					class Builder_setMessageLength {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setAction")
+					class Builder_setAction {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setLabel")
+					class Builder_setLabel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setStatus")
+					class Builder_setStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="VoiceMessageFeature")
+					class VoiceMessageFeature_VoiceMessageFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getId")
+					class VoiceMessageFeature_getId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getVoiceMessage")
+					class VoiceMessageFeature_getVoiceMessage {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class VoiceMessageFeature_Builder {
+						!ordered op void Builder();
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!ordered op VoiceMessageFeature_Builder[1] setVoiceMessage(!ordered VoiceMessage[1] voiceMessage);
+						!ordered op VoiceMessageFeature_Builder[1] setId(!ordered FeatureId[1] featureId);
+						!ordered op VoiceMessageFeature_Builder[1] start();
+						!ordered op VoiceMessageFeature[1] build();
+						!ordered op VoiceMessageFeature[1] build(!ordered java.lang.String[*] errors);
+						!unique !ordered ref FeatureId[1] featureId;
+						!unique !ordered ref VoiceMessage[1] voiceMessage;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setVoiceMessage")
+					class Builder_setVoiceMessage {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setId")
+					class Builder_setId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="DeviceStatus")
+					class DeviceStatus_DeviceStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isOnline")
+					class DeviceStatus_isOnline {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getProfileId")
+					class DeviceStatus_getProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDeviceId")
+					class DeviceStatus_getDeviceId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatures")
+					class DeviceStatus_getFeatures {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class DeviceStatus_Builder {
+						!ordered op void Builder();
+						!ordered op DeviceStatus_Builder[1] start();
+						!ordered op DeviceStatus[1] build();
+						!ordered op DeviceStatus[1] build(!ordered java.lang.String[*] errors);
+						!ordered op DeviceStatus_Builder[1] addFeature(!ordered VoiceMessageFeature[1] feature);
+						!ordered op VoiceMessageFeature[*] getFeatures();
+						!ordered op DeviceStatus_Builder[1] setOnline(!ordered importedTypes.primitivetype.Boolean[1] online);
+						!ordered op DeviceStatus_Builder[1] setProfileId(!ordered ProfileId[1] profileId);
+						!ordered op DeviceStatus_Builder[1] setDeviceId(!ordered DeviceId[1] deviceId);
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] online;
+						!unique !ordered ref ProfileId[1] profileId;
+						!unique !ordered ref DeviceId[1] deviceId;
+						!unique !ordered ref VoiceMessageFeature[*] features;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addFeature")
+					class Builder_addFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getFeatures")
+					class Builder_getFeatures {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setOnline")
+					class Builder_setOnline {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setProfileId")
+					class Builder_setProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDeviceId")
+					class Builder_setDeviceId {
+					}
+
+					class ActiveFeature extends Feature {
+						!ordered op void ActiveFeature(!ordered ActiveFeature_Builder[1] builder);
+						!ordered op java.util.Optional[1] getValue1();
+						!ordered op java.util.Optional[1] getValue2();
+						!ordered op java.util.Optional[1] getValue3();
+						!unique !ordered ref java.lang.String[1] value1;
+						!unique !ordered ref java.lang.String[1] value2;
+						!unique !ordered ref java.lang.String[1] value3;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="ActiveFeature")
+					class ActiveFeature_ActiveFeature {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue1")
+					class ActiveFeature_getValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue2")
+					class ActiveFeature_getValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue3")
+					class ActiveFeature_getValue3 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class ActiveFeature_Builder extends Feature_AbstractFeatureBuilder {
+						!ordered op void Builder();
+						!ordered op ActiveFeature_Builder[1] start();
+						!ordered op ActiveFeature_Builder[1] setValue1(!ordered AbstractType[1] value1);
+						!ordered op ActiveFeature_Builder[1] setValue1(!ordered java.lang.String[1] value1);
+						!ordered op ActiveFeature_Builder[1] setValue2(!ordered AbstractType[1] value2);
+						!ordered op ActiveFeature_Builder[1] setValue2(!ordered java.lang.String[1] value2);
+						!ordered op ActiveFeature_Builder[1] setValue3(!ordered AbstractType[1] value3);
+						!ordered op ActiveFeature_Builder[1] setValue3(!ordered java.lang.String[1] value3);
+						!ordered op ActiveFeature[1] build();
+						!ordered op ActiveFeature[1] build(!ordered java.lang.String[*] errors);
+						!unique !ordered ref java.lang.String[1] value1;
+						!unique !ordered ref java.lang.String[1] value2;
+						!unique !ordered ref java.lang.String[1] value3;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue1")
+					class Builder_setValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue1")
+					class Builder_setValue1 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue2")
+					class Builder_setValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue2")
+					class Builder_setValue2 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue3")
+					class Builder_setValue3 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue3")
+					class Builder_setValue3 {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					class RequestActionValue extends AbstractType {
+						!ordered op void RequestActionValue(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op RequestActionValue[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="RequestActionValue")
+					class RequestActionValue_RequestActionValue {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RequestActionValue_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RequestActionValue_from {
+					}
+
+					class HistoricalCall extends java.io.Serializable {
+						!ordered op void HistoricalCall(!ordered HistoricalCall_Builder[1] builder);
+						!ordered op java.util.Optional[1] getId();
+						!ordered op java.util.Optional[1] getUserId();
+						!ordered op java.util.Optional[1] getInterestId();
+						!ordered op java.util.Optional[1] getState();
+						!ordered op java.util.Optional[1] getDirection();
+						!ordered op java.util.Optional[1] getCallerNumber();
+						!ordered op java.util.Optional[1] getCallerName();
+						!ordered op java.util.Optional[1] getCalledNumber();
+						!ordered op java.util.Optional[1] getCalledName();
+						!ordered op java.util.Optional[1] getStartTime();
+						!ordered op java.util.Optional[1] getDuration();
+						!ordered op java.util.Optional[1] getTsc();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref CallId[1] callId;
+						!unique !ordered ref UserId[1] userId;
+						!unique !ordered ref InterestId[1] interestId;
+						!unique !ordered attr CallState[1] state;
+						!unique !ordered attr CallDirection[1] direction;
+						!unique !ordered ref PhoneNumber[1] callerNumber;
+						!unique !ordered ref java.lang.String[1] callerName;
+						!unique !ordered ref PhoneNumber[1] calledNumber;
+						!unique !ordered ref java.lang.String[1] calledName;
+						!unique !ordered ref java.time.Instant[1] startTime;
+						!unique !ordered ref java.time.Duration[1] duration;
+						!unique !ordered ref J[1] tsc;
+					}
+
+					class J {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="HistoricalCall")
+					class HistoricalCall_HistoricalCall {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getId")
+					class HistoricalCall_getId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getUserId")
+					class HistoricalCall_getUserId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getInterestId")
+					class HistoricalCall_getInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getState")
+					class HistoricalCall_getState {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDirection")
+					class HistoricalCall_getDirection {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallerNumber")
+					class HistoricalCall_getCallerNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallerName")
+					class HistoricalCall_getCallerName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCalledNumber")
+					class HistoricalCall_getCalledNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCalledName")
+					class HistoricalCall_getCalledName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getStartTime")
+					class HistoricalCall_getStartTime {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDuration")
+					class HistoricalCall_getDuration {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getTsc")
+					class HistoricalCall_getTsc {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class HistoricalCall_Builder {
+						!ordered op void Builder();
+						!ordered op HistoricalCall_Builder[1] start();
+						!ordered op HistoricalCall[1] build();
+						!ordered op HistoricalCall[1] build(!ordered java.lang.String[*] errors);
+						!ordered op HistoricalCall_Builder[1] setId(!ordered CallId[1] callId);
+						!ordered op HistoricalCall_Builder[1] setUserId(!ordered UserId[1] userId);
+						!ordered op HistoricalCall_Builder[1] setInterestId(!ordered InterestId[1] interestId);
+						!ordered op HistoricalCall_Builder[1] setState(!ordered CallState[1] state);
+						!ordered op HistoricalCall_Builder[1] setDirection(!ordered CallDirection[1] direction);
+						!ordered op HistoricalCall_Builder[1] setCallerNumber(!ordered PhoneNumber[1] callerNumber);
+						!ordered op HistoricalCall_Builder[1] setCallerName(!ordered java.lang.String[1] callerName);
+						!ordered op HistoricalCall_Builder[1] setCalledNumber(!ordered PhoneNumber[1] calledNumber);
+						!ordered op HistoricalCall_Builder[1] setCalledName(!ordered java.lang.String[1] calledName);
+						!ordered op HistoricalCall_Builder[1] setStartTime(!ordered java.time.Instant[1] startTime);
+						!ordered op importedTypes.primitivetype.Boolean[1] isStartTimeNull();
+						!ordered op HistoricalCall_Builder[1] setDuration(!ordered java.time.Duration[1] duration);
+						!ordered op HistoricalCall_Builder[1] setTsc(!ordered J[1] tsc);
+						!unique !ordered ref CallId[1] callId;
+						!unique !ordered ref UserId[1] userId;
+						!unique !ordered ref InterestId[1] interestId;
+						!unique !ordered attr CallState[1] state;
+						!unique !ordered attr CallDirection[1] direction;
+						!unique !ordered ref PhoneNumber[1] callerNumber;
+						!unique !ordered ref java.lang.String[1] callerName;
+						!unique !ordered ref PhoneNumber[1] calledNumber;
+						!unique !ordered ref java.lang.String[1] calledName;
+						!unique !ordered ref java.time.Instant[1] startTime;
+						!unique !ordered ref java.time.Duration[1] duration;
+						!unique !ordered ref J[1] tsc;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setId")
+					class Builder_setId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setUserId")
+					class Builder_setUserId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setInterestId")
+					class Builder_setInterestId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setState")
+					class Builder_setState {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDirection")
+					class Builder_setDirection {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallerNumber")
+					class Builder_setCallerNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallerName")
+					class Builder_setCallerName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCalledNumber")
+					class Builder_setCalledNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCalledName")
+					class Builder_setCalledName {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setStartTime")
+					class Builder_setStartTime {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isStartTimeNull")
+					class Builder_isStartTimeNull {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDuration")
+					class Builder_setDuration {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setTsc")
+					class Builder_setTsc {
+					}
+
+					class ItemId extends AbstractType {
+						!ordered op void ItemId(!ordered java.lang.String[1] value);
+						!ordered op ItemId[1] random();
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op ItemId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="ItemId")
+					class ItemId_ItemId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="random")
+					class ItemId_random {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class ItemId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class ItemId_from {
+					}
+
+					class CallFeatureTextValue extends CallFeature {
+						!ordered op void CallFeatureTextValue(!ordered importedTypes.CallFeatureTextValue.Builder[1] builder);
+						!ordered op java.util.Optional[1] getValue();
+						!unique !ordered ref java.lang.String[1] value;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="CallFeatureTextValue")
+					class CallFeatureTextValue_CallFeatureTextValue {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue")
+					class CallFeatureTextValue_getValue {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class CallFeatureTextValue_Builder extends importedTypes.CallFeature.AbstractCallFeatureBuilder {
+						!ordered op void Builder();
+						!ordered op CallFeatureTextValue_Builder[1] start();
+						!ordered op CallFeatureTextValue[1] build();
+						!ordered op CallFeatureTextValue[1] build(!ordered java.lang.String[*] errors);
+						!ordered op java.lang.String[1] getValue();
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!ordered op CallFeatureTextValue_Builder[1] setValue(!ordered java.lang.String[1] value);
+						!unique !ordered ref java.lang.String[1] value;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getValue")
+					class Builder_getValue {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setValue")
+					class Builder_setValue {
+					}
+
+					class CallFeatureHandset extends CallFeature {
+						!ordered op void CallFeatureHandset(!ordered CallFeatureHandset_Builder[1] builder);
+						!ordered op java.util.Optional[1] isEnabled();
+						!ordered op java.util.Optional[1] isMicrophoneEnabled();
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] enabled;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] microphoneEnabled;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="CallFeatureHandset")
+					class CallFeatureHandset_CallFeatureHandset {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isEnabled")
+					class CallFeatureHandset_isEnabled {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isMicrophoneEnabled")
+					class CallFeatureHandset_isMicrophoneEnabled {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class CallFeatureHandset_Builder extends CallFeature_AbstractCallFeatureBuilder {
+						!ordered op void Builder();
+						!ordered op CallFeatureHandset_Builder[1] start();
+						!ordered op CallFeatureHandset[1] build();
+						!ordered op CallFeatureHandset[1] build(!ordered java.lang.String[*] errors);
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!ordered op CallFeatureHandset_Builder[1] setEnabled(!ordered importedTypes.primitivetype.Boolean[1] enabled);
+						!ordered op CallFeatureHandset_Builder[1] setMicrophoneEnabled(!ordered importedTypes.primitivetype.Boolean[1] microphoneEnabled);
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] enabled = "null";
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] microphoneEnabled = "null";
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setEnabled")
+					class Builder_setEnabled {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setMicrophoneEnabled")
+					class Builder_setMicrophoneEnabled {
+					}
+
+					class RecorderNumber extends AbstractType {
+						!ordered op void RecorderNumber(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op RecorderNumber[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="RecorderNumber")
+					class RecorderNumber_RecorderNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RecorderNumber_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RecorderNumber_from {
+					}
+
+					class RecorderType extends AbstractType {
+						!ordered op void RecorderType(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op RecorderType[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="RecorderType")
+					class RecorderType_RecorderType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RecorderType_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RecorderType_from {
+					}
+
+					class VoiceRecorderInfo extends java.io.Serializable {
+						!ordered op void VoiceRecorderInfo(!ordered importedTypes.VoiceRecorderInfo.Builder[1] builder);
+						!ordered op java.util.Optional[1] getRecorderNumber();
+						!ordered op java.util.Optional[1] getRecorderPort();
+						!ordered op java.util.Optional[1] getRecorderChannel();
+						!ordered op java.util.Optional[1] getRecorderType();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] serialVersionUID;
+						!unique !ordered ref RecorderNumber[1] recorderNumber;
+						!unique !ordered ref RecorderPort[1] recorderPort;
+						!unique !ordered ref RecorderChannel[1] recorderChannel;
+						!unique !ordered ref RecorderType[1] recorderType;
+					}
+
+					class RecorderPort extends AbstractType {
+						!ordered op void RecorderPort(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op RecorderPort[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="RecorderPort")
+					class RecorderPort_RecorderPort {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RecorderPort_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RecorderPort_from {
+					}
+
+					class RecorderChannel extends AbstractType {
+						!ordered op void RecorderChannel(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op RecorderChannel[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="RecorderChannel")
+					class RecorderChannel_RecorderChannel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RecorderChannel_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class RecorderChannel_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="VoiceRecorderInfo")
+					class VoiceRecorderInfo_VoiceRecorderInfo {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getRecorderNumber")
+					class VoiceRecorderInfo_getRecorderNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getRecorderPort")
+					class VoiceRecorderInfo_getRecorderPort {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getRecorderChannel")
+					class VoiceRecorderInfo_getRecorderChannel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getRecorderType")
+					class VoiceRecorderInfo_getRecorderType {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class VoiceRecorderInfo_Builder {
+						!ordered op void Builder();
+						!ordered op VoiceRecorderInfo_Builder[1] start();
+						!ordered op VoiceRecorderInfo[1] build();
+						!ordered op VoiceRecorderInfo[1] build(!ordered java.lang.String[*] errors);
+						!ordered op VoiceRecorderInfo_Builder[1] setRecorderNumber(!ordered RecorderNumber[1] recorderNumber);
+						!ordered op VoiceRecorderInfo_Builder[1] setRecorderPort(!ordered RecorderPort[1] recorderPort);
+						!ordered op VoiceRecorderInfo_Builder[1] setRecorderChannel(!ordered RecorderChannel[1] recorderChannel);
+						!ordered op VoiceRecorderInfo_Builder[1] setRecorderType(!ordered RecorderType[1] recorderType);
+						!unique !ordered ref RecorderNumber[1] recorderNumber;
+						!unique !ordered ref RecorderPort[1] recorderPort;
+						!unique !ordered ref RecorderChannel[1] recorderChannel;
+						!unique !ordered ref RecorderType[1] recorderType;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setRecorderNumber")
+					class Builder_setRecorderNumber {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setRecorderPort")
+					class Builder_setRecorderPort {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setRecorderChannel")
+					class Builder_setRecorderChannel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setRecorderType")
+					class Builder_setRecorderType {
+					}
+
+					class DeviceKey extends AbstractType {
+						!ordered op void DeviceKey(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op DeviceKey[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="DeviceKey")
+					class DeviceKey_DeviceKey {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class DeviceKey_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class DeviceKey_from {
+					}
+
+					class CallFeatureSpeakerChannel extends CallFeature {
+						!ordered op void CallFeatureSpeakerChannel(!ordered CallFeatureSpeakerChannel_Builder[1] builder);
+						!ordered op java.util.Optional[1] getChannel();
+						!ordered op java.util.Optional[1] isMicrophoneActive();
+						!ordered op java.util.Optional[1] isMuteRequested();
+						!unique !ordered ref importedTypes.primitivetype.Long[1] channel;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] microphoneActive;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] muteRequested;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="CallFeatureSpeakerChannel")
+					class CallFeatureSpeakerChannel_CallFeatureSpeakerChannel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getChannel")
+					class CallFeatureSpeakerChannel_getChannel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isMicrophoneActive")
+					class CallFeatureSpeakerChannel_isMicrophoneActive {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isMuteRequested")
+					class CallFeatureSpeakerChannel_isMuteRequested {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class CallFeatureSpeakerChannel_Builder extends CallFeature_AbstractCallFeatureBuilder {
+						!ordered op void Builder();
+						!ordered op CallFeatureSpeakerChannel_Builder[1] start();
+						!ordered op CallFeatureSpeakerChannel[1] build();
+						!ordered op CallFeatureSpeakerChannel[1] build(!ordered java.lang.String[*] errors);
+						!ordered op CallFeatureSpeakerChannel_Builder[1] setChannel(!ordered importedTypes.primitivetype.Long[1] channel);
+						!ordered op CallFeatureSpeakerChannel_Builder[1] setMicrophoneActive(!ordered importedTypes.primitivetype.Boolean[1] microphoneActive);
+						!ordered op CallFeatureSpeakerChannel_Builder[1] setMuteRequested(!ordered importedTypes.primitivetype.Boolean[1] muteRequested);
+						!unique !ordered ref importedTypes.primitivetype.Long[1] channel;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] microphoneActive;
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] muteRequested;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setChannel")
+					class Builder_setChannel {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setMicrophoneActive")
+					class Builder_setMicrophoneActive {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setMuteRequested")
+					class Builder_setMuteRequested {
+					}
+
+					class CallFeatureBoolean extends CallFeature {
+						!ordered op void CallFeatureBoolean(!ordered CallFeatureBoolean_Builder[1] builder);
+						!ordered op java.util.Optional[1] isEnabled();
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] enabled;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="CallFeatureBoolean")
+					class CallFeatureBoolean_CallFeatureBoolean {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isEnabled")
+					class CallFeatureBoolean_isEnabled {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class CallFeatureBoolean_Builder extends importedTypes.CallFeature.AbstractCallFeatureBuilder {
+						!ordered op void Builder();
+						!ordered op CallFeatureBoolean_Builder[1] start();
+						!ordered op CallFeatureBoolean[1] build();
+						!ordered op CallFeatureBoolean[1] build(!ordered java.lang.String[*] errors);
+						!ordered op importedTypes.primitivetype.Boolean[1] isEnabled();
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!ordered op CallFeatureBoolean_Builder[1] setEnabled(!ordered importedTypes.primitivetype.Boolean[1] enabled);
+						!unique !ordered attr importedTypes.primitivetype.Boolean[1] enabled = "null";
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="isEnabled")
+					class Builder_isEnabled {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setEnabled")
+					class Builder_setEnabled {
+					}
+
+					class CallFeatureVoiceRecorder extends CallFeature {
+						!ordered op void CallFeatureVoiceRecorder(!ordered importedTypes.CallFeatureVoiceRecorder.Builder[1] builder);
+						!ordered op java.util.Optional[1] getVoiceRecorderInfo();
+						!unique !ordered ref VoiceRecorderInfo[1] voiceRecorderInfo;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="CallFeatureVoiceRecorder")
+					class CallFeatureVoiceRecorder_CallFeatureVoiceRecorder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getVoiceRecorderInfo")
+					class CallFeatureVoiceRecorder_getVoiceRecorderInfo {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class CallFeatureVoiceRecorder_Builder extends CallFeature_AbstractCallFeatureBuilder {
+						!ordered op void Builder();
+						!ordered op CallFeatureVoiceRecorder_Builder[1] start();
+						!ordered op CallFeatureVoiceRecorder[1] build();
+						!ordered op CallFeatureVoiceRecorder[1] build(!ordered java.lang.String[*] errors);
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!ordered op CallFeatureVoiceRecorder_Builder[1] setVoiceRecorderInfo(!ordered VoiceRecorderInfo[1] voiceRecorderInfo);
+						!unique !ordered ref VoiceRecorderInfo[1] voiceRecorderInfo;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setVoiceRecorderInfo")
+					class Builder_setVoiceRecorderInfo {
+					}
+
+					class CallFeatureDeviceKey extends CallFeature {
+						!ordered op void CallFeatureDeviceKey(!ordered CallFeatureDeviceKey_Builder[1] builder);
+						!ordered op DeviceKey[*] getDeviceKeys();
+						!unique !ordered ref DeviceKey[*] deviceKeys;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="CallFeatureDeviceKey")
+					class CallFeatureDeviceKey_CallFeatureDeviceKey {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDeviceKeys")
+					class CallFeatureDeviceKey_getDeviceKeys {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class CallFeatureDeviceKey_Builder extends AbstractCallFeatureBuilder {
+						!ordered op void Builder();
+						!ordered op CallFeatureDeviceKey_Builder[1] start();
+						!ordered op CallFeatureDeviceKey[1] build();
+						!ordered op CallFeatureDeviceKey[1] build(!ordered java.lang.String[*] errors);
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!ordered op CallFeatureDeviceKey_Builder[1] addDeviceKey(!ordered DeviceKey[1] deviceKey);
+						!unique !ordered ref DeviceKey[*] deviceKeys;
+					}
+
+					class AbstractCallFeatureBuilder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="Builder")
+					class Builder_Builder {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="start")
+					class Builder_start {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="build")
+					class Builder_build {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class Builder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="addDeviceKey")
+					class Builder_addDeviceKey {
+					}
+
+					class ProfileId extends AbstractType {
+						!ordered op void ProfileId(!ordered java.lang.String[1] value);
+						!ordered op java.util.Optional[1] from(!ordered java.lang.String[1] value);
+						!ordered op ProfileId[1] from(!ordered AbstractType[1] type);
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="ProfileId")
+					class ProfileId_ProfileId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class ProfileId_from {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="from")
+					class ProfileId_from {
+					}
+
+				}
+
+				@namespace(uri="http:///btopenlinkjavacoremodel/java/com/bt/openlink/message.ecore", prefix="btopenlinkjavacoremodel.java.com.bt.openlink.message")
+				package message {
+					abstract class PubSubMessageBuilder extends StanzaBuilder {
+						!ordered op B[1] setDelay(!ordered java.time.Instant[1] delay);
+						!ordered op java.util.Optional[1] getDelay();
+						!ordered op B[1] setPubSubNodeId(!ordered type.InterestId[1] interestId);
+						!ordered op B[1] setPubSubNodeId(!ordered type.PubSubNodeId[1] pubSubNodeId);
+						!ordered op java.util.Optional[1] getPubSubNodeId();
+						!ordered op B[1] setItemId(!ordered type.ItemId[1] itemId);
+						!ordered op java.util.Optional[1] getItemId();
+						!ordered op void validate();
+						!ordered op void validate(!ordered java.lang.String[*] errors);
+						!unique !ordered ref java.time.Instant[1] delay;
+						!unique !ordered ref type.PubSubNodeId[1] pubSubNodeId;
+						!unique !ordered ref type.ItemId[1] itemId;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDelay")
+					class PubSubMessageBuilder_setDelay {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDelay")
+					class PubSubMessageBuilder_getDelay {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setPubSubNodeId")
+					class PubSubMessageBuilder_setPubSubNodeId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setPubSubNodeId")
+					class PubSubMessageBuilder_setPubSubNodeId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getPubSubNodeId")
+					class PubSubMessageBuilder_getPubSubNodeId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setItemId")
+					class PubSubMessageBuilder_setItemId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getItemId")
+					class PubSubMessageBuilder_getItemId {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class PubSubMessageBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class PubSubMessageBuilder_validate {
+					}
+
+					class B {
+					}
+
+					abstract class CallStatusMessageBuilder extends PubSubMessageBuilder {
+						!ordered op B[1] setCallStatus(!ordered type.CallStatus[1] callStatus);
+						!ordered op java.util.Optional[1] getCallStatus();
+						!ordered op void validateCallsAreOnTheCorrectInterest(!ordered type.CallStatus[1] callStatus, !ordered java.util.function.Consumer[1] errorConsumer);
+						!unique !ordered ref type.CallStatus[1] callStatus;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setCallStatus")
+					class CallStatusMessageBuilder_setCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getCallStatus")
+					class CallStatusMessageBuilder_getCallStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class CallStatusMessageBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class CallStatusMessageBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validateCallsAreOnTheCorrectInterest")
+					class CallStatusMessageBuilder_validateCallsAreOnTheCorrectInterest {
+					}
+
+					abstract class DeviceStatusMessageBuilder extends PubSubMessageBuilder {
+						!ordered op B[1] setDeviceStatus(!ordered type.DeviceStatus[1] deviceStatus);
+						!ordered op java.util.Optional[1] getDeviceStatus();
+						!ordered op void validate(!ordered java.lang.String[*] errors, !ordered importedTypes.primitivetype.Boolean[1] checkIQFields);
+						!unique !ordered ref type.DeviceStatus[1] deviceStatus;
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="setDeviceStatus")
+					class DeviceStatusMessageBuilder_setDeviceStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="getDeviceStatus")
+					class DeviceStatusMessageBuilder_getDeviceStatus {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class DeviceStatusMessageBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class DeviceStatusMessageBuilder_validate {
+					}
+
+					@"http://www.eclipse.org/uml2/2.0.0/UML"(originalName="validate")
+					class DeviceStatusMessageBuilder_validate {
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	@namespace(uri="http:///btopenlinkjavacoremodel/java/java.ecore", prefix="btopenlinkjavacoremodel.java.java")
+	package java {
+		@namespace(uri="http:///btopenlinkjavacoremodel/java/java/util.ecore", prefix="btopenlinkjavacoremodel.java.java.util")
+		package util {
+			class Optional {
+			}
+
+			@namespace(uri="http:///btopenlinkjavacoremodel/java/java/util/function.ecore", prefix="btopenlinkjavacoremodel.java.java.util.function")
+			package function {
+				class Consumer {
+				}
+
+			}
+
+		}
+
+		@namespace(uri="http:///btopenlinkjavacoremodel/java/java/time.ecore", prefix="btopenlinkjavacoremodel.java.java.time")
+		package time {
+			class LocalDate {
+			}
+
+			class Instant {
+			}
+
+			class Duration {
+			}
+
+		}
+
+		@namespace(uri="http:///btopenlinkjavacoremodel/java/java/io.ecore", prefix="btopenlinkjavacoremodel.java.java.io")
+		package io {
+			abstract interface Serializable {
+			}
+
+		}
+
+		@namespace(uri="http:///btopenlinkjavacoremodel/java/java/lang.ecore", prefix="btopenlinkjavacoremodel.java.java.lang")
+		package lang {
+			class Class {
+			}
+
+			class Object {
+			}
+
+			class String {
+			}
+
+		}
+
+	}
+
+}
+
+@namespace(uri="http:///btopenlinkjavacoremodel/importedTypes.ecore", prefix="btopenlinkjavacoremodel.importedTypes")
+package importedTypes {
+	@namespace(uri="http:///btopenlinkjavacoremodel/importedTypes/CallFeatureTextValue.ecore", prefix="btopenlinkjavacoremodel.importedTypes.CallFeatureTextValue")
+	package CallFeatureTextValue {
+		class Builder {
+		}
+
+	}
+
+	@namespace(uri="http:///btopenlinkjavacoremodel/importedTypes/CallFeature.ecore", prefix="btopenlinkjavacoremodel.importedTypes.CallFeature")
+	package CallFeature {
+		class AbstractCallFeatureBuilder {
+		}
+
+	}
+
+	@namespace(uri="http:///btopenlinkjavacoremodel/importedTypes/VoiceRecorderInfo.ecore", prefix="btopenlinkjavacoremodel.importedTypes.VoiceRecorderInfo")
+	package VoiceRecorderInfo {
+		class Builder {
+		}
+
+	}
+
+	@namespace(uri="http:///btopenlinkjavacoremodel/importedTypes/CallFeatureVoiceRecorder.ecore", prefix="btopenlinkjavacoremodel.importedTypes.CallFeatureVoiceRecorder")
+	package CallFeatureVoiceRecorder {
+		class Builder {
+		}
+
+	}
+
+	@namespace(uri="http:///btopenlinkjavacoremodel/importedTypes/primitivetype.ecore", prefix="btopenlinkjavacoremodel.importedTypes.primitivetype")
+	package primitivetype {
+		datatype Boolean : Boolean;
+
+		datatype Integer : Integer;
+
+		class Long {
+		}
+
+	}
+
+}
+
