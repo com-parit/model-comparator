@@ -24,6 +24,12 @@ public class JSONtoDTOMapper {
 		}
 
 		try {
+			modelComparisonConfigurationDTO.INCLUDE_CLASS_SUPERTYPES = jsonObject.getBoolean("INCLUDE_CLASS_SUPERTYPES");
+		} catch (Exception e) {
+			System.out.println("Incorrect configuration provided for INCLUDE_CLASS_SUPERTYPES; using default configuration");
+		}
+
+		try {
 			modelComparisonConfigurationDTO.INCLUDE_ENUMS = jsonObject.getBoolean("INCLUDE_ENUMS");
 		} catch (Exception e) {
 			System.out.println("Incorrect configuration provided for INCLUDE_ENUMS; using default configuration");

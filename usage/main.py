@@ -5,6 +5,7 @@ from visualizations import Visualizations as visualizations
 import requests
 from adapter import Adapter
 from constants import CONSTANTS
+from collections import OrderedDict
 
 class Main:
     def reorder_model_level_df(self, model_level_df):
@@ -20,7 +21,7 @@ class Main:
         return class_level_df
 
     def rename_model_level_columns(self, model_df):
-        names = CONSTANTS.MODEL_LEVEL_RENAMING
+        names = CONSTANTS.MODEL_LEVEL_RENAMING.value
         model_df = model_df.rename(columns=names)
         return model_df
 
@@ -102,8 +103,8 @@ class Main:
         groundTruthModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco.emf"
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco-flat-without-errors.emf"
         
-        groundTruthModelEcore = "resources/btopenlinkjavacoremodel.ecore"
-        predictedModelEcore = "resources/bt_openlink.ecore"
+        groundTruthModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/cd_output.ecore" # "resources/btopenlinkjavacoremodel.ecore"
+        predictedModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/model_1.ecore" # "resources/bt_openlink.ecore"
 
         output_dir = f'output'
         os.makedirs(output_dir, exist_ok=True)
@@ -114,7 +115,12 @@ class Main:
             projectName,
             config
         )
-        print(json.dumps(model_level_json, indent=4))
+        df_model = pd.DataFrame.from_dict(
+            {"values": model_level_json[projectName]}, orient='index')
+        df_model = self.reorder_model_level_df(df_model)
+        df_model = self.rename_model_level_columns(df_model)
+        json_result = df_model.to_json(orient='records', indent=4)
+        print(json_result)
 
 if __name__ == '__main__':
     Main().run()

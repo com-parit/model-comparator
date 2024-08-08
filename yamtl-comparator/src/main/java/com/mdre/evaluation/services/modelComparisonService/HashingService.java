@@ -119,7 +119,7 @@ public class HashingService extends AbstractClassComparisonService {
 		EReference eref = (EReference) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_REFERENCES_NAME) {
-	        totalChecksum += computeHashCode(eref.getName().toLowerCase());
+	        totalChecksum += computeHashCode(eref.getName() != null ? eref.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_REFERENCES_LOWER_BOUND) {
 	        totalChecksum += computeHashCode(Integer.toString(eref.getLowerBound()));
@@ -131,7 +131,7 @@ public class HashingService extends AbstractClassComparisonService {
 	        totalChecksum += computeHashCode(Boolean.toString(eref.isContainment()));
 		}
 		if (hashingConfiguration.INCLUDE_REFERENCES_CONTAINING_CLASS) {
-	        totalChecksum += computeHashCode(eref.getEContainingClass().getName().toLowerCase());
+	        totalChecksum += computeHashCode(eref.getEContainingClass().getName() != null ? eref.getEContainingClass().getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_REFERENCES_IS_ORDERED) {
 	        totalChecksum += computeHashCode(Boolean.toString(eref.isOrdered()));
@@ -146,7 +146,7 @@ public class HashingService extends AbstractClassComparisonService {
 	public static String getComparableObjectForEClass(Object obj) {
 		EClass eclass = (EClass) obj;
         long totalChecksum = 0;
-        totalChecksum += computeHashCode(eclass.getName().toLowerCase());
+        totalChecksum += computeHashCode(eclass.getName() != null ? eclass.getName().toLowerCase() : "");
         String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
         return binaryHash;
 	}
@@ -155,7 +155,7 @@ public class HashingService extends AbstractClassComparisonService {
 		EEnum enumeration = (EEnum) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_ENUM_NAME) {
-	        totalChecksum += computeHashCode(enumeration.getName().toLowerCase());
+	        totalChecksum += computeHashCode(enumeration.getName() != null ? enumeration.getName().toLowerCase() : "");
 		}
         String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
         return binaryHash;
@@ -165,16 +165,16 @@ public class HashingService extends AbstractClassComparisonService {
 		EAttribute eAtt = (EAttribute) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_NAME) {
-	        totalChecksum += computeHashCode(eAtt.getName().toLowerCase());
+	        totalChecksum += computeHashCode(eAtt.getName() != null ? eAtt.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_CONTAINING_CLASS) {
 			if (eAtt.getEContainingClass() != null) {
-				totalChecksum += computeHashCode(eAtt.getEContainingClass().getName().toLowerCase());
+				totalChecksum += computeHashCode(eAtt.getEContainingClass().getName() != null ? eAtt.getEContainingClass().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_TYPE) {
 			if (eAtt.getEAttributeType() != null) {
-				totalChecksum += computeHashCode(eAtt.getEAttributeType().getName().toLowerCase());
+				totalChecksum += computeHashCode(eAtt.getEAttributeType().getName() != null ? eAtt.getEAttributeType().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_LOWER_BOUND) {
@@ -197,11 +197,11 @@ public class HashingService extends AbstractClassComparisonService {
 		EOperation eop = (EOperation) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_OPERATION_NAME) {
-	        totalChecksum += computeHashCode(eop.getName().toLowerCase());
+	        totalChecksum += computeHashCode(eop.getName() != null ? eop.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_OPERATION_CONTAINING_CLASS) {
 			if (eop.getEContainingClass() != null) {
-				totalChecksum += computeHashCode(eop.getEContainingClass().getName().toLowerCase());
+				totalChecksum += computeHashCode(eop.getEContainingClass().getName() != null ? eop.getEContainingClass().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_OPERATION_PARAMETERS) {
@@ -218,16 +218,16 @@ public class HashingService extends AbstractClassComparisonService {
 		EParameter eparam = (EParameter) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_PARAMETER_NAME) {
-	        totalChecksum += computeHashCode(eparam.getName().toLowerCase());
+	        totalChecksum += computeHashCode(eparam.getName() != null ? eparam.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_PARAMETER_TYPE) {
 			if (eparam.getEType() != null) {
-				totalChecksum += computeHashCode(eparam.getEType().getName().toLowerCase());
+				totalChecksum += computeHashCode(eparam.getEType().getName() != null ? eparam.getEType().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_PARAMETER_OPERATION_NAME) {
 			if (eparam.getEOperation() != null) {
-				totalChecksum += computeHashCode(eparam.getEOperation().getName().toLowerCase());
+				totalChecksum += computeHashCode(eparam.getEOperation().getName() != null ? eparam.getEOperation().getName().toLowerCase() : "");
 			}
 		}
         String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
@@ -238,16 +238,16 @@ public class HashingService extends AbstractClassComparisonService {
 		EParameter eparam = (EParameter) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_PARAMETER_NAME) {
-	        totalChecksum += computeHashCode(eparam.getName().toLowerCase());
+	        totalChecksum += computeHashCode(eparam.getName() != null ? eparam.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_PARAMETER_TYPE) {
 			if (eparam.getEType() != null) {
-				totalChecksum += computeHashCode(eparam.getEType().getName().toLowerCase());
+				totalChecksum += computeHashCode(eparam.getEType().getName() != null ? eparam.getEType().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_PARAMETER_OPERATION_NAME) {
 			if (eparam.getEOperation() != null) {
-				totalChecksum += computeHashCode(eparam.getEOperation().getName().toLowerCase());
+				totalChecksum += computeHashCode(eparam.getEOperation().getName() != null ? eparam.getEOperation().getName().toLowerCase() : "");
 			}
 		}
 		return totalChecksum;
