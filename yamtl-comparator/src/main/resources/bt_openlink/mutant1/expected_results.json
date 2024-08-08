@@ -1,0 +1,8 @@
+{
+    "results": {
+        "classes_fp": 10,
+        "attributes_fp": 12,
+        "references_fp": 9,
+        "operations_fp": 21
+    }
+}

@@ -166,13 +166,15 @@ public class ModelComparisonService {
 			modelLevelMetrics.put("classes_fn", classes_fn);
 
 			// enumerations
-			modelLevelMetrics.put("enumerations_tp", enumerationConfusionMatrix.get("tp"));
-			modelLevelMetrics.put("enumerations_fp", enumerationConfusionMatrix.get("fp"));
-			modelLevelMetrics.put("enumerations_fn", enumerationConfusionMatrix.get("fn"));
-			modelLevelMetrics.put("total_enumerations_model1", total_enumerations_model1);
-			modelLevelMetrics.put("total_enumerations_model2", total_enumerations_model2);
-			modelLevelMetrics.put("total_enumerations_diff_model1_minus_model2", total_enumerations_model1 - total_enumerations_model2);
-			modelLevelMetrics.put("total_enumerations_diff_model2_minus_model1", total_enumerations_model2 - total_enumerations_model1);
+			if (this.modelComparisonConfiguration.INCLUDE_ENUMS) {
+				modelLevelMetrics.put("enumerations_tp", enumerationConfusionMatrix.get("tp"));
+				modelLevelMetrics.put("enumerations_fp", enumerationConfusionMatrix.get("fp"));
+				modelLevelMetrics.put("enumerations_fn", enumerationConfusionMatrix.get("fn"));
+				modelLevelMetrics.put("total_enumerations_model1", total_enumerations_model1);
+				modelLevelMetrics.put("total_enumerations_model2", total_enumerations_model2);
+				modelLevelMetrics.put("total_enumerations_diff_model1_minus_model2", total_enumerations_model1 - total_enumerations_model2);
+				modelLevelMetrics.put("total_enumerations_diff_model2_minus_model1", total_enumerations_model2 - total_enumerations_model1);
+			}
 
 			for (String metric : includedElements) {
 				int tp = 0, fn = 0, fp = 0;

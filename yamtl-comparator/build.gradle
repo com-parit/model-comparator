@@ -16,6 +16,7 @@ java {
 repositories {
 	mavenCentral()
 	mavenLocal()
+	maven { url "https://github.com/yamtl/yamtl.github.io/raw/master/mvn-repo/snapshot-repo" }
 }
 
 dependencies {
@@ -44,10 +45,16 @@ dependencies {
 	implementation 'org.json:json:20171018'
     implementation 'org.apache.opennlp:opennlp-tools:2.0.0'
 	implementation 'org.everit.json:org.everit.json.schema:1.0.0'
+	implementation "yamtl:yamtl.groovy:1.0.5"
+	implementation 'org.apache.groovy:groovy-all:4.0.15'
 }
 application {
     mainClass = 'com.mdre.evaluation.App'
 }
 tasks.named('test') {
 	useJUnitPlatform()
+}
+task runYamtl(type: JavaExec) {
+    mainClass.set('com.mdre.evaluation.services.modelComparisonService.YamtlComparator')
+    classpath = sourceSets.main.runtimeClasspath
 }

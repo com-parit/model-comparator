@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="openlink">
+  <eClassifiers xsi:type="ecore:EClass" name="StanzaBuilderabcdefs">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PhoneNumberabcdefs">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyColorabcdefs">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallFeatureDeviceKeyabcdefs">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deviceKeys" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallFeatureTextValueabcdefs">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ActiveFeatureabcdefs">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value2"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HistoricalCallabcdefs">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callerName"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="calledName"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="userId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interestId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callerNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="startTime"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="duration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tsc"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallFeatureHandsetabcdefs">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enabled"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="microphoneEnabled"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OriginatorReferenceabcdefs">
+    <eOperations name="equals"/>
+    <eOperations name="hashCode"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeviceKey">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VoiceMessage">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="action"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageLength"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="creationDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extension"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Site">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeviceStatus">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="online"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deviceId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequestActionValue">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RecorderPort">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VoiceMessageFeature">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="voiceMessage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InterestType">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Interest">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxCalls"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interestId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interestType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="number"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callForward"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyPageModule">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyLabel">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallFeatureBoolean">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enabled"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RecorderNumber">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyModifier">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyFunction">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyId">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FeatureId">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PubSubNodeId">
+    <eOperations name="from"/>
+    <eOperations name="toInterestId"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallFeatureSpeakerChannel">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="channel"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="microphoneActive"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="muteRequested"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConferenceId">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyQualifier">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyPageLabel">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallFeature">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyPageId">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ItemId">
+    <eOperations name="random"/>
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Key">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="id"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modifier"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="color"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interest"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeviceType">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyPage">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyPageId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyPageLabel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyPageModule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="localKeyPage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keys" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyPageLocalKeyPage">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeviceId">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VoiceRecorderInfo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="recorderNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="recorderPort"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="recorderChannel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="recorderType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProfileId">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Participant">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jid"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="participantType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="participantCategory"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="number"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e164Numbers" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destinationNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="startTime"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="duration"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallId">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RecorderChannel">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InterestId">
+    <eOperations name="from"/>
+    <eOperations name="toPubSubNodeId"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UserId">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MakeCallFeature">
+    <eOperations name="stringToOptionalBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value2"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TelephonyCallId">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyInterest">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Call">
+    <eOperations name="toCallStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changed"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callerName"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="calledName"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="actions" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="telephonyCallId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conferenceId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="site"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deviceId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="userId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interestId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callerNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callerE164Numbers" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledDestination"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledE164Numbers" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="originatorReferences" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="startTime"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="duration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participants" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RecorderType">
+    <eOperations name="from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractType">
+    <eOperations name="equals"/>
+    <eOperations name="hashCode"/>
+    <eOperations name="compareTo"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Feature">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="featureType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallFeatureVoiceRecorder">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="voiceRecorderInfo"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallStatus">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callStatusBusy"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callForward"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calls" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Profile">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="online"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deviceType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deviceId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="site"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyPages" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PubSubMessageBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delay"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pubSubNodeId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="itemId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeviceStatusMessageBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deviceStatus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallStatusMessageBuilder">
+    <eOperations name="validate"/>
+    <eOperations name="validateCallsAreOnTheCorrectInterest"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callStatus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetProfileRequestBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PubSubPublishRequestBuilder">
+    <eOperations name="validate"/>
+    <eOperations name="validateCallsAreOnTheCorrectInterest"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pubSubNodeId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deviceStatus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetInterestsRequestBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetFeaturesResultBuilder">
+    <eOperations name="addFeature"/>
+    <eOperations name="validate"/>
+    <eOperations name="validateUniqueness"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetCallHistoryRequestBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="caller"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="called"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="start"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="count"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jid"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fromDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="upToDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ManageVoiceMessageRequestBuilder">
+    <eOperations name="validate"/>
+    <eOperations name="addFeature"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="action"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequestActionRequestBuilder">
+    <eOperations name="addFeatures"/>
+    <eOperations name="addFeature"/>
+    <eOperations name="validate"/>
+    <eOperations name="checkValuesArePResent"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requestAction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interestId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value2"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetProfileResultBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profile"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PubSubSubscriptionRequestResultBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subscriptionState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pubSubNodeId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jid"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IQBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iqType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetInterestResultBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interest"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QueryFeaturesResultBuilder">
+    <eOperations name="addFeature"/>
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetCallHistoryResultBuilder">
+    <eOperations name="addCall"/>
+    <eOperations name="addCalls"/>
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="totalRecordCount"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstRecordNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="recordCountInBatch"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calls" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ManageVoiceMessageResultBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deviceStatus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SetFeaturesRequestBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value2"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value3"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetInterestRequestBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interestId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetProfilesRequestBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jid"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetFeaturesRequestBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QueryFeaturesRequestBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequestActionResultBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callStatus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetInterestsResultBuilder">
+    <eOperations name="addInterest"/>
+    <eOperations name="validate"/>
+    <eOperations name="validateUniqueness"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interests" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MakeCallRequestBuilder">
+    <eOperations name="addFeature"/>
+    <eOperations name="addOriginatorReference"/>
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jid"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profileId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interestId"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destination"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="originatorReferences" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GetProfilesResultBuilder">
+    <eOperations name="addProfile"/>
+    <eOperations name="validate"/>
+    <eOperations name="validateUniqueness"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profiles" upperBound="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MakeCallResultBuilder">
+    <eOperations name="validate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callStatus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="J"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Instant"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Duration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Object"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Serializable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Optional"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Comparable_AbstractType_T__"/>
+  <eClassifiers xsi:type="ecore:EClass" name="T"/>
+  <eClassifiers xsi:type="ecore:EClass" name="List"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Consumer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="B"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalDate"/>
+</ecore:EPackage>

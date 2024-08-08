@@ -104,7 +104,7 @@ class Main:
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco-flat-without-errors.emf"
         
         groundTruthModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/cd_output.ecore" # "resources/btopenlinkjavacoremodel.ecore"
-        predictedModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/model_1.ecore" # "resources/bt_openlink.ecore"
+        predictedModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/bt_openlink.ecore" # "resources/bt_openlink.ecore"
 
         output_dir = f'output'
         os.makedirs(output_dir, exist_ok=True)
@@ -121,6 +121,10 @@ class Main:
         df_model = self.rename_model_level_columns(df_model)
         json_result = df_model.to_json(orient='records', indent=4)
         print(json_result)
+        with open(f'{output_dir}/model_level_json.json', 'w', encoding='utf-8') as json_file:
+            json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
+        with open(f'{output_dir}/class_level_json.json', 'w', encoding='utf-8') as json_file:
+            json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
 
 if __name__ == '__main__':
     Main().run()
