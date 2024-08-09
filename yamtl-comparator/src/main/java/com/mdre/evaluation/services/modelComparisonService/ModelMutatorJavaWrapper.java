@@ -9,7 +9,7 @@ import java.io.File;
 
 import groovy.lang.GroovyClassLoader;
 
-public class YamtlComparator {
+public class ModelMutatorJavaWrapper {
 
     public static void main(String[] args) {
         System.out.println("hello");

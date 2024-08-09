@@ -54,7 +54,7 @@ application {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-task runYamtl(type: JavaExec) {
-    mainClass.set('com.mdre.evaluation.services.modelComparisonService.YamtlComparator')
+task runModelMutatorJavaWrapper(type: JavaExec) {
+    mainClass.set('com.mdre.evaluation.services.modelComparisonService.ModelMutatorJavaWrapper')
     classpath = sourceSets.main.runtimeClasspath
 }
