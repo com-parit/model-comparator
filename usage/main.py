@@ -97,6 +97,34 @@ class Main:
                 except Exception as e:
                     print(e)
 
+    def compute_similarity_for_test_set(self):
+        root_directory = "/media/jawad/secondaryStorage/projects/thesis/evaluation/travis/evaluateTravis"
+        for subfolder_name in os.listdir(root_directory):
+            subfolder_path = os.path.join(root_directory, subfolder_name)
+            subfolder_path = os.path.join(subfolder_path, "base_model")
+            if os.path.isdir(subfolder_path):
+                ground_truth_ecore_model_file_path = ""
+                for file in os.listdir(subfolder_path):
+                    if ".ecore" in file:
+                        ground_truth_ecore_model_file_path = subfolder_path + "/" + file
+                for file in os.listdir(subfolder_path):
+                    predicted_ecore_model_file_path = ""
+                    if os.path.isdir(os.path.join(subfolder_path, file)):
+                        sub_sub_folder = os.path.join(subfolder_path, file)
+                        for file2 in os.listdir(sub_sub_folder):
+                            if ".ecore" in file2:
+                                predicted_ecore_model_file_path = sub_sub_folder + "/" + file2
+                        model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(
+                            groundTruthModelEcore=ground_truth_ecore_model_file_path,
+                            predictedModelEcore=predicted_ecore_model_file_path,
+                            projectName=file,
+                            config="resources/config.json"
+                        )
+                        with open(f'{sub_sub_folder}/model_level_json.json', 'w', encoding='utf-8') as json_file:
+                            json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
+                        with open(f'{sub_sub_folder}/class_level_json.json', 'w', encoding='utf-8') as json_file:
+                            json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
+
     def run(self, ):
         projectName = "ecommerce-backend"
         config = "resources/config.json"
@@ -127,4 +155,4 @@ class Main:
             json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
 
 if __name__ == '__main__':
-    Main().run()
+    Main().compute_similarity_for_test_set()

@@ -36,6 +36,23 @@ class Adapter:
         model_level_json[projectName] = {**response_syntactic["modelLevelJson"][projectName], **response_semantic, **response_syntactic["time"]}
         return model_level_json, class_level_json
 
+    def compare_models_syntactically_and_semantically(
+        ground_truth_model_ecore,
+        predicted_model_ecore,
+        ground_truth_model_emf, 
+        predicted_truth_model_emf, 
+        projectName, 
+        config
+    ):
+        model_level_json = {}
+        class_level_json = {}
+
+        response_syntactic = Adapter.compare_ecore_models_syntactically(ground_truth_model_ecore, predicted_model_ecore, projectName, config)
+        response_semantic = Adapter.compare_emfatic_models_semantically(ground_truth_model_emf, predicted_truth_model_emf)
+        
+        class_level_json = response_syntactic["classLevelJson"]
+        model_level_json[projectName] = {**response_syntactic["modelLevelJson"][projectName], **response_semantic, **response_syntactic["time"]}
+        return model_level_json, class_level_json
     
     def compare_emfatic_models_semantically(ground_truth_emfatic, predicted_emfatic):
         with open(ground_truth_emfatic, 'r') as groundTruthModel, open(predicted_emfatic, 'r') as predictedModel:

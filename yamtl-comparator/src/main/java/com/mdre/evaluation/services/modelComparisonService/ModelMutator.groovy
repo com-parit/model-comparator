@@ -77,7 +77,7 @@ public class ModelMutator extends YAMTLModuleGroovy {
                 .out('ct', EcorePackage.eINSTANCE.EClass, {
                     class_count = class_count + 1
                     if (class_count < falsePositiveClasses) {
-                        ct.name = c.name + "mutation"
+                        ct.name = "mutation"
                     }
                     else {
                         ct.name = c.name
@@ -105,7 +105,7 @@ public class ModelMutator extends YAMTLModuleGroovy {
                 .out('ct', EcorePackage.eINSTANCE.EAttribute, {
                     attribute_count = attribute_count + 1
                     if (attribute_count < falsePositiveAttributes) {
-                        ct.name = c.name + "mutation"
+                        ct.name = "mutation"
                     } else {
                         ct.name = c.name
                         // def new_type = c.getEType()
@@ -127,7 +127,7 @@ public class ModelMutator extends YAMTLModuleGroovy {
                 .out('ct', EcorePackage.eINSTANCE.EOperation, {
                     operation_count = operation_count + 1
                     if (operation_count < falsePositiveOperations) {
-                        ct.name = c.name + "mutation"
+                        ct.name = "mutation"
                     } else {
                         ct.name = c.name
                     }
@@ -138,7 +138,7 @@ public class ModelMutator extends YAMTLModuleGroovy {
                 .out('ct', EcorePackage.eINSTANCE.EReference, {
                     reference_count = reference_count + 1
                     if (reference_count < falsePositiveReferences) {
-                        ct.name = c.name + "mutation"
+                        ct.name = "mutation"
                     } else {
                         ct.name = c.name
                         ct.lowerBound = c.lowerBound
@@ -233,14 +233,58 @@ public class ModelMutator extends YAMTLModuleGroovy {
         // exact match
         createMutant(modelPath, 0, 0, 0, 0, "mutant_1")
 
-       // opposite
+        // opposite
         createMutant(modelPath, 100, 100, 100, 100, "mutant_2")
-  
-       // classes match but none of the sub elements match
+
+        // classes match only
         createMutant(modelPath, 0, 100, 100, 100, "mutant_3")
+
+        // classes and attributes match only
+        createMutant(modelPath, 0, 0, 100, 100, "mutant_4")
+
+        // classes and references match only
+        createMutant(modelPath, 0, 100, 100, 0, "mutant_5")
+
+        // classes and operations match only
+        createMutant(modelPath, 0, 100, 0, 100, "mutant_6")
+
+        // classes, attributes and operations match only
+        createMutant(modelPath, 0, 0, 0, 100, "mutant_7")
+
+        // classes, attributes and references match only
+        createMutant(modelPath, 0, 0, 100, 0, "mutant_8")
+
+        // classes, operations and references match only
+        createMutant(modelPath, 0, 100, 0, 0, "mutant_9")
+
+        // hybrid match
+        createMutant(modelPath, 0, 40, 30, 70, "mutant_10")
     }
 
     public static void run() {
-        createMutantsForTesting("/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/bt_openlink/bt_openlink.ecore")
+        File mainDirectory = new File("/media/jawad/secondaryStorage/projects/thesis/evaluation/travis/evaluateTravis");
+
+        if (mainDirectory.exists() && mainDirectory.isDirectory()) {
+            File[] subdirs = mainDirectory.listFiles();
+            for (File subdir : subdirs) {
+                if (subdir.isDirectory()) {
+                    File[] files = subdir.listFiles();
+                    for (File file : files) {
+                        try {
+                            String path = file.getAbsolutePath()
+                            if (!file.isDirectory() && path.substring(path.lastIndexOf(".")) == ".ecore") {
+                                createMutant(path.toString(), 0, 0, 0, 0, "base_model")
+                                String baseModelPath = path.substring(0, path.lastIndexOf("/")) + "/base_model/base_model.ecore";
+                                createMutantsForTesting(baseModelPath)
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Could not generate mutants for " + file.getAbsolutePath() + "/n" + e)
+                        }
+                    }
+                }
+            }
+        } else {
+            System.out.println("The provided path is not a valid directory.");
+        }
     }
 }
