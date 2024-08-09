@@ -29,15 +29,18 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EAnnotation;
 
-public class YamtlService extends YAMTLModule {
-	public YamtlService() {
+class YamtlCounter extends YAMTLModule {
+	public YamtlCounter() {
+		this.selectedExecutionPhases = ExecutionPhase.HELPER_ONLY;
 		header().in("in", EcorePackage.eINSTANCE);
 	}
+}
+
+public class ModelElementsFetcher {
 
 	// function get counts of each EcorePackage literal
-	public HashMap<String, Integer> getCountOfAllLiterals(String modelFilePath) {
-		YamtlService countEngine = new YamtlService();
-		countEngine.selectedExecutionPhases = ExecutionPhase.HELPER_ONLY;
+	public static HashMap<String, Integer> getCountOfAllLiterals(String modelFilePath) {
+		YamtlCounter countEngine = new YamtlCounter();
 		countEngine.loadInputModels(Map.of("in", modelFilePath));
 		countEngine.execute();
 
@@ -76,9 +79,8 @@ public class YamtlService extends YAMTLModule {
 	}
 
 	// function get counts of each EcorePackage literal
-	public HashMap<String, Object[]> getAllLiterals(String modelFilePath) {
-		YamtlService countEngine = new YamtlService();
-		countEngine.selectedExecutionPhases = ExecutionPhase.HELPER_ONLY;
+	public static HashMap<String, Object[]> getAllLiterals(String modelFilePath) {
+		YamtlCounter countEngine = new YamtlCounter();
 		countEngine.loadInputModels(Map.of("in", modelFilePath));
 		countEngine.execute();
 		HashMap<String, Object[]> result = new HashMap<String, Object[]>();

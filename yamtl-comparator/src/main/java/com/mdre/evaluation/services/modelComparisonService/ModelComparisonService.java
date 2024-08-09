@@ -18,7 +18,7 @@ import com.mdre.evaluation.utils.ModelComparisonUtils;
 import com.mdre.evaluation.services.modelComparisonService.HashingService;
 import com.mdre.evaluation.services.modelComparisonService.DigestService;
 import com.mdre.evaluation.services.modelComparisonService.MetricsComputationService;
-import com.mdre.evaluation.services.modelComparisonService.YamtlService;
+import com.mdre.evaluation.services.modelComparisonService.ModelElementsFetcher;
 import com.mdre.evaluation.config.Constants;
 
 import org.eclipse.emf.ecore.EcorePackage;
@@ -147,8 +147,6 @@ public class ModelComparisonService {
 			Integer total_enumerations_model1,
 			Integer total_enumerations_model2
 		) {
-			YamtlService countEngine = new YamtlService();
-
 			HashMap<String, Object> modelLevelMetrics = new HashMap<>();
 
 			// classes
@@ -247,17 +245,16 @@ public class ModelComparisonService {
 
 		// perform class level comparison
 		for(HashMap<String, String> model: models) {
-			YamtlService countEngine = new YamtlService();
 			String original_model = model.get("original");
 			String generated_model = model.get("generated");
-			HashMap<String, Integer> original_literal_counts = countEngine.getCountOfAllLiterals(original_model);
-			HashMap<String, Integer> generated_literal_counts = countEngine.getCountOfAllLiterals(generated_model);
-			Object[] allClassLiteralsForOriginalModel = countEngine.getAllLiterals(original_model).get("classes");
+			HashMap<String, Integer> original_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(original_model);
+			HashMap<String, Integer> generated_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(generated_model);
+			Object[] allClassLiteralsForOriginalModel = ModelElementsFetcher.getAllLiterals(original_model).get("classes");
 			Object[] allClassLiteralsForGeneratedlModel;
 			if (includeDependencies) {
-				allClassLiteralsForGeneratedlModel = countEngine.getAllLiterals(generated_model).get("classes");
+				allClassLiteralsForGeneratedlModel = ModelElementsFetcher.getAllLiterals(generated_model).get("classes");
 			} else {
-				allClassLiteralsForGeneratedlModel = countEngine.getAllLiterals(generated_model).get("classesWithoutDependencies");
+				allClassLiteralsForGeneratedlModel = ModelElementsFetcher.getAllLiterals(generated_model).get("classesWithoutDependencies");
 			}
 
 			ArrayList<EClass> classesModel1 = new ArrayList<EClass>();
@@ -325,11 +322,11 @@ public class ModelComparisonService {
 			// compute confusion matrix for enumerations
 			ArrayList<EEnum> enumsModel1 = new ArrayList<EEnum>();
 			ArrayList<EEnum> enumsModel2 = new ArrayList<EEnum>();
-			for (Object enumObject: countEngine.getAllLiterals(original_model).get("enumerations")) {
+			for (Object enumObject: ModelElementsFetcher.getAllLiterals(original_model).get("enumerations")) {
 				EEnum eenum = (EEnum) enumObject;
 				enumsModel1.add(eenum);
 			}
-			for (Object enumObject: countEngine.getAllLiterals(generated_model).get("enumerations")) {
+			for (Object enumObject: ModelElementsFetcher.getAllLiterals(generated_model).get("enumerations")) {
 				EEnum eenum = (EEnum) enumObject;
 				enumsModel2.add(eenum);
 			}

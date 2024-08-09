@@ -1,0 +1,607 @@
+package openlink;
+
+class StanzaBuilderabcdefs {
+	attr null ~id;
+	ref null to;
+	ref null from;
+}
+
+class PhoneNumberabcdefs {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class KeyColorabcdefs {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class CallFeatureDeviceKeyabcdefs {
+	attr null serialVersionUID;
+	ref null[*] deviceKeys;
+}
+
+class CallFeatureTextValueabcdefs {
+	attr null serialVersionUID;
+	attr null value;
+}
+
+class ActiveFeatureabcdefs {
+	attr null serialVersionUID;
+	attr null value1;
+	attr null value2;
+	attr null value3;
+}
+
+class HistoricalCallabcdefs {
+	attr null serialVersionUID;
+	attr null state;
+	attr null direction;
+	attr null callerName;
+	attr null calledName;
+	ref null callId;
+	ref null userId;
+	ref null interestId;
+	ref null callerNumber;
+	ref null calledNumber;
+	ref null startTime;
+	ref null duration;
+	ref null tsc;
+}
+
+class CallFeatureHandsetabcdefs {
+	attr null serialVersionUID;
+	attr null enabled;
+	attr null microphoneEnabled;
+}
+
+class OriginatorReferenceabcdefs {
+	op void equals();
+	op void hashCode();
+	attr null serialVersionUID;
+	attr null key;
+	attr null value;
+}
+
+class DeviceKey {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class VoiceMessage {
+	attr null serialVersionUID;
+	attr null label;
+	attr null status;
+	attr null action;
+	ref null messageLength;
+	ref null creationDate;
+	ref null extension;
+}
+
+class Site {
+	attr null serialVersionUID;
+	attr null ~id;
+	attr null isDefault;
+	attr null name;
+	attr null type;
+}
+
+class DeviceStatus {
+	attr null serialVersionUID;
+	attr null online;
+	ref null profileId;
+	ref null deviceId;
+	ref null[*] features;
+}
+
+class RequestActionValue {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class RecorderPort {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class VoiceMessageFeature {
+	attr null serialVersionUID;
+	ref null featureId;
+	ref null voiceMessage;
+}
+
+class InterestType {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class Interest {
+	attr null serialVersionUID;
+	attr null label;
+	attr null isDefault;
+	attr null maxCalls;
+	ref null interestId;
+	ref null interestType;
+	ref null callStatus;
+	ref null number;
+	ref null callForward;
+}
+
+class KeyPageModule {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class KeyLabel {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class CallFeatureBoolean {
+	attr null serialVersionUID;
+	attr null enabled;
+}
+
+class RecorderNumber {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class KeyModifier {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class KeyFunction {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class KeyId {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class FeatureId {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class PubSubNodeId {
+	op void from();
+	op void toInterestId();
+	attr null serialVersionUID;
+}
+
+class CallFeatureSpeakerChannel {
+	attr null serialVersionUID;
+	attr null channel;
+	attr null microphoneActive;
+	attr null muteRequested;
+}
+
+class ConferenceId {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class KeyQualifier {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class KeyPageLabel {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class CallFeature {
+	attr null serialVersionUID;
+}
+
+class KeyPageId {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class ItemId {
+	op void random();
+	op void from();
+	attr null serialVersionUID;
+}
+
+class Key {
+	attr null serialVersionUID;
+	ref null ~id;
+	ref null label;
+	ref null function;
+	ref null modifier;
+	ref null qualifier;
+	ref null color;
+	ref null interest;
+}
+
+class DeviceType {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class KeyPage {
+	attr null serialVersionUID;
+	ref null keyPageId;
+	ref null keyPageLabel;
+	ref null keyPageModule;
+	ref null localKeyPage;
+	ref null[*] keys;
+}
+
+class KeyPageLocalKeyPage {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class DeviceId {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class VoiceRecorderInfo {
+	attr null serialVersionUID;
+	ref null recorderNumber;
+	ref null recorderPort;
+	ref null recorderChannel;
+	ref null recorderType;
+}
+
+class ProfileId {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class Participant {
+	attr null serialVersionUID;
+	attr null jid;
+	attr null participantType;
+	attr null participantCategory;
+	attr null direction;
+	ref null number;
+	ref null[*] e164Numbers;
+	ref null destinationNumber;
+	ref null startTime;
+	ref null duration;
+}
+
+class CallId {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class RecorderChannel {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class InterestId {
+	op void from();
+	op void toPubSubNodeId();
+	attr null serialVersionUID;
+}
+
+class UserId {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class MakeCallFeature {
+	op void stringToOptionalBoolean();
+	attr null value1;
+	attr null value2;
+	ref null featureId;
+}
+
+class TelephonyCallId {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class KeyInterest {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class Call {
+	op void toCallStatus();
+	attr null serialVersionUID;
+	attr null changed;
+	attr null state;
+	attr null direction;
+	attr null callerName;
+	attr null calledName;
+	attr null[*] actions;
+	ref null callId;
+	ref null telephonyCallId;
+	ref null conferenceId;
+	ref null site;
+	ref null profileId;
+	ref null deviceId;
+	ref null userId;
+	ref null interestId;
+	ref null callerNumber;
+	ref null[*] callerE164Numbers;
+	ref null calledNumber;
+	ref null calledDestination;
+	ref null[*] calledE164Numbers;
+	ref null[*] originatorReferences;
+	ref null startTime;
+	ref null duration;
+	ref null[*] features;
+	ref null[*] participants;
+}
+
+class RecorderType {
+	op void from();
+	attr null serialVersionUID;
+}
+
+class AbstractType {
+	op void equals();
+	op void hashCode();
+	op void compareTo();
+	attr null serialVersionUID;
+	ref null[1] value;
+}
+
+class Feature {
+	attr null serialVersionUID;
+	attr null featureType;
+	attr null label;
+	ref null featureId;
+}
+
+class CallFeatureVoiceRecorder {
+	attr null serialVersionUID;
+	ref null voiceRecorderInfo;
+}
+
+class CallStatus {
+	attr null serialVersionUID;
+	attr null callStatusBusy;
+	ref null callForward;
+	ref null[*] calls;
+}
+
+class Profile {
+	attr null serialVersionUID;
+	attr null isDefault;
+	attr null label;
+	attr null online;
+	ref null profileId;
+	ref null deviceType;
+	ref null deviceId;
+	ref null site;
+	ref null[*] keyPages;
+	ref null[*] actions;
+}
+
+class PubSubMessageBuilder {
+	op void validate();
+	ref null delay;
+	ref null pubSubNodeId;
+	ref null itemId;
+}
+
+class DeviceStatusMessageBuilder {
+	op void validate();
+	ref null deviceStatus;
+}
+
+class CallStatusMessageBuilder {
+	op void validate();
+	op void validateCallsAreOnTheCorrectInterest();
+	ref null callStatus;
+}
+
+class GetProfileRequestBuilder {
+	op void validate();
+	ref null profileId;
+}
+
+class PubSubPublishRequestBuilder {
+	op void validate();
+	op void validateCallsAreOnTheCorrectInterest();
+	ref null pubSubNodeId;
+	ref null callStatus;
+	ref null deviceStatus;
+}
+
+class GetInterestsRequestBuilder {
+	op void validate();
+	ref null profileId;
+}
+
+class GetFeaturesResultBuilder {
+	op void addFeature();
+	op void validate();
+	op void validateUniqueness();
+	ref null profileId;
+	ref null[*] features;
+}
+
+class GetCallHistoryRequestBuilder {
+	op void validate();
+	attr null caller;
+	attr null called;
+	attr null callType;
+	attr null start;
+	attr null count;
+	ref null jid;
+	ref null fromDate;
+	ref null upToDate;
+}
+
+class ManageVoiceMessageRequestBuilder {
+	op void validate();
+	op void addFeature();
+	attr null action;
+	attr null label;
+	ref null profileId;
+	ref null[*] features;
+}
+
+class RequestActionRequestBuilder {
+	op void addFeatures();
+	op void addFeature();
+	op void validate();
+	op void checkValuesArePResent();
+	attr null requestAction;
+	ref null interestId;
+	ref null callId;
+	ref null value2;
+	ref null value1;
+	ref null[*] features;
+}
+
+class GetProfileResultBuilder {
+	op void validate();
+	ref null profile;
+}
+
+class PubSubSubscriptionRequestResultBuilder {
+	op void validate();
+	attr null subscriptionState;
+	ref null pubSubNodeId;
+	ref null jid;
+}
+
+class IQBuilder {
+	op void validate();
+	ref null iqType;
+}
+
+class GetInterestResultBuilder {
+	op void validate();
+	ref null interest;
+}
+
+class QueryFeaturesResultBuilder {
+	op void addFeature();
+	op void validate();
+	ref null[*] features;
+}
+
+class GetCallHistoryResultBuilder {
+	op void addCall();
+	op void addCalls();
+	op void validate();
+	attr null totalRecordCount;
+	attr null firstRecordNumber;
+	attr null recordCountInBatch;
+	ref null[*] calls;
+}
+
+class ManageVoiceMessageResultBuilder {
+	op void validate();
+	ref null deviceStatus;
+}
+
+class SetFeaturesRequestBuilder {
+	op void validate();
+	attr null value1;
+	attr null value2;
+	attr null value3;
+	ref null profileId;
+	ref null featureId;
+}
+
+class GetInterestRequestBuilder {
+	op void validate();
+	ref null interestId;
+}
+
+class GetProfilesRequestBuilder {
+	op void validate();
+	ref null jid;
+}
+
+class GetFeaturesRequestBuilder {
+	op void validate();
+	ref null profileId;
+}
+
+class QueryFeaturesRequestBuilder {
+	op void validate();
+	ref null profileId;
+}
+
+class RequestActionResultBuilder {
+	op void validate();
+	ref null callStatus;
+}
+
+class GetInterestsResultBuilder {
+	op void addInterest();
+	op void validate();
+	op void validateUniqueness();
+	ref null[*] interests;
+}
+
+class MakeCallRequestBuilder {
+	op void addFeature();
+	op void addOriginatorReference();
+	op void validate();
+	ref null jid;
+	ref null profileId;
+	ref null interestId;
+	ref null destination;
+	ref null[*] features;
+	ref null[*] originatorReferences;
+}
+
+class GetProfilesResultBuilder {
+	op void addProfile();
+	op void validate();
+	op void validateUniqueness();
+	ref null[*] profiles;
+}
+
+class MakeCallResultBuilder {
+	op void validate();
+	ref null callStatus;
+}
+
+class J {
+}
+
+class Instant {
+}
+
+class Duration {
+}
+
+class Object {
+}
+
+class Serializable {
+}
+
+class Optional {
+}
+
+class Comparable_AbstractType_T__ {
+}
+
+class T {
+}
+
+class List {
+}
+
+class Consumer {
+}
+
+class B {
+}
+
+class LocalDate {
+}
+

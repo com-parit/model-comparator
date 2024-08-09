@@ -12,6 +12,7 @@ import yamtl.core.YAMTLModuleGroovy
 import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 import java.io.File
+import com.mdre.evaluation.services.modelComparisonService.ModelElementsFetcher
 
 public class ModelMutator extends YAMTLModuleGroovy {
 	
@@ -138,7 +139,26 @@ public class ModelMutator extends YAMTLModuleGroovy {
         ])
 	}
 
-    public static createMutantsForTesting(String modelPath) {
+    public static createMutant(
+        String modelPath, 
+        falsePositiveClassesPercentange, 
+        falsePositiveAttributesPercentange, 
+        falsePositiveOperationsPercentange, 
+        falsePositiveReferencesPercentange,
+        key
+    ) {
+        def literalCounts = ModelElementsFetcher.getCountOfAllLiterals(modelPath)
+
+        // mutant 1 (exact match)
+        def total_classes = literalCounts.get("classes")
+        def total_attributes = literalCounts.get("attributes")
+        def total_references = literalCounts.get("references")
+        def total_operations = literalCounts.get("operations")
+        int falsePositiveClasses = (int) (total_classes * (falsePositiveClassesPercentange / 100))
+        int falsePositiveAttributes = (int) (total_attributes * (falsePositiveAttributesPercentange / 100))
+        int falsePositiveOperations = (int) (total_operations * (falsePositiveOperationsPercentange / 100))
+        int falsePositiveReferences = (int) (total_references * (falsePositiveReferencesPercentange / 100))
+
         System.out.println("Creating Instance");
 		def matcher = new ModelMutator()
 		
@@ -146,26 +166,53 @@ public class ModelMutator extends YAMTLModuleGroovy {
 		matcher.loadInputModels([
             'in': modelPath, 
         ])
-
         System.out.println("Executing Matcher");
 		matcher.execute()
-
-        String modelDirectory = modelPath.substring(0, modelPath.lastIndexOf("/")) + "/mutant1/"   
-        String outputModel = modelDirectory + "mutant_1.ecore"
+        String modelDirectory = modelPath.substring(0, modelPath.lastIndexOf("/")) + "/" + key + "/"   
+        String outputModel = modelDirectory + key + ".ecore"
 		matcher.saveOutputModels(['out': outputModel])
 
         def jsonBuilder = new JsonBuilder()
+        def classes_tp_v = total_classes - falsePositiveClasses 
+        def attributes_tp_v = total_attributes - falsePositiveAttributes 
+        def operations_tp_v = total_operations - falsePositiveOperations 
+        def references_tp_v = total_references - falsePositiveReferences 
+        def aggregate_tp_v = classes_tp_v + attributes_tp_v + operations_tp_v + references_tp_v
+        def aggregate_fp_v = falsePositiveClasses + falsePositiveAttributes + falsePositiveOperations + falsePositiveReferences
+        def aggregate_fn_v = falsePositiveClasses + falsePositiveAttributes + falsePositiveOperations + falsePositiveReferences
+        def aggregate_model_precision_v = (aggregate_tp_v) / (aggregate_tp_v + aggregate_fp_v) 
+        def aggregate_model_recall_v = (aggregate_tp_v) / (aggregate_tp_v + aggregate_fn_v)
+        def aggregate_model_f1_score_v = 2 * (aggregate_model_precision_v * aggregate_model_recall_v) / (aggregate_model_precision_v + aggregate_model_recall_v)
         println("creating json")
         def root = jsonBuilder.results {
-            classes_fp 10
-            attributes_fp 12
-            references_fp 9
-            operations_fp 21
+            classes_fp falsePositiveClasses
+            classes_tp classes_tp_v
+            classes_fn falsePositiveClasses
+            attributes_fp falsePositiveAttributes
+            attributes_tp attributes_tp_v
+            attributes_fn falsePositiveAttributes
+            operations_fp falsePositiveOperations
+            operations_tp operations_tp_v
+            operations_fn falsePositiveOperations
+            references_fp falsePositiveReferences
+            references_tp references_tp_v
+            references_fn falsePositiveReferences
+            aggregate_tp aggregate_tp_v
+            aggregate_fp aggregate_fp_v
+            aggregate_fn aggregate_fn_v
+            aggregate_model_precision aggregate_model_precision_v 
+            aggregate_model_recall aggregate_model_recall_v
+            aggregate_model_f1_score aggregate_model_f1_score_v
         }
         String jsonString = JsonOutput.prettyPrint(jsonBuilder.toString())
         File jsonFile = new File(modelDirectory + "expected_results.json")
         jsonFile.write(jsonString)
         println("JSON file created successfully!")
+    }
+
+    public static createMutantsForTesting(String modelPath) {
+        // exact match
+        createMutant(modelPath, 0, 0, 0, 0, "mutant_1")
     }
 
     public static void run() {

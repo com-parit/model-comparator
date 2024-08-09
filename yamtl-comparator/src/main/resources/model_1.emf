@@ -1,0 +1,22 @@
+@namespace(uri="http://www.xtext.org/example/mydsl/MyDsl", prefix="myDsl")
+package myDsl;
+
+class Model {
+	val Greeting[*] greetings;
+}
+
+class Greeting {
+	attr String question;
+	val Reponse[*] reponses;
+}
+
+class Reponse {
+	attr String name;
+}
+
+class ReponseT extends Reponse {
+}
+
+class ReponseF extends Reponse {
+}
+
