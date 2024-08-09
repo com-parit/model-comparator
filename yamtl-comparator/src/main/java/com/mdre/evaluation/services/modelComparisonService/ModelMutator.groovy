@@ -26,7 +26,7 @@ public class ModelMutator extends YAMTLModuleGroovy {
         return this.falsePositiveClasses
     }
     public setfalsePositiveClasses(int value) {
-        return this.falsePositiveClasses
+        return this.falsePositiveClasses = value
     }
 
     public falsePositiveOperations = 0
@@ -77,7 +77,7 @@ public class ModelMutator extends YAMTLModuleGroovy {
                 .out('ct', EcorePackage.eINSTANCE.EClass, {
                     class_count = class_count + 1
                     if (class_count < falsePositiveClasses) {
-                        ct.name = c.name + "abcdefs"
+                        ct.name = c.name + "mutation"
                     }
                     else {
                         ct.name = c.name
@@ -104,37 +104,49 @@ public class ModelMutator extends YAMTLModuleGroovy {
                 .in('c', EcorePackage.eINSTANCE.EAttribute)
                 .out('ct', EcorePackage.eINSTANCE.EAttribute, {
                     attribute_count = attribute_count + 1
-                    ct.name = c.name
-                    // def new_type = c.getEType()
-                    // try {
-                    //     ct.setEType(new_type)
-                    // } catch (Exception e) {
-                    //     System.out.println("?")
-                    //     System.out.println(e)
-                    // }
-                    ct.lowerBound = c.lowerBound
-                    ct.upperBound = c.upperBound
-                    ct.ordered = c.ordered
-                    ct.unique = c.unique
+                    if (attribute_count < falsePositiveAttributes) {
+                        ct.name = c.name + "mutation"
+                    } else {
+                        ct.name = c.name
+                        // def new_type = c.getEType()
+                        // try {
+                        //     ct.setEType(new_type)
+                        // } catch (Exception e) {
+                        //     System.out.println("?")
+                        //     System.out.println(e)
+                        // }
+                        ct.lowerBound = c.lowerBound
+                        ct.upperBound = c.upperBound
+                        ct.ordered = c.ordered
+                        ct.unique = c.unique
+                    }
                 }),
             rule('Operation')
                 .isLazy()
                 .in('c', EcorePackage.eINSTANCE.EOperation)
                 .out('ct', EcorePackage.eINSTANCE.EOperation, {
                     operation_count = operation_count + 1
-                    ct.name = c.name
+                    if (operation_count < falsePositiveOperations) {
+                        ct.name = c.name + "mutation"
+                    } else {
+                        ct.name = c.name
+                    }
                 }),
             rule('Reference')
                 .isLazy()
                 .in('c', EcorePackage.eINSTANCE.EReference)
                 .out('ct', EcorePackage.eINSTANCE.EReference, {
                     reference_count = reference_count + 1
-                    ct.name = c.name
-                    ct.lowerBound = c.lowerBound
-                    ct.upperBound = c.upperBound
-                    ct.containment = c.containment
-                    ct.ordered = c.ordered
-                    ct.unique = c.unique
+                    if (reference_count < falsePositiveReferences) {
+                        ct.name = c.name + "mutation"
+                    } else {
+                        ct.name = c.name
+                        ct.lowerBound = c.lowerBound
+                        ct.upperBound = c.upperBound
+                        ct.containment = c.containment
+                        ct.ordered = c.ordered
+                        ct.unique = c.unique
+                    }
                 })
         ])
 	}
@@ -161,6 +173,10 @@ public class ModelMutator extends YAMTLModuleGroovy {
 
         System.out.println("Creating Instance");
 		def matcher = new ModelMutator()
+        matcher.setfalsePositiveClasses(falsePositiveClasses)
+        matcher.setfalsePositiveAttributes(falsePositiveAttributes)
+        matcher.setfalsePositiveOperations(falsePositiveOperations)
+        matcher.setfalsePositiveReferences(falsePositiveReferences)
 		
         System.out.println("Loading Input models");
 		matcher.loadInputModels([
@@ -182,7 +198,10 @@ public class ModelMutator extends YAMTLModuleGroovy {
         def aggregate_fn_v = falsePositiveClasses + falsePositiveAttributes + falsePositiveOperations + falsePositiveReferences
         def aggregate_model_precision_v = (aggregate_tp_v) / (aggregate_tp_v + aggregate_fp_v) 
         def aggregate_model_recall_v = (aggregate_tp_v) / (aggregate_tp_v + aggregate_fn_v)
-        def aggregate_model_f1_score_v = 2 * (aggregate_model_precision_v * aggregate_model_recall_v) / (aggregate_model_precision_v + aggregate_model_recall_v)
+        def aggregate_model_f1_score_v = 0
+        if (aggregate_model_precision_v + aggregate_model_recall_v != 0) {
+            aggregate_model_f1_score_v = 2 * (aggregate_model_precision_v * aggregate_model_recall_v) / (aggregate_model_precision_v + aggregate_model_recall_v)
+        }
         println("creating json")
         def root = jsonBuilder.results {
             classes_fp falsePositiveClasses
@@ -213,6 +232,12 @@ public class ModelMutator extends YAMTLModuleGroovy {
     public static createMutantsForTesting(String modelPath) {
         // exact match
         createMutant(modelPath, 0, 0, 0, 0, "mutant_1")
+
+       // opposite
+        createMutant(modelPath, 100, 100, 100, 100, "mutant_2")
+  
+       // classes match but none of the sub elements match
+        createMutant(modelPath, 0, 100, 100, 100, "mutant_3")
     }
 
     public static void run() {

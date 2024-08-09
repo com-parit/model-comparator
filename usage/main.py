@@ -103,7 +103,7 @@ class Main:
         groundTruthModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco.emf"
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco-flat-without-errors.emf"
         
-        groundTruthModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/bt_openlink/mutant1/mutant1.ecore" # "resources/btopenlinkjavacoremodel.ecore"
+        groundTruthModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/bt_openlink/mutant_3/mutant_3.ecore" # "resources/btopenlinkjavacoremodel.ecore"
         predictedModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/bt_openlink/bt_openlink.ecore" # "resources/bt_openlink.ecore"
 
         output_dir = f'output'
