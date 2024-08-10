@@ -56,9 +56,9 @@ class SemanticSimilarity:
     def compute_ragas_similarity(self, original_model, generated_model):
         try:
             data_samples = {
-                'question': ['How should the ecore metamodel representation for this java project look like?'],
+                'question': ['How similar is this metamodel to the ground truth metamodel?'],
                 'answer': [generated_model],
-                'contexts' : [['Extract metamodel as an ecore meta model to capture the java project']],
+                'contexts' : [['The metamodel is represents the data model of a java project']],
                 'ground_truth': [original_model]
             }
 
@@ -120,6 +120,6 @@ class SemanticSimilarity:
         result_object = {
             "cosine_similarity_SMOTE": float(similarity),
             "cosine_similarity_word2vec": -1,
-            "ragas_similarity": float(ragas_similarity) if ragas_similarity else None
+            "ragas_similarity": ragas_similarity if ragas_similarity else None
         }
         return result_object

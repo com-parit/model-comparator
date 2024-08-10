@@ -131,8 +131,8 @@ class Main:
         groundTruthModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco.emf"
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco-flat-without-errors.emf"
         
-        groundTruthModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/bt_openlink/mutant_3/mutant_3.ecore" # "resources/btopenlinkjavacoremodel.ecore"
-        predictedModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/src/main/resources/bt_openlink/bt_openlink.ecore" # "resources/bt_openlink.ecore"
+        groundTruthModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/usage/ase2024-dataset/ecommerce-backend/ground-truth/ecommerce2.ecore"
+        predictedModelEcore = "resources/bt_openlink.ecore"
 
         output_dir = f'output'
         os.makedirs(output_dir, exist_ok=True)
@@ -143,16 +143,16 @@ class Main:
             projectName,
             config
         )
+        print(json.dumps(model_level_json, indent=4))
         df_model = pd.DataFrame.from_dict(
             {"values": model_level_json[projectName]}, orient='index')
         df_model = self.reorder_model_level_df(df_model)
         df_model = self.rename_model_level_columns(df_model)
         json_result = df_model.to_json(orient='records', indent=4)
-        print(json_result)
         with open(f'{output_dir}/model_level_json.json', 'w', encoding='utf-8') as json_file:
             json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
         with open(f'{output_dir}/class_level_json.json', 'w', encoding='utf-8') as json_file:
             json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
 
 if __name__ == '__main__':
-    Main().compute_similarity_for_test_set()
+    Main().run()
