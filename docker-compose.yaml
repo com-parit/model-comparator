@@ -1,14 +1,14 @@
 version: '3.8'
 
 services:
-  yamtl-comparator:
+  syntactic-comparator:
     build:
-      context: ./yamtl-comparator
+      context: ./syntactic-comparator
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     volumes:
-      - ./yamtl-comparator:/app
+      - ./syntactic-comparator:/app
 
   driver:
     build:
@@ -17,16 +17,16 @@ services:
     ports:
       - "5050:5050"
     environment:
-      - nlp_comparator_url=http://nlp-evaluator:4040
-      - yamtl_comparator_url=http://yamtl-comparator:8080
+      - nlp_comparator_url=http://semantic-evaluator:4040
+      - yamtl_comparator_url=http://syntactic-comparator:8080
     volumes:
       - ./driver:/driver
 
-  nlp-evaluator:
+  semantic-evaluator:
     build:
-      context: ./nlp-evaluator
+      context: ./semantic-evaluator
       dockerfile: Dockerfile
     ports:
       - "4040:4040"
     volumes:
-      - ./nlp-evaluator:/app
+      - ./semantic-evaluator:/app

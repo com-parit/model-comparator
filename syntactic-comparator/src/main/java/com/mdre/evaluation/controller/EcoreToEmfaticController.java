@@ -19,7 +19,7 @@ import com.mdre.evaluation.utils.FileUtils;
 
 @RestController
 public class EcoreToEmfaticController {
-    String rootProjectPath = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/";
+    String rootProjectPath = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/syntactic-comparator/";
     @PostMapping("/ecore2emfatic")
     public String getEmfaticFromEcore(@RequestParam("ecoreModel") MultipartFile ecoreModel) {
         try {
