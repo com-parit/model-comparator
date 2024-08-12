@@ -19,7 +19,7 @@ import com.mdre.evaluation.utils.FileUtils;
 
 @RestController
 public class EmfaticToEcoreController {
-    String rootProjectPath = "/media/jawad/secondaryStorage/projects/thesis/";
+    String rootProjectPath = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/";
     @PostMapping("/emfatic2ecore")
     public String getEcoreFromEmfatic(@RequestParam("emfaticModel") MultipartFile emfaticModel) {
         try {
@@ -32,9 +32,10 @@ public class EmfaticToEcoreController {
             String response = Files.readString(path);
             Files.delete(path);
             Files.delete(Paths.get(emfaticFilePath));
+            System.out.println("Generated ecore model");
             return response;
         } catch (Exception e) {
-            return "Could not generate emfatic file " + e;
+            return "Could not generate ecore file " + e;
         }
     }
 }

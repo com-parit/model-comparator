@@ -5,28 +5,28 @@ import plotly.graph_objects as go
 import json
 from adapter import Adapter
 
-st.title('Dashboard')
+st.title('Comparit')
 
 model_type = st.selectbox("Choose Model Type", ["None", "Ecore", "Emf"])
 
 col1, col2 = st.columns(2)
 if model_type == "Ecore":
     with col1:
-        ground_truth_model_ecore = st.text_area(
+        ground_truth_model = st.text_area(
             "Input Ecore Ground Truth Model",
         )
     with col2:
-        predicted_model_ecore = st.text_area(
+        predicted_model = st.text_area(
             "Input Ecore Predicted Model"
         )
 elif model_type == "Emf":
     with col1:
-        ground_truth_model_ecore = st.text_area(
-            "Input Ecore EMF Truth Model",
+        ground_truth_model = st.text_area(
+            "Input EMFatic Truth Model",
         )
     with col2:
-        predicted_model_ecore = st.text_area(
-            "Input EMF Predicted Model"
+        predicted_model = st.text_area(
+            "Input EMFatic Predicted Model"
         )
     
 
@@ -113,9 +113,9 @@ if st.button("Compare", type="primary"):
     with open(config_file_path, 'w') as fr:
         fr.write(str(config))  
     with open(ground_truth_path, 'w') as fr:
-        fr.write(str(ground_truth_model_ecore))  
+        fr.write(str(ground_truth_model))  
     with open(predicted_path, 'w') as fr:
-        fr.write(str(predicted_model_ecore))  
+        fr.write(str(predicted_model))  
         
     if model_type == "Ecore":
         model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_truth_path, predicted_path, project_name, config_file_path)

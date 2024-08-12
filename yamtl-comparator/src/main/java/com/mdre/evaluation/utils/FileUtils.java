@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtils {
     public static String saveFile(MultipartFile file, String extension) throws IOException {
-    	String rootProjectPath = "/media/jawad/secondaryStorage/projects/thesis/";
+    	String rootProjectPath = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/yamtl-comparator/";
         String uploadDir = rootProjectPath;
         File directory = new File(uploadDir);
         if (!directory.exists()) {
