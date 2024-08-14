@@ -1,0 +1,34 @@
+@startuml
+actor       Actor       as act
+participant "User Interface" as ui
+participant "model-converter" as mc
+participant "syntactic-comparator" as sync
+participant "semantic-comparator" as semc
+
+act -> ui: ecore_model_1, ecore_model_2
+activate ui
+ui-> mc: convertEcore2Emf(ecore_model_1)
+activate mc
+mc -> ui: emfatic_model_1
+deactivate mc
+
+ui-> mc: convertEcore2Emf(ecore_model_2)
+activate mc
+mc -> ui: emfatic_model_2
+deactivate mc
+
+ui -> sync: ecore_model_1, ecore_model_2
+activate sync
+sync -> ui: syntactic comparison results
+deactivate sync
+
+ui -> semc: emfatic_model_1, emfatic_model_2
+activate semc
+semc -> ui: semantic comparison results
+deactivate semc
+
+ui -> ui: generate visualizations
+ui -> act: results
+
+deactivate ui
+@enduml

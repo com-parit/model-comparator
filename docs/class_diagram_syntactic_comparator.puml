@@ -1,0 +1,158 @@
+@startuml
+
+package com.mdre.evaluation.services.modelComparisonService {
+
+	class ModelComparisonService {
+		+ HashMap<String, JSONObject> compareModels(ArrayList<HashMap<String, String>> models)
+		+ HashMap<String, Object> getClassLevelMetrics(EClass erefOriginal, EClass erefPredicted)
+		+ HashMap<String, Object> getModelLevelMetricsFromClassLevelMetrics()
+	}
+
+    abstract class AbstractClassComparisonService {
+        + abstract double computeSimilarity(Object comparisonObject1, Object comparisonObject2);
+        + abstract VenDiagramDTO<EClass>  getVenDiagramForClasses(List<EClass> classesModel1, List<EClass> classesModel2);
+        + abstract VenDiagramDTO<EEnum> getVenDiagramForEnumerations(List<EEnum> enumsModel1, List<EEnum> enumsModel2);
+        + abstract VenDiagramDTO<EAttribute> getVenDiagramForEAttributes(List<EAttribute> attributesClass1, List<EAttribute> attributesClass2);
+        + abstract VenDiagramDTO<EReference> getVenDiagramForEReferences(List<EReference> ereferencesClass1, List<EReference> ereferencesClass2);
+        + abstract VenDiagramDTO<EOperation> getVenDiagramForEOperations(List<EOperation> eoperationsClass1, List<EOperation> eoperationsClass2);
+    }
+
+    class DigestService {
+        + ArrayList<HashMap<String, String>> getComparableObjectForEAtrribute(EAttribute eAttribute)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEClass(EClass eClass)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEParameter(EParameter eParameter)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEOperation(EOperation eOperation)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEReference(EReference eReference)
+    }
+
+    class HashingService {
+        + ArrayList<HashMap<String, String>> getComparableObjectForEAtrribute(EAttribute eAttribute)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEClass(EClass eClass)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEParameter(EParameter eParameter)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEOperation(EOperation eOperation)
+        + ArrayList<HashMap<String, String>> getComparableObjectForEReference(EReference eReference)
+    }
+
+    class MetricsComputationService {
+        + static HashMap<String, Float> computeMetrics(HashMap<String, Integer> metrics)
+        + static Float computePrecision(Float tp, Float fp)
+        + static Float computeRecall(float tp, float fn)
+        + static Float computeF1Score(float precision, float recall)
+    }
+
+
+
+    
+    AbstractClassComparisonService <|-- DigestService
+    AbstractClassComparisonService <|-- HashingService
+	ModelComparisonService "1" *--> "1" DigestService: uses
+	ModelComparisonService "1" *--> "1" HashingService: uses
+	ModelComparisonService "1" *--> "1" MetricsComputationService: uses
+
+}
+package com.mdre.evaluation.dtos {
+    class DigestConfigurationDTO {
+        + Boolean INCLUDE_ENUM_NAME
+        + Boolean INCLUDE_CLASS_PARAMETERS
+        + Boolean INCLUDE_ATTRIBUTE_NAME
+        + Boolean INCLUDE_ATTRIBUTE_CONTAINING_CLASS
+        + Boolean INCLUDE_ATTRIBUTE_TYPE
+        + Boolean INCLUDE_ATTRIBUTE_LOWER_BOUND
+        + Boolean INCLUDE_ATTRIBUTE_UPPER_BOUND
+        + Boolean INCLUDE_ATTRIBUTE_IS_ORDERED
+        + Boolean INCLUDE_ATTRIBUTE_IS_UNIQUE
+        + Boolean INCLUDE_REFERENCES_NAME
+        + Boolean INCLUDE_REFERENCES_CONTAINING_CLASS
+        + Boolean INCLUDE_REFERENCES_IS_CONTAINMENT
+        + Boolean INCLUDE_REFERENCES_LOWER_BOUND
+        + Boolean INCLUDE_REFERENCES_UPPER_BOUND
+        + Boolean INCLUDE_REFERENCES_IS_ORDERED
+        + Boolean INCLUDE_REFERENCES_IS_UNIQUE
+        + Boolean INCLUDE_OPERATION_NAME
+        + Boolean INCLUDE_OPERATION_CONTAINING_CLASS
+        + Boolean INCLUDE_OPERATION_PARAMETERS
+        + Boolean INCLUDE_PARAMETER_NAME
+        + Boolean INCLUDE_PARAMETER_TYPE
+        + Boolean INCLUDE_PARAMETER_OPERATION_NAME
+    }
+
+    class HashingConfigurationDTO {
+        + double HASHING_THRESHOLD
+        + Boolean INCLUDE_ENUM_NAME
+        + Boolean INCLUDE_CLASS_PARAMETERS
+        + Boolean INCLUDE_ATTRIBUTE_NAME
+        + Boolean INCLUDE_ATTRIBUTE_CONTAINING_CLASS
+        + Boolean INCLUDE_ATTRIBUTE_TYPE
+        + Boolean INCLUDE_ATTRIBUTE_LOWER_BOUND
+        + Boolean INCLUDE_ATTRIBUTE_UPPER_BOUND
+        + Boolean INCLUDE_ATTRIBUTE_IS_ORDERED
+        + Boolean INCLUDE_ATTRIBUTE_IS_UNIQUE
+        + Boolean INCLUDE_REFERENCES_NAME
+        + Boolean INCLUDE_REFERENCES_CONTAINING_CLASS
+        + Boolean INCLUDE_REFERENCES_IS_CONTAINMENT
+        + Boolean INCLUDE_REFERENCES_LOWER_BOUND
+        + Boolean INCLUDE_REFERENCES_UPPER_BOUND
+        + Boolean INCLUDE_REFERENCES_IS_ORDERED
+        + Boolean INCLUDE_REFERENCES_IS_UNIQUE
+        + Boolean INCLUDE_OPERATION_NAME
+        + Boolean INCLUDE_OPERATION_CONTAINING_CLASS
+        + Boolean INCLUDE_OPERATION_PARAMETERS
+        + Boolean INCLUDE_PARAMETER_NAME
+        + Boolean INCLUDE_PARAMETER_TYPE
+        + Boolean INCLUDE_PARAMETER_OPERATION_NAME
+    }
+
+    class VenDiagramDTO<X> {
+        + ArrayList<MatchedElementsDTO<X>> matched
+        + ArrayList<X> onlyInModel1
+        + ArrayList<X> onlyInModel2
+    }
+
+    class ModelComparisonConfigurationDTO {
+        + Boolean USE_HASHING
+        + Boolean INCLUDE_ENUMS
+        + Boolean INCLUDE_CLASS_ATTRIBUTES
+        + Boolean INCLUDE_CLASS_OPERATIONS
+        + Boolean INCLUDE_CLASS_SUPERTYPES
+        + Boolean INCLUDE_CLASS_REFERENCES
+        + HashingConfigurationDTO hashingConfiguration
+        + DigestConfigurationDTO digestConfiguration
+    }
+}
+package com.mdre.evaluation.controller {
+    class ModelComparisonController {
+        + Object compareUsingDigests(MultipartFile groundTruthModel, MultipartFile predictedModel, MultipartFile config, String projectName)
+        + JsonSchemaValidatorService jsonSchemaValidatorService
+    }
+
+    class EmfaticToEcoreController {
+        + void run(String EMFATIC_FILE_PATH)
+        + EmfaticToEcoreService emfaticToEcoreService
+    }
+
+    class EcoreToEmfaticController {
+        + void run(String ECORE_FILE_PATH)
+        + EcoreToEmfaticService ecoreToEmfatic
+    }
+}
+package com.mdre.evaluation.services {
+    class JsonSchemaValidatorService {
+        + JsonSchemaValidatorService()
+        + void validate(String jsonString, String schemaKey)
+        - void loadSchema(String key, String schemaPath)
+        - Map<String, Schema> schemas
+    }
+}
+
+package com.mdre.evaluation.services {
+    class EmfaticToEcoreService {
+        + void run(String EMFATIC_FILE_PATH)
+    }
+
+    class EcoreToEmfaticService {
+        + void run(String ECORE_FILE_PATH)
+    }
+}
+
+
+@enduml

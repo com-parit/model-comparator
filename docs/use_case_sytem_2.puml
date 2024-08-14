@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+actor "User" as fc
+rectangle Comparit-API{
+  usecase "Make a POST Request to syntactic Comparator" as UC1
+  usecase "Make a POST Request to Semantic Comparator" as UC2
+  usecase "Attach pair of Ecore Models" as UC3
+  usecase "Attach Configuration file" as UC4
+}
+
+fc --> UC1
+fc --> UC2
+UC1 -[dotted]-> UC3: includes
+UC1 -[dotted]-> UC4: includes
+UC2 -[dotted]-> UC3: includes
+@enduml

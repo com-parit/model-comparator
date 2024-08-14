@@ -1,0 +1,34 @@
+@startuml
+component semantic-comparator {
+  port p1
+}
+
+component syntactic-comparator {
+  port p2
+}
+
+component model-converter {
+  port p3
+  port p4
+}
+interface "compare\nsemantically" as csem
+csem --> p1
+
+interface "compare\nsyntactically" as csyn
+csyn --> p2
+
+interface "Ecore2Emfatic" as ecore2emf
+ecore2emf --> p3
+
+interface "Emfatic2Ecore" as emf2ecore
+emf2ecore --> p4
+
+component UsageScript {
+
+}
+UsageScript ..> csem : uses
+UsageScript ..> csyn : uses
+UsageScript ..> ecore2emf : uses
+UsageScript ..> emf2ecore : uses
+
+@enduml

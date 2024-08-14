@@ -1,0 +1,12 @@
+@startuml
+
+participant User
+participant "/authenticateAndRequestSimilarOffers" as auth
+
+!define request_payload_1 "{"username":"userabcd",\n"password":"password123",\n"jobOffers":["1","2"]}"
+User -> auth: POST /auth\nContent-Type: application/json\nrequest_payload_1
+activate auth
+auth --> User: HTTP/1.1 401 UNAUTHORIZED\n{"error": "Authentication failed."}
+deactivate auth
+
+@enduml

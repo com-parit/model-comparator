@@ -1,0 +1,17 @@
+@startuml
+package app.controllers {
+	class semantic_similarity_controller {
+
+	}
+}
+
+package app.services {
+	class semantic_similarity_service {
+		+ compute_word2vec_cosine_similarity(text1, text2, model)
+		+ compute_tfidf_cosine_similarity(text1, text2)
+		+ compute_ragas_similarity(text1, text2)
+	}
+}
+
+semantic_similarity_controller "1" *--> "1" semantic_similarity_service: uses
+@enduml

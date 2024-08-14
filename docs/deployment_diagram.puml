@@ -1,0 +1,24 @@
+@startuml
+
+
+rectangle "Server" {
+	rectangle "Kubernetes Cluster" {
+		rectangle "pod 1" {
+			rectangle "Docker Container 1" {
+				rectangle "Flask Service" {
+					component "semantic-comparator"
+				}
+			}
+		}
+
+		rectangle "pod 2" {
+			rectangle "Docker Container 2" {
+				rectangle "Springboot Service" {
+					component "syntactic-comparator"
+					component "model-converter" 
+				}
+			}
+		}
+	}
+}
+@enduml
