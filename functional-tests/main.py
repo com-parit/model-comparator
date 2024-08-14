@@ -1,11 +1,9 @@
 import json
 import pandas as pd
 import os
-from visualizations import Visualizations as visualizations
-import requests
 from adapter import Adapter
 from constants import CONSTANTS
-from collections import OrderedDict
+from report import create_report
 
 class Main:
     def reorder_model_level_df(self, model_level_df):
@@ -70,35 +68,8 @@ class Main:
         consolidated_csv_paths.append(model_csv_path)
         return consolidated_csv_paths
 
-    def get_results_for_dataset(self):
-        root_directory = "/media/jawad/secondaryStorage/projects/thesis/similar_models"
-        for subfolder_name in os.listdir(root_directory):
-            subfolder_path = os.path.join(root_directory, subfolder_name)
-            if os.path.isdir(subfolder_path):
-                model_1 = os.path.join(subfolder_path, "model_1.emf")
-                model_2 = os.path.join(subfolder_path, "model_2.emf")
-                projectName = subfolder_path
-                config = "resources/config.json"
-                groundTruthModel_emf = model_1
-                predictedModel_emf = model_2
-
-                output_dir = subfolder_path
-                os.makedirs(output_dir, exist_ok=True)
-
-                try:
-                    model_level_json, class_level_json = Adapter.compare_emfatic_models_syntactically_and_semantically(
-                        groundTruthModel_emf, predictedModel_emf, projectName, config)
-                    
-                    with open(f'{output_dir}/model_level_json.json', 'w', encoding='utf-8') as json_file:
-                        json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
-                    with open(f'{output_dir}/class_level_json.json', 'w', encoding='utf-8') as json_file:
-                        json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
-                    print(f'Computed for {output_dir}')
-                except Exception as e:
-                    print(e)
-
     def compute_similarity_for_test_set(self):
-        root_directory = "/media/jawad/secondaryStorage/projects/thesis/evaluation/travis/evaluateTravis"
+        root_directory = "evaluate_travis"
         for subfolder_name in os.listdir(root_directory):
             subfolder_path = os.path.join(root_directory, subfolder_name)
             subfolder_path = os.path.join(subfolder_path, "base_model")
@@ -118,21 +89,22 @@ class Main:
                             groundTruthModelEcore=ground_truth_ecore_model_file_path,
                             predictedModelEcore=predicted_ecore_model_file_path,
                             projectName=file,
-                            config="resources/config.json"
+                            config="config.json"
                         )
                         with open(f'{sub_sub_folder}/model_level_json.json', 'w', encoding='utf-8') as json_file:
                             json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
                         with open(f'{sub_sub_folder}/class_level_json.json', 'w', encoding='utf-8') as json_file:
                             json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
+        create_report(root_directory)
 
     def run(self, ):
         projectName = "ecommerce-backend"
-        config = "resources/config.json"
+        config = "config.json"
         groundTruthModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco.emf"
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco-flat-without-errors.emf"
         
         groundTruthModelEcore = "/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/usage/ase2024-dataset/ecommerce-backend/ground-truth/ecommerce2.ecore"
-        predictedModelEcore = "resources/bt_openlink.ecore"
+        predictedModelEcore = "bt_openlink.ecore"
 
         output_dir = f'output'
         os.makedirs(output_dir, exist_ok=True)
@@ -144,15 +116,10 @@ class Main:
             config
         )
         print(json.dumps(model_level_json, indent=4))
-        df_model = pd.DataFrame.from_dict(
-            {"values": model_level_json[projectName]}, orient='index')
-        df_model = self.reorder_model_level_df(df_model)
-        df_model = self.rename_model_level_columns(df_model)
-        json_result = df_model.to_json(orient='records', indent=4)
         with open(f'{output_dir}/model_level_json.json', 'w', encoding='utf-8') as json_file:
             json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
         with open(f'{output_dir}/class_level_json.json', 'w', encoding='utf-8') as json_file:
             json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
 
 if __name__ == '__main__':
-    Main().run()
+    Main().compute_similarity_for_test_set()

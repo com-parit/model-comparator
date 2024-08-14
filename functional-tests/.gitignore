@@ -1,0 +1,9 @@
+*.csv
+*.pdf
+*.png
+*.jpg
+*.json
+
+.venv*/
+baseline_models
+evaluate_travis

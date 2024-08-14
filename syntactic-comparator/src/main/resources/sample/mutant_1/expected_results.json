@@ -1,0 +1,22 @@
+{
+    "results": {
+        "classes_fp": 0,
+        "classes_tp": 95,
+        "classes_fn": 0,
+        "attributes_fp": 0,
+        "attributes_tp": 115,
+        "attributes_fn": 0,
+        "operations_fp": 0,
+        "operations_tp": 84,
+        "operations_fn": 0,
+        "references_fp": 0,
+        "references_tp": 121,
+        "references_fn": 0,
+        "aggregate_tp": 415,
+        "aggregate_fp": 0,
+        "aggregate_fn": 0,
+        "aggregate_model_precision": 1,
+        "aggregate_model_recall": 1,
+        "aggregate_model_f1_score": 1
+    }
+}

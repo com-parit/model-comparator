@@ -1,0 +1,56 @@
+@namespace(uri="top", prefix="top")
+package top;
+
+package default {
+	class root {
+		val null[*] containedElements;
+	}
+
+}
+
+package datatypes {
+}
+
+package java {
+}
+
+package io {
+}
+
+package io {
+}
+
+package tracee {
+}
+
+package binding {
+}
+
+package httpclient {
+	class TraceeHttpClientDecorator {
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void setParams();
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		attr null profile;
+	}
+
+}
+

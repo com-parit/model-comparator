@@ -262,29 +262,32 @@ public class ModelMutator extends YAMTLModuleGroovy {
     }
 
     public static void run() {
-        File mainDirectory = new File("/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/syntactic-comparator/evaluation/travis/evaluateTravis");
+        // exact match
+        createMutant("/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/syntactic-comparator/src/main/resources/sample/bt_openlink.ecore", 0, 0, 0, 0, "mutant_1")
 
-        if (mainDirectory.exists() && mainDirectory.isDirectory()) {
-            File[] subdirs = mainDirectory.listFiles();
-            for (File subdir : subdirs) {
-                if (subdir.isDirectory()) {
-                    File[] files = subdir.listFiles();
-                    for (File file : files) {
-                        try {
-                            String path = file.getAbsolutePath()
-                            if (!file.isDirectory() && path.substring(path.lastIndexOf(".")) == ".ecore") {
-                                createMutant(path.toString(), 0, 0, 0, 0, "base_model")
-                                String baseModelPath = path.substring(0, path.lastIndexOf("/")) + "/base_model/base_model.ecore";
-                                createMutantsForTesting(baseModelPath)
-                            }
-                        } catch (Exception e) {
-                            System.out.println("Could not generate mutants for " + file.getAbsolutePath() + "/n" + e)
-                        }
-                    }
-                }
-            }
-        } else {
-            System.out.println("The provided path is not a valid directory.");
-        }
+        // File mainDirectory = new File("/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/syntactic-comparator/evaluation/travis/evaluateTravis");
+
+        // if (mainDirectory.exists() && mainDirectory.isDirectory()) {
+        //     File[] subdirs = mainDirectory.listFiles();
+        //     for (File subdir : subdirs) {
+        //         if (subdir.isDirectory()) {
+        //             File[] files = subdir.listFiles();
+        //             for (File file : files) {
+        //                 try {
+        //                     String path = file.getAbsolutePath()
+        //                     if (!file.isDirectory() && path.substring(path.lastIndexOf(".")) == ".ecore") {
+        //                         createMutant(path.toString(), 0, 0, 0, 0, "base_model")
+        //                         String baseModelPath = path.substring(0, path.lastIndexOf("/")) + "/base_model/base_model.ecore";
+        //                         createMutantsForTesting(baseModelPath)
+        //                     }
+        //                 } catch (Exception e) {
+        //                     System.out.println("Could not generate mutants for " + file.getAbsolutePath() + "/n" + e)
+        //                 }
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     System.out.println("The provided path is not a valid directory.");
+        // }
     }
 }

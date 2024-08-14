@@ -133,14 +133,14 @@ if st.button("Compare", type="primary"):
         "precision", 
         "recall", 
         "f1_score", 
-        # "cosine_similarity_tfidf", 
+        "cosine_similarity_SMOTE", 
         # "cosine_similarity_word2vec",
         #  "ragas_answer_similarity"
         ], 'y': [
             df.T["aggregate_model_precision"][0], 
             df.T["aggregate_model_recall"][0], 
             df.T["aggregate_model_f1_score"][0],
-            # df.T["cosine_similarity_tfidf"][0],
+            df.T["cosine_similarity_SMOTE"][0],
             # df.T["cosine_similarity_word2vec"][0],
             # df.T["ragas_answer_similarity"][0] if df.T["ragas_answer_similarity"][0] > 0 else 0 
         ]

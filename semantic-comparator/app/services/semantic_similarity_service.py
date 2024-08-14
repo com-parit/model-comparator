@@ -105,6 +105,10 @@ class SemanticSimilarity:
 
         tokens1_resampled = [token for token in vectorizer.inverse_transform([X_resampled[0]])[0]]
         tokens2_resampled = [token for token in vectorizer.inverse_transform([X_resampled[1]])[0]]
+        
+        print("Vectorized Tokens using tfidf")
+        print(tokens1_resampled)
+        print(tokens2_resampled)
 
         sentences = [tokens1_resampled, tokens2_resampled]
 
@@ -113,8 +117,12 @@ class SemanticSimilarity:
         vector1 = np.mean([model.wv[tok] for tok in tokens1_resampled if tok in model.wv], axis=0)
         vector2 = np.mean([model.wv[tok] for tok in tokens2_resampled if tok in model.wv], axis=0)
 
+        print("Vectors obtained from word embeddings")
+        print(vector1)
+        print(vector2)
         similarity = dot(vector1, vector2) / (norm(vector1) * norm(vector2))
-        
+        print("Cosine Similarity")
+        print(similarity)        
         # Compute ragas similarity
         ragas_similarity = self.compute_ragas_similarity(emf_original_s, emf_predicted_s)        
         result_object = {
