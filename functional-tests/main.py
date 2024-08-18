@@ -85,6 +85,7 @@ class Main:
                         for file2 in os.listdir(sub_sub_folder):
                             if ".ecore" in file2:
                                 predicted_ecore_model_file_path = sub_sub_folder + "/" + file2
+                        print(f'processing {predicted_ecore_model_file_path}')
                         model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(
                             groundTruthModelEcore=ground_truth_ecore_model_file_path,
                             predictedModelEcore=predicted_ecore_model_file_path,
@@ -95,7 +96,9 @@ class Main:
                             json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
                         with open(f'{sub_sub_folder}/class_level_json.json', 'w', encoding='utf-8') as json_file:
                             json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
-        create_report(root_directory)
+        df = create_report(root_directory)
+        df.to_csv(f'{root_directory}/results.csv')
+
 
     def run(self, ):
         projectName = "ecommerce-backend"

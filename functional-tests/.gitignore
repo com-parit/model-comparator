@@ -6,4 +6,4 @@
 
 .venv*/
 baseline_models
-evaluate_travis
+evaluate_travis*

@@ -42,8 +42,8 @@ def create_report(directory):
 							results_json["comparit_recall"].append(comparit_recall)
 							results_json["comparit_f1_score"].append(comparit_f1_score)
 							results_json["SMOTE"].append(SMOTE)
-							results_json["SMOTE_ERROR"].append(round((abs(SMOTE - expected_f1_score))/(max(SMOTE, expected_f1_score) if max(SMOTE, expected_f1_score) > 0 else 1), 5))
-							results_json["COMPARIT_ERROR"].append(round((abs(comparit_f1_score - expected_f1_score))/(max(comparit_f1_score, expected_f1_score) if max(comparit_f1_score, expected_f1_score) > 0 else 1), 5))
+							results_json["SMOTE_ERROR"].append(round(abs(SMOTE - expected_f1_score), 5))
+							results_json["COMPARIT_ERROR"].append(round((abs(comparit_f1_score - expected_f1_score)), 3))
 		
 	df = pd.DataFrame(results_json)
-	df.to_csv(f'{root_directory}/results.csv')
+	return df
