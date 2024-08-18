@@ -33,8 +33,7 @@ public class ModelComparisonController {
     public Object compareUsingDigests(
         @RequestParam("groundTruthModel") MultipartFile groundTruthModel, 
         @RequestParam("predictedModel") MultipartFile predictedModel,
-        @RequestParam("config") MultipartFile config,
-        @RequestParam("projectName") String projectName
+        @RequestParam("config") MultipartFile config
         ) {
         try {
             String originalModelFilePath = FileUtils.saveFile(groundTruthModel, ".ecore");
@@ -56,14 +55,7 @@ public class ModelComparisonController {
             }
             ModelComparisonConfigurationDTO modelComparisonConfigurationDTO = JSONtoDTOMapper.mapToModelComparisonConfigurationDTO(configuration);
        		ModelComparisonService evaluationEngine = new ModelComparisonService(modelComparisonConfigurationDTO);
-            Boolean includeDependencies = true;
-            ArrayList<HashMap<String, String>> models = new ArrayList<HashMap<String, String>>();
-            models.add(new HashMap<String, String>(){{
-				put("original", originalModelFilePath);
-				put("generated", predictedModelFilePath);
-                put("projectName", projectName);
-			}});
-            HashMap<String,JSONObject> results = evaluationEngine.compareModels(models, includeDependencies);
+            HashMap<String,JSONObject> results = evaluationEngine.compareModels(originalModelFilePath, predictedModelFilePath);
             File originalModelFile = new File(originalModelFilePath);
             File predictedModelFile = new File(predictedModelFilePath);
             originalModelFile.delete();

@@ -4,7 +4,7 @@ import json
 yamtl_comparator_url = "http://localhost:8080"
 nlp_comparator_url = "http://localhost:4040"
 class Adapter:
-    def compare_ecore_models_syntactically_and_semantically(groundTruthModelEcore, predictedModelEcore, projectName, config):
+    def compare_ecore_models_syntactically_and_semantically(groundTruthModelEcore, predictedModelEcore, config):
         model_level_json = {}
         class_level_json = {}
 
@@ -12,15 +12,15 @@ class Adapter:
         predicted_truth_model_emf = Adapter.get_emfatic_from_ecore(predictedModelEcore)
 
         response_syntactic = Adapter.compare_ecore_models_syntactically(
-            groundTruthModelEcore, predictedModelEcore, projectName, config)
+            groundTruthModelEcore, predictedModelEcore, config)
 
         response_semantic = Adapter.compare_emfatic_models_semantically(ground_truth_model_emf, predicted_truth_model_emf)
         
         class_level_json = response_syntactic["classLevelJson"]
-        model_level_json[projectName] = {**response_syntactic["modelLevelJson"][projectName], **response_semantic, **response_syntactic["time"]}
+        model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
         return model_level_json, class_level_json
             
-    def compare_emfatic_models_syntactically_and_semantically(ground_truth_model_emf, predicted_truth_model_emf, projectName, config):
+    def compare_emfatic_models_syntactically_and_semantically(ground_truth_model_emf, predicted_truth_model_emf, config):
         model_level_json = {}
         class_level_json = {}
 
@@ -28,12 +28,12 @@ class Adapter:
         predictedModelEcore = Adapter.get_ecore_model_from_emfatic(predicted_truth_model_emf)
 
         response_syntactic = Adapter.compare_ecore_models_syntactically(
-            groundTruthModelEcore, predictedModelEcore, projectName, config)
+            groundTruthModelEcore, predictedModelEcore, config)
 
         response_semantic = Adapter.compare_emfatic_models_semantically(ground_truth_model_emf, predicted_truth_model_emf)
         
         class_level_json = response_syntactic["classLevelJson"]
-        model_level_json[projectName] = {**response_syntactic["modelLevelJson"][projectName], **response_semantic, **response_syntactic["time"]}
+        model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
         return model_level_json, class_level_json
 
     def compare_models_syntactically_and_semantically(
@@ -41,17 +41,16 @@ class Adapter:
         predicted_model_ecore,
         ground_truth_model_emf, 
         predicted_truth_model_emf, 
-        projectName, 
         config
     ):
         model_level_json = {}
         class_level_json = {}
 
-        response_syntactic = Adapter.compare_ecore_models_syntactically(ground_truth_model_ecore, predicted_model_ecore, projectName, config)
+        response_syntactic = Adapter.compare_ecore_models_syntactically(ground_truth_model_ecore, predicted_model_ecore, config)
         response_semantic = Adapter.compare_emfatic_models_semantically(ground_truth_model_emf, predicted_truth_model_emf)
         
         class_level_json = response_syntactic["classLevelJson"]
-        model_level_json[projectName] = {**response_syntactic["modelLevelJson"][projectName], **response_semantic, **response_syntactic["time"]}
+        model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
         return model_level_json, class_level_json
     
     def compare_emfatic_models_semantically(ground_truth_emfatic, predicted_emfatic):
@@ -69,7 +68,7 @@ class Adapter:
             nlp_compare_result = json.loads(nlp_compare_result)
             return nlp_compare_result
     
-    def compare_ecore_models_syntactically(ground_truth_model, predicted_model, projectName, config):
+    def compare_ecore_models_syntactically(ground_truth_model, predicted_model, config):
         with open(ground_truth_model, 'rb') as groundTruthModel, open(predicted_model, 'rb') as predictedModel, open(config, 'rb') as config_file:
             yamtl_comparator_endpoint = f'{yamtl_comparator_url}/compare'
             response = requests.post(
@@ -79,9 +78,6 @@ class Adapter:
                     "predictedModel": predictedModel,
                     "config": config_file
                 },
-                data={
-                    "projectName": projectName
-                }
             )
             result = response.json()
         return result

@@ -29,8 +29,6 @@ elif model_type == "Emf":
             "Input EMFatic Predicted Model"
         )
     
-
-project_name = st.text_input("Input Name of Project")
 st.write("Configuration Panel")
 with st.container(height=400, border=True):    
     config_col1, config_col2, config_col3, config_col4, config_col5 = st.columns(5)
@@ -118,16 +116,15 @@ if st.button("Compare", type="primary"):
         fr.write(str(predicted_model))  
         
     if model_type == "Ecore":
-        model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_truth_path, predicted_path, project_name, config_file_path)
+        model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
     elif model_type == "Emf":
-        model_level_json, class_level_json = Adapter.compare_emfatic_models_syntactically_and_semantically(ground_truth_path, predicted_path, project_name, config_file_path)
+        model_level_json, class_level_json = Adapter.compare_emfatic_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
     
     with open("model_level_json.json", 'w') as fr:
         fr.write(json.dumps(model_level_json, indent=4)) 
     with open("class_level_json.json", 'w') as fr:
         fr.write(json.dumps(class_level_json, indent=4)) 
 
-    df = pd.read_json("model_level_json.json")
     try:
         bar_df = pd.DataFrame({'x': [
         "precision", 
@@ -137,12 +134,12 @@ if st.button("Compare", type="primary"):
         # "cosine_similarity_word2vec",
         #  "ragas_answer_similarity"
         ], 'y': [
-            df.T["aggregate_model_precision"][0], 
-            df.T["aggregate_model_recall"][0], 
-            df.T["aggregate_model_f1_score"][0],
-            df.T["cosine_similarity_SMOTE"][0],
-            # df.T["cosine_similarity_word2vec"][0],
-            # df.T["ragas_answer_similarity"][0] if df.T["ragas_answer_similarity"][0] > 0 else 0 
+            model_level_json["aggregate_model_precision"], 
+            model_level_json["aggregate_model_recall"], 
+            model_level_json["aggregate_model_f1_score"],
+            model_level_json["cosine_similarity_SMOTE"],
+            # model_level_json["cosine_similarity_word2vec"],
+            # model_level_json["ragas_answer_similarity"] if model_level_json["ragas_answer_similarity"] > 0 else 0 
         ]
         })
         fig = px.bar(bar_df, x='x', y='y', title='Model Level Metrics')
@@ -154,9 +151,9 @@ if st.button("Compare", type="primary"):
 
     try:
         pie_df = pd.DataFrame({'element': ["Correctly Identified", "Only in Model 2", "Only in Model 1"], 'values': [
-            df.T["classes_tp"][0],
-            df.T["classes_fp"][0],
-            df.T["classes_fn"][0]
+            model_level_json["classes_tp"],
+            model_level_json["classes_fp"],
+            model_level_json["classes_fn"]
         ]})
         pie = px.pie(pie_df, values='values', names='element', title='Classes')
         pie.update_traces(textposition='inside', textinfo='value', marker=dict(colors=colors))
@@ -166,9 +163,9 @@ if st.button("Compare", type="primary"):
 
     try:
         pie_df = pd.DataFrame({'element': ["Correctly Identified", "Only in Model 2", "Only in Model 1"], 'values': [
-            df.T["attributes_tp"][0],
-            df.T["attributes_fp"][0],
-            df.T["attributes_fn"][0]
+            model_level_json["attributes_tp"],
+            model_level_json["attributes_fp"],
+            model_level_json["attributes_fn"]
         ]})
         pie = px.pie(pie_df, values='values', names='element', title='Attributes')
         pie.update_traces(textposition='inside', textinfo='value', marker=dict(colors=colors))
@@ -178,9 +175,9 @@ if st.button("Compare", type="primary"):
 
     try:
         pie_df = pd.DataFrame({'element': ["Correctly Identified", "Only in Model 2", "Only in Model 1"], 'values': [
-            df.T["operations_tp"][0],
-            df.T["operations_fp"][0],
-            df.T["operations_fn"][0]
+            model_level_json["operations_tp"],
+            model_level_json["operations_fp"],
+            model_level_json["operations_fn"]
         ]})
         pie = px.pie(pie_df, values='values', names='element', title='Operations')
         pie.update_traces(textposition='inside', textinfo='value', marker=dict(colors=colors))
@@ -191,9 +188,9 @@ if st.button("Compare", type="primary"):
 
     try:
         pie_df = pd.DataFrame({'element': ["Correctly Identified", "Only in Model 2", "Only in Model 1"], 'values': [
-            df.T["references_tp"][0],
-            df.T["references_fp"][0],
-            df.T["references_fn"][0]
+            model_level_json["references_tp"],
+            model_level_json["references_fp"],
+            model_level_json["references_fn"]
         ]})
         pie = px.pie(pie_df, values='values', names='element', title='References')
         pie.update_traces(textposition='inside', textinfo='value', marker=dict(colors=colors))
@@ -203,9 +200,9 @@ if st.button("Compare", type="primary"):
 
     try:
         pie_df = pd.DataFrame({'element': ["Correctly Identified", "Only in Model 2", "Only in Model 1"], 'values': [
-            df.T["superTypes_tp"][0],
-            df.T["superTypes_fp"][0],
-            df.T["superTypes_fn"][0]
+            model_level_json["superTypes_tp"],
+            model_level_json["superTypes_fp"],
+            model_level_json["superTypes_fn"]
         ]})
         pie = px.pie(pie_df, values='values', names='element', title=f'Supertypes')
         pie.update_traces(textposition='inside', textinfo='value', marker=dict(colors=colors))
@@ -247,21 +244,20 @@ if st.button("Compare", type="primary"):
             operations_tp = []
             operations_fp = []
             operations_fn = []
-            for class_obj in class_level_json[i]:
-                names1.append(class_level_json[i][class_obj]["class_name_model1"])
-                names2.append(class_level_json[i][class_obj]["class_name_model2"])
-                attributes_tp.append(class_level_json[i][class_obj]["attributes_tp"])
-                attributes_fp.append(class_level_json[i][class_obj]["attributes_fp"])
-                attributes_fn.append(class_level_json[i][class_obj]["attributes_fn"])
-                references_tp.append(class_level_json[i][class_obj]["references_tp"])
-                references_fp.append(class_level_json[i][class_obj]["references_fp"])
-                references_fn.append(class_level_json[i][class_obj]["references_fn"])
-                operations_tp.append(class_level_json[i][class_obj]["operations_tp"])
-                operations_fp.append(class_level_json[i][class_obj]["operations_fp"])
-                operations_fn.append(class_level_json[i][class_obj]["operations_fn"])
-                superTypes_tp.append(class_level_json[i][class_obj]["superTypes_tp"])
-                superTypes_fp.append(class_level_json[i][class_obj]["superTypes_fp"])
-                superTypes_fn.append(class_level_json[i][class_obj]["superTypes_fn"])
+            names1.append(class_level_json[i]["class_name_model1"])
+            names2.append(class_level_json[i]["class_name_model2"])
+            attributes_tp.append(class_level_json[i]["attributes_tp"])
+            attributes_fp.append(class_level_json[i]["attributes_fp"])
+            attributes_fn.append(class_level_json[i]["attributes_fn"])
+            references_tp.append(class_level_json[i]["references_tp"])
+            references_fp.append(class_level_json[i]["references_fp"])
+            references_fn.append(class_level_json[i]["references_fn"])
+            operations_tp.append(class_level_json[i]["operations_tp"])
+            operations_fp.append(class_level_json[i]["operations_fp"])
+            operations_fn.append(class_level_json[i]["operations_fn"])
+            superTypes_tp.append(class_level_json[i]["superTypes_tp"])
+            superTypes_fp.append(class_level_json[i]["superTypes_fp"])
+            superTypes_fn.append(class_level_json[i]["superTypes_fn"])
             values.append(names1)
             values.append(names2)
             values.append(attributes_tp)

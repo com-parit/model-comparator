@@ -5,7 +5,11 @@
     "properties": {
         "USE_HASHING": {
             "type": "boolean",
-            "daefault": true
+            "default": true
+        },
+        "INCLUDE_DEPENDENCIES": {
+            "type": "boolean",
+            "default": true
         },
         "HASHING_THRESHOLD": {
             "type": "number",

@@ -234,129 +234,117 @@ public class ModelComparisonService {
 			return modelLevelMetrics;
 		}
 
-	public HashMap<String, JSONObject> compareModels(ArrayList<HashMap<String, String>> models, Boolean includeDependencies) {
+	public HashMap<String, JSONObject> compareModels(String original_model, String generated_model) {
 		long startTime = System.currentTimeMillis();
 
-		// initialize class level analysis object for matched classes
-		HashMap<String, Object> allMatchedClassesMetrics = new HashMap<String, Object>();
-
-		// initialize model level analysis object
-		HashMap<String, Object> modelLevelResultObject = new HashMap<String, Object>();
-
 		// perform class level comparison
-		for(HashMap<String, String> model: models) {
-			String original_model = model.get("original");
-			String generated_model = model.get("generated");
-			HashMap<String, Integer> original_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(original_model);
-			HashMap<String, Integer> generated_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(generated_model);
-			Object[] allClassLiteralsForOriginalModel = ModelElementsFetcher.getAllLiterals(original_model).get("classes");
-			Object[] allClassLiteralsForGeneratedlModel;
-			if (includeDependencies) {
-				allClassLiteralsForGeneratedlModel = ModelElementsFetcher.getAllLiterals(generated_model).get("classes");
-			} else {
-				allClassLiteralsForGeneratedlModel = ModelElementsFetcher.getAllLiterals(generated_model).get("classesWithoutDependencies");
-			}
-
-			ArrayList<EClass> classesModel1 = new ArrayList<EClass>();
-			ArrayList<EClass> classesModel2 = new ArrayList<EClass>();
-			for (Object classObject: allClassLiteralsForOriginalModel) {
-				EClass eclass = (EClass) classObject;
-				classesModel1.add(eclass);
-			}
-			for (Object classObject: allClassLiteralsForGeneratedlModel) {
-				EClass eclass = (EClass) classObject;
-				classesModel2.add(eclass);
-			}
-			VenDiagramDTO<EClass> venDiagramClasses = comparisonService.getVenDiagramForClasses(classesModel1, classesModel2);
-
-			// initialize class level analysis object
-			HashMap<String, HashMap<String, Object>> matchedClassMetrics = new HashMap<String, HashMap<String, Object>>();
-
-			// initialize class level analysis object for original classes not matched
-			ArrayList<HashMap<String, Integer>> allOriginalClassesMetricsNotMatched = new ArrayList<HashMap<String, Integer>>();
-
-			// initialize class level analysis object for predicted classes not matched
-			ArrayList<HashMap<String, Integer>> allPredictedClassesMetricsNotMatched = new ArrayList<HashMap<String, Integer>>();
-
-			for (MatchedElementsDTO<EClass> eclassesMatchedPairs: venDiagramClasses.matched) {
-				EClass erefOriginal = eclassesMatchedPairs.model1;
-				EClass erefPredicted = eclassesMatchedPairs.model2;
-				HashMap<String, Object> classLevelMetrics = getClassLevelMetrics(erefOriginal, erefPredicted);
-				matchedClassMetrics.put(erefOriginal.getName(), classLevelMetrics);
-			}
-
-			for (EClass erefOriginal: venDiagramClasses.onlyInModel1) {
-				HashMap<String, Integer> metricsNotMatched = new HashMap<String, Integer>();
-				if (modelComparisonConfiguration.INCLUDE_CLASS_ATTRIBUTES) {
-					metricsNotMatched.put(Constants.ATTRIBUTES_IDENTIFIER, erefOriginal.getEAttributes().size());
-				}
-				if (modelComparisonConfiguration.INCLUDE_CLASS_REFERENCES) {
-					metricsNotMatched.put(Constants.REFERENCES_IDENTIFIER, erefOriginal.getEReferences().size());
-				}
-				if (modelComparisonConfiguration.INCLUDE_CLASS_OPERATIONS) {
-					metricsNotMatched.put(Constants.OPERATIONS_IDENTIFIER, erefOriginal.getEOperations().size());
-				}
-				if (modelComparisonConfiguration.INCLUDE_CLASS_SUPERTYPES) {
-					metricsNotMatched.put(Constants.SUPERTYPES_IDENTIFIER, erefOriginal.getESuperTypes().size());
-				}
-				allOriginalClassesMetricsNotMatched.add(metricsNotMatched);
-			}
-
-			for (EClass erefPredicted: venDiagramClasses.onlyInModel2) {
-				HashMap<String, Integer> metricsNotMatched = new HashMap<String, Integer>();
-				if (modelComparisonConfiguration.INCLUDE_CLASS_ATTRIBUTES) {
-					metricsNotMatched.put(Constants.ATTRIBUTES_IDENTIFIER, erefPredicted.getEAttributes().size());
-				}
-				if (modelComparisonConfiguration.INCLUDE_CLASS_REFERENCES) {
-					metricsNotMatched.put(Constants.REFERENCES_IDENTIFIER, erefPredicted.getEReferences().size());
-				}
-				if (modelComparisonConfiguration.INCLUDE_CLASS_OPERATIONS) {
-					metricsNotMatched.put(Constants.OPERATIONS_IDENTIFIER, erefPredicted.getEOperations().size());
-				}
-				if (modelComparisonConfiguration.INCLUDE_CLASS_SUPERTYPES) {
-					metricsNotMatched.put(Constants.SUPERTYPES_IDENTIFIER, erefPredicted.getESuperTypes().size());
-				}
-				allPredictedClassesMetricsNotMatched.add(metricsNotMatched);				
-			}
-
-			// compute confusion matrix for enumerations
-			ArrayList<EEnum> enumsModel1 = new ArrayList<EEnum>();
-			ArrayList<EEnum> enumsModel2 = new ArrayList<EEnum>();
-			for (Object enumObject: ModelElementsFetcher.getAllLiterals(original_model).get("enumerations")) {
-				EEnum eenum = (EEnum) enumObject;
-				enumsModel1.add(eenum);
-			}
-			for (Object enumObject: ModelElementsFetcher.getAllLiterals(generated_model).get("enumerations")) {
-				EEnum eenum = (EEnum) enumObject;
-				enumsModel2.add(eenum);
-			}
-			VenDiagramDTO<EEnum> enumerationResultObject = comparisonService.getVenDiagramForEnumerations(enumsModel1, enumsModel2);
-			HashMap<String, Integer> enumerationConfusionMatrix = new HashMap<String, Integer>();
-			enumerationConfusionMatrix.put("tp", enumerationResultObject.matched.size());
-			enumerationConfusionMatrix.put("fn", enumerationResultObject.onlyInModel1.size());
-			enumerationConfusionMatrix.put("fp", enumerationResultObject.onlyInModel2.size());
-			Integer total_enumerations_model1 = original_literal_counts.get("enumerations");
-			Integer total_enumerations_model2 = generated_literal_counts.get("enumerations");
-
-			// Create model level metrics object informed from class level analysis
-			System.out.println("Generating Model Level Metrics");
-			HashMap<String, Object> modelLevelMetrics = getModelLevelMetricsFromClassLevelMetrics(
-				matchedClassMetrics, 
-				allOriginalClassesMetricsNotMatched,
-				allPredictedClassesMetricsNotMatched,
-				enumerationConfusionMatrix,
-				total_enumerations_model1,
-				total_enumerations_model2
-			);
-			modelLevelMetrics.put("model1_identifier", original_model);
-			modelLevelMetrics.put("model2_identifier", generated_model);
-			modelLevelResultObject.put(model.get("projectName"), modelLevelMetrics);
-			allMatchedClassesMetrics.put(model.get("projectName"), matchedClassMetrics);
+		HashMap<String, Integer> original_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(original_model);
+		HashMap<String, Integer> generated_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(generated_model);
+		Object[] allClassLiteralsForOriginalModel = ModelElementsFetcher.getAllLiterals(original_model).get("classes");
+		Object[] allClassLiteralsForGeneratedlModel;
+		if (modelComparisonConfiguration.INCLUDE_DEPENDENCIES) {
+			allClassLiteralsForGeneratedlModel = ModelElementsFetcher.getAllLiterals(generated_model).get("classes");
+		} else {
+			allClassLiteralsForGeneratedlModel = ModelElementsFetcher.getAllLiterals(generated_model).get("classesWithoutDependencies");
 		}
 
+		ArrayList<EClass> classesModel1 = new ArrayList<EClass>();
+		ArrayList<EClass> classesModel2 = new ArrayList<EClass>();
+		for (Object classObject: allClassLiteralsForOriginalModel) {
+			EClass eclass = (EClass) classObject;
+			classesModel1.add(eclass);
+		}
+		for (Object classObject: allClassLiteralsForGeneratedlModel) {
+			EClass eclass = (EClass) classObject;
+			classesModel2.add(eclass);
+		}
+		VenDiagramDTO<EClass> venDiagramClasses = comparisonService.getVenDiagramForClasses(classesModel1, classesModel2);
+
+		// initialize class level analysis object
+		HashMap<String, HashMap<String, Object>> matchedClassMetrics = new HashMap<String, HashMap<String, Object>>();
+
+		// initialize class level analysis object for original classes not matched
+		ArrayList<HashMap<String, Integer>> allOriginalClassesMetricsNotMatched = new ArrayList<HashMap<String, Integer>>();
+
+		// initialize class level analysis object for predicted classes not matched
+		ArrayList<HashMap<String, Integer>> allPredictedClassesMetricsNotMatched = new ArrayList<HashMap<String, Integer>>();
+
+		for (MatchedElementsDTO<EClass> eclassesMatchedPairs: venDiagramClasses.matched) {
+			EClass erefOriginal = eclassesMatchedPairs.model1;
+			EClass erefPredicted = eclassesMatchedPairs.model2;
+			HashMap<String, Object> classLevelMetrics = getClassLevelMetrics(erefOriginal, erefPredicted);
+			matchedClassMetrics.put(erefOriginal.getName(), classLevelMetrics);
+		}
+
+		for (EClass erefOriginal: venDiagramClasses.onlyInModel1) {
+			HashMap<String, Integer> metricsNotMatched = new HashMap<String, Integer>();
+			if (modelComparisonConfiguration.INCLUDE_CLASS_ATTRIBUTES) {
+				metricsNotMatched.put(Constants.ATTRIBUTES_IDENTIFIER, erefOriginal.getEAttributes().size());
+			}
+			if (modelComparisonConfiguration.INCLUDE_CLASS_REFERENCES) {
+				metricsNotMatched.put(Constants.REFERENCES_IDENTIFIER, erefOriginal.getEReferences().size());
+			}
+			if (modelComparisonConfiguration.INCLUDE_CLASS_OPERATIONS) {
+				metricsNotMatched.put(Constants.OPERATIONS_IDENTIFIER, erefOriginal.getEOperations().size());
+			}
+			if (modelComparisonConfiguration.INCLUDE_CLASS_SUPERTYPES) {
+				metricsNotMatched.put(Constants.SUPERTYPES_IDENTIFIER, erefOriginal.getESuperTypes().size());
+			}
+			allOriginalClassesMetricsNotMatched.add(metricsNotMatched);
+		}
+
+		for (EClass erefPredicted: venDiagramClasses.onlyInModel2) {
+			HashMap<String, Integer> metricsNotMatched = new HashMap<String, Integer>();
+			if (modelComparisonConfiguration.INCLUDE_CLASS_ATTRIBUTES) {
+				metricsNotMatched.put(Constants.ATTRIBUTES_IDENTIFIER, erefPredicted.getEAttributes().size());
+			}
+			if (modelComparisonConfiguration.INCLUDE_CLASS_REFERENCES) {
+				metricsNotMatched.put(Constants.REFERENCES_IDENTIFIER, erefPredicted.getEReferences().size());
+			}
+			if (modelComparisonConfiguration.INCLUDE_CLASS_OPERATIONS) {
+				metricsNotMatched.put(Constants.OPERATIONS_IDENTIFIER, erefPredicted.getEOperations().size());
+			}
+			if (modelComparisonConfiguration.INCLUDE_CLASS_SUPERTYPES) {
+				metricsNotMatched.put(Constants.SUPERTYPES_IDENTIFIER, erefPredicted.getESuperTypes().size());
+			}
+			allPredictedClassesMetricsNotMatched.add(metricsNotMatched);				
+		}
+
+		// compute confusion matrix for enumerations
+		ArrayList<EEnum> enumsModel1 = new ArrayList<EEnum>();
+		ArrayList<EEnum> enumsModel2 = new ArrayList<EEnum>();
+		for (Object enumObject: ModelElementsFetcher.getAllLiterals(original_model).get("enumerations")) {
+			EEnum eenum = (EEnum) enumObject;
+			enumsModel1.add(eenum);
+		}
+		for (Object enumObject: ModelElementsFetcher.getAllLiterals(generated_model).get("enumerations")) {
+			EEnum eenum = (EEnum) enumObject;
+			enumsModel2.add(eenum);
+		}
+		VenDiagramDTO<EEnum> enumerationResultObject = comparisonService.getVenDiagramForEnumerations(enumsModel1, enumsModel2);
+		HashMap<String, Integer> enumerationConfusionMatrix = new HashMap<String, Integer>();
+		enumerationConfusionMatrix.put("tp", enumerationResultObject.matched.size());
+		enumerationConfusionMatrix.put("fn", enumerationResultObject.onlyInModel1.size());
+		enumerationConfusionMatrix.put("fp", enumerationResultObject.onlyInModel2.size());
+		Integer total_enumerations_model1 = original_literal_counts.get("enumerations");
+		Integer total_enumerations_model2 = generated_literal_counts.get("enumerations");
+
+		// Create model level metrics object informed from class level analysis
+		System.out.println("Generating Model Level Metrics");
+		HashMap<String, Object> modelLevelMetrics = getModelLevelMetricsFromClassLevelMetrics(
+			matchedClassMetrics, 
+			allOriginalClassesMetricsNotMatched,
+			allPredictedClassesMetricsNotMatched,
+			enumerationConfusionMatrix,
+			total_enumerations_model1,
+			total_enumerations_model2
+		);
+		modelLevelMetrics.put("model1_identifier", original_model);
+		modelLevelMetrics.put("model2_identifier", generated_model);
+
 		System.out.println("Generating Final JSON");
-		JSONObject jsonResultsClass = new JSONObject(allMatchedClassesMetrics);
-		JSONObject jsonResultsModel = new JSONObject(modelLevelResultObject);
+		JSONObject jsonResultsClass = new JSONObject(matchedClassMetrics);
+		JSONObject jsonResultsModel = new JSONObject(modelLevelMetrics);
 		HashMap<String, JSONObject> results = new HashMap<String, JSONObject>();
 		results.put("classLevelJson", jsonResultsClass);
 		results.put("modelLevelJson", jsonResultsModel);

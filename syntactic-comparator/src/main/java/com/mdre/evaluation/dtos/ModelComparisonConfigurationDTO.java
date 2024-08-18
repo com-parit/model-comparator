@@ -9,6 +9,7 @@ public class ModelComparisonConfigurationDTO {
 	public Boolean INCLUDE_CLASS_OPERATIONS = true;
 	public Boolean INCLUDE_CLASS_SUPERTYPES = true;
 	public Boolean INCLUDE_CLASS_REFERENCES = true;
+	public Boolean INCLUDE_DEPENDENCIES = true;
 	public HashingConfigurationDTO hashingConfiguration;	
 	public DigestConfigurationDTO digestConfiguration;
 }
