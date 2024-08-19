@@ -39,15 +39,37 @@ import com.mdre.evaluation.dtos.MatchedElementsDTO;
 
 public class HashingService extends AbstractClassComparisonService {
 	private HashingConfigurationDTO hashingConfiguration;
-	private HashMap<String, Double> cache;
+	private static HashMap<String, Long> cache;
 
 	public HashingService(HashingConfigurationDTO configuration) {
 		this.hashingConfiguration = configuration;
-		this.cache = new HashMap<String, Double>();
+		this.cache = new HashMap<String, Long>();
 	}
 
     public static long computeHashCode(String input) {
-		return input.hashCode();
+		String cHash = computeCRC32(input);
+		// check cache
+		if (cache.containsKey(cHash)) {
+			return cache.get(cHash);
+		}
+		long hashValue = input.hashCode();
+		cache.put(cHash, hashValue);
+		return hashValue;
+	}
+
+	public static long hashNgram(String input) {
+		String cHash = computeCRC32(input);
+		// check cache
+		if (cache.containsKey(cHash)) {
+			return cache.get(cHash);
+		}
+        long hashValue=0;
+		for (int i=0; i < input.length() - 1; i++) {
+            String bigram= input.substring(i, i + 2);
+            hashValue += (long) bigram.hashCode();
+        }
+		cache.put(cHash, hashValue);
+		return hashValue;
 	}
 
     public static String computeCRC32(String input) {
@@ -80,13 +102,6 @@ public class HashingService extends AbstractClassComparisonService {
 		String hashA = (String) comparisonObject1;
 		String hashB = (String) comparisonObject2;
 
-		String concatHash = hashA + "-" + hashB;
-		String cHash = computeCRC32(concatHash);
-		// check cache
-		if (this.cache.containsKey(cHash)) {
-			return this.cache.get(cHash);
-		}
-
         if (hashA.length() != hashB.length()) {
             throw new IllegalArgumentException("Hashes must be of the same length");
         }
@@ -110,7 +125,6 @@ public class HashingService extends AbstractClassComparisonService {
         }
 
 		double result = dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-		this.cache.put(cHash, result);
         return result;
 	}
 
@@ -119,7 +133,7 @@ public class HashingService extends AbstractClassComparisonService {
 		EReference eref = (EReference) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_REFERENCES_NAME) {
-	        totalChecksum += computeHashCode(eref.getName() != null ? eref.getName().toLowerCase() : "");
+	        totalChecksum += hashNgram(eref.getName() != null ? eref.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_REFERENCES_LOWER_BOUND) {
 	        totalChecksum += computeHashCode(Integer.toString(eref.getLowerBound()));
@@ -131,7 +145,7 @@ public class HashingService extends AbstractClassComparisonService {
 	        totalChecksum += computeHashCode(Boolean.toString(eref.isContainment()));
 		}
 		if (hashingConfiguration.INCLUDE_REFERENCES_CONTAINING_CLASS) {
-	        totalChecksum += computeHashCode(eref.getEContainingClass().getName() != null ? eref.getEContainingClass().getName().toLowerCase() : "");
+	        totalChecksum += hashNgram(eref.getEContainingClass().getName() != null ? eref.getEContainingClass().getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_REFERENCES_IS_ORDERED) {
 	        totalChecksum += computeHashCode(Boolean.toString(eref.isOrdered()));
@@ -146,7 +160,7 @@ public class HashingService extends AbstractClassComparisonService {
 	public static String getComparableObjectForEClass(Object obj) {
 		EClass eclass = (EClass) obj;
         long totalChecksum = 0;
-        totalChecksum += computeHashCode(eclass.getName() != null ? eclass.getName().toLowerCase() : "");
+        totalChecksum += hashNgram(eclass.getName() != null ? eclass.getName().toLowerCase() : "");
         String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
         return binaryHash;
 	}
@@ -155,7 +169,7 @@ public class HashingService extends AbstractClassComparisonService {
 		EEnum enumeration = (EEnum) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_ENUM_NAME) {
-	        totalChecksum += computeHashCode(enumeration.getName() != null ? enumeration.getName().toLowerCase() : "");
+	        totalChecksum += hashNgram(enumeration.getName() != null ? enumeration.getName().toLowerCase() : "");
 		}
         String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
         return binaryHash;
@@ -165,16 +179,16 @@ public class HashingService extends AbstractClassComparisonService {
 		EAttribute eAtt = (EAttribute) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_NAME) {
-	        totalChecksum += computeHashCode(eAtt.getName() != null ? eAtt.getName().toLowerCase() : "");
+	        totalChecksum += hashNgram(eAtt.getName() != null ? eAtt.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_CONTAINING_CLASS) {
 			if (eAtt.getEContainingClass() != null) {
-				totalChecksum += computeHashCode(eAtt.getEContainingClass().getName() != null ? eAtt.getEContainingClass().getName().toLowerCase() : "");
+				totalChecksum += hashNgram(eAtt.getEContainingClass().getName() != null ? eAtt.getEContainingClass().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_TYPE) {
 			if (eAtt.getEAttributeType() != null) {
-				totalChecksum += computeHashCode(eAtt.getEAttributeType().getName() != null ? eAtt.getEAttributeType().getName().toLowerCase() : "");
+				totalChecksum += hashNgram(eAtt.getEAttributeType().getName() != null ? eAtt.getEAttributeType().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_ATTRIBUTE_LOWER_BOUND) {
@@ -197,11 +211,11 @@ public class HashingService extends AbstractClassComparisonService {
 		EOperation eop = (EOperation) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_OPERATION_NAME) {
-	        totalChecksum += computeHashCode(eop.getName() != null ? eop.getName().toLowerCase() : "");
+	        totalChecksum += hashNgram(eop.getName() != null ? eop.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_OPERATION_CONTAINING_CLASS) {
 			if (eop.getEContainingClass() != null) {
-				totalChecksum += computeHashCode(eop.getEContainingClass().getName() != null ? eop.getEContainingClass().getName().toLowerCase() : "");
+				totalChecksum += hashNgram(eop.getEContainingClass().getName() != null ? eop.getEContainingClass().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_OPERATION_PARAMETERS) {
@@ -218,16 +232,16 @@ public class HashingService extends AbstractClassComparisonService {
 		EParameter eparam = (EParameter) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_PARAMETER_NAME) {
-	        totalChecksum += computeHashCode(eparam.getName() != null ? eparam.getName().toLowerCase() : "");
+	        totalChecksum += hashNgram(eparam.getName() != null ? eparam.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_PARAMETER_TYPE) {
 			if (eparam.getEType() != null) {
-				totalChecksum += computeHashCode(eparam.getEType().getName() != null ? eparam.getEType().getName().toLowerCase() : "");
+				totalChecksum += hashNgram(eparam.getEType().getName() != null ? eparam.getEType().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_PARAMETER_OPERATION_NAME) {
 			if (eparam.getEOperation() != null) {
-				totalChecksum += computeHashCode(eparam.getEOperation().getName() != null ? eparam.getEOperation().getName().toLowerCase() : "");
+				totalChecksum += hashNgram(eparam.getEOperation().getName() != null ? eparam.getEOperation().getName().toLowerCase() : "");
 			}
 		}
         String binaryHash = String.format("%64s", Long.toBinaryString(totalChecksum)).replace(' ', '0');
@@ -238,16 +252,16 @@ public class HashingService extends AbstractClassComparisonService {
 		EParameter eparam = (EParameter) obj;
         long totalChecksum = 0;
 		if (hashingConfiguration.INCLUDE_PARAMETER_NAME) {
-	        totalChecksum += computeHashCode(eparam.getName() != null ? eparam.getName().toLowerCase() : "");
+	        totalChecksum += hashNgram(eparam.getName() != null ? eparam.getName().toLowerCase() : "");
 		}
 		if (hashingConfiguration.INCLUDE_PARAMETER_TYPE) {
 			if (eparam.getEType() != null) {
-				totalChecksum += computeHashCode(eparam.getEType().getName() != null ? eparam.getEType().getName().toLowerCase() : "");
+				totalChecksum += hashNgram(eparam.getEType().getName() != null ? eparam.getEType().getName().toLowerCase() : "");
 			}
 		}
 		if (hashingConfiguration.INCLUDE_PARAMETER_OPERATION_NAME) {
 			if (eparam.getEOperation() != null) {
-				totalChecksum += computeHashCode(eparam.getEOperation().getName() != null ? eparam.getEOperation().getName().toLowerCase() : "");
+				totalChecksum += hashNgram(eparam.getEOperation().getName() != null ? eparam.getEOperation().getName().toLowerCase() : "");
 			}
 		}
 		return totalChecksum;

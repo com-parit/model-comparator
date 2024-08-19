@@ -104,7 +104,6 @@ if st.button("Compare", type="primary"):
     # Save to JSON file
     with open("config_user.json", "w") as outfile:
         json.dump(config, outfile, indent=4)
-    st.write("Comparing...")
     config_file_path = "config_user.json"
     ground_truth_path = "ground_truth_model.ecore" if model_type == "Ecore" else "ground_truth_model.emf"
     predicted_path = "predicted_model.ecore" if model_type == "Ecore" else "predicted_model.emf"
@@ -120,6 +119,7 @@ if st.button("Compare", type="primary"):
     elif model_type == "Emf":
         model_level_json, class_level_json = Adapter.compare_emfatic_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
     
+    st.write(f'Took {model_level_json["time in milliseconds for syntantic comparison"]} for sytnactic comparison')
     with open("model_level_json.json", 'w') as fr:
         fr.write(json.dumps(model_level_json, indent=4)) 
     with open("class_level_json.json", 'w') as fr:
@@ -130,16 +130,16 @@ if st.button("Compare", type="primary"):
         "precision", 
         "recall", 
         "f1_score", 
-        "cosine_similarity_SMOTE", 
+        "semantic_similarity", 
         # "cosine_similarity_word2vec",
-        #  "ragas_answer_similarity"
+         "ragas_similarity"
         ], 'y': [
             model_level_json["aggregate_model_precision"], 
             model_level_json["aggregate_model_recall"], 
             model_level_json["aggregate_model_f1_score"],
-            model_level_json["cosine_similarity_SMOTE"],
+            model_level_json["semantic_similarity"],
             # model_level_json["cosine_similarity_word2vec"],
-            # model_level_json["ragas_answer_similarity"] if model_level_json["ragas_answer_similarity"] > 0 else 0 
+            model_level_json["ragas_similarity"] if model_level_json["ragas_similarity"] > 0 else 0 
         ]
         })
         fig = px.bar(bar_df, x='x', y='y', title='Model Level Metrics')

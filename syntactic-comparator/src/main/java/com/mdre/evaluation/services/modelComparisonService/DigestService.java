@@ -42,10 +42,6 @@ public class DigestService extends AbstractClassComparisonService {
 		this.configuration = configuration;
 	}
 
-	public double computeSimilarity(Object comparisonObject1, Object comparisonObject2) {
-		return 1.0;
-	}
-
 	public HashMap<String, String> getComparableObjectForEReference(Object obj) {
 		EReference eref = (EReference) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();

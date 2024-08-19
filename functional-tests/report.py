@@ -28,10 +28,10 @@ def create_report(directory):
 									expected_f1_score = expected_results["results"]["aggregate_model_f1_score"]
 								with open(f'{os.path.join(sub_sub_folder_name, mutant)}/model_level_json.json', 'r') as fr:
 									actual_results = json.loads(fr.read())
-									SMOTE = actual_results[f'{mutant}']["cosine_similarity_SMOTE"]
-									comparit_precision = actual_results[f'{mutant}']["aggregate_model_precision"]
-									comparit_recall = actual_results[f'{mutant}']["aggregate_model_recall"]
-									comparit_f1_score = actual_results[f'{mutant}']["aggregate_model_f1_score"]
+									SMOTE = actual_results["cosine_similarity_SMOTE"]
+									comparit_precision = actual_results["aggregate_model_precision"]
+									comparit_recall = actual_results["aggregate_model_recall"]
+									comparit_f1_score = actual_results["aggregate_model_f1_score"]
 							except Exception as e:
 								print(e)
 							results_json["model"].append(os.path.join(sub_sub_folder_name, mutant))

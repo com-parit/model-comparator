@@ -262,7 +262,7 @@ public class ModelMutator extends YAMTLModuleGroovy {
     }
 
     public static void run() {
-        File mainDirectory = new File("/media/jawad/secondaryStorage/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/functional-tests/evaluate_travis");
+        File mainDirectory = new File("/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/functional-tests/evaluate_travis");
 
         if (mainDirectory.exists() && mainDirectory.isDirectory()) {
             File[] subdirs = mainDirectory.listFiles();
