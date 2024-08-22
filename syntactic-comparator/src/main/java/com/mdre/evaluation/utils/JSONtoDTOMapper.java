@@ -54,6 +54,12 @@ public class JSONtoDTOMapper {
 			System.out.println("Incorrect configuration provided for INCLUDE_DEPENDENCIES; using default configuration");
 		}
 
+		try {
+			modelComparisonConfigurationDTO.MODEL_LEVEL_COMPARISON_DERIVED_FROM_CLASS_LEVEL_COMPARISON = jsonObject.getBoolean("MODEL_LEVEL_COMPARISON_DERIVED_FROM_CLASS_LEVEL_COMPARISON");
+		} catch (Exception e) {
+			System.out.println("Incorrect configuration provided for MODEL_LEVEL_COMPARISON_DERIVED_FROM_CLASS_LEVEL_COMPARISON; using default configuration");
+		}
+
 		if (modelComparisonConfigurationDTO.USE_HASHING) {
 			try {
 				hashingConfiguration.INCLUDE_CLASS_PARAMETERS = jsonObject.getBoolean("INCLUDE_CLASS_PARAMETERS");

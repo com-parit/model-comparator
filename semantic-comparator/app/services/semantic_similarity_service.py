@@ -12,7 +12,8 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from gensim.models import Word2Vec
 from gensim.test.utils import common_texts
 
-word_vectors = KeyedVectors.load_word2vec_format('archive/GoogleNews-vectors-negative300.bin', binary=True)
+word_vectors = KeyedVectors.load_word2vec_format('glove.6B/glove.6B.100d.txt', no_header=True)
+# word_vectors = KeyedVectors.load_word2vec_format('archive/GoogleNews-vectors-negative300.bin', binary=True)
 
 class SemanticSimilarity:
     def get_tokens(self, text):
@@ -53,7 +54,6 @@ class SemanticSimilarity:
         emf_predicted_s = re.sub(r'@namespace.*?\)', '', emf_predicted_s)
         text1 = self.extract_comments_and_names(emf_original_s)
         text2 = self.extract_comments_and_names(emf_predicted_s)
-        print(text1)
 
         doc1 = self.preprocess_text(text1)
         doc2 = self.preprocess_text(text2)

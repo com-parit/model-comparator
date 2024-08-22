@@ -11,6 +11,10 @@
             "type": "boolean",
             "default": true
         },
+        "MODEL_LEVEL_COMPARISON_DERIVED_FROM_CLASS_LEVEL_COMPARISON": {
+            "type": "boolean",
+            "default": true
+        },
         "HASHING_THRESHOLD": {
             "type": "number",
             "default": 0.5

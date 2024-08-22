@@ -64,17 +64,20 @@ class Main:
         groundTruthModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco.emf"
         predictedModel_emf = "ase2024-dataset/ecommerce-backend/modisco/ecommerce-modisco-flat-without-errors.emf"
         
-        groundTruthModelEcore = "/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/usage/ase2024-dataset/ecommerce-backend/ground-truth/ecommerce2.ecore"
-        predictedModelEcore = "bt_openlink.ecore"
+        groundTruthModelEcore = "bt_openlink.ecore"
+        predictedModelEcore = "mutant_1.ecore"
 
         output_dir = f'output'
         os.makedirs(output_dir, exist_ok=True)
         
-        model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(
-            groundTruthModelEcore, 
-            predictedModelEcore,
-            config
-        )
+        model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(groundTruthModelEcore, predictedModelEcore, config)
+        # result = Adapter.compare_ecore_models_syntactically(
+        #     groundTruthModelEcore, 
+        #     predictedModelEcore,
+        #     config
+        # )
+        # model_level_json = result["modelLevelJson"]
+        # class_level_json = result["classLevelJson"]
         print(json.dumps(model_level_json, indent=4))
         with open(f'{output_dir}/model_level_json.json', 'w', encoding='utf-8') as json_file:
             json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)

@@ -28,7 +28,7 @@ def create_report(directory):
 									expected_f1_score = expected_results["results"]["aggregate_model_f1_score"]
 								with open(f'{os.path.join(sub_sub_folder_name, mutant)}/model_level_json.json', 'r') as fr:
 									actual_results = json.loads(fr.read())
-									SMOTE = actual_results["cosine_similarity_SMOTE"]
+									SMOTE = actual_results["semantic_similarity"]
 									comparit_precision = actual_results["aggregate_model_precision"]
 									comparit_recall = actual_results["aggregate_model_recall"]
 									comparit_f1_score = actual_results["aggregate_model_f1_score"]
