@@ -8,6 +8,14 @@ df = pd.read_csv("evaluate_travis/results.csv")
 st.write("Results")
 st.dataframe(df)
 
+msqe_syntactic = ((df['expected_f1_score'] - df['comparit_f1_score']) ** 2).mean()
+msqe_semantic = ((df['expected_f1_score'] - df['SEMANTIC_SIMILARITY']) ** 2).mean()
+se_syntactic = sum(df['expected_f1_score'] - df['comparit_f1_score'])
+se_semantic = sum(df['expected_f1_score'] - df['SEMANTIC_SIMILARITY'])
+st.write("Aggregate Results")
+results_summary = pd.DataFrame(columns=["Sum of Semantic Error", "Sum of Syntactic Error", "Semantic Similarity MSQE", "Sntactic Similarity MSQE"], data = [[se_semantic, se_syntactic, msqe_semantic, msqe_syntactic]]).T
+st.dataframe(results_summary)
+
 values = df["predicted_model"].values
 option = st.selectbox("Select Model Pair to view individual results", values)
 
@@ -51,6 +59,5 @@ with col2:
     with open(path) as fr:
         predicted_model = fr.read()
     st.text_area("predicted model", predicted_model, height = 500)
-
 
 generate_visualizations(model_level_json, class_level_json)
