@@ -4,7 +4,7 @@ import pandas as pd
 
 def create_report(directory):
 	root_directory = directory
-	results_json = {"model": [], "expected_f1_score": [], "expected_precision": [], "expected_recall": [], "SMOTE": [], "comparit_precision": [], "comparit_recall": [], "comparit_f1_score": [], "SMOTE_ERROR": [], "COMPARIT_ERROR": []}
+	results_json = {"base_model": [], "predicted_model": [], "expected_f1_score": [], "expected_precision": [], "expected_recall": [], "SMOTE": [], "comparit_precision": [], "comparit_recall": [], "comparit_f1_score": [], "SMOTE_ERROR": [], "COMPARIT_ERROR": []}
 	for subfolder_name in os.listdir(root_directory):
 		sub_dir = os.path.join(root_directory, subfolder_name)
 		if os.path.isdir(sub_dir):
@@ -34,7 +34,8 @@ def create_report(directory):
 									comparit_f1_score = actual_results["aggregate_model_f1_score"]
 							except Exception as e:
 								print(e)
-							results_json["model"].append(os.path.join(sub_sub_folder_name, mutant))
+							results_json["base_model"].append(os.path.join(sub_sub_folder_name, "mutant_1"))
+							results_json["predicted_model"].append(os.path.join(sub_sub_folder_name, mutant))
 							results_json["expected_precision"].append(expected_precision)
 							results_json["expected_recall"].append(expected_recall)
 							results_json["expected_f1_score"].append(expected_f1_score)
