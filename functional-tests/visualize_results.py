@@ -10,10 +10,10 @@ st.dataframe(df)
 
 msqe_syntactic = ((df['expected_f1_score'] - df['comparit_f1_score']) ** 2).mean()
 msqe_semantic = ((df['expected_f1_score'] - df['SEMANTIC_SIMILARITY']) ** 2).mean()
-se_syntactic = sum(df['expected_f1_score'] - df['comparit_f1_score'])
-se_semantic = sum(df['expected_f1_score'] - df['SEMANTIC_SIMILARITY'])
+se_syntactic = sum(abs(df['expected_f1_score'] - df['comparit_f1_score']))
+se_semantic = sum(abs(df['expected_f1_score'] - df['SEMANTIC_SIMILARITY']))
 st.write("Aggregate Results")
-results_summary = pd.DataFrame(columns=["Sum of Semantic Error", "Sum of Syntactic Error", "Semantic Similarity MSQE", "Sntactic Similarity MSQE"], data = [[se_semantic, se_syntactic, msqe_semantic, msqe_syntactic]]).T
+results_summary = pd.DataFrame(columns=["Sum of abs Semantic Error", "Sum of abs Syntactic Error", "Semantic Similarity MSQE", "Sntactic Similarity MSQE"], data = [[se_semantic, se_syntactic, msqe_semantic, msqe_syntactic]]).T
 st.dataframe(results_summary)
 
 values = df["predicted_model"].values

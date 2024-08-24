@@ -14,23 +14,23 @@ def generate_visualizations(model_level_json, class_level_json):
         ragas_similarity = model_level_json["ragas_similarity"] if "ragas_similarity" in model_level_json else None
         keys= []
         values = []
-        if aggregate_model_precision:
+        if aggregate_model_precision is not None:
             keys.append("precision")
             values.append(aggregate_model_precision)
 
-        if aggregate_model_recall:
+        if aggregate_model_recall is not None:
             keys.append("recall")
             values.append(aggregate_model_recall)
 
-        if aggregate_model_f1_score:
+        if aggregate_model_f1_score is not None:
             keys.append("f1")
             values.append(aggregate_model_f1_score)
 
-        if semantic_similarity:
+        if semantic_similarity is not None:
             keys.append("semantic_similarity")
             values.append(semantic_similarity)
 
-        if ragas_similarity:
+        if ragas_similarity is not None:
             keys.append("ragas")
             values.append(ragas_similarity)
 
@@ -38,6 +38,7 @@ def generate_visualizations(model_level_json, class_level_json):
         fig = px.bar(bar_df, x='x', y='y', title='Model Level Metrics')
         st.plotly_chart(fig)
     except Exception as e:
+        print("could not generate bar")
         print(e)
 
     colors = ['green', 'grey', 'red']

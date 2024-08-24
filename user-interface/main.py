@@ -149,7 +149,7 @@ if st.button("Compare", type="primary"):
         
     if model_type == "Ecore":
         model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
-    elif model_type == "Emf":
+    elif model_type == "Emfatic":
         model_level_json, class_level_json = Adapter.compare_emfatic_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
     
     st.write(f'Took {model_level_json["time in milliseconds for syntantic comparison"]} for sytnactic comparison')
