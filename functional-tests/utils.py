@@ -3,7 +3,6 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import json
-import plotly.graph_objects as go
 
 
 def get_venn_figure(onlyInModel1, onlyInModel2, intersection):

@@ -17,6 +17,7 @@ repositories {
 	mavenCentral()
 	mavenLocal()
 	maven { url "https://github.com/yamtl/yamtl.github.io/raw/master/mvn-repo/snapshot-repo" }
+	maven {url "https://maven.irisa.fr/artifactory/list/kermeta-public-release/" }
 }
 
 dependencies {
@@ -46,7 +47,11 @@ dependencies {
     implementation 'org.apache.opennlp:opennlp-tools:2.0.0'
 	implementation 'org.everit.json:org.everit.json.schema:1.0.0'
 	implementation "yamtl:yamtl.groovy:1.0.5"
+    implementation files('jars/uml-5.0.0-v20140602-0749.jar')
+    implementation files('jars/common-2.0.0-v20140602-0749.jar')
+    implementation files('jars/types-2.0.0-v20140602-0749.jar')
 	implementation 'org.apache.groovy:groovy-all:4.0.15'
+	implementation 'org.eclipse.emf:edit:2.1.1'
 }
 application {
     mainClass = 'com.mdre.evaluation.App'
@@ -61,5 +66,15 @@ task runModelMutatorJavaWrapper(type: JavaExec) {
 
 task runYamtlModelComparatorJavaWrapper(type: JavaExec) {
     mainClass.set('com.mdre.evaluation.services.modelComparisonService.YamtlModelComparatorWrapper')
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runEMFCompare(type: JavaExec) {
+    mainClass.set('com.mdre.evaluation.services.modelComparisonService.EMFCompareService')
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runUML(type: JavaExec) {
+    mainClass.set('com.mdre.evaluation.services.UML2ToEcoreService')
     classpath = sourceSets.main.runtimeClasspath
 }

@@ -36,6 +36,25 @@ class Adapter:
         model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
         return model_level_json, class_level_json
 
+    def compare_uml2_models_syntactically_and_semantically(ground_truth_model_uml2, predicted_truth_model_uml2, config):
+        model_level_json = {}
+        class_level_json = {}
+
+        groundTruthModelEcore = Adapter.get_ecore_model_from_uml2(ground_truth_model_uml2)
+        predictedModelEcore = Adapter.get_ecore_model_from_uml2(predicted_truth_model_uml2)
+        
+        ground_truth_model_emf = Adapter.get_emfatic_from_ecore(groundTruthModelEcore)
+        predicted_truth_model_emf = Adapter.get_emfatic_from_ecore(predictedModelEcore)
+
+        response_syntactic = Adapter.compare_ecore_models_syntactically(
+            groundTruthModelEcore, predictedModelEcore, config)
+
+        response_semantic = Adapter.compare_emfatic_models_semantically(ground_truth_model_emf, predicted_truth_model_emf)
+        
+        class_level_json = response_syntactic["classLevelJson"]
+        model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
+        return model_level_json, class_level_json
+    
     def compare_models_syntactically_and_semantically(
         ground_truth_model_ecore,
         predicted_model_ecore,
@@ -94,6 +113,19 @@ class Adapter:
         with open(ecore_path, "w") as file:
             file.write(ecoreFromEmfaticResponse.text)  
         return ecore_path
+
+    def get_ecore_model_from_uml2(umlFilePath):
+        comparator_url = f'{yamtl_comparator_url}/uml2Toecore'
+        with open(umlFilePath) as uml2Model:
+            ecoreFromUml2Response = requests.post(
+                comparator_url,
+                files={"uml2Model":uml2Model}
+            )
+
+        ecore_path = umlFilePath.replace(".uml", ".ecore")
+        with open(ecore_path, "w") as file:
+            file.write(ecoreFromUml2Response.text)  
+        return ecore_path
             
     def get_emfatic_from_ecore(ecoreModelFilePath):
         comparator_url = f'{yamtl_comparator_url}/ecore2emfatic'
@@ -106,3 +138,5 @@ class Adapter:
         with open(emf_path, "w") as file:
             file.write(ecoreFromEmfaticResponse.text)
         return emf_path
+if __name__ == "__main__":
+    print(Adapter.get_ecore_model_from_uml2("/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/syntactic-comparator/src/main/resources/sample_model.uml"))

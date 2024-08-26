@@ -436,8 +436,6 @@ public class ModelComparisonService {
 		long startTime = System.currentTimeMillis();
 
 		// perform class level comparison
-		HashMap<String, Integer> original_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(original_model);
-		HashMap<String, Integer> generated_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(predicted_model);
 		Object[] allClassLiteralsForOriginalModel = ModelElementsFetcher.getAllLiterals(original_model).get("classes");
 		Object[] allClassLiteralsForGeneratedlModel;
 		if (modelComparisonConfiguration.INCLUDE_DEPENDENCIES) {
@@ -508,29 +506,32 @@ public class ModelComparisonService {
 			allPredictedClassesMetricsNotMatched.add(metricsNotMatched);				
 		}
 
-		// compute confusion matrix for enumerations
-		ArrayList<EEnum> enumsModel1 = new ArrayList<EEnum>();
-		ArrayList<EEnum> enumsModel2 = new ArrayList<EEnum>();
-		for (Object enumObject: ModelElementsFetcher.getAllLiterals(original_model).get("enumerations")) {
-			EEnum eenum = (EEnum) enumObject;
-			enumsModel1.add(eenum);
-		}
-		for (Object enumObject: ModelElementsFetcher.getAllLiterals(predicted_model).get("enumerations")) {
-			EEnum eenum = (EEnum) enumObject;
-			enumsModel2.add(eenum);
-		}
-		VenDiagramDTO<EEnum> enumerationResultObject = comparisonService.getVenDiagramForEnumerations(enumsModel1, enumsModel2);
-		HashMap<String, Integer> enumerationConfusionMatrix = new HashMap<String, Integer>();
-		enumerationConfusionMatrix.put("tp", enumerationResultObject.matched.size());
-		enumerationConfusionMatrix.put("fn", enumerationResultObject.onlyInModel1.size());
-		enumerationConfusionMatrix.put("fp", enumerationResultObject.onlyInModel2.size());
-		Integer total_enumerations_model1 = original_literal_counts.get("enumerations");
-		Integer total_enumerations_model2 = generated_literal_counts.get("enumerations");
-
-		// Create model level metrics object informed from class level analysis
 		System.out.println("Generating Model Level Metrics");
 		HashMap<String, Object> modelLevelMetrics;
 		if (this.modelComparisonConfiguration.MODEL_LEVEL_COMPARISON_DERIVED_FROM_CLASS_LEVEL_COMPARISON) {
+			// Create model level metrics object informed from class level analysis
+	
+			// compute confusion matrix for enumerations
+			ArrayList<EEnum> enumsModel1 = new ArrayList<EEnum>();
+			ArrayList<EEnum> enumsModel2 = new ArrayList<EEnum>();
+			for (Object enumObject: ModelElementsFetcher.getAllLiterals(original_model).get("enumerations")) {
+				EEnum eenum = (EEnum) enumObject;
+				enumsModel1.add(eenum);
+			}
+			for (Object enumObject: ModelElementsFetcher.getAllLiterals(predicted_model).get("enumerations")) {
+				EEnum eenum = (EEnum) enumObject;
+				enumsModel2.add(eenum);
+			}
+			VenDiagramDTO<EEnum> enumerationResultObject = comparisonService.getVenDiagramForEnumerations(enumsModel1, enumsModel2);
+			HashMap<String, Integer> enumerationConfusionMatrix = new HashMap<String, Integer>();
+			enumerationConfusionMatrix.put("tp", enumerationResultObject.matched.size());
+			enumerationConfusionMatrix.put("fn", enumerationResultObject.onlyInModel1.size());
+			enumerationConfusionMatrix.put("fp", enumerationResultObject.onlyInModel2.size());
+			HashMap<String, Integer> original_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(original_model);
+			HashMap<String, Integer> generated_literal_counts = ModelElementsFetcher.getCountOfAllLiterals(predicted_model);
+			Integer total_enumerations_model1 = original_literal_counts.get("enumerations");
+			Integer total_enumerations_model2 = generated_literal_counts.get("enumerations");
+
 			modelLevelMetrics = getModelLevelMetricsFromClassLevelMetrics(
 				matchedClassMetrics, 
 				allOriginalClassesMetricsNotMatched,

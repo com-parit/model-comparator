@@ -9,7 +9,7 @@ from utils import generate_visualizations
 
 st.title('Comparit')
 
-model_type = st.selectbox("Choose Model Type", ["None", "Ecore", "Emfatic"])
+model_type = st.selectbox("Choose Model Type", ["None", "Ecore", "Emfatic", "UML2"])
 
 if model_type == "Ecore":
     option = st.selectbox(
@@ -59,7 +59,31 @@ elif model_type == "Emfatic":
         predicted_model = st.text_area(
             "Input EMFATIC Predicted Truth Model", value=sample_predicted_model, height = 500
         )
-            
+elif model_type == "UML2":
+    option = st.selectbox(
+        "Sample Model Pairs",
+        ("None", "carAndBottle", "jmotiff"),
+    )
+    sample_ground_truth = "Input EMFATIC Ground Truth Model"
+    sample_predicted_model = "Input EMFATIC Predicted Truth Model"
+    if option != "None":
+        try:
+            sample_ground_truth = CONSTANTS.SAMPLE_EMFATIC_MODEL_PAIRS.value[option][0]
+            sample_predicted_model = CONSTANTS.SAMPLE_EMFATIC_MODEL_PAIRS.value[option][1]
+        except Exception as e:
+            sample_ground_truth = "The selected model could not be loaded please try some other model"
+            sample_predicted_model = "The selected model could not be loaded please try some other model"    
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        ground_truth_model = st.text_area(
+            "Input EMFATIC Ground Truth Model", value=sample_ground_truth, height = 500
+        )
+    with col2:
+        predicted_model = st.text_area(
+            "Input EMFATIC Predicted Truth Model", value=sample_predicted_model, height = 500
+        )    
+                
 st.write("Configuration Panel")
 with st.container(height=400, border=True):    
     config_col1, config_col2, config_col3, config_col4, config_col5 = st.columns(5)
@@ -138,8 +162,17 @@ if st.button("Compare", type="primary"):
     with open("config_user.json", "w") as outfile:
         json.dump(config, outfile, indent=4)
     config_file_path = "config_user.json"
-    ground_truth_path = "ground_truth_model.ecore" if model_type == "Ecore" else "ground_truth_model.emf"
-    predicted_path = "predicted_model.ecore" if model_type == "Ecore" else "predicted_model.emf"
+    ground_truth_path = ""
+    predicted_path = ""
+    if model_type == "Ecore":
+        ground_truth_path = "ground_truth_model.ecore"
+        predicted_path = "predicted_model.ecore"
+    if model_type == "Emfatic":
+        ground_truth_path = "ground_truth_model.emf"
+        predicted_path = "predicted_model.emf"
+    if model_type == "UML2":
+        ground_truth_path = "ground_truth_model.uml"
+        predicted_path = "predicted_model.uml"
     with open(config_file_path, 'w') as fr:
         fr.write(str(config))  
     with open(ground_truth_path, 'w') as fr:
@@ -151,7 +184,9 @@ if st.button("Compare", type="primary"):
         model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
     elif model_type == "Emfatic":
         model_level_json, class_level_json = Adapter.compare_emfatic_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
-    
+    elif model_type == "UML2":
+        model_level_json, class_level_json = Adapter.compare_uml2_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
+            
     st.write(f'Took {model_level_json["time in milliseconds for syntantic comparison"]} for sytnactic comparison')
     with open("model_level_json.json", 'w') as fr:
         fr.write(json.dumps(model_level_json, indent=4)) 
