@@ -62,14 +62,14 @@ elif model_type == "Emfatic":
 elif model_type == "UML2":
     option = st.selectbox(
         "Sample Model Pairs",
-        ("None", "carAndBottle", "jmotiff"),
+        ("None", "sample"),
     )
     sample_ground_truth = "Input EMFATIC Ground Truth Model"
     sample_predicted_model = "Input EMFATIC Predicted Truth Model"
     if option != "None":
         try:
-            sample_ground_truth = CONSTANTS.SAMPLE_EMFATIC_MODEL_PAIRS.value[option][0]
-            sample_predicted_model = CONSTANTS.SAMPLE_EMFATIC_MODEL_PAIRS.value[option][1]
+            sample_ground_truth = CONSTANTS.SAMPLE_UML2_MODEL_PAIRS.value[option][0]
+            sample_predicted_model = CONSTANTS.SAMPLE_UML2_MODEL_PAIRS.value[option][1]
         except Exception as e:
             sample_ground_truth = "The selected model could not be loaded please try some other model"
             sample_predicted_model = "The selected model could not be loaded please try some other model"    

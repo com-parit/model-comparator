@@ -60,3 +60,10 @@ class CONSTANTS(Enum):
 		]
  	} 
     
+    SAMPLE_UML2_MODEL_PAIRS = {
+		"sample": [
+			open('samples/sample_uml_model.uml', 'r').read(),
+			open('samples/sample_uml_model_predicted.uml', 'r').read()
+		]
+ 	} 
+    
