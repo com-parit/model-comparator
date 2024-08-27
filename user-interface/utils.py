@@ -163,3 +163,97 @@ def generate_visualizations(model_level_json, class_level_json):
 
     st.write("Matched Classes Metrics")
     st.dataframe(pd.DataFrame(class_level_json).T)
+    
+def summarize_results_of_bulk_comparison(array_of_model_level_json):
+    results_json = {
+        "base_model": [],
+        "predicted_model": [],
+        "SEMANTIC_SIMILARITY": [],
+        "comparit_precision": [],
+        "comparit_recall": [],
+        "comparit_f1_score": [],
+    }
+ 
+    for model_level_json in array_of_model_level_json:
+        try:
+            results_json["base_model"].append(model_level_json["model1_identifier"])
+        except KeyError as ke:
+            results_json["base_model"].append(model_level_json["model1_identifier"])
+
+        try:
+            results_json["predicted_model"].append(model_level_json["model2_identifier"])
+        except KeyError as ke:
+            results_json["predicted_model"].append(model_level_json["model2_identifier"])
+
+        try:
+            results_json["comparit_precision"].append(model_level_json["aggregate_model_precision"])
+        except KeyError as ke:
+            results_json["comparit_precision"].append(-1)
+
+        try:
+            results_json["comparit_recall"].append(model_level_json["aggregate_model_recall"])
+        except KeyError as ke:
+            results_json["comparit_recall"].append(-1)
+
+        try:
+            results_json["comparit_f1_score"].append(model_level_json["aggregate_model_f1_score"])
+        except KeyError as ke:
+            results_json["comparit_f1_score"].append(-1)
+
+        try:
+            results_json["SEMANTIC_SIMILARITY"].append(model_level_json["semantic_similarity"])
+        except KeyError as ke:
+            results_json["SEMANTIC_SIMILARITY"].append(-1)
+
+    df = pd.DataFrame(results_json)
+    return df
+    
+    df = st.session_state.results_df
+    fig = px.box(df, y=["comparit_f1_score", "comparit_precision", "comparit_recall", "SEMANTIC_SIMILARITY"], points="all")
+    st.plotly_chart(fig)
+
+    values = df["predicted_model"].values
+    option = st.selectbox("Select Model Pair to view individual results", values, index=None)
+    st.write(option)
+    model_level_json = {}
+    class_level_json = {}
+    # with open(f'{option[0:option.rindex("/")]}/model_level_json.json', 'r') as fr:
+    #     model_level_json = json.loads(fr.read())
+    # with open(f'{option[0:option.rindex("/")]}/class_level_json.json', 'r') as fr:
+    #     class_level_json = json.loads(fr.read())
+
+    # col1, col2 = st.columns(2)
+    # with col1:
+    #     base_model = ""
+    #     try:
+    #         path = model_level_json["model1_identifier"]
+    #         with open(path) as fr:
+    #             base_model = fr.read()
+    #     except Exception as e:
+    #         base_model = "Model not found"
+    #     st.text_area("base_model_ecore", base_model, height = 500)
+
+    # with col2:
+    #     path = model_level_json["model2_identifier"]
+    #     with open(path) as fr:
+    #         predicted_model = fr.read()
+    #     st.text_area("predicted model ecore", predicted_model, height = 500)
+
+    # col1, col2 = st.columns(2)
+    # with col1:
+    #     base_model = ""
+    #     try:
+    #         path = model_level_json["model1_identifier"][0:model_level_json["model1_identifier"].rindex(".")] + ".emf"
+    #         with open(path) as fr:
+    #             base_model = fr.read()
+    #     except Exception as e:
+    #         base_model = "Model not found"
+    #     st.text_area("base_model_emfatic", base_model, height = 500)
+
+    # with col2:
+    #     path = model_level_json["model2_identifier"][0:model_level_json["model2_identifier"].rindex(".")] + ".emf"
+    #     with open(path) as fr:
+    #         predicted_model = fr.read()
+    #     st.text_area("predicted model emfatic", predicted_model, height = 500)
+
+    # generate_visualizations(model_level_json, class_level_json)        

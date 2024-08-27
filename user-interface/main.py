@@ -5,12 +5,15 @@ import plotly.graph_objects as go
 import json
 from adapter import Adapter
 from constants import CONSTANTS
-from utils import generate_visualizations
+from utils import generate_visualizations, summarize_results_of_bulk_comparison
 import io
 import zipfile
 import os
-
-# Function to save files to the desired location
+import plotly.express as px
+import plotly.graph_objects as go
+import json
+import plotly.graph_objects as go
+    
 def save_file(file, save_path):
     with open(save_path, 'wb') as f:
         f.write(file.read())
@@ -380,41 +383,71 @@ def interface_for_comparing_uml():
         generate_visualizations(model_level_json, class_level_json)
                 
 def interface_for_bulk_ecore():
+    help = st.toggle("View Instructions")
+
+    if help:
+        folder_structure = '''You are here because you want to compare more than 1 model pairs.
+
+        For this to work; you should upload a zip folder that follows the following directory pattern:
+        . <folder_name (any string)> 
+        | +-- <project_folder_name (any string)> 
+        | | +-- <base> 
+        | | | +-- <model_name>.(ecore/uml/emf) 
+        | | +-- <predicted> 
+        | | | +-- <model_name>.(ecore/uml/emf) 
+        |
+        | +-- <project_folder_name (any string)> 
+        | +-- <base> 
+        | | +-- <model_name>.(ecore/uml/emf) 
+        | +-- <predicted> 
+        | | | +-- <model_name>.(ecore/uml/emf)
+        '''
+        st.markdown(folder_structure)
+
+        with open('sample_zip_folder_for_user.zip', 'rb') as f:
+            st.download_button('Download Sample Zip', f.read(), file_name="sample_zip_folder_for_user.zip", type="primary")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        base_model_type = st.selectbox("Choose Base Model Type", ["ecore", "uml", "emf"])
+    with col2:
+        predicted_model_type = st.selectbox("Choose Predicted Model Type", ["ecore", "uml", "emf"])
     uploaded_files = st.file_uploader(
         "Upload a zip file containing ecore model pairs", accept_multiple_files=True
     )
+    
     pairs_count = 0
     pairs = []
-    for uploaded_zip_folder in uploaded_files:
-        if uploaded_zip_folder is not None:
-            extract_dir = "extracted_files"
+    if uploaded_files is not None:
+        for uploaded_zip_folder in uploaded_files:
+            if uploaded_zip_folder is not None:
+                extract_dir = "extracted_files"
 
-            if not os.path.exists(extract_dir):
-                os.makedirs(extract_dir)
+                if not os.path.exists(extract_dir):
+                    os.makedirs(extract_dir)
 
-            with zipfile.ZipFile(io.BytesIO(uploaded_zip_folder.read()), 'r') as zip_ref:
-                zip_ref.extractall(extract_dir)
+                with zipfile.ZipFile(io.BytesIO(uploaded_zip_folder.read()), 'r') as zip_ref:
+                    zip_ref.extractall(extract_dir)
 
-            st.success('Zip file has been extracted.')
-            for meta_sub_folder in os.listdir(extract_dir):
-                meta_sub_folder_path = os.path.join(extract_dir, meta_sub_folder)
-                for subfolder_name in os.listdir(meta_sub_folder_path):
-                    subfolder_path = os.path.join(meta_sub_folder_path, subfolder_name)
-                    
-                    if os.path.isdir(subfolder_path):
-                        st.write(f'Processing subfolder: {subfolder_name}')
-                        pairs_count += 1
-                        base_folder_path = f'{subfolder_path}/base'
-                        predicted_folder_path = f'{subfolder_path}/predicted'
-                        pair_obj = {"base": [], "predicted": []}
-                        for file_name in os.listdir(base_folder_path):
-                            base_model_path = os.path.join(base_folder_path, file_name)
-                            pair_obj["base"].append(base_model_path)
-                        for file_name in os.listdir(predicted_folder_path):
-                            predicted_model_path = os.path.join(predicted_folder_path, file_name)
-                            pair_obj["predicted"].append(predicted_model_path)
-                        pairs.append(pair_obj)
-            st.success('All subfolders have been processed.')
+                st.success('Zip file has been extracted.')
+                for meta_sub_folder in os.listdir(extract_dir):
+                    meta_sub_folder_path = os.path.join(extract_dir, meta_sub_folder)
+                    for subfolder_name in os.listdir(meta_sub_folder_path):
+                        subfolder_path = os.path.join(meta_sub_folder_path, subfolder_name)
+                        
+                        if os.path.isdir(subfolder_path):
+                            pairs_count += 1
+                            base_folder_path = f'{subfolder_path}/base'
+                            predicted_folder_path = f'{subfolder_path}/predicted'
+                            pair_obj = {"base": [], "predicted": []}
+                            for file_name in os.listdir(base_folder_path):
+                                base_model_path = os.path.join(base_folder_path, file_name)
+                                pair_obj["base"].append(base_model_path)
+                            for file_name in os.listdir(predicted_folder_path):
+                                predicted_model_path = os.path.join(predicted_folder_path, file_name)
+                                pair_obj["predicted"].append(predicted_model_path)
+                            pairs.append(pair_obj)
+                st.success('All subfolders have been processed.')
 
     st.write("Configuration Panel")
     with st.container(height=400, border=True):    
@@ -457,6 +490,7 @@ def interface_for_bulk_ecore():
             INCLUDE_PARAMETER_NAME = st.selectbox("Include Parameter Name", ["True", "False"]) == "True"
             INCLUDE_PARAMETER_TYPE = st.selectbox("Include Parameter Type", ["True", "False"]) == "True"
             INCLUDE_PARAMETER_OPERATION_NAME = st.selectbox("Include Parameter Operation Name", ["True", "False"]) == "True"
+    array_of_model_level_json = []
     if st.button("Compare", type="primary"):
         config = {
             "USE_HASHING": USE_HASHING,
@@ -496,15 +530,147 @@ def interface_for_bulk_ecore():
         for pair in pairs:
             for base_model in pair["base"]:
                 for predicted_model in pair["predicted"]:
-                    st.write(f'processing pair: {base_model} and {predicted_model}')
-        
-model_type = st.selectbox("Choose Comparison Type", ["None", "Ecore", "Emfatic", "UML2", "Bulk Ecore"])
+                    base_model_extension = base_model[base_model.rindex(".") + 1:]
+                    predicted_model_extension = predicted_model[predicted_model.rindex(".") + 1:]
+                    ground_ecore_model = None
+                    predicted_ecore_model = None
+                    if base_model_extension == base_model_type:
+                        ground_ecore_model = base_model
+                    # elif base_model_extension == "emf":
+                    #     ground_ecore_model = Adapter.get_ecore_model_from_emfatic(base_model)
+                    # elif base_model_extension == "uml":
+                    #     ground_ecore_model = Adapter.get_ecore_model_from_uml2(base_model)
+                    if predicted_model_extension == predicted_model_type:
+                        predicted_ecore_model = predicted_model
+                    # elif predicted_model_extension == "emf":
+                    #     predicted_ecore_model = Adapter.get_ecore_model_from_emfatic(predicted_model)
+                    # elif predicted_model_extension == "uml":
+                        # predicted_ecore_model = Adapter.get_ecore_model_from_uml2(predicted_model)
+                    if ground_ecore_model is not None and predicted_ecore_model is not None:
+                        try:
+                            model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_ecore_model, predicted_ecore_model, config_file_path)
+                            model_level_json["model1_identifier"] = base_model # f'{base_model[:base_model.rindex("/")]}'
+                            model_level_json["model2_identifier"] = predicted_model # f'{predicted_model[:predicted_model.rindex("/")]}'
+                                
+                            with open(f'{predicted_model[:predicted_model.rindex("/")]}/model_level_json.json', 'w') as fr:
+                                fr.write(json.dumps(model_level_json, indent=4)) 
+                            with open(f'{predicted_model[:predicted_model.rindex("/")]}/class_level_json.json', 'w') as fr:
+                                fr.write(json.dumps(class_level_json, indent=4)) 
+                            array_of_model_level_json.append(model_level_json)
+                        except Exception as e:
+                            st.write(f'Could not perform comparison for {base_model} with {predicted_model} \n {e}')
+        df = summarize_results_of_bulk_comparison(array_of_model_level_json)
+        df.to_csv("results.csv")
+    
+    col1, col2 = st.columns([0.9, 0.10])
+    new_df = pd.read_csv("results.csv")
+    with col1:
+        fig = px.box(new_df, y=["comparit_f1_score", "comparit_precision", "comparit_recall", "SEMANTIC_SIMILARITY"], points="all")
+        st.plotly_chart(fig)
+    with col2:
+        pass
+    values = new_df["predicted_model"].values
+    option = st.selectbox("Select Model Pair to view individual results", values)
+    st.write(option)
+    model_level_json = {}
+    class_level_json = {}
+    with open(f'{option[:option.rindex("/")]}/model_level_json.json', 'r') as fr:
+        model_level_json = json.loads(fr.read())
+    with open(f'{option[:option.rindex("/")]}/class_level_json.json', 'r') as fr:
+        class_level_json = json.loads(fr.read())
+    col1, col2 = st.columns(2)
+    with col1:
+        base_model = ""
+        try:
+            path = model_level_json["model1_identifier"]
+            with open(path) as fr:
+                base_model = fr.read()
+        except Exception as e:
+            base_model = "Model not found"
+        st.text_area("base_model_ecore", base_model, height = 500)
 
-if model_type == "Ecore":
+    with col2:
+        path = model_level_json["model2_identifier"]
+        with open(path) as fr:
+            predicted_model = fr.read()
+        st.text_area("predicted model ecore", predicted_model, height = 500)
+
+    generate_visualizations(model_level_json, class_level_json)
+
+def interface_for_viewing_evaluation_results():
+    df = pd.read_csv("evaluation_results.csv")
+    st.write("Results")
+    st.dataframe(df)
+
+    msqe_syntactic = ((df['expected_f1_score'] - df['comparit_f1_score']) ** 2).mean()
+    msqe_semantic = ((df['expected_f1_score'] - df['SEMANTIC_SIMILARITY']) ** 2).mean()
+    se_syntactic = sum(abs(df['expected_f1_score'] - df['comparit_f1_score']))
+    se_semantic = sum(abs(df['expected_f1_score'] - df['SEMANTIC_SIMILARITY']))
+    st.write("Aggregate Results")
+    results_summary = pd.DataFrame(columns=["Sum of abs Semantic Error", "Sum of abs Syntactic Error", "Semantic Similarity MSQE", "Sntactic Similarity MSQE"], data = [[se_semantic, se_syntactic, msqe_semantic, msqe_syntactic]]).T
+    st.dataframe(results_summary)
+
+    fig = px.box(df, y=["comparit_f1_score", "comparit_precision", "comparit_recall", "SEMANTIC_SIMILARITY"], points="all")
+    st.plotly_chart(fig)
+
+    fig = px.box(df, y=["expected_f1_score", "expected_precision", "expected_recall"], points="all")
+    st.plotly_chart(fig)
+
+    values = df["predicted_model"].values
+    option = st.selectbox("Select Model Pair to view individual results", values)
+
+    model_level_json = {}
+    class_level_json = {}
+    with open(f'{option}/model_level_json.json', 'r') as fr:
+        model_level_json = json.loads(fr.read())
+    with open(f'{option}/class_level_json.json', 'r') as fr:
+        class_level_json = json.loads(fr.read())
+
+    col1, col2 = st.columns(2)
+    with col1:
+        base_model = ""
+        try:
+            path = option[:len(option)] + "/base_model.ecore"
+            with open(path) as fr:
+                base_model = fr.read()
+        except Exception as e:
+            base_model = "Model not found"
+        st.text_area("base_model_ecore", base_model, height = 500)
+
+    with col2:
+        path = f'{option}/{option[option.rindex("/"):]}.ecore'
+        with open(path) as fr:
+            predicted_model = fr.read()
+        st.text_area("predicted model ecore", predicted_model, height = 500)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        base_model = ""
+        try:
+            path = option[:len(option)] + "/base_model.emf"
+            with open(path) as fr:
+                base_model = fr.read()
+        except Exception as e:
+            base_model = "Model not found"
+        st.text_area("base_model_emfatic", base_model, height = 500)
+
+    with col2:
+        path = f'{option}/{option[option.rindex("/"):]}.emf'
+        with open(path) as fr:
+            predicted_model = fr.read()
+        st.text_area("predicted model emfatic", predicted_model, height = 500)
+
+    generate_visualizations(model_level_json, class_level_json)
+
+user_choice = st.selectbox("What do you want to do?", ["None", "Compare Ecore", "Compare Emfatic", "Compare UML2", "Bulk Comparison", "View Tool Evaluation Results"])
+
+if user_choice == "Compare Ecore":
     interface_for_comparing_ecore()
-elif model_type == "Emfatic":
+elif user_choice == "Compare Emfatic":
     interface_for_comparing_emfatic()
-elif model_type == "UML2":
+elif user_choice == "Compare UML2":
     interface_for_comparing_uml()
-elif model_type == "Bulk Ecore":
+elif user_choice == "Bulk Comparison":
     interface_for_bulk_ecore()    
+elif user_choice == "View Tool Evaluation Results":
+    interface_for_viewing_evaluation_results()
