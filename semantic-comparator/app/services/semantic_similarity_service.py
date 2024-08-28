@@ -11,7 +11,6 @@ from gensim.models import KeyedVectors
 from nltk.tokenize import sent_tokenize, word_tokenize
 from gensim.models import Word2Vec
 from gensim.test.utils import common_texts
-
 word_vectors = KeyedVectors.load_word2vec_format('archive/glove.6B/glove.6B.50d.txt', no_header=True)
 # word_vectors = KeyedVectors.load_word2vec_format('archive/GoogleNews-vectors-negative300.bin', binary=True)
 

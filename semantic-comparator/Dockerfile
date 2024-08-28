@@ -8,7 +8,7 @@ COPY ./requirements.txt /app
 RUN pip install -r requirements.txt
 RUN pip install --upgrade nltk
 RUN pip install gunicorn
-RUN python -m nltk.downloader punkt
+RUN python -c 'import nltk; nltk.download("punkt_tab")'
 
 EXPOSE 9090
 

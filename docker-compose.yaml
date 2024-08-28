@@ -2,17 +2,17 @@ version: '3.8'
 
 services:
   comparit-syntactic:
-    image: comparit-1.0.0
+    image: comparit-syntactic-1.0.0
     ports:
       - "8080:8080"
 
   comparit-semantic:
-    image: comparit-semantic-1.0.1
+    image: comparit-semantic-1.0.0
     ports:
       - "9090:9090"
 
   user-interface:
-    image: comparit-user-interface-1.0.0
+    image: comparit-user-interface:1.0.0
     ports:
       - "8501:8501"
     environment:
