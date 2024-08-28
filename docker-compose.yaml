@@ -1,32 +1,20 @@
 version: '3.8'
 
 services:
-  syntactic-comparator:
-    build:
-      context: ./syntactic-comparator
-      dockerfile: Dockerfile
+  comparit-syntactic:
+    image: comparit-1.0.0
     ports:
       - "8080:8080"
-    volumes:
-      - ./syntactic-comparator:/app
 
-  driver:
-    build:
-      context: ./driver
-      dockerfile: Dockerfile
+  comparit-semantic:
+    image: comparit-semantic-1.0.1
     ports:
-      - "5050:5050"
+      - "9090:9090"
+
+  user-interface:
+    image: comparit-user-interface-1.0.0
+    ports:
+      - "8501:8501"
     environment:
-      - nlp_comparator_url=http://semantic-evaluator:4040
-      - yamtl_comparator_url=http://syntactic-comparator:8080
-    volumes:
-      - ./driver:/driver
-
-  semantic-evaluator:
-    build:
-      context: ./semantic-evaluator
-      dockerfile: Dockerfile
-    ports:
-      - "4040:4040"
-    volumes:
-      - ./semantic-evaluator:/app
+      - COMPARIT_SYNTACTIC_URL=http://comparit-syntactic:8080
+      - COMPARIT_SEMANTIC_URL=http://comparit-semantic:9090

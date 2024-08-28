@@ -19,17 +19,17 @@ public class JsonSchemaValidatorService {
     private final Map<String, Schema> schemas = new HashMap<>();
 
     public JsonSchemaValidatorService() {
-        loadSchema(Constants.CONFIGURATION_SCHEMA_KEY, "src/main/java/com/mdre/evaluation/schemas/configuration.json");
+        loadSchema(Constants.CONFIGURATION_SCHEMA_KEY, Constants.JSON_SCHEMA);
         System.out.println("Schema loaded as " + Constants.CONFIGURATION_SCHEMA_KEY);
     }
 
-    private void loadSchema(String key, String schemaPath) {
-        try (FileReader reader = new FileReader(schemaPath)) {
-            JSONObject rawSchema = new JSONObject(new JSONTokener(reader));
+    private void loadSchema(String key, String schemaString) {
+        try {
+            JSONObject rawSchema = new JSONObject(new JSONTokener(schemaString));
             Schema schema = SchemaLoader.load(rawSchema);
             schemas.put(key, schema);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load JSON schema: " + schemaPath, e);
+            throw new RuntimeException("Failed to load JSON schema: " + schemaString, e);
         }
     }
 
