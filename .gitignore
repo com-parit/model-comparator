@@ -10,5 +10,5 @@ ase2024-dataset/
 semantic-comparator/app/*.bin.*
 semantic-comparator/app/archive
 syntactic-comparator/src/main/java/org
-syntactic-comparator/jars
+syntactic-comparator/output
 docs/provider
