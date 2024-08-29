@@ -11,10 +11,10 @@ services:
     ports:
       - "9090:9090"
 
-  user-interface:
-    image: jawad571/comparit-user-interface:1.0.0
-    ports:
-      - "8501:8501"
-    environment:
-      - COMPARIT_SYNTACTIC_URL=http://comparit-syntactic:8080
-      - COMPARIT_SEMANTIC_URL=http://comparit-semantic:9090
+  # user-interface:
+  #   image: jawad571/comparit-user-interface:1.0.0
+  #   ports:
+  #     - "8501:8501"
+  #   environment:
+  #     - COMPARIT_SYNTACTIC_URL=http://comparit-syntactic:8080
+  #     - COMPARIT_SEMANTIC_URL=http://comparit-semantic:9090

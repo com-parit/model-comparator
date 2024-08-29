@@ -42,7 +42,7 @@ st.title('Comparit')
 def interface_for_comparing_ecore():
     option = st.selectbox(
         "Sample Model Pairs",
-        ("None", "carAndBottle", "jmotiff"),
+        ("None", "sample"),
     )
     sample_ground_truth = "Input Ecore Ground Truth Model"
     sample_predicted_model = "Input Ecore Predicted Truth Model"
@@ -159,7 +159,7 @@ def interface_for_comparing_ecore():
 def interface_for_comparing_emfatic():
     option = st.selectbox(
         "Sample Model Pairs",
-        ("None", "carAndBottle", "jmotiff"),
+        ("None", "sample"),
     )
     sample_ground_truth = "Input EMFATIC Ground Truth Model"
     sample_predicted_model = "Input EMFATIC Predicted Truth Model"
