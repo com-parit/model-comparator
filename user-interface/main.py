@@ -643,7 +643,70 @@ def interface_for_viewing_evaluation_results():
 
     generate_visualizations(model_level_json, class_level_json)
 
-user_choice = st.selectbox("What do you want to do?", ["Choose", "Compare Ecore", "Compare Emfatic", "Compare UML2", "Bulk Comparison", "View Tool Evaluation Results"])
+def interface_for_ecore_to_emfatic():
+    col1, col2, col3 = st.columns([0.45, 0.10, 0.45])
+    emfatic_model = ""
+    with col1:
+        ecore_model = st.text_area("Enter Ecore Model", CONSTANTS.SAMPLE_ECORE_MODEL_SINGLE.value, height = 500)
+    with col2:
+        if st.button("Go"):
+            model_path = f'model_{datetime.now(timezone.utc).timestamp()}.ecore'
+            with open(model_path, 'w') as fr:
+                fr.write(str(ecore_model))
+            emfatic_path = Adapter.get_emfatic_from_ecore(model_path)
+            with open(emfatic_path, 'r') as fr:
+                try:
+                    emfatic_model = fr.read()
+                except Exception as e:
+                    emfatic_model = "failed to convert; it is likely that ecore model is invalid"
+            os.remove(model_path)
+            os.remove(emfatic_path)
+    with col3:
+        st.text_area("Emfatic Model will appear here", emfatic_model, height = 500)
+
+def interface_for_emfatic_to_ecore():
+    col1, col2, col3 = st.columns([0.45, 0.10, 0.45])
+    ecore_model = ""
+    with col1:
+        emfatic_model = st.text_area("Enter Emfatic Model", CONSTANTS.SAMPLE_EMFATIC_MODEL_SINGLE.value ,height = 500)
+    with col2:
+        if st.button("Go"):
+            model_path = f'model_{datetime.now(timezone.utc).timestamp()}.emf'
+            with open(model_path, 'w') as fr:
+                fr.write(str(emfatic_model))
+            ecore_path = Adapter.get_ecore_model_from_emfatic(model_path)
+            with open(ecore_path, 'r') as fr:
+                try:
+                    ecore_model = fr.read()
+                except Exception as e:
+                    ecore_model = "failed to convert; it is likely that ecore model is invalid"
+            os.remove(model_path)
+            os.remove(ecore_path)
+    with col3:
+        st.text_area("Ecore Model will appear here", ecore_model, height = 500)
+
+def interface_for_uml2_to_ecore():
+    col1, col2, col3 = st.columns([0.45, 0.10, 0.45])
+    ecore_model = ""
+    with col1:
+        uml_model = st.text_area("Enter UML Model", CONSTANTS.SAMPLE_UML2_MODEL_SINGLE.value, height = 500)
+    with col2:
+        if st.button("Go"):
+            model_path = f'model_{datetime.now(timezone.utc).timestamp()}.uml'
+            with open(model_path, 'w') as fr:
+                fr.write(str(uml_model))
+            uml2_path = Adapter.get_ecore_model_from_uml2(model_path)
+            with open(uml2_path, 'r') as fr:
+                try:
+                    ecore_model = fr.read()
+                except Exception as e:
+                    ecore_model = "failed to convert; it is likely that ecore model is invalid"
+            os.remove(model_path)
+            os.remove(uml2_path)
+    with col3:
+        st.text_area("Ecore Model will appear here", ecore_model, height = 500)
+
+user_choice = st.selectbox("What do you want to do?", ["Choose", "Compare Ecore", "Compare Emfatic", "Compare UML2", "Bulk Comparison", "Ecore to Emfatic", "Emfatic to Ecore", "Uml2 to Ecore", "View Tool Evaluation Results"])
 
 if user_choice == "Compare Ecore":
     interface_for_comparing_ecore()
@@ -655,3 +718,9 @@ elif user_choice == "Bulk Comparison":
     interface_for_bulk_ecore()    
 elif user_choice == "View Tool Evaluation Results":
     interface_for_viewing_evaluation_results()
+elif user_choice == "Ecore to Emfatic":
+    interface_for_ecore_to_emfatic()
+elif user_choice == "Emfatic to Ecore":
+    interface_for_emfatic_to_ecore()    
+elif user_choice == "Uml2 to Ecore":
+    interface_for_uml2_to_ecore()    

@@ -24,3 +24,7 @@ class CONSTANTS(Enum):
 		]
  	} 
     
+    SAMPLE_ECORE_MODEL_SINGLE = open('samples/sample_ecore_model_base.ecore', 'r').read()
+    SAMPLE_EMFATIC_MODEL_SINGLE = open('samples/sample_ecore_model_base.emf', 'r').read()
+    SAMPLE_UML2_MODEL_SINGLE = open('samples/sample_uml_model_base.uml', 'r').read()
+    
