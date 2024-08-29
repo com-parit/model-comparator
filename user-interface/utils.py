@@ -56,6 +56,7 @@ def get_venn_figure(onlyInModel1, onlyInModel2, intersection):
 def generate_visualizations(model_level_json, class_level_json):
     # Aggregate metrics
     try:
+        st.subheader("Model Level Metrics", divider=True)
         aggregate_model_precision = model_level_json["aggregate_model_precision"] if "aggregate_model_precision" in model_level_json else None
         aggregate_model_recall = model_level_json["aggregate_model_recall"] if "aggregate_model_recall" in model_level_json else None
         aggregate_model_f1_score = model_level_json["aggregate_model_f1_score"] if "aggregate_model_f1_score" in model_level_json else None
@@ -82,9 +83,9 @@ def generate_visualizations(model_level_json, class_level_json):
         if ragas_similarity:
             keys.append("ragas")
             values.append(ragas_similarity)
-
+        
         bar_df = pd.DataFrame({'x': keys, 'y': values})
-        fig = px.bar(bar_df, x='x', y='y', title='Model Level Metrics')
+        fig = px.bar(bar_df, x='x', y='y', title='metrics')
         st.plotly_chart(fig)
     except Exception as e:
         print(e)
@@ -101,7 +102,7 @@ def generate_visualizations(model_level_json, class_level_json):
                 model_level_json["classes_fn"]
             ]})
             if len(pie_df.values) > 0:
-                st.write("Classes")
+                st.subheader("Classes", divider=True)
                 fig = get_venn_figure(model_level_json["classes_fn"], model_level_json["classes_fp"], model_level_json["classes_tp"])
                 st.plotly_chart(fig)
         except Exception as e:
@@ -114,7 +115,7 @@ def generate_visualizations(model_level_json, class_level_json):
                 model_level_json["attributes_fn"]
             ]})
             if len(pie_df.values) > 0:
-                st.write("Attributes")
+                st.subheader("Attributes", divider=True)
                 fig = get_venn_figure(model_level_json["attributes_fn"], model_level_json["attributes_fp"], model_level_json["attributes_tp"])
                 st.plotly_chart(fig)
         except Exception as e:
@@ -128,7 +129,7 @@ def generate_visualizations(model_level_json, class_level_json):
                 model_level_json["operations_fn"]
             ]})
             if len(pie_df.values) > 0:
-                st.write("Operations")
+                st.subheader("Operations", divider=True)
                 fig = get_venn_figure(model_level_json["operations_fn"], model_level_json["operations_fp"], model_level_json["operations_tp"])
                 st.plotly_chart(fig)
         except Exception as e:
@@ -142,7 +143,7 @@ def generate_visualizations(model_level_json, class_level_json):
                 model_level_json["references_fn"]
             ]})
             if len(pie_df.values) > 0:
-                st.write("References")
+                st.subheader("References", divider=True)
                 fig = get_venn_figure(model_level_json["references_fn"], model_level_json["references_fp"], model_level_json["references_tp"])
                 st.plotly_chart(fig)
         except Exception as e:
@@ -155,13 +156,13 @@ def generate_visualizations(model_level_json, class_level_json):
             model_level_json["superTypes_fn"]
         ]})
         if len(pie_df.values) > 0:
-            st.write("Supertypes")
+            st.subheader("Supertypes", divider=True)
             fig = get_venn_figure(model_level_json["superTypes_fn"], model_level_json["superTypes_fp"], model_level_json["superTypes_tp"])
             st.plotly_chart(fig)
     except Exception as e:
         print(e)
 
-    st.write("Matched Classes Metrics")
+    st.subheader("Matched Classes Metrics")
     st.dataframe(pd.DataFrame(class_level_json).T)
     
 def summarize_results_of_bulk_comparison(array_of_model_level_json):

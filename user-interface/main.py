@@ -42,11 +42,11 @@ st.title('Comparit')
 def interface_for_comparing_ecore():
     option = st.selectbox(
         "Sample Model Pairs",
-        ("None", "sample"),
+        ("Choose", "sample"),
     )
     sample_ground_truth = "Input Ecore Ground Truth Model"
     sample_predicted_model = "Input Ecore Predicted Truth Model"
-    if option != "None":
+    if option != "Choose":
         try:
             sample_ground_truth = CONSTANTS.SAMPLE_ECORE_MODEL_PAIRS.value[option][0]
             sample_predicted_model = CONSTANTS.SAMPLE_ECORE_MODEL_PAIRS.value[option][1]
@@ -63,7 +63,7 @@ def interface_for_comparing_ecore():
         predicted_model = st.text_area(
             "Input Ecore Predicted Truth Model", value=sample_predicted_model, height = 500
         )
-    st.write("Configuration Panel")
+    st.subheader("Configuration Panel", divider=True)
     with st.container(height=400, border=True):    
         config_col1, config_col2, config_col3, config_col4, config_col5 = st.columns(5)
 
@@ -159,11 +159,11 @@ def interface_for_comparing_ecore():
 def interface_for_comparing_emfatic():
     option = st.selectbox(
         "Sample Model Pairs",
-        ("None", "sample"),
+        ("Choose", "sample"),
     )
     sample_ground_truth = "Input EMFATIC Ground Truth Model"
     sample_predicted_model = "Input EMFATIC Predicted Truth Model"
-    if option != "None":
+    if option != "Choose":
         try:
             sample_ground_truth = CONSTANTS.SAMPLE_EMFATIC_MODEL_PAIRS.value[option][0]
             sample_predicted_model = CONSTANTS.SAMPLE_EMFATIC_MODEL_PAIRS.value[option][1]
@@ -180,7 +180,7 @@ def interface_for_comparing_emfatic():
         predicted_model = st.text_area(
             "Input EMFATIC Predicted Truth Model", value=sample_predicted_model, height = 500
         )    
-    st.write("Configuration Panel")
+    st.subheader("Configuration Panel", divider=True)
     with st.container(height=400, border=True):    
         config_col1, config_col2, config_col3, config_col4, config_col5 = st.columns(5)
 
@@ -276,11 +276,11 @@ def interface_for_comparing_emfatic():
 def interface_for_comparing_uml():
     option = st.selectbox(
         "Sample Model Pairs",
-        ("None", "sample"),
+        ("Choose", "sample"),
     )
     sample_ground_truth = "Input EMFATIC Ground Truth Model"
     sample_predicted_model = "Input EMFATIC Predicted Truth Model"
-    if option != "None":
+    if option != "Choose":
         try:
             sample_ground_truth = CONSTANTS.SAMPLE_UML2_MODEL_PAIRS.value[option][0]
             sample_predicted_model = CONSTANTS.SAMPLE_UML2_MODEL_PAIRS.value[option][1]
@@ -297,7 +297,7 @@ def interface_for_comparing_uml():
         predicted_model = st.text_area(
             "Input EMFATIC Predicted Truth Model", value=sample_predicted_model, height = 500
         )    
-    st.write("Configuration Panel")
+    st.subheader("Configuration Panel", divider=True)
     with st.container(height=400, border=True):    
         config_col1, config_col2, config_col3, config_col4, config_col5 = st.columns(5)
 
@@ -418,44 +418,11 @@ def interface_for_bulk_ecore():
         base_model_type = st.selectbox("Choose Base Model Type", ["ecore", "uml", "emf"])
     with col2:
         predicted_model_type = st.selectbox("Choose Predicted Model Type", ["ecore", "uml", "emf"])
-    uploaded_files = st.file_uploader(
-        "Upload a zip file containing ecore model pairs", accept_multiple_files=True
+    uploaded_zip_folder = st.file_uploader(
+        "Upload a zip file containing ecore model pairs", accept_multiple_files=False
     )
     
-    pairs_count = 0
-    pairs = []
-    if st.button("Upload"):
-        if uploaded_files is not None:
-            for uploaded_zip_folder in uploaded_files:
-                if uploaded_zip_folder is not None:
-                    extract_dir = f'extracted_files_{datetime.now(timezone.utc).timestamp()}'
-                    st.session_state['bulk_extraction_directory'] = extract_dir
-                    if not os.path.exists(extract_dir):
-                        os.mkdir(extract_dir)
-                    
-                    with zipfile.ZipFile(io.BytesIO(uploaded_zip_folder.read()), 'r') as zip_ref:
-                        zip_ref.extractall(extract_dir)
-
-                    for meta_sub_folder in os.listdir(extract_dir):
-                        meta_sub_folder_path = os.path.join(extract_dir, meta_sub_folder)
-                        for subfolder_name in os.listdir(meta_sub_folder_path):
-                            subfolder_path = os.path.join(meta_sub_folder_path, subfolder_name)
-                            
-                            if os.path.isdir(subfolder_path):
-                                pairs_count += 1
-                                base_folder_path = f'{subfolder_path}/base'
-                                predicted_folder_path = f'{subfolder_path}/predicted'
-                                pair_obj = {"base": [], "predicted": []}
-                                for file_name in os.listdir(base_folder_path):
-                                    base_model_path = os.path.join(base_folder_path, file_name)
-                                    pair_obj["base"].append(base_model_path)
-                                for file_name in os.listdir(predicted_folder_path):
-                                    predicted_model_path = os.path.join(predicted_folder_path, file_name)
-                                    pair_obj["predicted"].append(predicted_model_path)
-                                pairs.append(pair_obj)
-                    st.session_state['model_pairs'] = pairs
-                    st.success('Zip File Processed. Please specify the configuration and then click Compare')     
-    st.write("Configuration Panel")
+    st.subheader("Configuration Panel", divider=True)
     with st.container(height=400, border=True):    
         config_col1, config_col2, config_col3, config_col4, config_col5 = st.columns(5)
 
@@ -497,6 +464,36 @@ def interface_for_bulk_ecore():
             INCLUDE_PARAMETER_TYPE = st.selectbox("Include Parameter Type", ["True", "False"]) == "True"
             INCLUDE_PARAMETER_OPERATION_NAME = st.selectbox("Include Parameter Operation Name", ["True", "False"]) == "True"
     if st.button("Compare", type="primary"):
+        pairs_count = 0
+        pairs = []
+        if uploaded_zip_folder is not None:
+            extract_dir = f'extracted_files_{datetime.now(timezone.utc).timestamp()}'
+            st.session_state['bulk_extraction_directory'] = extract_dir
+            if not os.path.exists(extract_dir):
+                os.mkdir(extract_dir)
+            
+            with zipfile.ZipFile(io.BytesIO(uploaded_zip_folder.read()), 'r') as zip_ref:
+                zip_ref.extractall(extract_dir)
+
+            for meta_sub_folder in os.listdir(extract_dir):
+                meta_sub_folder_path = os.path.join(extract_dir, meta_sub_folder)
+                for subfolder_name in os.listdir(meta_sub_folder_path):
+                    subfolder_path = os.path.join(meta_sub_folder_path, subfolder_name)
+                    
+                    if os.path.isdir(subfolder_path):
+                        pairs_count += 1
+                        base_folder_path = f'{subfolder_path}/base'
+                        predicted_folder_path = f'{subfolder_path}/predicted'
+                        pair_obj = {"base": [], "predicted": []}
+                        for file_name in os.listdir(base_folder_path):
+                            base_model_path = os.path.join(base_folder_path, file_name)
+                            pair_obj["base"].append(base_model_path)
+                        for file_name in os.listdir(predicted_folder_path):
+                            predicted_model_path = os.path.join(predicted_folder_path, file_name)
+                            pair_obj["predicted"].append(predicted_model_path)
+                        pairs.append(pair_obj)
+            st.session_state['model_pairs'] = pairs
+            st.success('Zip File Processed. Performing comparison')
         array_of_model_level_json = []
         config = {
             "USE_HASHING": USE_HASHING,
@@ -561,17 +558,19 @@ def interface_for_bulk_ecore():
         shutil.rmtree(st.session_state["bulk_extraction_directory"])
     if st.session_state['bulk_models_loaded']:
         new_df = st.session_state['bulk_models_df']
+        st.header("Results CSV view", divider=True)
         st.write(new_df)
         col1, col2 = st.columns([0.9, 0.10])
         with col1:
+            st.header("Aggregate Visualizations", divider=True)
             fig = px.box(new_df, y=["comparit_f1_score", "comparit_precision", "comparit_recall", "SEMANTIC_SIMILARITY"], points="all")
             st.plotly_chart(fig)
         with col2:
             pass
         
         values = new_df["predicted_model"].values
+        st.header("Individual Pair Visualizations", divider=True)
         option = st.selectbox("Select Model Pair to view individual results", values)
-        st.write(option)
         if option != None:
             model_level_json = {}
             class_level_json = {}
@@ -644,7 +643,7 @@ def interface_for_viewing_evaluation_results():
 
     generate_visualizations(model_level_json, class_level_json)
 
-user_choice = st.selectbox("What do you want to do?", ["None", "Compare Ecore", "Compare Emfatic", "Compare UML2", "Bulk Comparison", "View Tool Evaluation Results"])
+user_choice = st.selectbox("What do you want to do?", ["Choose", "Compare Ecore", "Compare Emfatic", "Compare UML2", "Bulk Comparison", "View Tool Evaluation Results"])
 
 if user_choice == "Compare Ecore":
     interface_for_comparing_ecore()
