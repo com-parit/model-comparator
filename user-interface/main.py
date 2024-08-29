@@ -13,7 +13,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 import json
 import plotly.graph_objects as go
-    
+from datetime import datetime, timezone
+
 def save_file(file, save_path):
     with open(save_path, 'wb') as f:
         f.write(file.read())
@@ -118,11 +119,11 @@ def interface_for_comparing_ecore():
         }
 
         # Save to JSON file
-        with open("config_user.json", "w") as outfile:
+        config_file_path = f'config_user_{datetime.now(timezone.utc).timestamp()}.json'
+        with open(config_file_path, "w") as outfile:
             json.dump(config, outfile, indent=4)
-        config_file_path = "config_user.json"
-        ground_truth_path = "ground_truth_model.ecore"
-        predicted_path = "predicted_model.ecore"
+        ground_truth_path = f'ground_truth_model{datetime.now(timezone.utc).timestamp()}.ecore'
+        predicted_path = f'predicted_model{datetime.now(timezone.utc).timestamp()}.ecore'
         with open(config_file_path, 'w') as fr:
             fr.write(str(config))  
         with open(ground_truth_path, 'w') as fr:
@@ -133,12 +134,8 @@ def interface_for_comparing_ecore():
         model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
                 
         st.write(f'Took {model_level_json["time in milliseconds for syntantic comparison"]} for sytnactic comparison')
-        with open("model_level_json.json", 'w') as fr:
-            fr.write(json.dumps(model_level_json, indent=4)) 
-        with open("class_level_json.json", 'w') as fr:
-            fr.write(json.dumps(class_level_json, indent=4)) 
-
         generate_visualizations(model_level_json, class_level_json)
+
 
 def interface_for_comparing_emfatic():
     option = st.selectbox(
@@ -239,11 +236,11 @@ def interface_for_comparing_emfatic():
         }
 
         # Save to JSON file
-        with open("config_user.json", "w") as outfile:
+        config_file_path = f'config_user_{datetime.now(timezone.utc).timestamp()}.json'
+        with open(config_file_path, "w") as outfile:
             json.dump(config, outfile, indent=4)
-        config_file_path = "config_user.json"
-        ground_truth_path = "ground_truth_model.emf"
-        predicted_path = "predicted_model.emf"
+        ground_truth_path = f'ground_truth_model{datetime.now(timezone.utc).timestamp()}.emf'
+        predicted_path = f'predicted_model{datetime.now(timezone.utc).timestamp()}.emf'
         with open(config_file_path, 'w') as fr:
             fr.write(str(config))  
         with open(ground_truth_path, 'w') as fr:
@@ -254,12 +251,8 @@ def interface_for_comparing_emfatic():
         model_level_json, class_level_json = Adapter.compare_emfatic_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
                 
         st.write(f'Took {model_level_json["time in milliseconds for syntantic comparison"]} for sytnactic comparison')
-        with open("model_level_json.json", 'w') as fr:
-            fr.write(json.dumps(model_level_json, indent=4)) 
-        with open("class_level_json.json", 'w') as fr:
-            fr.write(json.dumps(class_level_json, indent=4)) 
-
         generate_visualizations(model_level_json, class_level_json)
+
 
 def interface_for_comparing_uml():
     option = st.selectbox(
@@ -360,11 +353,11 @@ def interface_for_comparing_uml():
         }
 
         # Save to JSON file
-        with open("config_user.json", "w") as outfile:
+        config_file_path = f'config_user_{datetime.now(timezone.utc).timestamp()}.json'
+        with open(config_file_path, "w") as outfile:
             json.dump(config, outfile, indent=4)
-        config_file_path = "config_user.json"
-        ground_truth_path = "ground_truth_model.uml"
-        predicted_path = "predicted_model.uml"
+        ground_truth_path = f'ground_truth_model{datetime.now(timezone.utc).timestamp()}.uml'
+        predicted_path = f'predicted_model{datetime.now(timezone.utc).timestamp()}.uml'
         with open(config_file_path, 'w') as fr:
             fr.write(str(config))  
         with open(ground_truth_path, 'w') as fr:
@@ -375,12 +368,8 @@ def interface_for_comparing_uml():
         model_level_json, class_level_json = Adapter.compare_uml2_models_syntactically_and_semantically(ground_truth_path, predicted_path, config_file_path)
                 
         st.write(f'Took {model_level_json["time in milliseconds for syntantic comparison"]} for sytnactic comparison')
-        with open("model_level_json.json", 'w') as fr:
-            fr.write(json.dumps(model_level_json, indent=4)) 
-        with open("class_level_json.json", 'w') as fr:
-            fr.write(json.dumps(class_level_json, indent=4)) 
-
         generate_visualizations(model_level_json, class_level_json)
+
                 
 def interface_for_bulk_ecore():
     help = st.toggle("View Instructions")
@@ -423,8 +412,9 @@ def interface_for_bulk_ecore():
             if uploaded_zip_folder is not None:
                 extract_dir = "extracted_files"
 
-                if not os.path.exists(extract_dir):
-                    os.makedirs(extract_dir)
+                if os.path.exists(extract_dir):
+                    os.remove(extract_dir)
+                os.makedirs(extract_dir)
 
                 with zipfile.ZipFile(io.BytesIO(uploaded_zip_folder.read()), 'r') as zip_ref:
                     zip_ref.extractall(extract_dir)
@@ -524,9 +514,9 @@ def interface_for_bulk_ecore():
         }
 
         # Save to JSON file
-        with open("config_user.json", "w") as outfile:
+        config_file_path = f'config_user_{datetime.now(timezone.utc).timestamp()}.json'
+        with open(config_file_path, "w") as outfile:
             json.dump(config, outfile, indent=4)
-        config_file_path = "config_user.json"
         for pair in pairs:
             for base_model in pair["base"]:
                 for predicted_model in pair["predicted"]:
@@ -536,16 +526,8 @@ def interface_for_bulk_ecore():
                     predicted_ecore_model = None
                     if base_model_extension == base_model_type:
                         ground_ecore_model = base_model
-                    # elif base_model_extension == "emf":
-                    #     ground_ecore_model = Adapter.get_ecore_model_from_emfatic(base_model)
-                    # elif base_model_extension == "uml":
-                    #     ground_ecore_model = Adapter.get_ecore_model_from_uml2(base_model)
                     if predicted_model_extension == predicted_model_type:
                         predicted_ecore_model = predicted_model
-                    # elif predicted_model_extension == "emf":
-                    #     predicted_ecore_model = Adapter.get_ecore_model_from_emfatic(predicted_model)
-                    # elif predicted_model_extension == "uml":
-                        # predicted_ecore_model = Adapter.get_ecore_model_from_uml2(predicted_model)
                     if ground_ecore_model is not None and predicted_ecore_model is not None:
                         try:
                             model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_ecore_model, predicted_ecore_model, config_file_path)
@@ -560,42 +542,40 @@ def interface_for_bulk_ecore():
                         except Exception as e:
                             st.write(f'Could not perform comparison for {base_model} with {predicted_model} \n {e}')
         df = summarize_results_of_bulk_comparison(array_of_model_level_json)
-        df.to_csv("results.csv")
-    
-    col1, col2 = st.columns([0.9, 0.10])
-    new_df = pd.read_csv("results.csv")
-    with col1:
-        fig = px.box(new_df, y=["comparit_f1_score", "comparit_precision", "comparit_recall", "SEMANTIC_SIMILARITY"], points="all")
-        st.plotly_chart(fig)
-    with col2:
-        pass
-    values = new_df["predicted_model"].values
-    option = st.selectbox("Select Model Pair to view individual results", values)
-    st.write(option)
-    model_level_json = {}
-    class_level_json = {}
-    with open(f'{option[:option.rindex("/")]}/model_level_json.json', 'r') as fr:
-        model_level_json = json.loads(fr.read())
-    with open(f'{option[:option.rindex("/")]}/class_level_json.json', 'r') as fr:
-        class_level_json = json.loads(fr.read())
-    col1, col2 = st.columns(2)
-    with col1:
-        base_model = ""
-        try:
-            path = model_level_json["model1_identifier"]
+
+        col1, col2 = st.columns([0.9, 0.10])
+        with col1:
+            fig = px.box(df, y=["comparit_f1_score", "comparit_precision", "comparit_recall", "SEMANTIC_SIMILARITY"], points="all")
+            st.plotly_chart(fig)
+        with col2:
+            pass
+        values = df["predicted_model"].values
+        option = st.selectbox("Select Model Pair to view individual results", values)
+        st.write(option)
+        model_level_json = {}
+        class_level_json = {}
+        with open(f'{option[:option.rindex("/")]}/model_level_json.json', 'r') as fr:
+            model_level_json = json.loads(fr.read())
+        with open(f'{option[:option.rindex("/")]}/class_level_json.json', 'r') as fr:
+            class_level_json = json.loads(fr.read())
+        col1, col2 = st.columns(2)
+        with col1:
+            base_model = ""
+            try:
+                path = model_level_json["model1_identifier"]
+                with open(path) as fr:
+                    base_model = fr.read()
+            except Exception as e:
+                base_model = "Model not found"
+            st.text_area("base_model_ecore", base_model, height = 500)
+
+        with col2:
+            path = model_level_json["model2_identifier"]
             with open(path) as fr:
-                base_model = fr.read()
-        except Exception as e:
-            base_model = "Model not found"
-        st.text_area("base_model_ecore", base_model, height = 500)
-
-    with col2:
-        path = model_level_json["model2_identifier"]
-        with open(path) as fr:
-            predicted_model = fr.read()
-        st.text_area("predicted model ecore", predicted_model, height = 500)
-
-    generate_visualizations(model_level_json, class_level_json)
+                predicted_model = fr.read()
+            st.text_area("predicted model ecore", predicted_model, height = 500)
+            
+        generate_visualizations(model_level_json, class_level_json)
 
 def interface_for_viewing_evaluation_results():
     df = pd.read_csv("evaluation_results.csv")

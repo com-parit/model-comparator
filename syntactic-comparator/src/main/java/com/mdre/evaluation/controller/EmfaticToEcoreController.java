@@ -22,9 +22,10 @@ public class EmfaticToEcoreController {
     String rootProjectPath = "/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/syntactic-comparator/";
     @PostMapping("/emfatic2ecore")
     public String getEcoreFromEmfatic(@RequestParam("emfaticModel") MultipartFile emfaticModel) {
+        String emfaticFilePath = "";
         try {
             EmfaticToEcoreService emf2ecore = new EmfaticToEcoreService();
-            String emfaticFilePath = FileUtils.saveFile(emfaticModel, "");
+            emfaticFilePath = FileUtils.saveFile(emfaticModel, "");
             System.out.println(rootProjectPath);
             System.out.println(emfaticFilePath);
             emf2ecore.run(emfaticFilePath);
@@ -35,6 +36,12 @@ public class EmfaticToEcoreController {
             System.out.println("Generated ecore model");
             return response;
         } catch (Exception e) {
+            try {
+                Files.delete(Paths.get(emfaticFilePath));
+            } catch (Exception fe) {
+                System.out.println(e);
+                System.out.println(fe);
+            }
             return "Could not generate ecore file " + e;
         }
     }

@@ -22,9 +22,10 @@ public class UML2ToEcoreController {
     String rootProjectPath = "/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/syntactic-comparator/";
     @PostMapping("/uml2Toecore")
     public String getEcoreFromUML2(@RequestParam("uml2Model") MultipartFile umlModel) {
+        String umlFilePath = "";
         try {
             UML2ToEcoreService uml2ecore = new UML2ToEcoreService();
-            String umlFilePath = FileUtils.saveFile(umlModel, "");
+            umlFilePath = FileUtils.saveFile(umlModel, "");
             System.out.println(rootProjectPath);
             System.out.println(umlFilePath);
             String ecoreFilePath = uml2ecore.convertToEcore(umlFilePath);
@@ -35,6 +36,12 @@ public class UML2ToEcoreController {
             System.out.println("Generated ecore model");
             return response;
         } catch (Exception e) {
+            try {
+                Files.delete(Paths.get(umlFilePath));
+            } catch (Exception fe) {
+                System.out.println(e);
+                System.out.println(fe);
+            }
             return "Could not generate ecore file " + e;
         }
     }

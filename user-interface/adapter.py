@@ -22,6 +22,11 @@ class Adapter:
         
         class_level_json = response_syntactic["classLevelJson"]
         model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
+        os.remove(groundTruthModelEcore)
+        os.remove(predictedModelEcore)
+        os.remove(ground_truth_model_emf)
+        os.remove(predicted_truth_model_emf)
+        os.remove(config)
         return model_level_json, class_level_json
             
     def compare_emfatic_models_syntactically_and_semantically(ground_truth_model_emf, predicted_truth_model_emf, config):
@@ -38,6 +43,11 @@ class Adapter:
         
         class_level_json = response_syntactic["classLevelJson"]
         model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
+        os.remove(groundTruthModelEcore)
+        os.remove(predictedModelEcore)
+        os.remove(ground_truth_model_emf)
+        os.remove(predicted_truth_model_emf)
+        os.remove(config)
         return model_level_json, class_level_json
 
     def compare_uml2_models_syntactically_and_semantically(ground_truth_model_uml2, predicted_truth_model_uml2, config):
@@ -57,6 +67,13 @@ class Adapter:
         
         class_level_json = response_syntactic["classLevelJson"]
         model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
+        os.remove(groundTruthModelEcore)
+        os.remove(predictedModelEcore)
+        os.remove(ground_truth_model_emf)
+        os.remove(predicted_truth_model_emf)
+        os.remove(ground_truth_model_uml2)
+        os.remove(predicted_truth_model_uml2)
+        os.remove(config)
         return model_level_json, class_level_json
     
     def compare_models_syntactically_and_semantically(

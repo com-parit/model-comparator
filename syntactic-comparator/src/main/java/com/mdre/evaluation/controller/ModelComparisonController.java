@@ -35,10 +35,13 @@ public class ModelComparisonController {
         @RequestParam("predictedModel") MultipartFile predictedModel,
         @RequestParam("config") MultipartFile config
         ) {
+        String originalModelFilePath = "";
+        String predictedModelFilePath = "";
+        String configFilePath = "";
         try {
-            String originalModelFilePath = FileUtils.saveFile(groundTruthModel, ".ecore");
-            String predictedModelFilePath = FileUtils.saveFile(predictedModel, ".ecore");
-            String configFilePath = FileUtils.saveFile(config, "");
+            originalModelFilePath = FileUtils.saveFile(groundTruthModel, ".ecore");
+            predictedModelFilePath = FileUtils.saveFile(predictedModel, ".ecore");
+            configFilePath = FileUtils.saveFile(config, "");
             JSONObject configuration = new JSONObject();
             try (FileReader reader = new FileReader(configFilePath)) {
                 JSONTokener tokener = new JSONTokener(reader);
@@ -58,10 +61,23 @@ public class ModelComparisonController {
             HashMap<String,JSONObject> results = evaluationEngine.compareModels(originalModelFilePath, predictedModelFilePath);
             File originalModelFile = new File(originalModelFilePath);
             File predictedModelFile = new File(predictedModelFilePath);
+            File configFile = new File(configFilePath);
             originalModelFile.delete();
             predictedModelFile.delete();
+            configFile.delete();
             return new JSONObject(results).toString();
         } catch (IOException e) {
+            try {
+                File originalModelFile = new File(originalModelFilePath);
+                File predictedModelFile = new File(predictedModelFilePath);
+                File configFile = new File(configFilePath);
+                originalModelFile.delete();
+                predictedModelFile.delete();
+                configFile.delete();
+            } catch (Exception fe) {
+                System.out.println(e);
+                System.out.println(fe);
+            }
             return "Internal Server Error: " + e.getMessage();
         }
     }
