@@ -8,7 +8,7 @@ load_dotenv()
 comparit_syntactic_url = os.getenv("COMPARIT_SYNTACTIC_URL") if os.getenv("COMPARIT_SYNTACTIC_URL") else "http://localhost:8080"
 comparit_semantic_url = os.getenv("COMPARIT_SEMANTIC_URL") if os.getenv("COMPARIT_SEMANTIC_URL") else "http://localhost:9090"
 class Adapter:
-    def compare_ecore_models_syntactically_and_semantically(groundTruthModelEcore, predictedModelEcore, config):
+    def compare_ecore_models_syntactically_and_semantically(groundTruthModelEcore, predictedModelEcore, config, remove_artifacts = True):
         model_level_json = {}
         class_level_json = {}
 
@@ -22,14 +22,15 @@ class Adapter:
         
         class_level_json = response_syntactic["classLevelJson"]
         model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
-        os.remove(groundTruthModelEcore)
-        os.remove(predictedModelEcore)
-        os.remove(ground_truth_model_emf)
-        os.remove(predicted_truth_model_emf)
-        os.remove(config)
+        if remove_artifacts:
+            os.remove(groundTruthModelEcore)
+            os.remove(predictedModelEcore)
+            os.remove(ground_truth_model_emf)
+            os.remove(predicted_truth_model_emf)
+            os.remove(config)
         return model_level_json, class_level_json
             
-    def compare_emfatic_models_syntactically_and_semantically(ground_truth_model_emf, predicted_truth_model_emf, config):
+    def compare_emfatic_models_syntactically_and_semantically(ground_truth_model_emf, predicted_truth_model_emf, config, remove_artifacts = True):
         model_level_json = {}
         class_level_json = {}
 
@@ -43,14 +44,15 @@ class Adapter:
         
         class_level_json = response_syntactic["classLevelJson"]
         model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
-        os.remove(groundTruthModelEcore)
-        os.remove(predictedModelEcore)
-        os.remove(ground_truth_model_emf)
-        os.remove(predicted_truth_model_emf)
-        os.remove(config)
+        if remove_artifacts:
+            os.remove(groundTruthModelEcore)
+            os.remove(predictedModelEcore)
+            os.remove(ground_truth_model_emf)
+            os.remove(predicted_truth_model_emf)
+            os.remove(config)
         return model_level_json, class_level_json
 
-    def compare_uml2_models_syntactically_and_semantically(ground_truth_model_uml2, predicted_truth_model_uml2, config):
+    def compare_uml2_models_syntactically_and_semantically(ground_truth_model_uml2, predicted_truth_model_uml2, config, remove_artifacts = True):
         model_level_json = {}
         class_level_json = {}
 
@@ -67,13 +69,14 @@ class Adapter:
         
         class_level_json = response_syntactic["classLevelJson"]
         model_level_json = {**response_syntactic["modelLevelJson"], **response_semantic, **response_syntactic["time"]}
-        os.remove(groundTruthModelEcore)
-        os.remove(predictedModelEcore)
-        os.remove(ground_truth_model_emf)
-        os.remove(predicted_truth_model_emf)
-        os.remove(ground_truth_model_uml2)
-        os.remove(predicted_truth_model_uml2)
-        os.remove(config)
+        if remove_artifacts:
+            os.remove(groundTruthModelEcore)
+            os.remove(predictedModelEcore)
+            os.remove(ground_truth_model_emf)
+            os.remove(predicted_truth_model_emf)
+            os.remove(ground_truth_model_uml2)
+            os.remove(predicted_truth_model_uml2)
+            os.remove(config)
         return model_level_json, class_level_json
     
     def compare_models_syntactically_and_semantically(

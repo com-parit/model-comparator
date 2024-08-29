@@ -14,6 +14,25 @@ import plotly.graph_objects as go
 import json
 import plotly.graph_objects as go
 from datetime import datetime, timezone
+import shutil
+
+if 'bulk_extraction_directory' not in st.session_state:
+    st.session_state['bulk_extraction_directory'] = ""
+
+if 'model_level_json_map_bulk' not in st.session_state:
+    st.session_state['model_level_json_map_bulk'] = {}
+
+if 'class_level_json_map_bulk' not in st.session_state:
+    st.session_state['class_level_json_map_bulk'] = {}
+
+if 'model_pairs' not in st.session_state:
+    st.session_state['model_pairs'] = []
+
+if 'bulk_models_loaded' not in st.session_state:
+    st.session_state['bulk_models_loaded'] = False
+
+if 'bulk_models_df' not in st.session_state:
+    st.session_state['bulk_models_df'] = None
 
 def save_file(file, save_path):
     with open(save_path, 'wb') as f:
@@ -370,10 +389,8 @@ def interface_for_comparing_uml():
         st.write(f'Took {model_level_json["time in milliseconds for syntantic comparison"]} for sytnactic comparison')
         generate_visualizations(model_level_json, class_level_json)
 
-                
 def interface_for_bulk_ecore():
     help = st.toggle("View Instructions")
-
     if help:
         folder_structure = '''You are here because you want to compare more than 1 model pairs.
 
@@ -407,38 +424,37 @@ def interface_for_bulk_ecore():
     
     pairs_count = 0
     pairs = []
-    if uploaded_files is not None:
-        for uploaded_zip_folder in uploaded_files:
-            if uploaded_zip_folder is not None:
-                extract_dir = "extracted_files"
+    if st.button("Upload"):
+        if uploaded_files is not None:
+            for uploaded_zip_folder in uploaded_files:
+                if uploaded_zip_folder is not None:
+                    extract_dir = f'extracted_files_{datetime.now(timezone.utc).timestamp()}'
+                    st.session_state['bulk_extraction_directory'] = extract_dir
+                    if not os.path.exists(extract_dir):
+                        os.mkdir(extract_dir)
+                    
+                    with zipfile.ZipFile(io.BytesIO(uploaded_zip_folder.read()), 'r') as zip_ref:
+                        zip_ref.extractall(extract_dir)
 
-                if os.path.exists(extract_dir):
-                    os.remove(extract_dir)
-                os.makedirs(extract_dir)
-
-                with zipfile.ZipFile(io.BytesIO(uploaded_zip_folder.read()), 'r') as zip_ref:
-                    zip_ref.extractall(extract_dir)
-
-                st.success('Zip file has been extracted.')
-                for meta_sub_folder in os.listdir(extract_dir):
-                    meta_sub_folder_path = os.path.join(extract_dir, meta_sub_folder)
-                    for subfolder_name in os.listdir(meta_sub_folder_path):
-                        subfolder_path = os.path.join(meta_sub_folder_path, subfolder_name)
-                        
-                        if os.path.isdir(subfolder_path):
-                            pairs_count += 1
-                            base_folder_path = f'{subfolder_path}/base'
-                            predicted_folder_path = f'{subfolder_path}/predicted'
-                            pair_obj = {"base": [], "predicted": []}
-                            for file_name in os.listdir(base_folder_path):
-                                base_model_path = os.path.join(base_folder_path, file_name)
-                                pair_obj["base"].append(base_model_path)
-                            for file_name in os.listdir(predicted_folder_path):
-                                predicted_model_path = os.path.join(predicted_folder_path, file_name)
-                                pair_obj["predicted"].append(predicted_model_path)
-                            pairs.append(pair_obj)
-                st.success('All subfolders have been processed.')
-
+                    for meta_sub_folder in os.listdir(extract_dir):
+                        meta_sub_folder_path = os.path.join(extract_dir, meta_sub_folder)
+                        for subfolder_name in os.listdir(meta_sub_folder_path):
+                            subfolder_path = os.path.join(meta_sub_folder_path, subfolder_name)
+                            
+                            if os.path.isdir(subfolder_path):
+                                pairs_count += 1
+                                base_folder_path = f'{subfolder_path}/base'
+                                predicted_folder_path = f'{subfolder_path}/predicted'
+                                pair_obj = {"base": [], "predicted": []}
+                                for file_name in os.listdir(base_folder_path):
+                                    base_model_path = os.path.join(base_folder_path, file_name)
+                                    pair_obj["base"].append(base_model_path)
+                                for file_name in os.listdir(predicted_folder_path):
+                                    predicted_model_path = os.path.join(predicted_folder_path, file_name)
+                                    pair_obj["predicted"].append(predicted_model_path)
+                                pairs.append(pair_obj)
+                    st.session_state['model_pairs'] = pairs
+                    st.success('Zip File Processed. Please specify the configuration and then click Compare')     
     st.write("Configuration Panel")
     with st.container(height=400, border=True):    
         config_col1, config_col2, config_col3, config_col4, config_col5 = st.columns(5)
@@ -480,8 +496,8 @@ def interface_for_bulk_ecore():
             INCLUDE_PARAMETER_NAME = st.selectbox("Include Parameter Name", ["True", "False"]) == "True"
             INCLUDE_PARAMETER_TYPE = st.selectbox("Include Parameter Type", ["True", "False"]) == "True"
             INCLUDE_PARAMETER_OPERATION_NAME = st.selectbox("Include Parameter Operation Name", ["True", "False"]) == "True"
-    array_of_model_level_json = []
     if st.button("Compare", type="primary"):
+        array_of_model_level_json = []
         config = {
             "USE_HASHING": USE_HASHING,
             "HASHING_THRESHOLD": float(HASHING_THRESHOLD),
@@ -517,7 +533,7 @@ def interface_for_bulk_ecore():
         config_file_path = f'config_user_{datetime.now(timezone.utc).timestamp()}.json'
         with open(config_file_path, "w") as outfile:
             json.dump(config, outfile, indent=4)
-        for pair in pairs:
+        for pair in st.session_state['model_pairs']:
             for base_model in pair["base"]:
                 for predicted_model in pair["predicted"]:
                     base_model_extension = base_model[base_model.rindex(".") + 1:]
@@ -530,53 +546,39 @@ def interface_for_bulk_ecore():
                         predicted_ecore_model = predicted_model
                     if ground_ecore_model is not None and predicted_ecore_model is not None:
                         try:
-                            model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_ecore_model, predicted_ecore_model, config_file_path)
+                            model_level_json, class_level_json = Adapter.compare_ecore_models_syntactically_and_semantically(ground_ecore_model, predicted_ecore_model, config_file_path, remove_artifacts=False)
                             model_level_json["model1_identifier"] = base_model # f'{base_model[:base_model.rindex("/")]}'
                             model_level_json["model2_identifier"] = predicted_model # f'{predicted_model[:predicted_model.rindex("/")]}'
-                                
-                            with open(f'{predicted_model[:predicted_model.rindex("/")]}/model_level_json.json', 'w') as fr:
-                                fr.write(json.dumps(model_level_json, indent=4)) 
-                            with open(f'{predicted_model[:predicted_model.rindex("/")]}/class_level_json.json', 'w') as fr:
-                                fr.write(json.dumps(class_level_json, indent=4)) 
+                            st.session_state["model_level_json_map_bulk"][f'{predicted_model[:predicted_model.rindex("/")]}/model_level_json.json'] = model_level_json    
+                            st.session_state["class_level_json_map_bulk"][f'{predicted_model[:predicted_model.rindex("/")]}/class_level_json.json'] = class_level_json    
                             array_of_model_level_json.append(model_level_json)
                         except Exception as e:
                             st.write(f'Could not perform comparison for {base_model} with {predicted_model} \n {e}')
         df = summarize_results_of_bulk_comparison(array_of_model_level_json)
-
+        os.remove(config_file_path)
+        st.session_state['bulk_models_df'] = df
+        st.session_state['bulk_models_loaded'] = True
+        shutil.rmtree(st.session_state["bulk_extraction_directory"])
+    if st.session_state['bulk_models_loaded']:
+        new_df = st.session_state['bulk_models_df']
+        st.write(new_df)
         col1, col2 = st.columns([0.9, 0.10])
         with col1:
-            fig = px.box(df, y=["comparit_f1_score", "comparit_precision", "comparit_recall", "SEMANTIC_SIMILARITY"], points="all")
+            fig = px.box(new_df, y=["comparit_f1_score", "comparit_precision", "comparit_recall", "SEMANTIC_SIMILARITY"], points="all")
             st.plotly_chart(fig)
         with col2:
             pass
-        values = df["predicted_model"].values
+        
+        values = new_df["predicted_model"].values
         option = st.selectbox("Select Model Pair to view individual results", values)
         st.write(option)
-        model_level_json = {}
-        class_level_json = {}
-        with open(f'{option[:option.rindex("/")]}/model_level_json.json', 'r') as fr:
-            model_level_json = json.loads(fr.read())
-        with open(f'{option[:option.rindex("/")]}/class_level_json.json', 'r') as fr:
-            class_level_json = json.loads(fr.read())
-        col1, col2 = st.columns(2)
-        with col1:
-            base_model = ""
-            try:
-                path = model_level_json["model1_identifier"]
-                with open(path) as fr:
-                    base_model = fr.read()
-            except Exception as e:
-                base_model = "Model not found"
-            st.text_area("base_model_ecore", base_model, height = 500)
-
-        with col2:
-            path = model_level_json["model2_identifier"]
-            with open(path) as fr:
-                predicted_model = fr.read()
-            st.text_area("predicted model ecore", predicted_model, height = 500)
-            
-        generate_visualizations(model_level_json, class_level_json)
-
+        if option != None:
+            model_level_json = {}
+            class_level_json = {}
+            model_level_json = st.session_state["model_level_json_map_bulk"][f'{option[:option.rindex("/")]}/model_level_json.json']
+            class_level_json = st.session_state["class_level_json_map_bulk"][f'{option[:option.rindex("/")]}/class_level_json.json']                
+            generate_visualizations(model_level_json, class_level_json)
+        
 def interface_for_viewing_evaluation_results():
     df = pd.read_csv("evaluation_results.csv")
     st.write("Results")
