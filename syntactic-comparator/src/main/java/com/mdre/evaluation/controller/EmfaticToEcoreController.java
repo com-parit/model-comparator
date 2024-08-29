@@ -31,6 +31,7 @@ public class EmfaticToEcoreController {
             emf2ecore.run(emfaticFilePath);
             Path path = Paths.get(emfaticFilePath.substring(0, emfaticFilePath.length() - ".emf".length()) + ".ecore");
             String response = Files.readString(path);
+            System.out.println(response);
             Files.delete(path);
             Files.delete(Paths.get(emfaticFilePath));
             System.out.println("Generated ecore model");

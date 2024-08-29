@@ -1,0 +1,4 @@
+{
+	"USE_HASHING": true,
+	"HASHING_THRESHOLD": 0.95
+}

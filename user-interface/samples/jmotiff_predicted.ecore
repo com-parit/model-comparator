@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <ecore:EPackage name="default">
+    <eClassifiers xsi:type="ecore:EClass" name="root">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="datatypes"/>
+  <ecore:EPackage name="java"/>
+  <ecore:EPackage name="awt"/>
+  <ecore:EPackage name="io"/>
+  <ecore:EPackage name="lang"/>
+  <ecore:EPackage name="text"/>
+  <ecore:EPackage name="util"/>
+  <ecore:EPackage name="concurrent"/>
+  <ecore:EPackage name="Map"/>
+  <ecore:EPackage name="net"/>
+  <ecore:EPackage name="seninp"/>
+  <ecore:EPackage name="jmotif"/>
+  <ecore:EPackage name="sax"/>
+  <ecore:EPackage name="net"/>
+  <ecore:EPackage name="seninp"/>
+  <ecore:EPackage name="jmotif"/>
+  <ecore:EPackage name="cbf">
+    <eClassifiers xsi:type="ecore:EClass" name="CBFGenerator"/>
+    <eClassifiers xsi:type="ecore:EClass" name="TestCBFGenerator"/>
+  </ecore:EPackage>
+  <ecore:EPackage name="distance">
+    <eClassifiers xsi:type="ecore:EClass" name="EuclideanDistance">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestEuclideanDistance">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="issues">
+    <eClassifiers xsi:type="ecore:EClass" name="TestIssue11">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="sax">
+    <eClassifiers xsi:type="ecore:EClass" name="SAXCLIConverter"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SAXCLIParameters"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SAXProcessor">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TSProcessor">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestApproxDistance">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestNRStrategy">
+      <eOperations name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestNormalAlphabet">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestSAXException">
+      <eOperations name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestSAXProcessor">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestShingling">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestTSProcessor">
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="mutation"/>
+      <eOperations name="testSeries2String"/>
+      <eOperations name="series2String"/>
+      <eOperations name="testFileLoadExceptions"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="alphabet">
+    <eClassifiers xsi:type="ecore:EClass" name="Alphabet">
+      <eOperations name="getMaxSize"/>
+      <eOperations name="getCuts"/>
+      <eOperations name="getDistanceMatrix"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="NormalAlphabet">
+      <eOperations name="getCuts"/>
+      <eOperations name="getMaxSize"/>
+      <eOperations name="getDistanceMatrix"/>
+      <eOperations name="getCentralCuts"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="bitmap">
+    <eClassifiers xsi:type="ecore:EClass" name="BitmapParameters"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Shingles">
+      <eOperations name="getShinglesIndex"/>
+      <eOperations name="addShingledSeries"/>
+      <eOperations name="addShingledSeries"/>
+      <eOperations name="get"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TSBitmapPrinter"/>
+    <eClassifiers xsi:type="ecore:EClass" name="UCRdataBitmapPrinter"/>
+  </ecore:EPackage>
+  <ecore:EPackage name="datastructure">
+    <eClassifiers xsi:type="ecore:EClass" name="DoublyLinkedSortedList">
+      <eOperations name="addElement"/>
+      <eOperations name="iterator"/>
+      <eOperations name="isEmpty"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FrequencyTableEntry">
+      <eOperations name="getStr"/>
+      <eOperations name="setStr"/>
+      <eOperations name="isTrivial"/>
+      <eOperations name="compareTo"/>
+      <eOperations name="hashCode"/>
+      <eOperations name="equals"/>
+      <eOperations name="toString"/>
+      <eOperations name="copy"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SAXRecord">
+      <eOperations name="addIndex"/>
+      <eOperations name="removeIndex"/>
+      <eOperations name="getPayload"/>
+      <eOperations name="getIndexes"/>
+      <eOperations name="compareTo"/>
+      <eOperations name="equals"/>
+      <eOperations name="hashCode"/>
+      <eOperations name="toString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SAXRecords">
+      <eOperations name="iterator"/>
+      <eOperations name="getByIndex"/>
+      <eOperations name="getByWord"/>
+      <eOperations name="dropByIndex"/>
+      <eOperations name="add"/>
+      <eOperations name="addAll"/>
+      <eOperations name="addAll"/>
+      <eOperations name="getMinIndex"/>
+      <eOperations name="getMaxIndex"/>
+      <eOperations name="size"/>
+      <eOperations name="getIndexes"/>
+      <eOperations name="getSAXString"/>
+      <eOperations name="getAllIndices"/>
+      <eOperations name="buildIndex"/>
+      <eOperations name="mapStringIndexToTSPosition"/>
+      <eOperations name="excludePositions"/>
+      <eOperations name="getSimpleMotifs"/>
+      <eOperations name="toString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="DoublyLinkedSortedListInnerTypes">
+    <eClassifiers xsi:type="ecore:EClass" name="MyIterator">
+      <eOperations name="hasNext"/>
+      <eOperations name="next"/>
+      <eOperations name="remove"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Node">
+      <eOperations name="toString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="datastructures">
+    <eClassifiers xsi:type="ecore:EClass" name="TestDoublyLinkedSortedList">
+      <eOperations name="setUp"/>
+      <eOperations name="testAddElement"/>
+      <eOperations name="testComparatorAscending"/>
+      <eOperations name="testComparatorDescending"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestFrequencyTableEntry">
+      <eOperations name="testFrequencyTableEntryIntInt"/>
+      <eOperations name="testFrequencyTableEntryIntegerCharArrayInt"/>
+      <eOperations name="testFrequencyTableEntrySettersGetters"/>
+      <eOperations name="testToStringAndColne"/>
+      <eOperations name="testFrequencyTableEntryComplexity"/>
+      <eOperations name="testFrequencyTableEntryCmp"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestMagicArrayEntry">
+      <eOperations name="testHashCode"/>
+      <eOperations name="testCompareTo"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestMotifRecord">
+      <eOperations name="testMotifRecord"/>
+      <eOperations name="testSetLocation"/>
+      <eOperations name="testGetFrequency"/>
+      <eOperations name="testToString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestPseudoMotifDiscovery">
+      <eOperations name="setUp"/>
+      <eOperations name="test"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestSAXRecord">
+      <eOperations name="testSAXFrequencyEntry"/>
+      <eOperations name="setUp"/>
+      <eOperations name="testCompare"/>
+      <eOperations name="testHash"/>
+      <eOperations name="testToString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestSAXRecords">
+      <eOperations name="testProperIndexing"/>
+      <eOperations name="testNoneIndexing"/>
+      <eOperations name="testToString"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="discord">
+    <eClassifiers xsi:type="ecore:EClass" name="BruteForceDiscordImplementation"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DiscordRecord">
+      <eOperations name="compareTo"/>
+      <eOperations name="hashCode"/>
+      <eOperations name="equals"/>
+      <eOperations name="toString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DiscordRecords">
+      <eOperations name="add"/>
+      <eOperations name="getTopHits"/>
+      <eOperations name="getMinDistance"/>
+      <eOperations name="toString"/>
+      <eOperations name="iterator"/>
+      <eOperations name="getSize"/>
+      <eOperations name="get"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="HOTSAXImplementation"/>
+    <eClassifiers xsi:type="ecore:EClass" name="TestDiscordDiscoveryEXACT">
+      <eOperations name="setUp"/>
+      <eOperations name="test"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestDiscordDiscoveryMINDIST">
+      <eOperations name="setUp"/>
+      <eOperations name="test"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestDiscordDiscoveryNONE">
+      <eOperations name="setUp"/>
+      <eOperations name="test"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestDiscordRecord">
+      <eOperations name="testDiscordRecord"/>
+      <eOperations name="testSetPosition"/>
+      <eOperations name="testComparisons"/>
+      <eOperations name="testIdSetter"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestDiscordRecords">
+      <eOperations name="setUp"/>
+      <eOperations name="testDiscordRecords"/>
+      <eOperations name="testDiscordRecordsInt"/>
+      <eOperations name="testGetMinDistance"/>
+      <eOperations name="testToString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="discord2"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="discord3"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="discord4"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="motif">
+    <eClassifiers xsi:type="ecore:EClass" name="BruteForceMotifImplementation"/>
+    <eClassifiers xsi:type="ecore:EClass" name="EMMAImplementation"/>
+    <eClassifiers xsi:type="ecore:EClass" name="MotifRecord">
+      <eOperations name="getFrequency"/>
+      <eOperations name="add"/>
+      <eOperations name="toString"/>
+      <eOperations name="isEmpty"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestMotifDiscovery">
+      <eOperations name="setUp"/>
+      <eOperations name="testEMMA"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="parallel">
+    <eClassifiers xsi:type="ecore:EClass" name="ParallelSAXImplementation">
+      <eOperations name="process"/>
+      <eOperations name="cancel"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SAXWorker">
+      <eOperations name="call"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutation"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="intervalEnd"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="saxWindowSize"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="saxPAASize"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="saxAlphabetSize"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="numerosityReductionStrategy"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="normalizationThreshold"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestParallelInterruption">
+      <eOperations name="test"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestParallelSAXImplementation">
+      <eOperations name="testParallelSAXNONE"/>
+      <eOperations name="testParallelSAXExact"/>
+      <eOperations name="testParallelSAXMINDIST"/>
+      <eOperations name="testParallelSAXrollbac"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="registry">
+    <eClassifiers xsi:type="ecore:EClass" name="LargeWindowAlgorithm">
+      <eOperations name="markVisited"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MagicArrayEntry">
+      <eOperations name="compareTo"/>
+      <eOperations name="getStr"/>
+      <eOperations name="hashCode"/>
+      <eOperations name="equals"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="word"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="freq"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestVisitRegistry">
+      <eOperations name="setUp"/>
+      <eOperations name="testInitCounters"/>
+      <eOperations name="testMarkPointVisited"/>
+      <eOperations name="testMarkIntervalVisited"/>
+      <eOperations name="testRandomizer"/>
+      <eOperations name="testBounds"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="vr"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VisitRegistry">
+      <eOperations name="markVisited"/>
+      <eOperations name="markVisited"/>
+      <eOperations name="getNextRandomUnvisitedPosition"/>
+      <eOperations name="isNotVisited"/>
+      <eOperations name="isVisited"/>
+      <eOperations name="isVisited"/>
+      <eOperations name="getUnvisited"/>
+      <eOperations name="getVisited"/>
+      <eOperations name="transferVisited"/>
+      <eOperations name="clone"/>
+      <eOperations name="size"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="registry"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="unvisitedCount"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="randomizer"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SlidingWindowMarkerAlgorithm">
+      <eOperations name="markVisited"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="tinker">
+    <eClassifiers xsi:type="ecore:EClass" name="BenchmarkMotifDiscovery"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DiscordDiscoveryPerformanceDoubleLong"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DiscordDiscoveryPerformanceNew"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DiscordDiscoveryPerformanceOld"/>
+    <eClassifiers xsi:type="ecore:EClass" name="JmotifRSAXTestHelper"/>
+    <eClassifiers xsi:type="ecore:EClass" name="KalpakisConverter"/>
+    <eClassifiers xsi:type="ecore:EClass" name="MoviePrinter"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ParallelPerformanceEvaluation"/>
+    <eClassifiers xsi:type="ecore:EClass" name="PrintSAXProcess"/>
+  </ecore:EPackage>
+  <ecore:EPackage name="util">
+    <eClassifiers xsi:type="ecore:EClass" name="TestMapEntry">
+      <eOperations name="setUp"/>
+      <eOperations name="testHashCode"/>
+      <eOperations name="testGetKey"/>
+      <eOperations name="testGetValue"/>
+      <eOperations name="testSetValue"/>
+      <eOperations name="testEqualsObject"/>
+      <eOperations name="testToString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="e1"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="e2"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="e3"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="e4"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestStackTrace">
+      <eOperations name="testStackTrace"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TestUCRUtils">
+      <eOperations name="testReadUCRData"/>
+      <eOperations name="testReadUCRData2"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ecore:EPackage name="util">
+    <eClassifiers xsi:type="ecore:EClass" name="HeatChart">
+      <eOperations name="setZValues"/>
+      <eOperations name="setXValues"/>
+      <eOperations name="setYValues"/>
+      <eOperations name="setCellWidth"/>
+      <eOperations name="getCellWidth"/>
+      <eOperations name="setCellHeight"/>
+      <eOperations name="getCellHeight"/>
+      <eOperations name="getChartWidth"/>
+      <eOperations name="getChartHeight"/>
+      <eOperations name="getChartMargin"/>
+      <eOperations name="setChartMargin"/>
+      <eOperations name="saveToFile"/>
+      <eOperations name="getChartImage"/>
+      <eOperations name="getChartImage"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="zValues"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="xValues"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="yValues"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="xValuesHorizontal"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="yValuesHorizontal"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="cellSize"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="chartSize"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="margin"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="backgroundColour"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="title"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="titleFont"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="titleColour"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="titleSize"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="titleAscent"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="axisThickness"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="axisColour"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="axisLabelsFont"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="axisLabelColour"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="xAxisLabel"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="yAxisLabel"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="axisValuesColour"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="axisValuesFont"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="xAxisValuesFrequency"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="yAxisValuesFrequency"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="showXAxisValues"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="showYAxisValues"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="xAxisValuesHeight"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="xAxisValuesWidthMax"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="yAxisValuesHeight"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="yAxisValuesAscent"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="yAxisValuesWidthMax"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="xAxisLabelSize"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="xAxisLabelDescent"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="yAxisLabelSize"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="yAxisLabelAscent"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="highValueColour"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowValueColour"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowValue"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="highValue"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="heatMapTL"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="heatMapBR"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="heatMapC"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="heatMapSize"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="colourScale"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="JmotifMapEntry">
+      <eOperations name="setValue"/>
+      <eOperations name="hashCode"/>
+      <eOperations name="equals"/>
+      <eOperations name="toString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SortedArrayList">
+      <eOperations name="insertSorted"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StackTrace"/>
+    <eClassifiers xsi:type="ecore:EClass" name="StdRandom"/>
+    <eClassifiers xsi:type="ecore:EClass" name="UCRUtils"/>
+  </ecore:EPackage>
+</xmi:XMI>

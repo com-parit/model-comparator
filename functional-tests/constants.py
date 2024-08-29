@@ -1,6 +1,4 @@
 from enum import Enum
-
-
 class CONSTANTS(Enum):
     MODEL_LEVEL_COLUMNS_ORDER = [
         'model1_identifier',
