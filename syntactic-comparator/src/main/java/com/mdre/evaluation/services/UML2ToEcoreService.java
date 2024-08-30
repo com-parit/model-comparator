@@ -27,11 +27,9 @@ public class UML2ToEcoreService {
         // Initialize the UML2 package (Model)
         UMLPackage.eINSTANCE.eClass();
 
-        // Register the XMI resource factory for the .uml extension
-        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION, new XMIResourceFactoryImpl());
-
         // Create a resource set
         ResourceSet resourceSet = new ResourceSetImpl();
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION, new XMIResourceFactoryImpl());
 
         // Load the UML model
         Resource umlResource = resourceSet.getResource(URI.createFileURI(umlModelPath), true);
@@ -47,12 +45,13 @@ public class UML2ToEcoreService {
         for (EPackage ePackage : ecorePackages) {
             // Register the XMI resource factory for the .ecore extension
             Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-            reg.getExtensionToFactoryMap().put("ecore", new XMIResourceFactoryImpl());
+            reg.getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 
             // Create a resource set and resource
             ResourceSet resourceSet1 = new ResourceSetImpl();
             URI fileURI = URI.createFileURI(ecoreFilePath);
             Resource resource1 = resourceSet.createResource(fileURI);
+            resourceSet1.getResourceFactoryRegistry().getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION, new XMIResourceFactoryImpl());
 
             // Add the EPackage to the resource
             resource1.getContents().add(ePackage);
