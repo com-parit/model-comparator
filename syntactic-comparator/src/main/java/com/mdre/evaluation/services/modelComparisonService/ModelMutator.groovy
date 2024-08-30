@@ -13,6 +13,7 @@ import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 import java.io.File
 import com.mdre.evaluation.services.modelComparisonService.ModelElementsFetcher
+import org.eclipse.emf.ecore.EPackage
 
 public class ModelMutator extends YAMTLModuleGroovy {
 	
@@ -65,6 +66,14 @@ public class ModelMutator extends YAMTLModuleGroovy {
                 .out('t', EcorePackage.eINSTANCE.EPackage, {
 					t.name = s.name
                     def new_classes = fetch(s.eClassifiers, 'ct', 'Class')
+                    println(new_classes)
+                    println("==")
+                    println(t.EClassifiers)
+                    println("abced")
+                    if (new_classes) {
+                        t.eClassifiers.addAll(new_classes)
+                    }
+
                     t.eClassifiers = s.eClassifiers
                     t.eClassifiers.clear()
                     for (int i = 0; i < new_classes.size(); i++) {
@@ -262,29 +271,31 @@ public class ModelMutator extends YAMTLModuleGroovy {
     }
 
     public static void run() {
-        File mainDirectory = new File("/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/functional-tests/evaluate_travis");
+        createMutant("/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/syntactic-comparator/src/main/resources/sample_ecore_model_base.ecore", 0, 0, 0, 0, "mutant_1")
+        // File mainDirectory = new File("/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/functional-tests/evaluate_travis");
 
-        if (mainDirectory.exists() && mainDirectory.isDirectory()) {
-            File[] subdirs = mainDirectory.listFiles();
-            for (File subdir : subdirs) {
-                if (subdir.isDirectory()) {
-                    File[] files = subdir.listFiles();
-                    for (File file : files) {
-                        try {
-                            String path = file.getAbsolutePath()
-                            if (!file.isDirectory() && path.substring(path.lastIndexOf(".")) == ".ecore") {
-                                createMutant(path.toString(), 0, 0, 0, 0, "base_model")
-                                String baseModelPath = path.substring(0, path.lastIndexOf("/")) + "/base_model/base_model.ecore";
-                                createMutantsForTesting(baseModelPath)
-                            }
-                        } catch (Exception e) {
-                            System.out.println("Could not generate mutants for " + file.getAbsolutePath() + "/n" + e)
-                        }
-                    }
-                }
-            }
-        } else {
-            System.out.println("The provided path is not a valid directory.");
-        }
+        // if (mainDirectory.exists() && mainDirectory.isDirectory()) {
+        //     File[] subdirs = mainDirectory.listFiles();
+        //     for (File subdir : subdirs) {
+        //         if (subdir.isDirectory()) {
+        //             File[] files = subdir.listFiles();
+        //             for (File file : files) {
+        //                 try {
+        //                     String path = file.getAbsolutePath()
+        //                     if (!file.isDirectory() && path.substring(path.lastIndexOf(".")) == ".ecore") {
+        //                         createMutant(path.toString(), 0, 0, 0, 0, "base_model")
+        //                         String baseModelPath = path.substring(0, path.lastIndexOf("/")) + "/base_model/base_model.ecore";
+        //                         createMutantsForTesting(baseModelPath)
+        //                     }
+        //                 } catch (Exception e) {
+        //                     System.out.println("Could not generate mutants for " + file.getAbsolutePath() + "/n" + e)
+        //                 }
+        //             }
+        //         }
+        //     break;
+        //     }
+        // } else {
+        //     System.out.println("The provided path is not a valid directory.");
+        // }
     }
 }
