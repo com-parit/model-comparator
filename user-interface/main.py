@@ -611,7 +611,7 @@ def interface_for_viewing_evaluation_results():
     with col1:
         base_model = ""
         try:
-            path = option[:len(option)] + "/base_model.ecore"
+            path = option[:option.rindex("/")] + "/base_model.ecore"
             with open(path) as fr:
                 base_model = fr.read()
         except Exception as e:
@@ -628,7 +628,7 @@ def interface_for_viewing_evaluation_results():
     with col1:
         base_model = ""
         try:
-            path = option[:len(option)] + "/base_model.emf"
+            path = option[:option.rindex("/")] + "/base_model.emf"
             with open(path) as fr:
                 base_model = fr.read()
         except Exception as e:
