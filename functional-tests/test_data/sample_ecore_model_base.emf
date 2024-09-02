@@ -1,9 +1,0 @@
-package default;
-
-class car {
-	val int wheels;
-	val int miles;
-	val int lights;
-	val int capacity;
-}
-

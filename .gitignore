@@ -15,9 +15,5 @@ semantic-comparator/*.emf
 semantic-comparator/*.ecore
 semantic-comparator/app/*.bin.*
 
-functional-tests/evaluate_travis/*
-functional-tests/env
-functional-tests/__pycache__
-
 user-interface/evaluate_travis/*
 docs/provider

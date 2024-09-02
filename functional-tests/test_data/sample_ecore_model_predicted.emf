@@ -1,7 +1,0 @@
-package default;
-
-class car {
-	val int mirros;
-	val int doors;
-	val int wheels;
-}
