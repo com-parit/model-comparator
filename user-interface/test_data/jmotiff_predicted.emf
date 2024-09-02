@@ -1,0 +1,696 @@
+@namespace(uri="top", prefix="top")
+package top;
+
+package default {
+	class root {
+		ref null mutation;
+	}
+
+}
+
+package datatypes {
+}
+
+package java {
+}
+
+package awt {
+}
+
+package io {
+}
+
+package lang {
+}
+
+package text {
+}
+
+package util {
+}
+
+package concurrent {
+}
+
+package Map {
+}
+
+package net {
+}
+
+package seninp {
+}
+
+package jmotif {
+}
+
+package sax {
+}
+
+package net {
+}
+
+package seninp {
+}
+
+package jmotif {
+}
+
+package cbf {
+	class CBFGenerator {
+	}
+
+	class TestCBFGenerator {
+	}
+
+}
+
+package distance {
+	class EuclideanDistance {
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+	}
+
+	class TestEuclideanDistance {
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		ref null mutation;
+	}
+
+}
+
+package issues {
+	class TestIssue11 {
+		op void mutation();
+		op void mutation();
+	}
+
+}
+
+package sax {
+	class SAXCLIConverter {
+	}
+
+	class SAXCLIParameters {
+	}
+
+	class SAXProcessor {
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		ref null mutation;
+		ref null mutation;
+		ref null mutation;
+	}
+
+	class TSProcessor {
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+	}
+
+	class TestApproxDistance {
+		op void mutation();
+		op void mutation();
+		ref null mutation;
+	}
+
+	class TestNRStrategy {
+		op void mutation();
+	}
+
+	class TestNormalAlphabet {
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		ref null mutation;
+	}
+
+	class TestSAXException {
+		op void mutation();
+	}
+
+	class TestSAXProcessor {
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+	}
+
+	class TestShingling {
+		op void mutation();
+		op void mutation();
+	}
+
+	class TestTSProcessor {
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void mutation();
+		op void testSeries2String();
+		op void series2String();
+		op void testFileLoadExceptions();
+		attr null mutation;
+		attr null mutation;
+	}
+
+}
+
+package alphabet {
+	class Alphabet {
+		op void getMaxSize();
+		op void getCuts();
+		op void getDistanceMatrix();
+	}
+
+	class NormalAlphabet {
+		op void getCuts();
+		op void getMaxSize();
+		op void getDistanceMatrix();
+		op void getCentralCuts();
+	}
+
+}
+
+package bitmap {
+	class BitmapParameters {
+	}
+
+	class Shingles {
+		op void getShinglesIndex();
+		op void addShingledSeries();
+		op void addShingledSeries();
+		op void get();
+		attr null mutation;
+		attr null mutation;
+	}
+
+	class TSBitmapPrinter {
+	}
+
+	class UCRdataBitmapPrinter {
+	}
+
+}
+
+package datastructure {
+	class DoublyLinkedSortedList {
+		op void addElement();
+		op void iterator();
+		op void isEmpty();
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		ref null mutation;
+	}
+
+	class FrequencyTableEntry {
+		op void getStr();
+		op void setStr();
+		op void isTrivial();
+		op void compareTo();
+		op void hashCode();
+		op void equals();
+		op void toString();
+		op void copy();
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+	}
+
+	class SAXRecord {
+		op void addIndex();
+		op void removeIndex();
+		op void getPayload();
+		op void getIndexes();
+		op void compareTo();
+		op void equals();
+		op void hashCode();
+		op void toString();
+		attr null mutation;
+		attr null mutation;
+	}
+
+	class SAXRecords {
+		op void iterator();
+		op void getByIndex();
+		op void getByWord();
+		op void dropByIndex();
+		op void add();
+		op void addAll();
+		op void addAll();
+		op void getMinIndex();
+		op void getMaxIndex();
+		op void size();
+		op void getIndexes();
+		op void getSAXString();
+		op void getAllIndices();
+		op void buildIndex();
+		op void mapStringIndexToTSPosition();
+		op void excludePositions();
+		op void getSimpleMotifs();
+		op void toString();
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+	}
+
+}
+
+package DoublyLinkedSortedListInnerTypes {
+	class MyIterator {
+		op void hasNext();
+		op void next();
+		op void remove();
+		ref null mutation;
+		ref null mutation;
+	}
+
+	class Node {
+		op void toString();
+		attr null mutation;
+		ref null mutation;
+		ref null mutation;
+	}
+
+}
+
+package datastructures {
+	class TestDoublyLinkedSortedList {
+		op void setUp();
+		op void testAddElement();
+		op void testComparatorAscending();
+		op void testComparatorDescending();
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		ref null mutation;
+	}
+
+	class TestFrequencyTableEntry {
+		op void testFrequencyTableEntryIntInt();
+		op void testFrequencyTableEntryIntegerCharArrayInt();
+		op void testFrequencyTableEntrySettersGetters();
+		op void testToStringAndColne();
+		op void testFrequencyTableEntryComplexity();
+		op void testFrequencyTableEntryCmp();
+	}
+
+	class TestMagicArrayEntry {
+		op void testHashCode();
+		op void testCompareTo();
+	}
+
+	class TestMotifRecord {
+		op void testMotifRecord();
+		op void testSetLocation();
+		op void testGetFrequency();
+		op void testToString();
+	}
+
+	class TestPseudoMotifDiscovery {
+		op void setUp();
+		op void test();
+		ref null mutation;
+	}
+
+	class TestSAXRecord {
+		op void testSAXFrequencyEntry();
+		op void setUp();
+		op void testCompare();
+		op void testHash();
+		op void testToString();
+	}
+
+	class TestSAXRecords {
+		op void testProperIndexing();
+		op void testNoneIndexing();
+		op void testToString();
+	}
+
+}
+
+package discord {
+	class BruteForceDiscordImplementation {
+	}
+
+	class DiscordRecord {
+		op void compareTo();
+		op void hashCode();
+		op void equals();
+		op void toString();
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+	}
+
+	class DiscordRecords {
+		op void add();
+		op void getTopHits();
+		op void getMinDistance();
+		op void toString();
+		op void iterator();
+		op void getSize();
+		op void get();
+		ref null mutation;
+	}
+
+	class HOTSAXImplementation {
+	}
+
+	class TestDiscordDiscoveryEXACT {
+		op void setUp();
+		op void test();
+		attr null mutation;
+	}
+
+	class TestDiscordDiscoveryMINDIST {
+		op void setUp();
+		op void test();
+		attr null mutation;
+	}
+
+	class TestDiscordDiscoveryNONE {
+		op void setUp();
+		op void test();
+		attr null mutation;
+	}
+
+	class TestDiscordRecord {
+		op void testDiscordRecord();
+		op void testSetPosition();
+		op void testComparisons();
+		op void testIdSetter();
+	}
+
+	class TestDiscordRecords {
+		op void setUp();
+		op void testDiscordRecords();
+		op void testDiscordRecordsInt();
+		op void testGetMinDistance();
+		op void testToString();
+		ref null mutation;
+		ref null discord2;
+		ref null discord3;
+		ref null discord4;
+	}
+
+}
+
+package motif {
+	class BruteForceMotifImplementation {
+	}
+
+	class EMMAImplementation {
+	}
+
+	class MotifRecord {
+		op void getFrequency();
+		op void add();
+		op void toString();
+		op void isEmpty();
+		attr null mutation;
+		attr null mutation;
+	}
+
+	class TestMotifDiscovery {
+		op void setUp();
+		op void testEMMA();
+		attr null mutation;
+	}
+
+}
+
+package parallel {
+	class ParallelSAXImplementation {
+		op void process();
+		op void cancel();
+		attr null mutation;
+	}
+
+	class SAXWorker {
+		op void call();
+		attr null mutation;
+		attr null mutation;
+		attr null mutation;
+		attr null intervalEnd;
+		attr null saxWindowSize;
+		attr null saxPAASize;
+		attr null saxAlphabetSize;
+		attr null numerosityReductionStrategy;
+		attr null normalizationThreshold;
+	}
+
+	class TestParallelInterruption {
+		op void test();
+	}
+
+	class TestParallelSAXImplementation {
+		op void testParallelSAXNONE();
+		op void testParallelSAXExact();
+		op void testParallelSAXMINDIST();
+		op void testParallelSAXrollbac();
+	}
+
+}
+
+package registry {
+	class LargeWindowAlgorithm {
+		op void markVisited();
+	}
+
+	class MagicArrayEntry {
+		op void compareTo();
+		op void getStr();
+		op void hashCode();
+		op void equals();
+		attr null word;
+		attr null freq;
+	}
+
+	class TestVisitRegistry {
+		op void setUp();
+		op void testInitCounters();
+		op void testMarkPointVisited();
+		op void testMarkIntervalVisited();
+		op void testRandomizer();
+		op void testBounds();
+		ref null vr;
+	}
+
+	class VisitRegistry {
+		op void markVisited();
+		op void markVisited();
+		op void getNextRandomUnvisitedPosition();
+		op void isNotVisited();
+		op void isVisited();
+		op void isVisited();
+		op void getUnvisited();
+		op void getVisited();
+		op void transferVisited();
+		op void clone();
+		op void size();
+		attr null registry;
+		attr null unvisitedCount;
+		attr null randomizer;
+	}
+
+	class SlidingWindowMarkerAlgorithm {
+		op void markVisited();
+	}
+
+}
+
+package tinker {
+	class BenchmarkMotifDiscovery {
+	}
+
+	class DiscordDiscoveryPerformanceDoubleLong {
+	}
+
+	class DiscordDiscoveryPerformanceNew {
+	}
+
+	class DiscordDiscoveryPerformanceOld {
+	}
+
+	class JmotifRSAXTestHelper {
+	}
+
+	class KalpakisConverter {
+	}
+
+	class MoviePrinter {
+	}
+
+	class ParallelPerformanceEvaluation {
+	}
+
+	class PrintSAXProcess {
+	}
+
+}
+
+package util {
+	class TestMapEntry {
+		op void setUp();
+		op void testHashCode();
+		op void testGetKey();
+		op void testGetValue();
+		op void testSetValue();
+		op void testEqualsObject();
+		op void testToString();
+		ref null e1;
+		ref null e2;
+		ref null e3;
+		ref null e4;
+	}
+
+	class TestStackTrace {
+		op void testStackTrace();
+	}
+
+	class TestUCRUtils {
+		op void testReadUCRData();
+		op void testReadUCRData2();
+	}
+
+}
+
+package util {
+	class HeatChart {
+		op void setZValues();
+		op void setXValues();
+		op void setYValues();
+		op void setCellWidth();
+		op void getCellWidth();
+		op void setCellHeight();
+		op void getCellHeight();
+		op void getChartWidth();
+		op void getChartHeight();
+		op void getChartMargin();
+		op void setChartMargin();
+		op void saveToFile();
+		op void getChartImage();
+		op void getChartImage();
+		attr null zValues;
+		attr null xValues;
+		attr null yValues;
+		attr null xValuesHorizontal;
+		attr null yValuesHorizontal;
+		attr null cellSize;
+		attr null chartSize;
+		attr null margin;
+		attr null backgroundColour;
+		attr null title;
+		attr null titleFont;
+		attr null titleColour;
+		attr null titleSize;
+		attr null titleAscent;
+		attr null axisThickness;
+		attr null axisColour;
+		attr null axisLabelsFont;
+		attr null axisLabelColour;
+		attr null xAxisLabel;
+		attr null yAxisLabel;
+		attr null axisValuesColour;
+		attr null axisValuesFont;
+		attr null xAxisValuesFrequency;
+		attr null yAxisValuesFrequency;
+		attr null showXAxisValues;
+		attr null showYAxisValues;
+		attr null xAxisValuesHeight;
+		attr null xAxisValuesWidthMax;
+		attr null yAxisValuesHeight;
+		attr null yAxisValuesAscent;
+		attr null yAxisValuesWidthMax;
+		attr null xAxisLabelSize;
+		attr null xAxisLabelDescent;
+		attr null yAxisLabelSize;
+		attr null yAxisLabelAscent;
+		attr null highValueColour;
+		attr null lowValueColour;
+		attr null lowValue;
+		attr null highValue;
+		attr null heatMapTL;
+		attr null heatMapBR;
+		attr null heatMapC;
+		attr null heatMapSize;
+		attr null colourScale;
+	}
+
+	class JmotifMapEntry {
+		op void setValue();
+		op void hashCode();
+		op void equals();
+		op void toString();
+		attr null key;
+		attr null value;
+	}
+
+	class SortedArrayList {
+		op void insertSorted();
+	}
+
+	class StackTrace {
+	}
+
+	class StdRandom {
+	}
+
+	class UCRUtils {
+	}
+
+}
+
