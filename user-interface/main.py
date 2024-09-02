@@ -591,10 +591,7 @@ def interface_for_viewing_evaluation_results():
     results_summary = pd.DataFrame(columns=["Sum of abs Semantic Error", "Sum of abs Syntactic Error", "Semantic Similarity MSQE", "Sntactic Similarity MSQE"], data = [[se_semantic, se_syntactic, msqe_semantic, msqe_syntactic]]).T
     st.dataframe(results_summary)
 
-    fig = px.box(df, y=["comparit_f1_score", "comparit_precision", "comparit_recall", "SEMANTIC_SIMILARITY"], points="all")
-    st.plotly_chart(fig)
-
-    fig = px.box(df, y=["expected_f1_score", "expected_precision", "expected_recall"], points="all")
+    fig = px.box(df, y=["COMPARIT_ERROR", "SEMANTIC_SIMILARITY_ERROR"])
     st.plotly_chart(fig)
 
     values = df["predicted_model"].values
@@ -642,6 +639,16 @@ def interface_for_viewing_evaluation_results():
         st.text_area("predicted model emfatic", predicted_model, height = 500)
 
     generate_visualizations(model_level_json, class_level_json)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.text_area("base_model_ecore", model_level_json, height = 500)
+
+    with col2:
+        path = f'{option}/expected_results.json'
+        with open(path) as fr:
+            expected_results = fr.read()
+        st.text_area("expected results", expected_results, height = 500)
 
 def interface_for_ecore_to_emfatic():
     col1, col2, col3 = st.columns([0.45, 0.10, 0.45])

@@ -34,7 +34,7 @@ def test_uml2_to_ecore_conversion():
 
 def test_compare_ecore_models_syntactically_and_semantically():
 	print("===== Running tests for ecore models syntactic and semantic comparison =====")
-	root_directory = "evaluate_travis"
+	root_directory = "/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/user-interface/evaluate_travis"
 	for subfolder_name in os.listdir(root_directory):
 		subfolder_path = os.path.join(root_directory, subfolder_name)
 		subfolder_path = os.path.join(subfolder_path, "base_model")
@@ -61,12 +61,13 @@ def test_compare_ecore_models_syntactically_and_semantically():
 					with open(f'{sub_sub_folder}/class_level_json.json', 'w', encoding='utf-8') as json_file:
 						json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
 	df = create_report(root_directory)
+	df.to_csv("/mnt/mydrive/leicester/uol/thesis/repo/jm982/code/branches/model-comparator-main/user-interface/evaluation_results.csv")
 	msqe_syntactic = ((df['expected_f1_score'] - df['comparit_f1_score']) ** 2).mean()
 	msqe_semantic = ((df['expected_f1_score'] - df['SEMANTIC_SIMILARITY']) ** 2).mean()
 	print(f'Syntactic Similarity Mean Squared Error {msqe_syntactic}')
 	print(f'Semantic Similarity Mean Squared Error {msqe_semantic}')
     
-test_ecore_to_emfatic_conversion()
-test_emfatic_to_ecore_conversion()
-test_uml2_to_ecore_conversion()
+# test_ecore_to_emfatic_conversion()
+# test_emfatic_to_ecore_conversion()
+# test_uml2_to_ecore_conversion()
 test_compare_ecore_models_syntactically_and_semantically()
