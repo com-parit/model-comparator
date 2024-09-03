@@ -64,6 +64,11 @@ public class HashingService extends AbstractClassComparisonService {
 			return cache.get(cHash);
 		}
         long hashValue=0;
+		if (input.length() == 1) {
+			hashValue = input.hashCode();
+			cache.put(cHash, hashValue);
+			return hashValue;
+		}
 		for (int i=0; i < input.length() - 1; i++) {
             String bigram= input.substring(i, i + 2);
             hashValue += (long) bigram.hashCode();

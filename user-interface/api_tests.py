@@ -33,7 +33,7 @@ def test_uml2_to_ecore_conversion():
 
 def test_compare_ecore_models_syntactically_and_semantically():
 	print("===== Running tests for ecore models syntactic and semantic comparison =====")
-	root_directory = "evaluate_travis"
+	root_directory = "ecore_models_modelset"
 	for subfolder_name in os.listdir(root_directory):
 		subfolder_path = os.path.join(root_directory, subfolder_name)
 		subfolder_path = os.path.join(subfolder_path, "base_model")
@@ -50,15 +50,18 @@ def test_compare_ecore_models_syntactically_and_semantically():
 						if ".ecore" in file2:
 							predicted_ecore_model_file_path = sub_sub_folder + "/" + file2
 					print(f'processing {predicted_ecore_model_file_path}')
-					model_level_json, class_level_json = Adapter_Ftests.compare_ecore_models_syntactically_and_semantically(
-						groundTruthModelEcore=ground_truth_ecore_model_file_path,
-						predictedModelEcore=predicted_ecore_model_file_path,
-						config="config.json"
-					)
-					with open(f'{sub_sub_folder}/model_level_json.json', 'w', encoding='utf-8') as json_file:
-						json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
-					with open(f'{sub_sub_folder}/class_level_json.json', 'w', encoding='utf-8') as json_file:
-						json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
+					try:
+						model_level_json, class_level_json = Adapter_Ftests.compare_ecore_models_syntactically_and_semantically(
+							groundTruthModelEcore=ground_truth_ecore_model_file_path,
+							predictedModelEcore=predicted_ecore_model_file_path,
+							config="config.json"
+						)
+						with open(f'{sub_sub_folder}/model_level_json.json', 'w', encoding='utf-8') as json_file:
+							json.dump(model_level_json, json_file, ensure_ascii=False, indent=4)
+						with open(f'{sub_sub_folder}/class_level_json.json', 'w', encoding='utf-8') as json_file:
+							json.dump(class_level_json, json_file, ensure_ascii=False, indent=4)
+					except Exception as e:
+						print(f'Failed to process {predicted_ecore_model_file_path} with error {e}')
 	df = create_report(root_directory)
 	df.to_csv("evaluation_results.csv")
 	msqe_syntactic = ((df['expected_f1_score'] - df['comparit_f1_score']) ** 2).mean()

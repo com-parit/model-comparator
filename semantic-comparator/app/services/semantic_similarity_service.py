@@ -11,8 +11,19 @@ from gensim.models import KeyedVectors
 from nltk.tokenize import sent_tokenize, word_tokenize
 from gensim.models import Word2Vec
 from gensim.test.utils import common_texts
-word_vectors = KeyedVectors.load_word2vec_format('archive/glove.6B/glove.6B.50d.txt', no_header=True)
-# word_vectors = KeyedVectors.load_word2vec_format('archive/GoogleNews-vectors-negative300.bin', binary=True)
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+embedding_model = os.getenv("EMBEDDING_MODEL") if os.getenv("EMBEDDING_MODEL") else "glove6B"
+
+if embedding_model == "gnews":
+    print("Using google news embedding model")
+    word_vectors = KeyedVectors.load_word2vec_format('archive/GoogleNews-vectors-negative300.bin', binary=True)
+else:
+    print("Using glove embedding model")
+    word_vectors = KeyedVectors.load_word2vec_format('archive/glove.6B/glove.6B.50d.txt', no_header=True)
 
 class SemanticSimilarity:
     def get_tokens(self, text):
