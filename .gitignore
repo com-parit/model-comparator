@@ -1,32 +1,16 @@
 env/
 __pycache__/
-driver/uploads
 .env
-usage/output/
-ase2024-dataset/
-syntactic-comparator/*.json
-syntactic-comparator/*.emf
-syntactic-comparator/*.ecore
-syntactic-comparator/src/main/java/org
-syntactic-comparator/output
+
 syntactic-comparator/jars/javaEvaluation-0.0.1-SNAPSHOT.jar
 
-semantic-comparator/*.json
-semantic-comparator/*.emf
-semantic-comparator/*.ecore
-semantic-comparator/app/*.bin.*
 semantic-comparator/app/archive/glove.6B/glove.6B.50d.txt
 semantic-comparator/app/archive/GoogleNews-vectors-negative300.bin
-
-user-interface/evaluate_travis/*
-user-interface/ecore_models_modelset
 
 functional-tests/evaluate_travis/*
 functional-tests/ecore_models_modelset
 functional-tests/ecore_models_modelset.zip
 functional-tests/evaluate_travis.zip
-docs/provider
-
 functional-tests/modelset/__pycache__
 functional-tests/modelset/ecore_models_modelset
 functional-tests/modelset/env
@@ -35,3 +19,5 @@ functional-tests/modelset/uml_models_modelset
 functional-tests/modelset/ecore_models_modelset_ecore_uml.zip
 functional-tests/modelset/ecore_models_modelset.zip
 functional-tests/modelset/modelset.zip
+
+docs/provider
