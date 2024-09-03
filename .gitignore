@@ -27,4 +27,11 @@ functional-tests/ecore_models_modelset.zip
 functional-tests/evaluate_travis.zip
 docs/provider
 
-modelset/
+functional-tests/modelset/__pycache__
+functional-tests/modelset/ecore_models_modelset
+functional-tests/modelset/env
+functional-tests/modelset/modelset_data
+functional-tests/modelset/uml_models_modelset
+functional-tests/modelset/ecore_models_modelset_ecore_uml.zip
+functional-tests/modelset/ecore_models_modelset.zip
+functional-tests/modelset/modelset.zip
