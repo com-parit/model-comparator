@@ -59,6 +59,10 @@ application {
 // tasks.named('test') {
 // 	useJUnitPlatform()
 // }
+bootRun {
+    jvmArgs = ["-Xms6g", "-Xmx6g"]
+}
+
 task runModelMutatorJavaWrapper(type: JavaExec) {
     mainClass.set('com.mdre.evaluation.services.modelComparisonService.ModelMutatorJavaWrapper')
     classpath = sourceSets.main.runtimeClasspath

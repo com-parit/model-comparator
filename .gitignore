@@ -8,6 +8,7 @@ semantic-comparator/app/archive/glove.6B/glove.6B.50d.txt
 semantic-comparator/app/archive/GoogleNews-vectors-negative300.bin
 
 functional-tests/evaluate_travis/*
+functional-tests/evaluate_*/
 functional-tests/ecore_models_modelset
 functional-tests/ecore_models_modelset.zip
 functional-tests/evaluate_travis.zip

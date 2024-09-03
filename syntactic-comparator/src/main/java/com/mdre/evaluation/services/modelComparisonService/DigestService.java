@@ -46,7 +46,7 @@ public class DigestService extends AbstractClassComparisonService {
 		EReference eref = (EReference) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
 		if (configuration.INCLUDE_REFERENCES_NAME) {
-			digest.put("name", eref.getName().toLowerCase());
+			digest.put("name", eref.getName() != null ? eref.getName().toLowerCase() : "");
 		}
 		if (configuration.INCLUDE_REFERENCES_LOWER_BOUND) {
 			digest.put("lowerBound", Integer.toString(eref.getLowerBound()));
@@ -58,7 +58,7 @@ public class DigestService extends AbstractClassComparisonService {
 			digest.put("isContainment", Boolean.toString(eref.isContainment()));
 		}
 		if (configuration.INCLUDE_REFERENCES_CONTAINING_CLASS) {
-			digest.put("containingClass", eref.getEContainingClass().getName().toLowerCase());
+			digest.put("containingClass", eref.getEContainingClass().getName() != null ? eref.getEContainingClass().getName().toLowerCase() : "");
 		}
 		if (configuration.INCLUDE_REFERENCES_IS_ORDERED) {
 			digest.put("order", Boolean.toString(eref.isOrdered()));
@@ -72,7 +72,7 @@ public class DigestService extends AbstractClassComparisonService {
 	public HashMap<String, String> getComparableObjectForEClass(Object obj) {
 		EClass eclass = (EClass) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
-		digest.put("name", eclass.getName().toLowerCase());
+		digest.put("name", eclass.getName() != null ? eclass.getName().toLowerCase() : "");
 		return digest;
 	}
 
@@ -80,7 +80,7 @@ public class DigestService extends AbstractClassComparisonService {
 		EEnum enumeration = (EEnum) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
 		if (configuration.INCLUDE_ENUM_NAME) {
-			digest.put("name", enumeration.getName().toLowerCase());
+			digest.put("name", enumeration.getName() != null ? enumeration.getName().toLowerCase() : "");
 		}
 		return digest;
 	}
@@ -89,16 +89,16 @@ public class DigestService extends AbstractClassComparisonService {
 		EAttribute eAtt = (EAttribute) obj;
 		HashMap<String, String> digest = new HashMap<String, String>();
 		if (configuration.INCLUDE_ATTRIBUTE_NAME) {
-			digest.put("name", eAtt.getName().toLowerCase());
+			digest.put("name", eAtt.getName() != null ? eAtt.getName().toLowerCase() : "");
 		}
 		if (configuration.INCLUDE_ATTRIBUTE_CONTAINING_CLASS) {
 			if (eAtt.getEContainingClass() != null) {
-				digest.put("containerClassName", eAtt.getEContainingClass().getName().toLowerCase());
+				digest.put("containerClassName", eAtt.getEContainingClass().getName() != null ? eAtt.getEContainingClass().getName().toLowerCase() : "");
 			}
 		}
 		if (configuration.INCLUDE_ATTRIBUTE_TYPE) {
 			if (eAtt.getEAttributeType() != null) {
-				digest.put("attributeType", eAtt.getEAttributeType().getName().toLowerCase());
+				digest.put("attributeType", eAtt.getEAttributeType().getName() != null ? eAtt.getEAttributeType().getName().toLowerCase() : "");
 			}
 		}
 		if (configuration.INCLUDE_ATTRIBUTE_LOWER_BOUND) {
@@ -133,7 +133,7 @@ public class DigestService extends AbstractClassComparisonService {
 		}
 		if (configuration.INCLUDE_OPERATION_CONTAINING_CLASS) {
 			if (eop.getEContainingClass() != null) {
-				digest.put("containerClassName", eop.getEContainingClass().getName().toLowerCase());
+				digest.put("containerClassName", eop.getEContainingClass().getName() != null ? eop.getEContainingClass().getName().toLowerCase() : "");
 			}
 		}
 		if (configuration.INCLUDE_OPERATION_PARAMETERS) {
@@ -152,12 +152,12 @@ public class DigestService extends AbstractClassComparisonService {
 		}
 		if (configuration.INCLUDE_PARAMETER_TYPE) {
 			if (eparam.getEType() != null) {
-				digest.put("type", eparam.getEType().getName().toLowerCase());
+				digest.put("type", eparam.getEType().getName() != null ? eparam.getEType().getName().toLowerCase() : "");
 			}
 		}
 		if (configuration.INCLUDE_PARAMETER_OPERATION_NAME) {
 			if (eparam.getEOperation() != null) {
-				digest.put("containingMethodName", eparam.getEOperation().getName().toLowerCase());
+				digest.put("containingMethodName", eparam.getEOperation().getName() != null ? eparam.getEOperation().getName().toLowerCase() : "");
 			}		
 		}
 		return digest;

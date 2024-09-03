@@ -311,7 +311,7 @@ public class HashingService extends AbstractClassComparisonService {
 					candidateToPop = matchedCandidate;
 				}
             }
-			if (maxSimilarity > hashingConfiguration.HASHING_THRESHOLD) { // match found
+			if (maxSimilarity >= hashingConfiguration.HASHING_THRESHOLD) { // match found
 				model2ElementsHashes.remove(candidateToPop.second);
 				MatchedElementsDTO<T> matchedElements = new MatchedElementsDTO<T>();
 				matchedElements.model1 = hashIndexModel1.get(candidateToPop.first);
