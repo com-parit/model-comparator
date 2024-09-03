@@ -7,9 +7,10 @@ package app.controllers {
 
 package app.services {
 	class semantic_similarity_service {
-		+ compute_word2vec_cosine_similarity(text1, text2, model)
-		+ compute_tfidf_cosine_similarity(text1, text2)
-		+ compute_ragas_similarity(text1, text2)
+		+ compare_emfatic_files(base_emfatic_file, predicted_emfatic_file, model)
+		+ get_weighted_embeddings(doc, tfidf_weights)
+		+ get_tokens(text)
+		+ extract_comments_and_names(text)
 	}
 }
 
