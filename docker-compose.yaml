@@ -10,7 +10,8 @@ services:
     image: jawad571/comparit-semantic:1.0.0
     ports:
       - "9090:9090"
-
+    environment:
+      - EMBEDDING_MODEL=gnews
   user-interface:
     image: jawad571/comparit-user-interface:1.0.0
     ports:

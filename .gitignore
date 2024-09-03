@@ -9,11 +9,22 @@ syntactic-comparator/*.emf
 syntactic-comparator/*.ecore
 syntactic-comparator/src/main/java/org
 syntactic-comparator/output
+syntactic-comparator/jars/javaEvaluation-0.0.1-SNAPSHOT.jar
 
 semantic-comparator/*.json
 semantic-comparator/*.emf
 semantic-comparator/*.ecore
 semantic-comparator/app/*.bin.*
+semantic-comparator/app/archive/glove.6B/glove.6B.50d.txt
+semantic-comparator/app/archive/GoogleNews-vectors-negative300.bin
 
 user-interface/evaluate_travis/*
+user-interface/ecore_models_modelset
+
+functional-tests/evaluate_travis/*
+functional-tests/ecore_models_modelset
+functional-tests/ecore_models_modelset.zip
+functional-tests/evaluate_travis.zip
 docs/provider
+
+modelset/
