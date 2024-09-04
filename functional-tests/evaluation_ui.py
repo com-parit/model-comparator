@@ -119,8 +119,6 @@ user_choice = st.selectbox(
     ["Choose", 
      "Hashing (.95) with aggregation", 
      "Hashing (.95) without aggregation",
-     "Hashing (1) with aggregation", 
-     "Hashing (1) without aggregation",
      "Digest with aggregation", 
      "Digest without aggregation"
     ])
@@ -129,10 +127,6 @@ if user_choice == "Hashing (.95) with aggregation":
     interface_for_viewing_evaluation_results("evaluation_results_hashing_0.95_aggregate_true.csv")
 if user_choice == "Hashing (.95) without aggregation":
     interface_for_viewing_evaluation_results("evaluation_results_hashing_0.95_aggregate_false.csv")
-if user_choice == "Hashing (1) with aggregation":
-    interface_for_viewing_evaluation_results("evaluation_results_hashing_1_aggregate_true.csv")
-if user_choice == "Hashing (1) without aggregation":
-    interface_for_viewing_evaluation_results("evaluation_results_hashing_1_aggregate_false.csv")
 if user_choice == "Digest with aggregation":
     interface_for_viewing_evaluation_results("evaluation_results_digest_aggregate_true.csv")
 if user_choice == "Digest without aggregation":

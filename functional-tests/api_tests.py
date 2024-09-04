@@ -115,8 +115,6 @@ if __name__ == "__main__":
 		test_uml2_to_ecore_conversion()
 		# test_compare_ecore_models_syntactically_and_semantically("config_hashing_0.95_aggregate_true.json", "evaluation_results_hashing_0.95_aggregate_true.csv", "evaluate_config_hashing_0.95_aggregate_true")
 		# test_compare_ecore_models_syntactically_and_semantically("config_hashing_0.95_aggregate_false.json", "evaluation_results_hashing_0.95_aggregate_false.csv", "evaluate_config_hashing_0.95_aggregate_false")
-		# test_compare_ecore_models_syntactically_and_semantically("config_hashing_1_aggregate_true.json", "evaluation_results_hashing_1_aggregate_true.csv", "evaluate_config_hashing_1_aggregate_true")
-		# test_compare_ecore_models_syntactically_and_semantically("config_hashing_1_aggregate_false.json", "evaluation_results_hashing_1_aggregate_false.csv", "evaluate_config_hashing_1_aggregate_false")
 		# test_compare_ecore_models_syntactically_and_semantically("config_digest_aggregate_true.json", "evaluation_results_digest_aggregate_true.csv", "evaluate_config_digest_aggregate_true")
 		# test_compare_ecore_models_syntactically_and_semantically("config_digest_aggregate_false.json", "evaluation_results_digest_aggregate_false.csv", "evaluate_config_digest_aggregate_false")
 	else:
