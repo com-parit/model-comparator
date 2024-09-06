@@ -2,12 +2,23 @@
 left to right direction
 actor "User" as fc
 rectangle Comparit-User-Interface{
-  usecase "Input pair of Ecore Models" as UC1
+  usecase "Input pair of Ecore/Emfatic/UML2 Models" as UC1
   usecase "Specify Configuration" as UC2
   usecase "View Comparison Results" as UC3
+  usecase "Bulk Comaparison" as UC4
+  usecase "Ecore to Emfatic" as UC5
+  usecase "Emfatic to Ecore" as UC6
+  usecase "UML2 to Ecore" as UC7
 }
 
 fc --> UC1
-fc --> UC2
-fc --> UC3
+UC1 ..> UC2: extends
+UC1 ..> UC3: extends
+fc --> UC4
+UC4 ..> UC2: extends
+UC4 ..> UC3: extends
+fc --> UC5
+fc --> UC6
+fc --> UC7
+
 @enduml

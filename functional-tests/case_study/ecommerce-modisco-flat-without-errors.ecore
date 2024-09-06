@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ecommerce" nsURI="http:///rootmodel/ECommerceBackendmaster/com/metsoft/ecommerce.ecore"
+    nsPrefix="rootECommerceBackendmaster.com.metsoft.ecommerce">
+  <eClassifiers xsi:type="ecore:EClass" name="CategoriesController">
+    <eOperations name="CategoriesController" ordered="false">
+      <eParameters name="categoryRepository" ordered="false" eType="#//CategoryRepository"/>
+    </eOperations>
+    <eOperations name="getCategories" ordered="false" upperBound="-1" eType="#//Category"/>
+    <eOperations name="getCategoryById" ordered="false" eType="#//RequestMapping">
+      <eParameters name="id" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="saveCategory" ordered="false" eType="#//RequestMapping">
+      <eParameters name="category" ordered="false" eType="#//Category"/>
+    </eOperations>
+    <eOperations name="updateCategory" ordered="false" eType="#//RequestMapping">
+      <eParameters name="category" ordered="false" eType="#//Category"/>
+    </eOperations>
+    <eOperations name="deleteCategory" ordered="false" eType="#//RequestMapping">
+      <eParameters name="category" ordered="false" eType="#//Category"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categoryRepository" ordered="false"
+        eType="#//CategoryRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrdersController">
+    <eOperations name="OrdersController" ordered="false">
+      <eParameters name="orderRepository" ordered="false" eType="#//OrderRepository"/>
+    </eOperations>
+    <eOperations name="getAll" ordered="false" upperBound="-1" eType="#//Order"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orderRepository" ordered="false"
+        eType="#//OrderRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProductMutationResolver" eSuperTypes="#//orgspringframeworkhttpResponseEntity">
+    <eOperations name="ProductMutationResolver" ordered="false">
+      <eParameters name="productRepository" ordered="false" eType="#//ProductRepository"/>
+    </eOperations>
+    <eOperations name="saveProduct" ordered="false" eType="#//Product">
+      <eParameters name="product" ordered="false" eType="#//Product"/>
+    </eOperations>
+    <eOperations name="updateProduct" ordered="false" eType="#//Product">
+      <eParameters name="product" ordered="false" eType="#//Product"/>
+    </eOperations>
+    <eOperations name="deleteProduct" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eParameters name="id" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="productRepository" ordered="false"
+        eType="#//ProductRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProductQueryResolver" eSuperTypes="#//orgspringframeworkwebbindannotation">
+    <eOperations name="ProductQueryResolver" ordered="false">
+      <eParameters name="productRepository" ordered="false" eType="#//ProductRepository"/>
+    </eOperations>
+    <eOperations name="getProducts" ordered="false" upperBound="-1" eType="#//Product"/>
+    <eOperations name="getProductById" ordered="false" eType="#//Product">
+      <eParameters name="id" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="productRepository" ordered="false"
+        eType="#//ProductRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderRepository" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ProductRepository" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CategoryRepository" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Order">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="creationDate" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="products" ordered="false"
+        upperBound="-1" eType="#//Product"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Product">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="productName" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="description" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="price" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="createDate" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="category" ordered="false"
+        eType="#//Category"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orderItems" ordered="false"
+        upperBound="-1" eType="#//Order"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Category">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categoryName" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="products" ordered="false"
+        upperBound="-1" eType="#//Product"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkhttpResponseEntity"
+      abstract="true" interface="true">
+    <eAnnotations source="external"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="orgspringframeworkwebbindannotation"
+      abstract="true" interface="true">
+    <eAnnotations source="external"/>
+  </eClassifiers>
+</ecore:EPackage>
