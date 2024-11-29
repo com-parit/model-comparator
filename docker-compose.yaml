@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   comparit-syntactic:
-    image: jawad571/comparit-syntactic:1.0.0
+    image: jawad571/comparit-syntactic:v2.0.0
     ports:
       - "8080:8080"
 
